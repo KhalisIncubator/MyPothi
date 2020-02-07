@@ -1,16 +1,15 @@
 import React from 'react';
 import Routes from './Routes';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList
-} from 'react-native';
 import _ from 'lodash';
 import { GutkaContext, GlobalContext, ViewerContext } from './Contexts/Contexts.js';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Gutkas, Settings } from './Config/defaults';
-
+import {
+  View,
+  Text,
+  SafeAreaView
+} from 'react-native';
+import { fetchGutkas } from './functions';
 
 const GUTKAS_KEY = 'Gutkas';
 const SETTINGS_KEY = 'Settings';
@@ -36,26 +35,26 @@ class App extends React.Component {
       element: 'EngTransl',
     }
   }
-  fetchGutkas = async () => {
-    try {
-      let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-      if (getGutkas === null) {
-        await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
-        getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-      }
-      const normalized = JSON.parse(getGutkas);
-      let currGutka;
-      if (this.state.currentGutkaName === null) {
-        currGutka = normalized[0].name;
-      }
-      const filteredItems = _.values(normalized.find(gutka => gutka.name === currGutka).items);
-      this.setState({ isDataReady: true, gutkas: normalized, currentGutkaName: currGutka, currentGutka: filteredItems });
+  // fetchGutkas = async () => {
+  //   try {
+  //     let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
+  //     if (getGutkas === null) {
+  //       await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
+  //       getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
+  //     }
+  //     const normalized = JSON.parse(getGutkas);
+  //     let currGutka;
+  //     if (this.state.currentGutkaName === null) {
+  //       currGutka = normalized[0].name;
+  //     }
+  //     const filteredItems = _.values(normalized.find(gutka => gutka.name === currGutka).items);
+  //     this.setState({ isDataReady: true, gutkas: normalized, currentGutkaName: currGutka, currentGutka: filteredItems });
 
 
-    } catch (e) {
-      alert('Error occured and nothing could be fetched');
-    }
-  }
+  //   } catch (e) {
+  //     alert('Error occured and nothing could be fetched');
+  //   }
+  // }
   fetchSettings = async () => {
     let getSettings = await AsyncStorage.getItem(`${SETTINGS_KEY}`);
     if (getSettings === null) {
@@ -76,7 +75,10 @@ class App extends React.Component {
 
   }
   componentDidMount() {
-    this.fetchGutkas();
+    console.log(this.state.currentGutkaName);
+    const { dataReady, stored, currentName, currentItems } = fetchGutkas(this.state.currentGutkaName);
+    this.setState({ isDataReady: dataReady, gutkas: stored, currentGutkaName: currentName, currentGutka: currentItems });
+    console.log(currentItems)
     this.fetchSettings();
   }
   toggleEditMode = () => {
@@ -160,37 +162,40 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      <GlobalContext.Provider value={{
-        currentGutkaName,
-        updateCurrentGutka: this.updateCurrentGutka,
-        isEditMode,
-        toggleEditMode: this.toggleEditMode,
-        currShabadID,
-        updateCurrShabadID: this.updateCurrShabadID
-      }} >
-        <GutkaContext.Provider value={{
-          gutkas,
-          createGutka: this.createGutka,
-          currentGutka,
-          removeFromGutka: this.removeFromGutka,
-          addToGutka: this.addToGutka,
-          isDataReady
-        }} >
+      // <GlobalContext.Provider value={{
+      //   currentGutkaName,
+      //   updateCurrentGutka: this.updateCurrentGutka,
+      //   isEditMode,
+      //   toggleEditMode: this.toggleEditMode,
+      //   currShabadID,
+      //   updateCurrShabadID: this.updateCurrShabadID
+      // }} >
+      //   <GutkaContext.Provider value={{
+      //     gutkas,
+      //     createGutka: this.createGutka,
+      //     currentGutka,
+      //     removeFromGutka: this.removeFromGutka,
+      //     addToGutka: this.addToGutka,
+      //     isDataReady
+      //   }} >
 
-          <ViewerContext.Provider value={{
-            gurmukhiSize,
-            translSize,
-            translitSize,
-            updateFontSize: this.updateFontSize,
-            displayEngTransl,
-            displayPunTrasl,
-            displayTranslit,
-            updateDisplay: this.updateDisplay,
-          }}>
-            <Routes />
-          </ViewerContext.Provider>
-        </GutkaContext.Provider>
-      </GlobalContext.Provider>
+      //     <ViewerContext.Provider value={{
+      //       gurmukhiSize,
+      //       translSize,
+      //       translitSize,
+      //       updateFontSize: this.updateFontSize,
+      //       displayEngTransl,
+      //       displayPunTrasl,
+      //       displayTranslit,
+      //       updateDisplay: this.updateDisplay,
+      //     }}>
+      //       <Routes />
+      //     </ViewerContext.Provider>
+      //   </GutkaContext.Provider>
+      // </GlobalContext.Provider>
+      <View>
+        <Text>Hi</Text>
+      </View>
     );
   }
 }
