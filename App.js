@@ -19,7 +19,7 @@ class App extends React.Component {
     this.state = {
       // init values
       gutkas: [],
-      currentGutkaName: null,
+      currentGutkaName: "",
       currentGutka: [],
       isDataReady: false,
       isEditMode: false,
@@ -74,11 +74,10 @@ class App extends React.Component {
 
 
   }
-  componentDidMount() {
-    console.log(this.state.currentGutkaName);
-    const { dataReady, stored, currentName, currentItems } = fetchGutkas(this.state.currentGutkaName);
+  async componentDidMount() {
+    const fetched = await fetchGutkas(this.state.currentGutkaName);
+    const { dataReady, stored, currentName, currentItems } = fetched;
     this.setState({ isDataReady: dataReady, gutkas: stored, currentGutkaName: currentName, currentGutka: currentItems });
-    console.log(currentItems)
     this.fetchSettings();
   }
   toggleEditMode = () => {
@@ -162,40 +161,37 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      // <GlobalContext.Provider value={{
-      //   currentGutkaName,
-      //   updateCurrentGutka: this.updateCurrentGutka,
-      //   isEditMode,
-      //   toggleEditMode: this.toggleEditMode,
-      //   currShabadID,
-      //   updateCurrShabadID: this.updateCurrShabadID
-      // }} >
-      //   <GutkaContext.Provider value={{
-      //     gutkas,
-      //     createGutka: this.createGutka,
-      //     currentGutka,
-      //     removeFromGutka: this.removeFromGutka,
-      //     addToGutka: this.addToGutka,
-      //     isDataReady
-      //   }} >
+      <GlobalContext.Provider value={{
+        currentGutkaName,
+        updateCurrentGutka: this.updateCurrentGutka,
+        isEditMode,
+        toggleEditMode: this.toggleEditMode,
+        currShabadID,
+        updateCurrShabadID: this.updateCurrShabadID
+      }} >
+        <GutkaContext.Provider value={{
+          gutkas,
+          createGutka: this.createGutka,
+          currentGutka,
+          removeFromGutka: this.removeFromGutka,
+          addToGutka: this.addToGutka,
+          isDataReady
+        }} >
 
-      //     <ViewerContext.Provider value={{
-      //       gurmukhiSize,
-      //       translSize,
-      //       translitSize,
-      //       updateFontSize: this.updateFontSize,
-      //       displayEngTransl,
-      //       displayPunTrasl,
-      //       displayTranslit,
-      //       updateDisplay: this.updateDisplay,
-      //     }}>
-      //       <Routes />
-      //     </ViewerContext.Provider>
-      //   </GutkaContext.Provider>
-      // </GlobalContext.Provider>
-      <View>
-        <Text>Hi</Text>
-      </View>
+          <ViewerContext.Provider value={{
+            gurmukhiSize,
+            translSize,
+            translitSize,
+            updateFontSize: this.updateFontSize,
+            displayEngTransl,
+            displayPunTrasl,
+            displayTranslit,
+            updateDisplay: this.updateDisplay,
+          }}>
+            <Routes />
+          </ViewerContext.Provider>
+        </GutkaContext.Provider>
+      </GlobalContext.Provider>
     );
   }
 }

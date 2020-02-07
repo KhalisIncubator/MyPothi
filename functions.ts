@@ -17,7 +17,7 @@ const fetchGutkas = async (currentGutkaName: string) => {
     }
     const normalized = getGutkas !== null ? JSON.parse(getGutkas) : [];
     let currGutka: string = currentGutkaName;
-    if (currentGutkaName === null) {
+    if (currentGutkaName === "") {
       currGutka = normalized[0].name;
     }
     const filter =
