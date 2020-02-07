@@ -1,14 +1,14 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 const GUTKAS_KEY = 'Gutkas';
-import { Gutkas } from '../Config/defaults';
+
 
 
 const updateGutkas = () => {
 }
 const fetchGukas = async () => {
-  await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
-  const result = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
+  await AsyncStorage.setItem();
+  const result = await AsyncStorage.getItem();
 
 
   return JSON.parse(result);

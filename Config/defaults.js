@@ -1,35 +1,36 @@
 const Gutkas = [
-  Nitnem = {
+  {
     name: "Nitnem",
-    items: [{
-      name: "Japji Sahib",
-      id: 0,
-      firstLine: {
-        gurmukhi: "Ik Oankar Satnam Karta Purkh Nibhau Nirvair Akal Morat Ajooni Saibhan Gurprasaad",
-        translation: 'Translation'
-      }
-    }, {
-      name: "Jaap Sahib",
-      id: 1,
-      firstLine: {
-        gurmukhi: "Chakkar Chihan Ar Baran Jaat...",
-        translation: 'Translation'
-      }
-    }]
+    items: [
+      {
+        id: "Bani Guru Guru Hai Bani",
+        type: 'Shabad'
+      }, {
+        id: "Siro na mitai avan jai",
+        type: 'Shabad'
+      },
+      {
+        id: "Vaho Vaho Gobin Singh Aape Gur Chela",
+        type: "Shabad"
+      },
+      {
+        id: "Jaap Sahib",
+        type: "Shabad"
+      }]
   },
-  Kirtaan = {
-    name: "Kirtaan",
-    items: [{
-      name: 'Ik Til Nehin Visrai',
-      id: 0,
-      firstLine: {
-        gurmukhi: 'Ik Til Nehin Visrai',
-        translation: 'Translation',
-      }
-    }]
-  }
 ]
 
+const Settings = {
+  displayEngTransl: true,
+  displayPunTransl: true,
+  displayTranslit: true,
+
+  gurmukhiFont: 30,
+  translFont: 12,
+  translitFont: 12,
+
+}
 export {
-  Gutkas
+  Gutkas,
+  Settings
 }

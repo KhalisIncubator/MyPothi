@@ -6,23 +6,47 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { GutkaContext } from '../../Contexts/GutkaCtx';
-import { Card, Button } from 'react-native-elements';
+import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
+import { Card, Button, Icon } from 'react-native-elements';
 const ShabadButton = (props) => {
+  const GlobalCtx = useContext(GlobalContext);
   const GutkaCtx = useContext(GutkaContext);
+  if (GlobalCtx.isEditMode) {
+    return (
+
+      <View style={card.editOpacity}>
+        <Icon
+          name="minus-circle"
+          type='font-awesome'
+          color='red'
+          onPress={() => {
+            GutkaCtx.removeFromGutka(props.id)
+          }} />
+        <Text style={card.header}>{props.title}</Text>
+      </View>
+    );
+  }
   return (
     <TouchableOpacity style={card.container} onPress={() => {
-      GutkaCtx.setCurrShabadID(props.id)
+      GlobalCtx.updateCurrShabadID(props.id);
       props.navigation.navigate('ShabadViewer');
     }}>
-      <Text>{props.title}</Text>
+      <Text style={card.header}>{props.title}</Text>
     </TouchableOpacity>
   );
 }
 
 const card = StyleSheet.create({
+  editOpacity: {
+    flexDirection: "row",
+    alignItems: 'center',
+    borderColor: 'black',
+    backgroundColor: '#FEFEFE',
+    margin: 5,
+    minHeight: 100,
+    minWidth: 100,
+  },
   container: {
-    borderRadius: 15,
     borderColor: 'black',
     backgroundColor: '#FEFEFE',
     margin: 10,
@@ -31,6 +55,11 @@ const card = StyleSheet.create({
   button: {
     alignSelf: 'flex-start',
     paddingTop: 10,
+  },
+  header: {
+    fontWeight: '400',
+    fontSize: 20,
+    padding: 5,
   },
   text: {
     fontSize: 20,

@@ -688,7 +688,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.khalis.mypothijs;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.mypothijs;
 				PRODUCT_NAME = mypothijs;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -708,7 +708,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.khalis.mypothijs;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.mypothijs;
 				PRODUCT_NAME = mypothijs;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

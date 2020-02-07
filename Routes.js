@@ -10,6 +10,7 @@ import CustomDrawerComponent from './Components/Drawer/CustomDrawer';
 import SettingsScreen from './Screens/Settings';
 import AddScreen from './Screens/Add';
 
+
 const DrawerNav = createDrawerNavigator(
   {
     Gutka: Gutka,

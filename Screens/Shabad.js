@@ -4,10 +4,11 @@ import {
   Text,
   SafeAreaView
 } from 'react-native';
-import { GutkaContext } from '../Contexts/GutkaCtx';
+import { GutkaContext } from '../Contexts/Contexts';
 import { Header } from 'react-native-elements';
 
 import { Icon } from 'react-native-elements';
+import LineBlock from '../Components/Main/LineBlock';
 class Shabad extends React.Component {
   constructor(props) {
     super(props);
@@ -32,8 +33,9 @@ class Shabad extends React.Component {
             name="cog"
             type='font-awesome'
             color='white'
-            onPress={() => alert('menu')} />}
+            onPress={() => this.props.navigation.navigate('Settings')} />}
         />
+        <LineBlock />
       </View>
     );
   }

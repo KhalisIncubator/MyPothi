@@ -6,13 +6,14 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { GutkaContext } from '../../Contexts/GutkaCtx.js';
+import { GutkaContext, GlobalContext } from '../../Contexts/Contexts.js';
 
 const CustomDrawerItem = (props) => {
 
   const GutkaCtx = useContext(GutkaContext);
+  const GlobalCtx = useContext(GlobalContext);
 
-  if (props.value === GutkaCtx.currGutka) {
+  if (props.value === GlobalCtx.currentGutkaName) {
     return (
       <TouchableOpacity style={style.currentPage} onPress={() => props.navigation.closeDrawer()}>
         <Text style={style.currentPageText}>{props.value}</Text>
@@ -21,7 +22,7 @@ const CustomDrawerItem = (props) => {
   } else {
     return (
       <TouchableOpacity onPress={() => {
-        GutkaCtx.setCurrGutka(props.value);
+        GlobalCtx.updateCurrentGutka(props.value);
         props.navigation.closeDrawer();
       }}>
         <Text style={style.normalText}>{props.value}</Text>
