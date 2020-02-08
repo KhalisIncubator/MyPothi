@@ -6,7 +6,7 @@ import {
   Text,
   SafeAreaView
 } from 'react-native';
-import { fetchGutkas, fetchSettings, findCurrentGutka, getGutkaItems } from './functions';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems } from './functions';
 import { storedGutka, itemsObj } from './Config/types';
 
 
@@ -56,38 +56,29 @@ class App extends React.Component<IProps, IState> {
     const { $displayEngTransl, $displayPunTrasl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
     this.setState({ displayEngTransl: $displayEngTransl, displayPunTrasl: $displayPunTrasl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
   }
-  toggleEditMode = (): void => {
-    this.setState((prevState) => ({
-      isEditMode: !prevState.isEditMode
-    }))
-  }
+
+  toggleEditMode = () => { this.setState((prevState) => ({ isEditMode: !prevState.isEditMode })); }
+
   updateCurrentGutka = (newGutka: string) => {
-    const gutka = findCurrentGutka(this.state.gutkas, this.state.currentName) !== undefined ? findCurrentGutka(this.state.gutkas, this.state.currentName) : this.state.currentItems;
-    this.setState({ currentName: newGutka, currentItems: _.values(gutka) });
-
+    const gutka = findCurrentGutka(this.state.gutkas, this.state.currentName);
+    this.setState({ currentName: newGutka, currentItems: getGutkaItems(gutka) });
   }
-  // }
-  // updateCurrShabadID = (newID) => this.setState({ currShabadID: newID });
-  // updateDisplay = (element) => {
-  //   const displaySetting = `display${element}`;
-  //   this.setState(prevState => ({
-  //     [displaySetting]: !prevState[displaySetting]
-  //   }));
-  // }
-  // updateFontSize = (element, size) => {
-  //   const fontSetting = `${element}Size`;
-  //   this.setState({ [fontSetting]: size })
-  // }
+  updateCurrShabadID = (newID: number) => this.setState({ currShabadID: newID });
 
-
-  // removeFromGutka = (id) => {
-  //   let arr = this.state.currentGutka;
+  updateFontSize = (element: string, size: number) => {
+    const fontSetting = `${element}Size`;
+    this.setState(prevState => ({
+      ...prevState,
+      [fontSetting]: size,
+    }));
+  }
+  // removeFromGutka = (id: any) => {
+  //   let arr = this.state.currentItems;
   //   const allGutkas = this.state.gutkas;
   //   arr.splice(id, 1);
-  //   this.setState({ currentGutka: arr });
-  //   allGutkas.find(g => g.name === this.state.currentGutkaName).items = arr;
+  //   this.setState({ currentItems: arr });
   //   this.setState({ gutkas: allGutkas });
-  //   AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(allGutkas));
+  //   // saveGutkas();
   // }
   // addToGutka = (entryid, entrytype) => {
   //   const newObj = {

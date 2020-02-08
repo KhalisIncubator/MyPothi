@@ -7,4 +7,3 @@ export type storedGutka = {
   name: string,
   items: itemsObj[],
 }
-
