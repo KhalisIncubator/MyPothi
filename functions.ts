@@ -52,7 +52,17 @@ const fetchSettings = async (): Promise<setttingsFetched> => {
   }
 
 }
+
+const findCurrentGutka = async (gutkas: storedGutka[], name: string) => {
+  const filtered = gutkas.find((gutka: storedGutka) => (gutka.name === name));
+  return filtered;
+}
+const getGutkaItems = async (gutka: storedGutka) => {
+  return _.values(gutka.items);
+}
 export {
   fetchGutkas,
   fetchSettings,
+  findCurrentGutka,
+  getGutkaItems
 }

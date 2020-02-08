@@ -6,7 +6,7 @@ import {
   Text,
   SafeAreaView
 } from 'react-native';
-import { fetchGutkas, fetchSettings } from './functions';
+import { fetchGutkas, fetchSettings, findCurrentGutka, getGutkaItems } from './functions';
 import { storedGutka, itemsObj } from './Config/types';
 
 
@@ -47,47 +47,25 @@ class App extends React.Component<IProps, IState> {
       displayTranslit: true,
     }
   }
-  // fetchGutkas = async () => {
-  //   try {
-  //     let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-  //     if (getGutkas === null) {
-  //       await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
-  //       getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-  //     }
-  //     const normalized = JSON.parse(getGutkas);
-  //     let currGutka;
-  //     if (this.state.currentGutkaName === null) {
-  //       currGutka = normalized[0].name;
-  //     }
-  //     const filteredItems = _.values(normalized.find(gutka => gutka.name === currGutka).items);
-  //     this.setState({ isDataReady: true, gutkas: normalized, currentGutkaName: currGutka, currentGutka: filteredItems });
-
-
-  //   } catch (e) {
-  //     alert('Error occured and nothing could be fetched');
-  //   }
-  // }
-
   async componentDidMount() {
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
-    console.log($currentItems);
 
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTrasl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
     this.setState({ displayEngTransl: $displayEngTransl, displayPunTrasl: $displayPunTrasl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
   }
-  // toggleEditMode = () => {
-  //   this.setState((prevState) => ({
-  //     isEditMode: !prevState.isEditMode
-  //   }))
-  // }
-  // updateCurrentGutka = (newGutka) => {
-  //   const gutka = this.state.gutkas.find(g => g.name === newGutka);
-  //   this.setState({ currentGutkaName: newGutka, currentGutka: gutka })
+  toggleEditMode = (): void => {
+    this.setState((prevState) => ({
+      isEditMode: !prevState.isEditMode
+    }))
+  }
+  updateCurrentGutka = (newGutka: string) => {
+    const gutka = findCurrentGutka(this.state.gutkas, this.state.currentName) !== undefined ? findCurrentGutka(this.state.gutkas, this.state.currentName) : this.state.currentItems;
+    this.setState({ currentName: newGutka, currentItems: _.values(gutka) });
 
-
+  }
   // }
   // updateCurrShabadID = (newID) => this.setState({ currShabadID: newID });
   // updateDisplay = (element) => {
