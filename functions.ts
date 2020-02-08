@@ -34,7 +34,7 @@ const fetchGutkas = async (currentGutkaName: string): Promise<gutkaFetched> => {
     throw new Error("Something went wrong and nothing could be fetched");
   }
 }
-const saveGutkas = async (gutkas: storedGutka[]) {
+const saveGutkas = async (gutkas: storedGutka[]) => {
   AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(gutkas));
 }
 const fetchSettings = async (): Promise<setttingsFetched> => {
