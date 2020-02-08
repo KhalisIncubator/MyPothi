@@ -3,12 +3,12 @@ import _ from 'lodash';
 
 import { Gutkas, Settings } from './Config/defaults';
 import { storedGutka } from './Config/types';
-
+import { gutkaFetched, setttingsFetched } from './Config/interfaces'
 const GUTKAS_KEY = 'Gutkas';
 const SETTINGS_KEY = 'Settings';
 
 
-const fetchGutkas = async (currentGutkaName: string) => {
+const fetchGutkas = async (currentGutkaName: string): Promise<gutkaFetched> => {
   try {
     let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
     if (getGutkas === null) {
@@ -17,23 +17,42 @@ const fetchGutkas = async (currentGutkaName: string) => {
     }
     const normalized = getGutkas !== null ? JSON.parse(getGutkas) : [];
     let currGutka: string = currentGutkaName;
-    if (currentGutkaName === "") {
+    console.log(normalized.items);
+    if (currentGutkaName === "" || currentGutkaName === undefined) {
       currGutka = normalized[0].name;
     }
+    console.log(currentGutkaName);
     const filter =
       normalized.find((gutka: storedGutka) => (gutka.name === currGutka));
     return {
-      isDataReady: true,
-      stored: normalized,
-      currentName: currGutka,
-      currentItems: filter.items
+      $isDataReady: true,
+      $stored: normalized,
+      $currentName: currGutka,
+      $currentItems: _.values(filter.items)
     }
-
   } catch (e) {
-    console.log(e);
+    throw new Error("Something went wrong and nothing could be fetched");
   }
 }
+const fetchSettings = async (): Promise<setttingsFetched> => {
+  let getSettings = await AsyncStorage.getItem(`${SETTINGS_KEY}`);
+  if (getSettings === null) {
+    await AsyncStorage.setItem(`${SETTINGS_KEY}`, JSON.stringify(Settings));
+    getSettings = await AsyncStorage.getItem(`${SETTINGS_KEY}`);
+  }
+  const normalized = getSettings !== null ? JSON.parse(getSettings) : [];
+  const arr = _.values(normalized);
+  return {
+    $displayEngTransl: arr[0],
+    $displayPunTrasl: arr[1],
+    $displayTranslit: arr[2],
+    $gurmukhiSize: arr[3],
+    $translSize: arr[4],
+    $translitSize: arr[5]
+  }
 
+}
 export {
   fetchGutkas,
+  fetchSettings,
 }
