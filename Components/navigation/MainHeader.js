@@ -18,7 +18,7 @@ const MainHeader = (props) => {
       < Header
         backgroundColor={"#f99d1c"}
         leftComponent={< Text onPress={() => GlobalCtx.toggleEditMode()} style={{ color: '#fff', fontSize: 20 }}> Cancel</Text >}
-        centerComponent={{ text: `${GlobalCtx.currentGutkaName}` || props.tempHeading, style: { color: '#fff', fontSize: 25 } }}
+        centerComponent={{ text: `${GlobalCtx.currentName}` || props.tempHeading, style: { color: '#fff', fontSize: 25 } }}
         rightComponent={<Icon
           name="plus"
           type='font-awesome'
@@ -31,7 +31,7 @@ const MainHeader = (props) => {
   return (<Header
     backgroundColor={"#f99d1c"}
     leftComponent={<HeaderIcon name="bars" navigation={props.navigation} />}
-    centerComponent={{ text: `${GlobalCtx.currentGutkaName}` || props.tempHeading, style: { color: '#fff', fontSize: 25 } }}
+    centerComponent={{ text: `${GlobalCtx.currentName}` || props.tempHeading, style: { color: '#fff', fontSize: 25 } }}
     rightComponent={<Text onPress={() => GlobalCtx.toggleEditMode()} style={{ color: '#fff', fontSize: 20 }}>Edit</Text>}
   />);
 }

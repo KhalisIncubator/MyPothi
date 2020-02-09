@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { GutkaContext, GlobalContext } from '../../Contexts/Contexts.js';
+import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
 
 const CustomDrawerItem = (props) => {
 

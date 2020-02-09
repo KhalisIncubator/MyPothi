@@ -1,9 +1,10 @@
-export type itemsObj =
+export type entryObj =
   {
     id: string,
     type: string
   };
 export type storedGutka = {
   name: string,
-  items: itemsObj[],
+  items: entryObj[],
 }
+export type gutkaEntry = 'Shabad' | 'Bani';

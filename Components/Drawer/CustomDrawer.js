@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState, useContext, useCallback } from 're
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
 
-import { GutkaContext } from '../../Contexts/Contexts.js';
+import { GutkaContext } from '../../Contexts/Contexts';
 import CustomDrawerItem from './CustomDrawerItem.js';
 import { fetchGukas } from '../../Config/GutkaStorage';
 import LoadingItems from './LoadingItems.js';

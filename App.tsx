@@ -6,15 +6,16 @@ import {
   Text,
   SafeAreaView
 } from 'react-native';
-import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems } from './functions';
-import { storedGutka, itemsObj } from './Config/types';
+import { GlobalContext, GutkaContext, ViewerContext } from './Contexts/Contexts';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+import { storedGutka, entryObj, gutkaEntry } from './Config/types';
 
 
 interface IProps { };
 interface IState {
   gutkas: storedGutka[],
   currentName: string,
-  currentItems: itemsObj[],
+  currentItems: entryObj[],
   isDataReady: boolean,
   isEditMode: boolean,
   currShabadID: number,
@@ -23,7 +24,7 @@ interface IState {
   translSize: number,
   translitSize: number,
   displayEngTransl: boolean,
-  displayPunTrasl: boolean,
+  displayPunTansl: boolean,
   displayTranslit: boolean,
 }
 class App extends React.Component<IProps, IState> {
@@ -43,7 +44,7 @@ class App extends React.Component<IProps, IState> {
       translSize: 12,
       translitSize: 12,
       displayEngTransl: true,
-      displayPunTrasl: true,
+      displayPunTansl: true,
       displayTranslit: true,
     }
   }
@@ -53,8 +54,8 @@ class App extends React.Component<IProps, IState> {
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
 
     const settingsFetched = await fetchSettings();
-    const { $displayEngTransl, $displayPunTrasl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
-    this.setState({ displayEngTransl: $displayEngTransl, displayPunTrasl: $displayPunTrasl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
+    const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
+    this.setState({ displayEngTransl: $displayEngTransl, displayPunTansl: $displayPunTansl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
   }
 
   toggleEditMode = () => { this.setState((prevState) => ({ isEditMode: !prevState.isEditMode })); }
@@ -72,43 +73,45 @@ class App extends React.Component<IProps, IState> {
       [fontSetting]: size,
     }));
   }
-  // removeFromGutka = (id: any) => {
-  //   let arr = this.state.currentItems;
-  //   const allGutkas = this.state.gutkas;
-  //   arr.splice(id, 1);
-  //   this.setState({ currentItems: arr });
-  //   this.setState({ gutkas: allGutkas });
-  //   // saveGutkas();
-  // }
-  // addToGutka = (entryid, entrytype) => {
-  //   const newObj = {
-  //     id: entryid,
-  //     type: entrytype
-  //   }
-  //   const allGutkas = this.state.gutkas;
-  //   const gutka = allGutkas.find(g => g.name === this.state.currentGutkaName);
-  //   if (gutka.items.length == undefined) {
-  //     this.state.gutkas.find(g => g.name === this.state.currentGutkaName).items = [newObj];
-  //     this.setState(() => ({ currentGutka: [newObj] }));
-  //   } else {
-  //     this.state.gutkas.find(g => g.name === this.state.currentGutkaName).items = []
-  //     this.setState(prevState => ({
-  //       currentGutka: [...prevState.currentGutka, newObj]
-  //     }))
-  //   }
-  //   AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(this.state.gutkas));
-  // }
-  // createGutka = (gutkaName) => {
-  //   const newGutka = {
-  //     name: gutkaName,
-  //     items: [],
-  //   }
-  //   const allGutkas = this.state.gutkas;
-  //   this.setState(prevState => ({
-  //     gutkas: [...prevState.gutkas, newGutka]
-  //   }));
-  //   AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(allGutkas));
-  // }
+  updateDisplay = (element: string, value: boolean) => {
+    const displaySetting = `display${element}`;
+    this.setState(prevState => ({
+      ...prevState,
+      [displaySetting]: value,
+    }));
+  }
+  removeFromGutka = (id: any) => {
+    const { gutkas, currentName } = this.state;
+    const indexOf = findCurrentGutkaIndex(gutkas, currentName);
+    gutkas[indexOf].items.splice(id, 1);
+    this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
+    saveGutkas(gutkas);
+  }
+  addToGutka = (entryid: any, entrytype: gutkaEntry) => {
+    const newEntry: entryObj = {
+      id: entryid,
+      type: entrytype
+    }
+    const { gutkas, currentName } = this.state;
+    const allGutkas = gutkas;
+    const indexOfCurrent = findCurrentGutkaIndex(allGutkas, currentName);
+
+    allGutkas[indexOfCurrent].items = [...allGutkas[indexOfCurrent].items, newEntry];
+
+    this.setState({ gutkas: allGutkas, currentItems: _.values(allGutkas[indexOfCurrent].items) });
+    saveGutkas(allGutkas);
+  }
+  createGutka = (gutkaName: string) => {
+    const newGutka: storedGutka = {
+      name: gutkaName,
+      items: [],
+    }
+    const { gutkas } = this.state;
+    this.setState(prevState => ({
+      gutkas: [...prevState.gutkas, newGutka]
+    }));
+    saveGutkas([...gutkas, newGutka]);
+  }
   render() {
     // variables to init contexts with
     const {
@@ -123,45 +126,42 @@ class App extends React.Component<IProps, IState> {
       translSize,
       translitSize,
       displayEngTransl,
-      displayPunTrasl,
+      displayPunTansl,
       displayTranslit,
     } = this.state;
 
     return (
-      // <GlobalContext.Provider value={{
-      //   currentGutkaName,
-      //   updateCurrentGutka: this.updateCurrentGutka,
-      //   isEditMode,
-      //   toggleEditMode: this.toggleEditMode,
-      //   currShabadID,
-      //   updateCurrShabadID: this.updateCurrShabadID
-      // }} >
-      //   <GutkaContext.Provider value={{
-      //     gutkas,
-      //     createGutka: this.createGutka,
-      //     currentGutka,
-      //     removeFromGutka: this.removeFromGutka,
-      //     addToGutka: this.addToGutka,
-      //     isDataReady
-      //   }} >
+      <GlobalContext.Provider value={{
+        currentName,
+        updateCurrentGutka: this.updateCurrentGutka,
+        isEditMode,
+        toggleEditMode: this.toggleEditMode,
+        currShabadID,
+        updateCurrShabadID: this.updateCurrShabadID
+      }} >
+        <GutkaContext.Provider value={{
+          gutkas,
+          createGutka: this.createGutka,
+          currentItems,
+          removeFromGutka: this.removeFromGutka,
+          addToGutka: this.addToGutka,
+          isDataReady
+        }} >
 
-      //     <ViewerContext.Provider value={{
-      //       gurmukhiSize,
-      //       translSize,
-      //       translitSize,
-      //       updateFontSize: this.updateFontSize,
-      //       displayEngTransl,
-      //       displayPunTrasl,
-      //       displayTranslit,
-      //       updateDisplay: this.updateDisplay,
-      //     }}>
-      //       <Routes />
-      //     </ViewerContext.Provider>
-      //   </GutkaContext.Provider>
-      // </GlobalContext.Provider>
-      <View>
-        <Text>Hi</Text>
-      </View>
+          <ViewerContext.Provider value={{
+            gurmukhiSize,
+            translSize,
+            translitSize,
+            updateFontSize: this.updateFontSize,
+            displayEngTransl,
+            displayPunTansl,
+            displayTranslit,
+            updateDisplay: this.updateDisplay,
+          }}>
+            <Routes />
+          </ViewerContext.Provider>
+        </GutkaContext.Provider>
+      </GlobalContext.Provider>
     );
   }
 }

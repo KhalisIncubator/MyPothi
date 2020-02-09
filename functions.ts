@@ -17,11 +17,9 @@ const fetchGutkas = async (currentGutkaName: string): Promise<gutkaFetched> => {
     }
     const normalized = getGutkas !== null ? JSON.parse(getGutkas) : [];
     let currGutka: string = currentGutkaName;
-    console.log(normalized.items);
     if (currentGutkaName === "" || currentGutkaName === undefined) {
       currGutka = normalized[0].name;
     }
-    console.log(currentGutkaName);
     const filter =
       normalized.find((gutka: storedGutka) => (gutka.name === currGutka));
     return {
@@ -47,7 +45,7 @@ const fetchSettings = async (): Promise<setttingsFetched> => {
   const arr = _.values(normalized);
   return {
     $displayEngTransl: arr[0],
-    $displayPunTrasl: arr[1],
+    $displayPunTansl: arr[1],
     $displayTranslit: arr[2],
     $gurmukhiSize: arr[3],
     $translSize: arr[4],
@@ -60,6 +58,10 @@ const findCurrentGutka = (gutkas: storedGutka[], name: string) => {
   const filtered = gutkas.find((gutka: storedGutka) => (gutka.name === name));
   return filtered || gutkas[0];
 }
+const findCurrentGutkaIndex = (gutkas: storedGutka[], name: string) => {
+  const index = gutkas.findIndex((gutka: storedGutka) => gutka.name === name) | 0;
+  return index;
+}
 const getGutkaItems = (gutka: storedGutka) => {
   return _.values(gutka.items);
 }
@@ -68,5 +70,6 @@ export {
   saveGutkas,
   fetchSettings,
   findCurrentGutka,
-  getGutkaItems
+  findCurrentGutkaIndex,
+  getGutkaItems,
 }

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { storedGutka, entryObj, gutkaEntry } from '../Config/types';
+import { IGutkaCtx, IGlobalCtx, IViewerCtx } from '../Config/interfaces';
 // import Gutka from '../Screens/Gutka';
 
 
@@ -33,29 +35,29 @@ import React, { useState } from 'react';
 // }
 
 
-export const GutkaContext = React.createContext({
+export const GutkaContext = React.createContext<IGutkaCtx>({
   gutkas: [],
   createGutka: () => { },
-  currentGutka: [],
+  currentItems: [],
   removeFromGutka: () => { },
   addToGutka: () => { },
-  isDataReady: null,
+  isDataReady: false,
 })
-export const GlobalContext = React.createContext({
-  currentGutkaName: null,
+export const GlobalContext = React.createContext<IGlobalCtx>({
+  currentName: 'Loading...',
   updateCurrentGutka: () => { },
-  isEditMode: null,
+  isEditMode: false,
   toggleEditMode: () => { },
-  currShabadID: null,
+  currShabadID: 0,
   updateCurrShabadID: () => { }
 });
-export const ViewerContext = React.createContext({
-  gurmukhiSize: null,
-  translationSize: null,
-  translitSize: null,
+export const ViewerContext = React.createContext<IViewerCtx>({
+  gurmukhiSize: 12,
+  translSize: 12,
+  translitSize: 12,
   updateFontSize: () => { },
-  displayEngTransl: null,
-  displayPunTansl: null,
-  displayTranslit: null,
+  displayEngTransl: true,
+  displayPunTansl: true,
+  displayTranslit: true,
   updateDisplay: () => { },
 })

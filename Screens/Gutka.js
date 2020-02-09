@@ -31,8 +31,8 @@ const Gutka = ({ navigation }) => {
     <View style={styles.View}>
       <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
-        GutkaCtx.currentGutka.length != undefined &&
-        GutkaCtx.currentGutka.map(item => {
+        GutkaCtx.currentItems.length != undefined &&
+        GutkaCtx.currentItems.map(item => {
           return (
             <View>
               <ShabadButton title={item.id} navigation={navigation} />
