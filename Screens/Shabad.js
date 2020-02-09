@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
-import { GutkaContext } from '../Contexts/Contexts';
-import { Header } from 'react-native-elements';
+import { View } from 'react-native';
+import { Header, Icon } from 'react-native-elements';
 
-import { Icon } from 'react-native-elements';
 import LineBlock from '../Components/Main/LineBlock';
+
+import { GutkaContext } from '../Contexts/Contexts';
 class Shabad extends React.Component {
   constructor(props) {
     super(props);

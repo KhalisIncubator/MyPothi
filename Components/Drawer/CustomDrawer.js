@@ -1,14 +1,12 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useMemo, useState, useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
+import CustomDrawerItem from './CustomDrawerItem.js';
+import LoadingItems from './LoadingItems.js';
+import { Icon } from 'react-native-elements';
 
 import { GutkaContext } from '../../Contexts/Contexts';
-import CustomDrawerItem from './CustomDrawerItem.js';
-import { fetchGukas } from '../../Config/GutkaStorage';
-import LoadingItems from './LoadingItems.js';
-import { ThemeConsumer } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
 
 const CustomDrawerComponent = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);

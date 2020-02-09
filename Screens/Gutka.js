@@ -6,21 +6,13 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { GutkaContext, GlobalContext, ViewerContext } from '../Contexts/Contexts';
 import ShabadButton from '../Components/Main/ShabadButton';
 import MainHeader from '../Components/navigation/MainHeader';
+
+import { GutkaContext, GlobalContext, ViewerContext } from '../Contexts/Contexts';
+
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
-  const GlobalCtx = useContext(GlobalContext);
-  const ViewerCtx = useContext(ViewerContext);
-
-  if (!GutkaCtx.isDataReady) {
-    return (
-      <View style={styles.View}>
-        <MainHeader navigation={navigation} tempHeading="Loading..." />
-      </View>
-    );
-  }
   return (
     <View style={styles.View}>
       <MainHeader navigation={navigation} />
@@ -31,6 +23,10 @@ const Gutka = ({ navigation }) => {
             <ShabadButton title={item.id} id={index} key={index} navigation={navigation} />
           )
         })
+      }
+      {
+        !GutkaCtx.isDataReady &&
+        <Text>Loading...</Text>
       }
     </View>
   );

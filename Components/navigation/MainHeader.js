@@ -1,17 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
-import { Header } from 'react-native-elements';
-import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
+import React, { useContext } from 'react';
+import { Text } from 'react-native';
+
+import { Header, Icon } from 'react-native-elements';
+
 import HeaderIcon from './HeaderIcon';
-import { Icon } from 'react-native-elements';
+
+import { GlobalContext } from '../../Contexts/Contexts';
 
 const MainHeader = (props) => {
-
-  const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
   if (GlobalCtx.isEditMode) {
     return (

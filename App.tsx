@@ -1,14 +1,12 @@
 import React from 'react';
 import Routes from './Routes';
 import _ from 'lodash';
-import {
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
-import { GlobalContext, GutkaContext, ViewerContext } from './Contexts/Contexts';
-import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+
 import { storedGutka, entryObj, gutkaEntry } from './Config/types';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+
+import { GlobalContext, GutkaContext, ViewerContext } from './Contexts/Contexts';
+
 
 
 interface IProps { };

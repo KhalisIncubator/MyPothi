@@ -1,16 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
-  View,
   Text,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+
 import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
 
 const CustomDrawerItem = (props) => {
 
-  const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
 
   if (props.value === GlobalCtx.currentName) {
