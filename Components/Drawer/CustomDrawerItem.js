@@ -17,16 +17,15 @@ const CustomDrawerItem = (props) => {
         <Text style={style.currentPageText}>{props.value}</Text>
       </TouchableOpacity>
     );
-  } else {
-    return (
-      <TouchableOpacity onPress={() => {
-        GlobalCtx.updateCurrentGutka(props.value);
-        props.navigation.closeDrawer();
-      }}>
-        <Text style={style.normalText}>{props.value}</Text>
-      </TouchableOpacity>
-    )
   }
+  return (
+    <TouchableOpacity onPress={() => {
+      GlobalCtx.updateCurrentGutka(props.value);
+      props.navigation.closeDrawer();
+    }}>
+      <Text style={style.normalText}>{props.value}</Text>
+    </TouchableOpacity>
+  )
 }
 const style = StyleSheet.create({
   currentPage: {
