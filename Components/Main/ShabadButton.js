@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+
+import { Icon } from 'react-native-elements';
+
 import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
-import { Card, Button, Icon } from 'react-native-elements';
+
 const ShabadButton = (props) => {
   const GlobalCtx = useContext(GlobalContext);
   const GutkaCtx = useContext(GutkaContext);

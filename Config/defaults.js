@@ -15,7 +15,7 @@ const Gutkas = [
       },
       {
         id: "Jaap Sahib",
-        type: "Shabad"
+        type: "Bani"
       }]
   },
 ]

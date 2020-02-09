@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
-import { Header } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
+import { View } from 'react-native';
+import { Header, Icon } from 'react-native-elements';
 const SettingsScreen = ({ navigation }) => {
   return (
     <View>
