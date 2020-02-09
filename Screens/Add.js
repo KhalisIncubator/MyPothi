@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
-  SafeAreaView,
   StyleSheet,
   TextInput
 } from 'react-native';
-import { Header } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 
-import { Icon } from 'react-native-elements';
 import AddShabadButton from '../Components/Main/AddShabadButton';
+
 const AddScreen = ({ navigation }) => {
   const [inputVal, updateInputVal] = useState('Type Here...');
   return (

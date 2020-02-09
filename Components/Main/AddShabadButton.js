@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
