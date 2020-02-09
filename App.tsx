@@ -61,7 +61,7 @@ class App extends React.Component<IProps, IState> {
   toggleEditMode = () => { this.setState((prevState) => ({ isEditMode: !prevState.isEditMode })); }
 
   updateCurrentGutka = (newGutka: string) => {
-    const gutka = findCurrentGutka(this.state.gutkas, this.state.currentName);
+    const gutka = findCurrentGutka(this.state.gutkas, newGutka);
     this.setState({ currentName: newGutka, currentItems: getGutkaItems(gutka) });
   }
   updateCurrShabadID = (newID: number) => this.setState({ currShabadID: newID });
@@ -84,6 +84,7 @@ class App extends React.Component<IProps, IState> {
     const { gutkas, currentName } = this.state;
     const indexOf = findCurrentGutkaIndex(gutkas, currentName);
     gutkas[indexOf].items.splice(id, 1);
+    console.log(gutkas[indexOf]);
     this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
     saveGutkas(gutkas);
   }

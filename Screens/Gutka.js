@@ -1,20 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import {
   View,
+  FlatList,
   Text,
-  SafeAreaView,
   StyleSheet
 } from 'react-native';
 
-import { Header } from 'react-native-elements';
 import { GutkaContext, GlobalContext, ViewerContext } from '../Contexts/Contexts';
-import HeaderIcon from '../Components/navigation/HeaderIcon';
-import { fetchGukas } from '../Config/GutkaStorage';
 import ShabadButton from '../Components/Main/ShabadButton';
 import MainHeader from '../Components/navigation/MainHeader';
-import LoadingItems from '../Components/Drawer/LoadingItems';
-import { FlatList } from 'react-native-gesture-handler';
-import Shabad from './Shabad';
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
@@ -32,13 +26,12 @@ const Gutka = ({ navigation }) => {
       <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
-        GutkaCtx.currentItems.map(item => {
+        GutkaCtx.currentItems.map((item, index) => {
           return (
-            <View>
-              <ShabadButton title={item.id} navigation={navigation} />
-            </View>
+            <ShabadButton title={item.id} id={index} key={index} navigation={navigation} />
           )
-        })}
+        })
+      }
     </View>
   );
 }

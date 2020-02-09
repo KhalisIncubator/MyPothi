@@ -13,7 +13,7 @@ const CustomDrawerItem = (props) => {
   const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
 
-  if (props.value === GlobalCtx.currentGutkaName) {
+  if (props.value === GlobalCtx.currentName) {
     return (
       <TouchableOpacity style={style.currentPage} onPress={() => props.navigation.closeDrawer()}>
         <Text style={style.currentPageText}>{props.value}</Text>
