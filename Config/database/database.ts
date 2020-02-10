@@ -38,16 +38,12 @@ const downloadDB = async () => {
     })
 }
 
-const checkIfDbExists = () => {
-  RNFetchBlob.fs.exists($dbSchema)
-    .then((files) => {
-      console.log(`files: ${files}`)
+const checkIfDbExists = (): Promise<boolean> => {
+  return RNFetchBlob.fs.exists($dbPath)
+    .then((exists) => {
+      return exists;
     })
-    .catch((e) => { console.log(e) })
-}
-export {
-  downloadDB,
-  checkIfDbExists,
+    .catch((e) => { return Promise.reject() })
 }
 const readSchema = async (): Promise<ISchemaJSON> => {
   try {
@@ -63,7 +59,6 @@ const readSchema = async (): Promise<ISchemaJSON> => {
     throw new Error();
   }
 }
-// readSchema();
 
 const config: IConifg = {};
 const initSchema = async () => {
@@ -72,20 +67,25 @@ const initSchema = async () => {
   config.schemas = jsonParse.schemas;
   config.schemaVersion = jsonParse.schemaVersion;
 }
-// const loadShabad = (ShabadID: number) =>
-//   new Promise((resolve, reject) => {
-//     Realm.open(config)
-//       .then((realm: any) => {
-//         const rows = realm
-//           .objects('Verse')
-//           .filtered('ANY Shabads.ShabadID == $0', ShabadID)
-//           .sorted('ID');
-//         if (rows.length > 0) {
-//           resolve(rows);
-//         }
-//       })
-//       .catch(reject);
-//   });
+
+const loadShabad = (ShabadID: number) =>
+  new Promise((resolve, reject) => {
+    Realm.open(config)
+      .then((realm: any) => {
+        const rows = realm
+          .objects('Verse')
+          .filtered('ANY Shabads.ShabadID == $0', ShabadID)
+          .sorted('ID');
+        if (rows.length > 0) {
+          resolve(rows);
+        }
+      })
+      .catch(reject);
+  });
 export {
+  downloadDB,
+  checkIfDbExists,
   readSchema,
+  initSchema,
+  loadShabad
 }

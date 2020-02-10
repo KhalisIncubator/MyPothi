@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { storedGutka, entryObj, gutkaEntry } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
-import { downloadDB, checkIfDbExists, realmSchema, readSchema } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, readSchema, initSchema } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
 import Routes from './Routes';
@@ -50,15 +50,10 @@ class App extends React.Component<IProps, IState> {
   }
   async componentDidMount() {
     NetInfo.fetch().then(async state => {
-      if (state.isConnected) {
-        // // await downloadDB();
-        const result = await readSchema();
-        console.log(result)
-        // const result: any = await loadShabad(2608);
-        // result.forEach((row: any) => {
-        //   console.log(row);
-        // })
+      if (state.isConnected && !checkIfDbExists()) {
+        await downloadDB();
       }
+      await initSchema();
     });
 
     const gutkasFetched = await fetchGutkas(this.state.currentName);
