@@ -1,24 +1,43 @@
 import RNFetchBlob from 'rn-fetch-blob';
-// 
+import { unzip } from 'react-native-zip-archive'
+
+
+let dirs = RNFetchBlob.fs.dirs
+const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
+const $dbSchema = $dbPath + '/realm-schema-evergreen.json';
 const downloadDB = async () => {
   console.log('execution started')
   RNFetchBlob
     .config({
-      // add this option that makes response data to be stored as a file,
-      // this is much more performant.
       fileCache: true,
     })
     .fetch('GET', 'https://banidb.com/databases/sttmdesktop-evergreen.zip', {
       //some headers ..
     })
+    // listen to download progress event
+    .progress((received, total) => {
+      console.log('progress', received / total)
+    })
     .then((res) => {
-      // the temp file path
-      console.log('The file saved to ', res.path());
-      console.log('here');
+      unzip(res.path(), $dbPath)
+        .then((path) => {
+          console.log(`unzip completed at ${path}`);
+        })
+        .catch(e => {
+          console.log(e);
+        })
     })
 }
 
+const checkIfDbExists = () => {
+  RNFetchBlob.fs.ls($dbPath)
+    .then((exist) => {
+      console.log(`file ${exist ? '' : 'not'} exists`)
+    })
+    .catch((e) => { console.log(e) })
+}
 
 export {
-  downloadDB
+  downloadDB,
+  checkIfDbExists
 }
