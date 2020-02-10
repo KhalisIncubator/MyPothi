@@ -1,6 +1,6 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
-import { ISchemaJSON } from '../database/database-interfaces';
+import { ISchemaJSON, Schema, IConifg } from '../database/database-interfaces';
 const Realm = require('realm');
 
 let dirs = RNFetchBlob.fs.dirs
@@ -65,16 +65,13 @@ const readSchema = async (): Promise<ISchemaJSON> => {
 }
 // readSchema();
 
-// const config =  {
-//   path: `${$dbPath}/sttmdesktop-evergreen.realm`,
-//   schema: 
-//   schemaVersion: realmSchema.schemaVersion,
-// }
-// const initSchema = async() => {
-//   const schema = await readSchema();
-
-//   config.schema = sce
-// }
+const config: IConifg = {};
+const initSchema = async () => {
+  const jsonParse = await readSchema();
+  config.path = `${$dbPath}/sttmdesktop-evergreen.realm`;
+  config.schemas = jsonParse.schemas;
+  config.schemaVersion = jsonParse.schemaVersion;
+}
 // const loadShabad = (ShabadID: number) =>
 //   new Promise((resolve, reject) => {
 //     Realm.open(config)
