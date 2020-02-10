@@ -1,5 +1,6 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
+import { ISchemaJSON } from '../database/database-interfaces';
 const Realm = require('realm');
 
 let dirs = RNFetchBlob.fs.dirs
@@ -48,14 +49,32 @@ export {
   downloadDB,
   checkIfDbExists,
 }
-// const realmSchema = require($dbSchema);
-
-const config = {
-  path: `${$dbPath}/sttmdesktop-evergreen.realm`,
-  // schema: realmSchema.schemas,
-  // schemaVersion: realmSchema.schemaVersion,
+const readSchema = async (): Promise<ISchemaJSON> => {
+  try {
+    return RNFetchBlob.fs.readFile(`${RNFetchBlob.fs.dirs.DocumentDir}/sttmdesktop-evergreen/realm-schema-evergreen.json`, 'utf8')
+      .then((data) => {
+        // handle the data ..
+        return data;
+      })
+      .catch(e => {
+        return Promise.reject();
+      })
+  } catch (e) {
+    throw new Error();
+  }
 }
+// readSchema();
 
+// const config =  {
+//   path: `${$dbPath}/sttmdesktop-evergreen.realm`,
+//   schema: 
+//   schemaVersion: realmSchema.schemaVersion,
+// }
+// const initSchema = async() => {
+//   const schema = await readSchema();
+
+//   config.schema = sce
+// }
 // const loadShabad = (ShabadID: number) =>
 //   new Promise((resolve, reject) => {
 //     Realm.open(config)
@@ -70,6 +89,6 @@ const config = {
 //       })
 //       .catch(reject);
 //   });
-// export {
-//   loadShabad
-// }
+export {
+  readSchema,
+}
