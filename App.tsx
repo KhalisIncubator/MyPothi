@@ -3,9 +3,9 @@ import RNFetchBlob from 'rn-fetch-blob';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 
-import { storedGutka, entryObj, gutkaEntry } from './Config/types';
+import { storedGutka, entryObj, gutkaEntry } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
-import { downloadDB, checkIfDbExists } from './database';
+import { downloadDB, checkIfDbExists } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
 import Routes from './Routes';
@@ -51,8 +51,11 @@ class App extends React.Component<IProps, IState> {
   async componentDidMount() {
     NetInfo.fetch().then(async state => {
       if (state.isConnected) {
-        await downloadDB();
-        checkIfDbExists();
+        // // await downloadDB();
+        // const result: any = await loadShabad(2608);
+        // result.forEach((row: any) => {
+        //   console.log(row);
+        // })
       }
     });
 

@@ -229,6 +229,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.7.1):
     - React
+  - RNFS (2.16.4):
+    - React
   - RNGestureHandler (1.5.2):
     - React
   - RNReanimated (1.4.0):
@@ -277,6 +279,7 @@ DEPENDENCIES:
   - RealmJS (from `../node_modules/realm`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -346,6 +349,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -388,6 +393,7 @@ SPEC CHECKSUMS:
   RealmJS: c19d60dbe21606dade0f6217f4dd0d1fb8bb4e3a
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
+  RNFS: 90d1a32d3bc8f75cc7fc3dd2f67506049664346b
   RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
