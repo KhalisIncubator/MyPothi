@@ -5,7 +5,7 @@ import { Header, Icon } from 'react-native-elements';
 
 import HeaderIcon from './HeaderIcon';
 
-import { GlobalContext } from '../../Contexts/Contexts';
+import { GlobalContext } from '../../contexts/Contexts';
 
 const MainHeader = (props) => {
   const GlobalCtx = useContext(GlobalContext);

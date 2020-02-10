@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 
 import CustomDrawerItem from './CustomDrawerItem.js';
 
-import { GutkaContext } from '../../Contexts/Contexts';
+import { GutkaContext } from '../../contexts/Contexts';
 
 const CustomDrawerComponent = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);

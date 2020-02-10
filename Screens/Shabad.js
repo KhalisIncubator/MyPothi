@@ -4,7 +4,7 @@ import { Header, Icon } from 'react-native-elements';
 
 import LineBlock from '../Components/Main/LineBlock';
 
-import { GutkaContext } from '../Contexts/Contexts';
+import { GutkaContext } from '../contexts/Contexts';
 class Shabad extends React.Component {
   constructor(props) {
     super(props);

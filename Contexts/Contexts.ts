@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IGutkaCtx, IGlobalCtx, IViewerCtx } from '../Config/interfaces';
 
 export const GutkaContext = React.createContext<IGutkaCtx>({

@@ -9,7 +9,7 @@ import {
 import ShabadButton from '../Components/Main/ShabadButton';
 import MainHeader from '../Components/navigation/MainHeader';
 
-import { GutkaContext, GlobalContext, ViewerContext } from '../Contexts/Contexts';
+import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
 
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);

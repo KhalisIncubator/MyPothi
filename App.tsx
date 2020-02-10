@@ -1,12 +1,13 @@
 import React from 'react';
-import Routes from './Routes';
+import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 
 import { storedGutka, entryObj, gutkaEntry } from './Config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+import { downloadDB } from './database';
 
-import { GlobalContext, GutkaContext, ViewerContext } from './Contexts/Contexts';
-
+import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
+import Routes from './Routes';
 
 
 interface IProps { };
@@ -47,9 +48,17 @@ class App extends React.Component<IProps, IState> {
     }
   }
   async componentDidMount() {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        downloadDB();
+      }
+    });
+
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
+    // await downloadDB();
+
 
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;

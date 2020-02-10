@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { GutkaContext } from '../../Contexts/Contexts';
+import { GutkaContext } from '../../contexts/Contexts';
 
 const AddShabadButton = (props) => {
   const GuktaCtx = useContext(GutkaContext);
