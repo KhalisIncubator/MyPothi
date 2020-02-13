@@ -25,7 +25,7 @@ Path `.contexts`
 
 All the contexts to manage state inside the app. 
 Files:
-- [Context.ts](/files/contexts/contexts_ts.md)
+- [Context.ts](/docs/files/contexts/contexts_ts.md)
 
 ## Screens
 Path `./screens`
