@@ -1,8 +1,8 @@
 # MyPothi# MyPothi
 
 ## Table of Contents: 
-- Description
-- Documentation
+- [Description](#description)
+- [Documentation](/docs/structure.md)
 
 
 ## Description
