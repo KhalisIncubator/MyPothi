@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { storedGutka, entryObj, gutkaEntry } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
-import { downloadDB, checkIfDbExists, loadShabad, readSchema, initSchema } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, readSchema, initSchema, downloadProg } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
 import Routes from './Routes';
@@ -53,13 +53,12 @@ class App extends React.Component<IProps, IState> {
       if (state.isConnected && !checkIfDbExists()) {
         await downloadDB();
       }
-      await initSchema();
     });
+    console.log(await loadShabad(20));
 
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
-    // await downloadDB();
 
 
     const settingsFetched = await fetchSettings();
@@ -93,7 +92,6 @@ class App extends React.Component<IProps, IState> {
     const { gutkas, currentName } = this.state;
     const indexOf = findCurrentGutkaIndex(gutkas, currentName);
     gutkas[indexOf].items.splice(id, 1);
-    console.log(gutkas[indexOf]);
     this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
     saveGutkas(gutkas);
   }

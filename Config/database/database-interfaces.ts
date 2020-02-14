@@ -2,7 +2,7 @@
 
 export interface IConifg {
   path?: string,
-  schemas?: Schema[],
+  schema?: Schema[],
   schemaVersion?: number,
 }
 export interface ISchemaJSON {
