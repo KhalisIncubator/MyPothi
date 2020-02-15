@@ -50,7 +50,7 @@ class App extends React.Component<IProps, IState> {
   }
   async componentDidMount() {
     NetInfo.fetch().then(async state => {
-      if (state.isConnected && !checkIfDbExists()) {
+      if (state.isConnected && !(await checkIfDbExists())) {
         await downloadDB();
       }
     });

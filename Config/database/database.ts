@@ -41,52 +41,39 @@ const downloadDB = async () => {
     })
 }
 
-const checkIfDbExists = (): Promise<boolean> => {
-  return RNFetchBlob.fs.exists($dbPath)
-    .then((exists) => {
-      return exists;
+const checkIfDbExists = (): Promise<boolean> => RNFetchBlob.fs.exists($dbPath);
+
+const readSchema = (): Promise<ISchemaJSON> => {
+  return RNFetchBlob.fs.readFile(`${dirs.DocumentDir}/sttmdesktop-evergreen/realm-schema-evergreen.json`, 'utf8')
+    .then((data) => {
+      // handle the data ..
+      return JSON.parse(data);
     })
-    .catch((e) => { return Promise.reject() })
-}
-const readSchema = async (): Promise<ISchemaJSON> => {
-  try {
-    return RNFetchBlob.fs.readFile(`${RNFetchBlob.fs.dirs.DocumentDir}/sttmdesktop-evergreen/realm-schema-evergreen.json`, 'utf8')
-      .then((data) => {
-        // handle the data ..
-        return JSON.parse(data);
-      })
-      .catch(e => {
-        return Promise.reject();
-      })
-  } catch (e) {
-    throw new Error();
-  }
 }
 
 const config: IConifg = {};
 const initSchema = async () => {
-  const jsonParse = await readSchema();
+  const { schemas, schemaVersion } = await readSchema();
   config.path = `${RNFetchBlob.fs.dirs.DocumentDir}/sttmdesktop-evergreen/sttmdesktop-evergreen.realm`;
-  config.schema = jsonParse.schemas;
-  config.schemaVersion = jsonParse.schemaVersion;
+  config.schema = schemas;
+  config.schemaVersion = schemaVersion;
 }
 
 const loadShabad = async (ShabadID: number) => {
-  await initSchema().then(() => {
-    new Promise((resolve, reject) => {
-      Realm.open(config)
-        .then((realm: any) => {
-          const rows = realm
-            .objects('Verse')
-            .filtered('ANY Shabads.ShabadID == $0', ShabadID)
-            .sorted('ID');
-          if (rows.length > 0) {
-            resolve(rows);
-          }
-        })
-        .catch(reject);
-    });
-  })
+  await initSchema();
+  return new Promise((resolve, reject) => {
+    Realm.open(config)
+      .then((realm: any) => {
+        const rows = realm
+          .objects('Verse')
+          .filtered('ANY Shabads.ShabadID == $0', ShabadID)
+          .sorted('ID');
+        if (rows.length > 0) {
+          resolve(rows);
+        }
+      })
+      .catch(reject);
+  });
 }
 
 export {
