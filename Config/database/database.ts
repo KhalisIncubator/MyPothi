@@ -42,14 +42,16 @@ const downloadDB = async () => {
 
 const checkIfDbExists = (): Promise<boolean> => RNFetchBlob.fs.exists($dbPath);
 
+
+// return parsed version of schema JSON
 const readSchema = (): Promise<ISchemaJSON> => {
   return RNFetchBlob.fs.readFile(`${dirs.DocumentDir}/sttmdesktop-evergreen/realm-schema-evergreen.json`, 'utf8')
     .then((data) => {
-      // handle the data ..
       return JSON.parse(data);
     })
 }
-
+// configuration object to use in opening realm. 
+// TODO: remove config variable and just await readSchema in load functions
 const config: IConifg = {};
 const initSchema = async () => {
   const { schemas, schemaVersion } = await readSchema();

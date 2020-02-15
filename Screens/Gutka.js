@@ -17,6 +17,22 @@ const Gutka = ({ navigation }) => {
   const GlobalCtx = useContext(GlobalContext);
   const [shabads, updateShabads] = useState([]);
 
+  //when items update, load their shabads
+  useEffect(() => {
+    const getLines = async () => {
+      for (const item of GutkaCtx.currentItems) {
+        const shabad = await loadShabad(item.id);
+        updateShabads(prevArr => [...prevArr, shabad]);
+      }
+    }
+    getLines();
+  }, [GutkaCtx.currentItems]);
+  //empty out array when name changes to refill array with correct items
+  useEffect(() => {
+    updateShabads([]);
+  }, [GlobalCtx.currentName])
+
+  // render each shabad inside of flatlist
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
@@ -28,30 +44,12 @@ const Gutka = ({ navigation }) => {
       </View>
     )
   }
-  useEffect(() => {
-    const getLines = async () => {
-      for (const item of GutkaCtx.currentItems) {
-        const shabad = await loadShabad(item.id);
-        updateShabads(prevArr => [...prevArr, shabad]);
-      }
-    }
-    getLines();
-  }, [GutkaCtx.currentItems]);
-  useEffect(() => {
-    updateShabads([]);
-  }, [GlobalCtx.currentName])
   return (
     <View style={styles.View}>
       <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&
-        // shabads.map((item, index) => {
-        //   return (
-        //     // <ShabadButton title={item.mainLine} id={index} key={index} navigation={navigation} />
-        //     <Text>{shabads[index][0].Gurmukhi}</Text>
-        //   )
-        // })
         <FlatList
           data={shabads}
           keyExtractor={(item, index) => index.toString()}
