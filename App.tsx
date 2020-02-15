@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import RNFetchBlob from 'rn-fetch-blob';
+import { Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 
@@ -168,7 +168,9 @@ class App extends React.Component<IProps, IState> {
             displayTranslit,
             updateDisplay: this.updateDisplay,
           }}>
-            <Routes />
+            <PaperProvider>
+              <Routes />
+            </PaperProvider>
           </ViewerContext.Provider>
         </GutkaContext.Provider>
       </GlobalContext.Provider>

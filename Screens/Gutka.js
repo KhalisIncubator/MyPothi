@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import ShabadButton from '../Components/Main/ShabadButton';
-import MainHeader from '../Components/navigation/MainHeader';
 
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
 import { loadShabad } from '../config/database/database';
@@ -46,7 +45,6 @@ const Gutka = ({ navigation }) => {
   }
   return (
     <View style={styles.View}>
-      <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&
