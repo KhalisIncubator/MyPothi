@@ -1,7 +1,8 @@
 export type entryObj =
   {
-    id: string,
-    type: string
+    id: number,
+    mainLine: string,
+    type: gutkaEntry,
   };
 export type storedGutka = {
   name: string,

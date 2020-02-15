@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import { ViewerContext } from '../../Contexts/Contexts';
+import { ViewerContext } from '../../contexts/Contexts';
 
 const LineBlock = (props) => {
 

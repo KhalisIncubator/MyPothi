@@ -8,7 +8,7 @@ import {
 
 import { Icon } from 'react-native-elements';
 
-import { GutkaContext, GlobalContext } from '../../Contexts/Contexts';
+import { GutkaContext, GlobalContext } from '../../contexts/Contexts';
 
 const ShabadButton = (props) => {
   const GlobalCtx = useContext(GlobalContext);

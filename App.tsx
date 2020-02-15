@@ -1,12 +1,14 @@
 import React from 'react';
-import Routes from './Routes';
+import RNFetchBlob from 'rn-fetch-blob';
+import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 
-import { storedGutka, entryObj, gutkaEntry } from './Config/types';
+import { storedGutka, entryObj, gutkaEntry } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
 
-import { GlobalContext, GutkaContext, ViewerContext } from './Contexts/Contexts';
-
+import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
+import Routes from './Routes';
 
 
 interface IProps { };
@@ -47,9 +49,16 @@ class App extends React.Component<IProps, IState> {
     }
   }
   async componentDidMount() {
+    NetInfo.fetch().then(async state => {
+      if (state.isConnected && !(await checkIfDbExists())) {
+        await downloadDB();
+      }
+    });
+
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
+
 
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
@@ -82,13 +91,13 @@ class App extends React.Component<IProps, IState> {
     const { gutkas, currentName } = this.state;
     const indexOf = findCurrentGutkaIndex(gutkas, currentName);
     gutkas[indexOf].items.splice(id, 1);
-    console.log(gutkas[indexOf]);
     this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
     saveGutkas(gutkas);
   }
-  addToGutka = (entryid: any, entrytype: gutkaEntry) => {
+  addToGutka = (entryid: number, mainLine: string, entrytype: gutkaEntry) => {
     const newEntry: entryObj = {
       id: entryid,
+      mainLine: mainLine,
       type: entrytype
     }
     const { gutkas, currentName } = this.state;
