@@ -4,7 +4,7 @@ export interface IGutkaCtx {
   createGutka: (newGutka: string) => void,
   currentItems: entryObj[],
   removeFromGutka: (id: any) => void,
-  addToGutka: (entryId: any, entryType: gutkaEntry) => void,
+  addToGutka: (entryId: number, mainLine: string, entryType: gutkaEntry) => void,
   isDataReady: boolean,
 }
 export interface IGlobalCtx {
