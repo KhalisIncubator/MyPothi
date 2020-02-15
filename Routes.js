@@ -24,10 +24,7 @@ const ScreenStack = () => {
 const DrawerNav = () => {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerComponent {...props} />}>
-      <Drawer.Screen name="Gutka" component={Gutka} />
-      <Drawer.Screen name="ShabadViewer" component={Shabad} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
-      <Drawer.Screen name="Add" component={AddScreen} />
+      <Drawer.Screen name="Stack" component={ScreenStack} />
     </Drawer.Navigator>
   )
 }
