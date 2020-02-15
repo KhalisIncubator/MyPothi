@@ -2,22 +2,19 @@ import React, { useContext } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
-  DrawerItemList
 } from '@react-navigation/drawer';
 import {
-  useTheme,
-  Avatar,
+  withTheme,
   Title,
-  Caption,
-  Paragraph,
   Drawer,
   Text,
-  TouchableRipple,
-  Switch,
+  Avatar,
+  Appbar,
+  DefaultTheme
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gutka from './Screens/Gutka';
@@ -26,19 +23,55 @@ import SettingsScreen from './Screens/Settings';
 import AddScreen from './Screens/Add';
 
 import { GutkaContext, GlobalContext } from './contexts/Contexts';
+
+
+const Header = ({ previous, navigation }) => {
+  const GlobalCtx = useContext(GlobalContext);
+  const title = GlobalCtx.currentName;
+  const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#3498db',
+      accent: '#f1c40f',
+      surface: '#0092ff'
+    },
+  };
+  return (
+    <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
+      {previous ? (
+        <Appbar.BackAction
+          onPress={navigation.pop}
+          color={theme.colors.primary}
+        />
+      ) : (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.openDrawer();
+            }}
+          >
+            <Icon
+              name="menu"
+              size={30} />
+          </TouchableOpacity>
+        )}
+      <Appbar.Content
+        title={
+          title
+        }
+      />
+    </Appbar.Header>
+  );
+};
 const AppDrawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const ScreenStack = () => {
-
   return (
     <Stack.Navigator >
       <Stack.Screen name="Gutka" component={Gutka} options={{
-        headerRight: () => (
-          <Button
-            onPress={() => alert('This is a button!')}
-            title="Info"
-            color="#fff"
-          />
+        header: ({ previous, navigation }) => (
+          <Header previous={previous} navigation={navigation} />
         ),
       }} />
       <Stack.Screen name="ShabadViewer" component={Shabad} />
@@ -84,6 +117,24 @@ const CustomDrawerComponent = (props) => {
     </DrawerContentScrollView>
   );
 }
+const DrawerNav = () => {
+  return (
+    <AppDrawer.Navigator drawerContent={props => <CustomDrawerComponent {...props} />}>
+      <AppDrawer.Screen name="Stack" component={ScreenStack} />
+    </AppDrawer.Navigator>
+  )
+}
+
+
+const Routes = () => {
+  return (
+    <NavigationContainer>
+      <DrawerNav />
+    </NavigationContainer>
+  );
+}
+export default Routes;
+
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
@@ -110,21 +161,3 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
-
-const DrawerNav = () => {
-  return (
-    <AppDrawer.Navigator drawerContent={props => <CustomDrawerComponent {...props} />}>
-      <AppDrawer.Screen name="Stack" component={ScreenStack} />
-    </AppDrawer.Navigator>
-  )
-}
-
-
-const Routes = () => {
-  return (
-    <NavigationContainer>
-      <DrawerNav />
-    </NavigationContainer>
-  );
-}
-export default Routes;
