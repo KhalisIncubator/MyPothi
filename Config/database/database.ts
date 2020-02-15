@@ -1,12 +1,11 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
-import { ISchemaJSON, Schema, IConifg, Properties } from '../database/database-interfaces';
-const Realm = require('realm');
+import { ISchemaJSON, IConifg } from '../database/database-interfaces';
 
+const Realm = require('realm');
 let dirs = RNFetchBlob.fs.dirs
 const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
 const $dbSchema = `${$dbPath}/realm-schema-evergreen.json`;
-const $md5 = `${$dbPath}/sttmdesktop.md5`;
 
 let downloadProg: number;
 let hasDownloadFinished: boolean;

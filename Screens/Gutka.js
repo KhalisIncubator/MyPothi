@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
   FlatList,
@@ -10,17 +10,35 @@ import ShabadButton from '../Components/Main/ShabadButton';
 import MainHeader from '../Components/navigation/MainHeader';
 
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
+import { loadShabad } from '../config/database/database';
 
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
+  const GlobalCtx = useContext(GlobalContext);
+  const [shabads, updateShabads] = useState([]);
+  useEffect(() => {
+    const getLines = async () => {
+      for (const item of GutkaCtx.currentItems) {
+        const shabad = await loadShabad(item.id);
+        updateShabads(prevArr => [...prevArr, shabad]);
+      }
+    }
+    getLines();
+    console.log(GutkaCtx.currentItems.length)
+  }, [GutkaCtx.currentItems]);
+  useEffect(() => {
+    updateShabads([]);
+  }, [GlobalCtx.currentName])
   return (
     <View style={styles.View}>
       <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
-        GutkaCtx.currentItems.map((item, index) => {
+        shabads.length != 0 &&
+        shabads.map((item, index) => {
           return (
-            <ShabadButton title={item.id} id={index} key={index} navigation={navigation} />
+            // <ShabadButton title={item.mainLine} id={index} key={index} navigation={navigation} />
+            <Text>{shabads[index][0].Gurmukhi}</Text>
           )
         })
       }
