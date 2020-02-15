@@ -13,6 +13,7 @@
     "@react-native-community/async-storage": "^1.7.1",
     "@react-native-community/netinfo": "^5.3.3",
     "@types/lodash": "^4.14.149",
+    "anvaad-js": "^1.4.1",
     "lodash": "^4.17.15",
     "react": "16.9.0",
     "react-native": "0.61.5",

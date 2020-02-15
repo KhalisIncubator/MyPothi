@@ -16,6 +16,18 @@ const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
   const [shabads, updateShabads] = useState([]);
+
+  const renderItem = ({ item }) => {
+    let lines = [];
+    lines = item.map(line => {
+      return <Text>{line.Gurmukhi}</Text>
+    })
+    return (
+      <View>
+        {lines}
+      </View>
+    )
+  }
   useEffect(() => {
     const getLines = async () => {
       for (const item of GutkaCtx.currentItems) {
@@ -24,7 +36,6 @@ const Gutka = ({ navigation }) => {
       }
     }
     getLines();
-    console.log(GutkaCtx.currentItems.length)
   }, [GutkaCtx.currentItems]);
   useEffect(() => {
     updateShabads([]);
@@ -35,12 +46,17 @@ const Gutka = ({ navigation }) => {
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&
-        shabads.map((item, index) => {
-          return (
-            // <ShabadButton title={item.mainLine} id={index} key={index} navigation={navigation} />
-            <Text>{shabads[index][0].Gurmukhi}</Text>
-          )
-        })
+        // shabads.map((item, index) => {
+        //   return (
+        //     // <ShabadButton title={item.mainLine} id={index} key={index} navigation={navigation} />
+        //     <Text>{shabads[index][0].Gurmukhi}</Text>
+        //   )
+        // })
+        <FlatList
+          data={shabads}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
+        />
       }
       {
         !GutkaCtx.isDataReady &&
