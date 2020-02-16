@@ -41,17 +41,21 @@ const style = StyleSheet.create({
     flexDirection: 'column',
   },
   Gurmukhi: {
+    marginVertical: 10,
     fontWeight: "400",
     fontFamily: "AnmolLipiTrue",
   },
   Translation: {
+    marginVertical: 5,
     fontWeight: "200",
   },
   PunjabiTranslation: {
+    marginVertical: 5,
     fontWeight: "200",
     fontFamily: "AnmolLipiTrue",
   },
   Translit: {
+    marginVertical: 5,
     fontWeight: "200",
   }
 })
