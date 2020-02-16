@@ -7,6 +7,7 @@ let dirs = RNFetchBlob.fs.dirs
 const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
 const $dbSchema = `${$dbPath}/realm-schema-evergreen.json`;
 
+const anvaad = require('anvaad-js');
 let downloadProg: number;
 let hasDownloadFinished: boolean;
 
@@ -76,11 +77,27 @@ const loadShabad = async (ShabadID: number) => {
       .catch(reject);
   });
 }
+const remapLine = (rawLine: any) => {
+  const Line = Object.assign(rawLine, {});
+  if (Line.Translations) {
+    const lineTranslations = JSON.parse(Line.Translations);
+    Line.English = lineTranslations.en.bdb;
+    Line.Punjabi = lineTranslations.pu.ss;
+    Line.Spanish = lineTranslations.es.sn;
+  }
+  Line.Transliteration = {
+    English: anvaad.translit(Line.Gurmukhi || ''),
+    Shahmukhi: anvaad.translit(Line.Gurmukhi || '', 'shahmukhi'),
+    Devanagari: anvaad.translit(Line.Gurmukhi || '', 'devnagri'),
+  };
+  return Line;
+}
 
 export {
   downloadDB,
   checkIfDbExists,
   readSchema,
   initSchema,
-  loadShabad
+  loadShabad,
+  remapLine
 }
