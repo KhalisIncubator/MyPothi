@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
 import { Gutkas, Settings } from './config/defaults';
-import { storedGutka } from './config/types';
+import { storedGutka, entryObj } from './config/types';
 import { gutkaFetched, setttingsFetched } from './config/interfaces'
 const GUTKAS_KEY = 'Gutkas';
 const SETTINGS_KEY = 'Settings';
@@ -62,6 +62,10 @@ const findCurrentGutkaIndex = (gutkas: storedGutka[], name: string) => {
   const index = gutkas.findIndex((gutka: storedGutka) => gutka.name === name) | 0;
   return index;
 }
+const findEntry = (currentGutka: storedGutka, id: number) => {
+  const index = currentGutka.items.findIndex((entry: entryObj) => entry.id === id) | 0;
+  return index;
+}
 const getGutkaItems = (gutka: storedGutka) => {
   return _.values(gutka.items);
 }
@@ -71,5 +75,6 @@ export {
   fetchSettings,
   findCurrentGutka,
   findCurrentGutkaIndex,
+  findEntry,
   getGutkaItems,
 }

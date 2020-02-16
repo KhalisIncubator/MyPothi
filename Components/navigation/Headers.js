@@ -14,7 +14,7 @@ const Header = ({ previous, navigation }) => {
   const title = GlobalCtx.currentName;
   const route = useRoute();
   return (
-    <Appbar.Header theme={{ colors: { primary: "#FFA500" } }}>
+    <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
       {previous ? (
         <Appbar.BackAction
           onPress={() => { navigation.navigate("Gutka") }}
@@ -37,6 +37,8 @@ const Header = ({ previous, navigation }) => {
           route.name === 'Gutka' ? title : route.name
         }
       />
+      {route.name === 'Gutka' &&
+        <Appbar.Action icon="dots-vertical" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />}
       {route.name === 'Gutka' &&
         <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />}
     </Appbar.Header>

@@ -9,9 +9,8 @@ import { remapLine } from '../../config/database/database';
 
 const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
-  const normalized = remapLine(props.line);
-  const { Gurmukhi, English, Punjabi, Transliteration } = normalized;
   const { displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
+  const { Gurmukhi, English, Punjabi, Transliteration } = props.line;
   return (
     <View style={style.View}>
       <View stlye={style.column}>

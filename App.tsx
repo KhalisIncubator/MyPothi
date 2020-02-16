@@ -5,7 +5,7 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 import { storedGutka, entryObj, gutkaEntry } from './config/types';
-import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './functions';
 import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
@@ -18,6 +18,7 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#3498db',
     accent: '#f1c40f',
+    surface: "#FFA500"
   },
 };
 
@@ -97,10 +98,11 @@ class App extends React.Component<IProps, IState> {
       [displaySetting]: value,
     }));
   }
-  removeFromGutka = (id: any) => {
+  removeFromGutka = (id: number) => {
     const { gutkas, currentName } = this.state;
     const indexOf = findCurrentGutkaIndex(gutkas, currentName);
-    gutkas[indexOf].items.splice(id, 1);
+    const entryIndex = findEntry(gutkas[indexOf], id);
+    gutkas[indexOf].items.splice(entryIndex, 1);
     this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
     saveGutkas(gutkas);
   }

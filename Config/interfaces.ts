@@ -3,7 +3,7 @@ export interface IGutkaCtx {
   gutkas: storedGutka[],
   createGutka: (newGutka: string) => void,
   currentItems: entryObj[],
-  removeFromGutka: (id: any) => void,
+  removeFromGutka: (id: number) => void,
   addToGutka: (entryId: number, mainLine: string, entryType: gutkaEntry) => void,
   isDataReady: boolean,
 }

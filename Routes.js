@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gutka from './Screens/Gutka';
 import Shabad from './Screens/Shabad';
 import SettingsScreen from './Screens/Settings';
-import AddScreen from './Screens/Add';
+import Edit from './Screens/Edit';
 import { Header, BackHeader } from './Components/navigation/Headers';
 import { GutkaContext, GlobalContext } from './contexts/Contexts';
 
@@ -35,7 +35,7 @@ const ScreenStack = () => {
       <Stack.Screen name="Gutka" component={Gutka} />
       <Stack.Screen name="ShabadViewer" component={Shabad} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{}} />
-      <Stack.Screen name="Add" component={AddScreen} />
+      <Stack.Screen name="Edit" component={Edit} />
     </Stack.Navigator>
   )
 }

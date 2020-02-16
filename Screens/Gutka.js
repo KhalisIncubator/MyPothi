@@ -9,7 +9,7 @@ import {
 import ShabadButton from '../Components/Main/ShabadButton';
 
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
-import { loadShabad } from '../config/database/database';
+import { loadShabad, remapLine } from '../config/database/database';
 import LineBlock from '../Components/Main/LineBlock';
 
 const Gutka = ({ navigation }) => {
@@ -36,7 +36,8 @@ const Gutka = ({ navigation }) => {
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      return <LineBlock line={line} />
+      const normalized = remapLine(line);
+      return <LineBlock line={normalized} />
     })
     return (
       <View>
