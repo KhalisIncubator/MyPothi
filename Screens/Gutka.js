@@ -20,6 +20,7 @@ const Gutka = ({ navigation }) => {
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
+      updateShabads([]);
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
         updateShabads(prevArr => [...prevArr, shabad]);
