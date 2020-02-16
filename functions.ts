@@ -11,10 +11,10 @@ const SETTINGS_KEY = 'Settings';
 const fetchGutkas = async (currentGutkaName: string): Promise<gutkaFetched> => {
   try {
     let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-    if (getGutkas === null) {
-      await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
-      getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-    }
+    // if (getGutkas === null) {
+    await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
+    getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
+    // }
     const normalized = getGutkas !== null ? JSON.parse(getGutkas) : [];
     let currGutka: string = currentGutkaName;
     if (currentGutkaName === "" || currentGutkaName === undefined) {

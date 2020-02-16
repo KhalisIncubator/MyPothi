@@ -5,32 +5,49 @@ import {
   Text,
   TextInput
 } from 'react-native';
-import { Avatar, Card, IconButton } from 'react-native-paper';
+import { Avatar, Card, IconButton, Button, Snackbar } from 'react-native-paper';
 import { GutkaContext } from '../contexts/Contexts';
 
 
 const Edit = ({ navigation }) => {
-  const [inputVal, updateInputVal] = useState('Type Here...');
+  const [showSnack, updateShow] = useState(false);
   const GutkaCtx = useContext(GutkaContext);
   const currentGutka = GutkaCtx.currentItems;
+  const handleRemove = (id) => {
+    GutkaCtx.removeFromGutka(id);
+    updateShow(true);
+  }
   return (
-    currentGutka.map(item => {
-      return (
-        <Card.Title
-          style={style.Card}
-          title={`${item.mainLine}`}
-          subtitle={`Shaabd ID: ${item.id}`}
-          left={(props) => <Avatar.Icon {...props} icon="book" />}
-          right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
-            GutkaCtx.removeFromGutka(item.id);
-          }} />}
-        />
-      )
-    })
+    <View style={style.View}>
+      {currentGutka.map(item => {
+        return (
+          <Card.Title
+            style={style.Card}
+            title={`${item.mainLine}`}
+            subtitle={`Shaabd ID: ${item.id}`}
+            left={(props) => <Avatar.Icon {...props} icon="book" />}
+            right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
+              handleRemove(item.id);
+            }} />}
+          />
+        )
+      })}
+      <Snackbar
+        visible={showSnack}
+        onDismiss={() => updateShow(false)}
+        style={style.Snack}
+      >
+        Shabad Removed!
+        </Snackbar>
+    </View>
   );
 }
 
 const style = StyleSheet.create({
+  View: {
+    flex: 1,
+    flexDirection: 'column'
+  },
   Searchbar: {
     backgroundColor: '#FEFEFE',
     marginTop: 15,
@@ -43,6 +60,9 @@ const style = StyleSheet.create({
     margin: 5,
     backgroundColor: 'white'
   },
+  Snack: {
+    alignSelf: 'flex-end'
+  }
 
   // IconContainer: {
   //   marginLeft: 5,

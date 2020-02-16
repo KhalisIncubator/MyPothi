@@ -14,11 +14,11 @@ import {
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gutka from './Screens/Gutka';
-import Shabad from './Screens/Shabad';
 import SettingsScreen from './Screens/Settings';
 import Edit from './Screens/Edit';
 import { Header, BackHeader } from './Components/navigation/Headers';
 import { GutkaContext, GlobalContext } from './contexts/Contexts';
+import Search from './Screens/Search';
 
 const AppDrawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -33,8 +33,8 @@ const ScreenStack = () => {
         ),
       }}>
       <Stack.Screen name="Gutka" component={Gutka} />
-      <Stack.Screen name="ShabadViewer" component={Shabad} />
-      <Stack.Screen name="Settings" component={SettingsScreen} options={{}} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Edit" component={Edit} />
     </Stack.Navigator>
   )

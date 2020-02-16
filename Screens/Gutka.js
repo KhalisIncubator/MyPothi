@@ -6,8 +6,6 @@ import {
   StyleSheet
 } from 'react-native';
 
-import ShabadButton from '../Components/Main/ShabadButton';
-
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
 import { loadShabad, remapLine } from '../config/database/database';
 import LineBlock from '../Components/Main/LineBlock';

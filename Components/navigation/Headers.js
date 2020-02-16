@@ -13,8 +13,9 @@ const Header = ({ previous, navigation }) => {
   const theme = useTheme();
   const title = GlobalCtx.currentName;
   const route = useRoute();
+  const isMain = route.name === 'Gutka';
   return (
-    <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
+    <Appbar.Header theme={{ colors: { primary: theme.colors.header } }}>
       {previous ? (
         <Appbar.BackAction
           onPress={() => { navigation.navigate("Gutka") }}
@@ -34,12 +35,14 @@ const Header = ({ previous, navigation }) => {
       <Appbar.Content
         style={{ text: { color: 'white' } }}
         title={
-          route.name === 'Gutka' ? title : route.name
+          isMain ? title : route.name
         }
       />
-      {route.name === 'Gutka' &&
+      {isMain &&
+        <Appbar.Action icon="magnify" onPress={() => { navigation.navigate('Stack', { screen: 'Search' }); }} />}
+      {isMain &&
         <Appbar.Action icon="dots-vertical" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />}
-      {route.name === 'Gutka' &&
+      {isMain &&
         <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />}
     </Appbar.Header>
   );
