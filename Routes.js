@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Button, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -17,21 +17,24 @@ import Gutka from './Screens/Gutka';
 import Shabad from './Screens/Shabad';
 import SettingsScreen from './Screens/Settings';
 import AddScreen from './Screens/Add';
-import { Header } from './Components/navigation/Headers';
+import { Header, BackHeader } from './Components/navigation/Headers';
 import { GutkaContext, GlobalContext } from './contexts/Contexts';
 
 const AppDrawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const ScreenStack = () => {
   return (
-    <Stack.Navigator >
-      <Stack.Screen name="Gutka" component={Gutka} options={{
+    <Stack.Navigator
+      initialRouteName="Gutka"
+      headerMode="screen"
+      screenOptions={{
         header: ({ previous, navigation }) => (
           <Header previous={previous} navigation={navigation} />
         ),
-      }} />
+      }}>
+      <Stack.Screen name="Gutka" component={Gutka} />
       <Stack.Screen name="ShabadViewer" component={Shabad} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{}} />
       <Stack.Screen name="Add" component={AddScreen} />
     </Stack.Navigator>
   )

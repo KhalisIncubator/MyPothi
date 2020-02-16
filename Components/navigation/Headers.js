@@ -2,18 +2,22 @@ import React, { useContext } from 'react';
 import { TouchableOpacity } from 'react-native';
 import {
   Appbar,
+  useTheme,
 } from 'react-native-paper';
+import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GlobalContext } from '../../contexts/Contexts';
 
 const Header = ({ previous, navigation }) => {
   const GlobalCtx = useContext(GlobalContext);
+  const theme = useTheme();
   const title = GlobalCtx.currentName;
+  const route = useRoute();
   return (
     <Appbar.Header theme={{ colors: { primary: "#FFA500" } }}>
       {previous ? (
         <Appbar.BackAction
-          onPress={navigation.pop}
+          onPress={() => { navigation.navigate("Gutka") }}
           color={theme.colors.primary}
         />
       ) : (
@@ -30,14 +34,15 @@ const Header = ({ previous, navigation }) => {
       <Appbar.Content
         style={{ text: { color: 'white' } }}
         title={
-          title
+          route.name === 'Gutka' ? title : route.name
         }
       />
-      <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />
+      {route.name === 'Gutka' &&
+        <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />}
     </Appbar.Header>
   );
 };
 
 export {
-  Header
+  Header,
 }
