@@ -63,7 +63,6 @@ const Gutka = ({ navigation }) => {
 }
 const styles = StyleSheet.create({
   View: {
-    backgroundColor: '#f5f5f5',
     flex: 1,
   }
 })

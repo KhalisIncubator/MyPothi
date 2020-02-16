@@ -28,18 +28,8 @@ import { GutkaContext, GlobalContext } from './contexts/Contexts';
 const Header = ({ previous, navigation }) => {
   const GlobalCtx = useContext(GlobalContext);
   const title = GlobalCtx.currentName;
-  const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#3498db',
-      accent: '#f1c40f',
-      surface: '#0092ff'
-    },
-  };
   return (
-    <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
+    <Appbar.Header theme={{ colors: { primary: "#ff9a00" } }}>
       {previous ? (
         <Appbar.BackAction
           onPress={navigation.pop}
@@ -57,6 +47,7 @@ const Header = ({ previous, navigation }) => {
           </TouchableOpacity>
         )}
       <Appbar.Content
+        style={{ text: { color: 'white' } }}
         title={
           title
         }
@@ -103,6 +94,7 @@ const CustomDrawerComponent = (props) => {
                 <Icon name={focused ? "book-open-variant" : 'book'} color={color} size={size} />
               )}
               focused={gutka.name === GlobalCtx.currentName}
+              activeTintColor="#ff9a00"
               label={
                 ({ color }) => <Text style={[{ color }, styles.text]}>{gutka.name}</Text>
               }
@@ -119,7 +111,8 @@ const CustomDrawerComponent = (props) => {
 }
 const DrawerNav = () => {
   return (
-    <AppDrawer.Navigator drawerContent={props => <CustomDrawerComponent {...props} />}>
+    <AppDrawer.Navigator
+      drawerContent={props => <CustomDrawerComponent {...props} />}>
       <AppDrawer.Screen name="Stack" component={ScreenStack} />
     </AppDrawer.Navigator>
   )
