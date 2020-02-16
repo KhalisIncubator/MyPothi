@@ -1,8 +1,9 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
-import RNFetchBlob from 'rn-fetch-blob';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
-
 import { storedGutka, entryObj, gutkaEntry } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
 import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
@@ -10,6 +11,15 @@ import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/
 import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
 import Routes from './Routes';
 
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#f1c40f',
+  },
+};
 
 interface IProps { };
 interface IState {
@@ -166,7 +176,9 @@ class App extends React.Component<IProps, IState> {
             displayTranslit,
             updateDisplay: this.updateDisplay,
           }}>
-            <Routes />
+            <PaperProvider theme={theme}>
+              <Routes />
+            </PaperProvider>
           </ViewerContext.Provider>
         </GutkaContext.Provider>
       </GlobalContext.Provider>

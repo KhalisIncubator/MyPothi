@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 
 import ShabadButton from '../Components/Main/ShabadButton';
-import MainHeader from '../Components/navigation/MainHeader';
 
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
 import { loadShabad } from '../config/database/database';
+import LineBlock from '../Components/Main/LineBlock';
 
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
@@ -36,7 +36,7 @@ const Gutka = ({ navigation }) => {
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      return <Text>{line.Gurmukhi}</Text>
+      return <LineBlock line={line} />
     })
     return (
       <View>
@@ -46,7 +46,6 @@ const Gutka = ({ navigation }) => {
   }
   return (
     <View style={styles.View}>
-      <MainHeader navigation={navigation} />
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&
@@ -65,7 +64,6 @@ const Gutka = ({ navigation }) => {
 }
 const styles = StyleSheet.create({
   View: {
-    backgroundColor: '#f5f5f5',
     flex: 1,
   }
 })
