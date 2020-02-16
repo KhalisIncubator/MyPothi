@@ -36,6 +36,7 @@ target 'mypothijs' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+
   target 'mypothijsTests' do
     inherit! :search_paths
     # Pods for testing

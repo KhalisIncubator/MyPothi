@@ -10,6 +10,7 @@ import ShabadButton from '../Components/Main/ShabadButton';
 
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
 import { loadShabad } from '../config/database/database';
+import LineBlock from '../Components/Main/LineBlock';
 
 const Gutka = ({ navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
@@ -35,7 +36,7 @@ const Gutka = ({ navigation }) => {
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      return <Text>{line.Gurmukhi}</Text>
+      return <LineBlock line={line} />
     })
     return (
       <View>

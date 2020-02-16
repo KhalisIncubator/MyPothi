@@ -7,13 +7,13 @@ import {
 import { ViewerContext } from '../../contexts/Contexts';
 
 const LineBlock = (props) => {
-
   const ViewerCtx = useContext(ViewerContext);
+  const { Gurmukhi } = props.line;
   return (
     <View style={style.View}>
       <View stlye={style.column}>
-        <Text style={[style.Gurmukhi, { fontSize: ViewerCtx.gurmukhiSize }]}>Hi There</Text>
-        <Text style={[style.Translation, { fontSize: ViewerCtx.translationSize }]}>Content and DB coming soon </Text>
+        <Text style={[style.Gurmukhi, { fontSize: ViewerCtx.gurmukhiSize }]}>{Gurmukhi}</Text>
+        <Text style={[style.Translation, { fontSize: ViewerCtx.translationSize }]}></Text>
       </View>
     </View>
   );
@@ -29,6 +29,7 @@ const style = StyleSheet.create({
   },
   Gurmukhi: {
     fontWeight: "400",
+    fontFamily: "AnmolLipiTrue",
   },
   Translation: {
     fontWeight: "200",
