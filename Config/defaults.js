@@ -3,21 +3,21 @@ const Gutkas = [
     name: "Nitnem",
     items: [
       {
-        id: 1,
+        id: 3632,
         mainLine: "Bani Guru Guru Hai Bani",
         type: 'Shabad'
       }, {
-        id: 2,
+        id: 40021,
         mainLine: "Siro na mitai avan jai",
         type: 'Shabad'
       },
       {
-        id: 3,
-        mainLine: "Vaho Vaho Gobin Singh Aape Gur Chela",
+        id: 7738,
+        mainLine: "kha(n)ddaa pirathamai saaj kai",
         type: "Shabad"
       },
       {
-        id: 4,
+        id: 7402,
         mainLine: "Jaap Sahib",
         type: "Bani"
       }]

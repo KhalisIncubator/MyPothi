@@ -8,53 +8,18 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {
-  withTheme,
   Title,
   Drawer,
   Text,
-  Avatar,
-  Appbar,
-  DefaultTheme
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gutka from './Screens/Gutka';
 import Shabad from './Screens/Shabad';
 import SettingsScreen from './Screens/Settings';
 import AddScreen from './Screens/Add';
-
+import { Header } from './Components/navigation/Headers';
 import { GutkaContext, GlobalContext } from './contexts/Contexts';
 
-
-const Header = ({ previous, navigation }) => {
-  const GlobalCtx = useContext(GlobalContext);
-  const title = GlobalCtx.currentName;
-  return (
-    <Appbar.Header theme={{ colors: { primary: "#ff9a00" } }}>
-      {previous ? (
-        <Appbar.BackAction
-          onPress={navigation.pop}
-          color={theme.colors.primary}
-        />
-      ) : (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.openDrawer();
-            }}
-          >
-            <Icon
-              name="menu"
-              size={30} />
-          </TouchableOpacity>
-        )}
-      <Appbar.Content
-        style={{ text: { color: 'white' } }}
-        title={
-          title
-        }
-      />
-    </Appbar.Header>
-  );
-};
 const AppDrawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const ScreenStack = () => {
