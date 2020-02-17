@@ -8,6 +8,8 @@ export const GutkaContext = React.createContext<IGutkaCtx>({
   removeFromGutka: () => { },
   addToGutka: () => { },
   isDataReady: false,
+  modalVisibile: false,
+  toggleModal: () => { }
 })
 export const GlobalContext = React.createContext<IGlobalCtx>({
   currentName: 'Loading...',

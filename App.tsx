@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Portal, Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/types';
@@ -31,6 +31,7 @@ interface IState {
   isEditMode: boolean,
   searchType: SearchType,
   queryType: QueryType,
+  modalVisible: boolean,
 
   gurmukhiSize: number,
   translSize: number,
@@ -51,7 +52,7 @@ class App extends React.Component<IProps, IState> {
       isEditMode: false,
       searchType: 0,
       queryType: 'Shabad',
-
+      modalVisible: false,
       //display settings
       gurmukhiSize: 12,
       translSize: 12,
@@ -76,6 +77,10 @@ class App extends React.Component<IProps, IState> {
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
     this.setState({ displayEngTransl: $displayEngTransl, displayPunTansl: $displayPunTansl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
+  }
+  toggleModal = () => {
+    this.setState(prevState => ({ modalVisible: !prevState.modalVisible }))
+    console.log(this.state.modalVisible);
   }
   updateSearchType = (type: SearchType) => { this.setState({ searchType: type }) }
   updateQueryType = (type: QueryType) => this.setState({ queryType: type })
@@ -144,6 +149,7 @@ class App extends React.Component<IProps, IState> {
       isEditMode,
       searchType,
       queryType,
+      modalVisible,
 
       gurmukhiSize,
       translSize,
@@ -166,7 +172,9 @@ class App extends React.Component<IProps, IState> {
           currentItems,
           removeFromGutka: this.removeFromGutka,
           addToGutka: this.addToGutka,
-          isDataReady
+          isDataReady,
+          modalVisibile: false,
+          toggleModal: this.toggleModal,
         }} >
           <SearchContext.Provider value={{
             searchType,
@@ -185,7 +193,9 @@ class App extends React.Component<IProps, IState> {
               updateDisplay: this.updateDisplay,
             }}>
               <PaperProvider theme={theme}>
-                <Routes />
+                <Portal.Host>
+                  <Routes />
+                </Portal.Host>
               </PaperProvider>
             </ViewerContext.Provider>
           </SearchContext.Provider>

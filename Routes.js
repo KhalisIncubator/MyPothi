@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Button, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -11,6 +11,8 @@ import {
   Title,
   Drawer,
   Text,
+  TextInput,
+  Button
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gutka from './Screens/Gutka';
@@ -42,6 +44,8 @@ const ScreenStack = () => {
 const CustomDrawerComponent = (props) => {
   const GutkaCtx = useContext(GutkaContext);
   const GlobalCtx = useContext(GlobalContext);
+  const [isCreating, toggleCreateMode] = useState(false);
+  const [newGutkaName, changeText] = useState('');
   return (
     <DrawerContentScrollView {...props}>
       <View
@@ -52,7 +56,7 @@ const CustomDrawerComponent = (props) => {
         <View style={styles.TitleSection}>
           <View style={styles.row}>
             <Title style={styles.title}>Gutkas</Title>
-            <Icon name="plus-circle" size={20} />
+            <Icon name="plus-circle" size={20} onPress={() => { toggleCreateMode(true) }} />
           </View>
         </View>
         <Drawer.Section style={styles.drawerSection}>
@@ -61,6 +65,7 @@ const CustomDrawerComponent = (props) => {
               icon={({ focused, color, size }) => (
                 <Icon name={focused ? "book-open-variant" : 'book'} color={color} size={size} />
               )}
+              key={gutka.name}
               focused={gutka.name === GlobalCtx.currentName}
               activeTintColor="#ff9a00"
               label={
@@ -72,7 +77,29 @@ const CustomDrawerComponent = (props) => {
               }}
             />
           ))}
+          {isCreating &&
+            < DrawerItem
+              icon={({ color, size }) => (
+                <Icon name='pencil-outline' color={color} size={size} />
+              )}
+              activeTintColor="#ff9a00"
+              label={
+                ({ color }) =>
+                  <TextInput mode="flat" style={styles.input} placeholder="Enter Gutka Name" onChangeText={(text) => { changeText(text) }} />
+              }
+            >
+            </DrawerItem>}
         </Drawer.Section>
+        {isCreating &&
+          <View>
+            <Button onPress={() => {
+              GutkaCtx.createGutka(newGutkaName);
+              toggleCreateMode(false);
+            }} mode="outlined" style={styles.button}>Create Gutka!</Button>
+            <Button onPress={() => {
+              toggleCreateMode(false);
+            }} mode="outlined" style={styles.button}>Cancel</Button>
+          </View>}
       </View>
     </DrawerContentScrollView>
   );
@@ -99,6 +126,13 @@ export default Routes;
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
+  },
+  button: {
+    margin: 5,
+
+  },
+  input: {
+    height: 25,
   },
   TitleSection: {
     paddingLeft: 20,

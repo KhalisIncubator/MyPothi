@@ -6,6 +6,8 @@ export interface IGutkaCtx {
   removeFromGutka: (id: number) => void,
   addToGutka: (entryId: number, mainLine: string, entryType: gutkaEntry) => void,
   isDataReady: boolean,
+  modalVisibile: boolean,
+  toggleModal: () => void,
 }
 export interface IGlobalCtx {
   currentName: string,

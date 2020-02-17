@@ -36,10 +36,10 @@ const Gutka = ({ navigation }) => {
     let lines = [];
     lines = item.map(line => {
       const normalized = remapLine(line);
-      return <LineBlock line={normalized} />
+      return <LineBlock key={normalized.ID} line={normalized} />
     })
     return (
-      <View>
+      <View key='Viewer'>
         {lines}
       </View>
     )
