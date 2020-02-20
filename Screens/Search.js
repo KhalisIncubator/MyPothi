@@ -7,23 +7,35 @@ import {
 } from 'react-native';
 import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
+import { Results } from 'realm';
+import { query } from '../config/database/database';
+import SearchResult from '../Components/Main/SearchResults';
 const Search = (props) => {
   const SearchCtx = useContext(SearchContext);
 
   const theme = useTheme();
-  const [query, updateQuery] = useState('');
+  const [searchQuery, updateQuery] = useState('');
+  const [results, updateResults] = useState([]);
   const [typeMenu, updateTypeM] = useState(false);
   const [searchMenu, updateSearchM] = useState(false);
   useEffect(() => {
-    Object.entries(SEARCH_TEXTS).forEach(m => console.log(m))
-  })
+    const fetchResults = async () => {
+      const results = await query(searchQuery, SearchCtx.searchType);
+      console.log(results[0]);
+      updateResults([]);
+      results.forEach(result => updateResults(prevArr => [...prevArr, result]));
+    }
+    if (searchQuery.length > 3) {
+      fetchResults();
+    }
+  }, [searchQuery]);
   return (
     <View>
       <Searchbar
         placeholder="Search"
         inputStyle={styles.input}
-        onChangeText={query => { updateQuery(query.toLowerCase()) }}
-        value={query}
+        onChangeText={searchQuery => { updateQuery(searchQuery.toLowerCase()) }}
+        value={searchQuery}
         theme={{ colors: { primary: 'white' } }}
       />
       <View style={styles.row}>
@@ -58,6 +70,15 @@ const Search = (props) => {
             }} title={`${desc}`} />
           })}
         </Menu>
+      </View>
+      <View>
+        {results.length > 0 &&
+          results.map(result => {
+            return (
+              <SearchResult result={result} />
+            )
+          })
+        }
       </View>
     </View>
   );

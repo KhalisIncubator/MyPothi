@@ -6,7 +6,7 @@ import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
 import Routes from './Routes';
@@ -73,14 +73,12 @@ class App extends React.Component<IProps, IState> {
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
 
-
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
     this.setState({ displayEngTransl: $displayEngTransl, displayPunTansl: $displayPunTansl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
   }
   toggleModal = () => {
     this.setState(prevState => ({ modalVisible: !prevState.modalVisible }))
-    console.log(this.state.modalVisible);
   }
   updateSearchType = (type: SearchType) => { this.setState({ searchType: type }) }
   updateQueryType = (type: QueryType) => this.setState({ queryType: type })
