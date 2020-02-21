@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^5.0.5",
     "@types/lodash": "^4.14.149",
     "anvaad-js": "^1.4.1",
+    "immer": "^5.3.6",
     "lodash": "^4.17.15",
     "react": "16.9.0",
     "react-native": "0.61.5",

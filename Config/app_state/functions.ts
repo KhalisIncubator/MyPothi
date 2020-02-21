@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
-import { Gutkas, Settings } from './config/defaults';
-import { storedGutka, entryObj } from './config/types';
-import { gutkaFetched, setttingsFetched } from './config/interfaces'
+import { Gutkas, Settings } from '../defaults';
+import { storedGutka, entryObj } from '../types';
+import { gutkaFetched, setttingsFetched } from '../interfaces'
 const GUTKAS_KEY = 'Gutkas';
 const SETTINGS_KEY = 'Settings';
 

@@ -5,7 +5,7 @@ import { DefaultTheme, Portal, Provider as PaperProvider } from 'react-native-pa
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/types';
-import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './functions';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './config/app_state/functions';
 import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
