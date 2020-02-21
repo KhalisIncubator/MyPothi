@@ -2,6 +2,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
 import { ISchemaJSON, IConifg } from '../database/database-interfaces';
 
+const consts = require('./database_conts');
 const Realm = require('realm');
 let dirs = RNFetchBlob.fs.dirs
 const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
@@ -93,11 +94,57 @@ const remapLine = (rawLine: any) => {
   return Line;
 }
 
+const query = async (searchQuery: string, searchType: number) => {
+  await initSchema();
+
+  return new Promise((resolve, reject) => {
+    let dbQuery = '';
+    let searchColumn = '';
+    let condition = '';
+
+    // Sanitize query
+    const saniQuery = searchQuery.trim().replace("'", "\\'");
+    const MAX_RESULTS = 10;
+    const resultsOrder = [];
+    switch (searchType) {
+      case consts.SEARCH_TYPES.FIRST_LETTERS: // First letter start
+      case consts.SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
+        searchColumn = 'FirstLetterStr';
+        let operator = searchType === consts.SEARCH_TYPES.FIRST_LETTERS ? 'BEGINSWITH' : 'CONTAINS';
+        for (let x = 0, len = saniQuery.length; x < len; x += 1) {
+          let charCode = `${saniQuery.charCodeAt(x)}`;
+          if (charCode.length < 3) {
+            charCode = `0${charCode}`;
+          }
+          else {
+            dbQuery += `,${charCode}`;
+          }
+        }
+        condition = `${searchColumn} ${operator} '${dbQuery}'`;
+        if (saniQuery.length < 3) {
+          resultsOrder.push('FirstLetterLen');
+        }
+        break;
+      }
+      default:
+        break;
+    }
+    resultsOrder.push('Shabads');
+    condition = `${condition} SORT(${resultsOrder.join(' ASC, ')} ASC)`;
+    Realm.open(config)
+      .then(realm => {
+        const rows = realm.objects('Verse').filtered(condition);
+        resolve(rows.slice(0, MAX_RESULTS));
+      })
+      .catch(reject);
+  });
+}
 export {
   downloadDB,
   checkIfDbExists,
   readSchema,
   initSchema,
   loadShabad,
-  remapLine
+  remapLine,
+  query
 }

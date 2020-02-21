@@ -1,14 +1,14 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Portal, Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
-import { storedGutka, entryObj, gutkaEntry } from './config/types';
-import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex } from './functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
+import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/types';
+import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './functions';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query } from './config/database/database';
 
-import { GlobalContext, GutkaContext, ViewerContext } from './contexts/Contexts';
+import { GlobalContext, GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
 import Routes from './Routes';
 
 const theme = {
@@ -17,7 +17,8 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#3498db',
-    accent: '#f1c40f',
+    accent: '#FFA500',
+    header: "#FFA500"
   },
 };
 
@@ -28,7 +29,9 @@ interface IState {
   currentItems: entryObj[],
   isDataReady: boolean,
   isEditMode: boolean,
-  currShabadID: number,
+  searchType: SearchType,
+  queryType: QueryType,
+  modalVisible: boolean,
 
   gurmukhiSize: number,
   translSize: number,
@@ -47,8 +50,9 @@ class App extends React.Component<IProps, IState> {
       currentItems: [],
       isDataReady: false,
       isEditMode: false,
-      currShabadID: 0,
-
+      searchType: 0,
+      queryType: 'Shabad',
+      modalVisible: false,
       //display settings
       gurmukhiSize: 12,
       translSize: 12,
@@ -69,19 +73,21 @@ class App extends React.Component<IProps, IState> {
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
 
-
     const settingsFetched = await fetchSettings();
     const { $displayEngTransl, $displayPunTansl, $displayTranslit, $gurmukhiSize, $translSize, $translitSize } = settingsFetched;
     this.setState({ displayEngTransl: $displayEngTransl, displayPunTansl: $displayPunTansl, displayTranslit: $displayTranslit, gurmukhiSize: $gurmukhiSize, translSize: $translSize, translitSize: $translitSize });
   }
-
+  toggleModal = () => {
+    this.setState(prevState => ({ modalVisible: !prevState.modalVisible }))
+  }
+  updateSearchType = (type: SearchType) => { this.setState({ searchType: type }) }
+  updateQueryType = (type: QueryType) => this.setState({ queryType: type })
   toggleEditMode = () => { this.setState((prevState) => ({ isEditMode: !prevState.isEditMode })); }
 
   updateCurrentGutka = (newGutka: string) => {
     const gutka = findCurrentGutka(this.state.gutkas, newGutka);
     this.setState({ currentName: newGutka, currentItems: getGutkaItems(gutka) });
   }
-  updateCurrShabadID = (newID: number) => this.setState({ currShabadID: newID });
 
   updateFontSize = (element: string, size: number) => {
     const fontSetting = `${element}Size`;
@@ -97,10 +103,11 @@ class App extends React.Component<IProps, IState> {
       [displaySetting]: value,
     }));
   }
-  removeFromGutka = (id: any) => {
+  removeFromGutka = (id: number) => {
     const { gutkas, currentName } = this.state;
     const indexOf = findCurrentGutkaIndex(gutkas, currentName);
-    gutkas[indexOf].items.splice(id, 1);
+    const entryIndex = findEntry(gutkas[indexOf], id);
+    gutkas[indexOf].items.splice(entryIndex, 1);
     this.setState({ gutkas: gutkas, currentItems: _.values(gutkas[indexOf].items) });
     saveGutkas(gutkas);
   }
@@ -138,7 +145,9 @@ class App extends React.Component<IProps, IState> {
       currentItems,
       isDataReady,
       isEditMode,
-      currShabadID,
+      searchType,
+      queryType,
+      modalVisible,
 
       gurmukhiSize,
       translSize,
@@ -154,8 +163,6 @@ class App extends React.Component<IProps, IState> {
         updateCurrentGutka: this.updateCurrentGutka,
         isEditMode,
         toggleEditMode: this.toggleEditMode,
-        currShabadID,
-        updateCurrShabadID: this.updateCurrShabadID
       }} >
         <GutkaContext.Provider value={{
           gutkas,
@@ -163,23 +170,33 @@ class App extends React.Component<IProps, IState> {
           currentItems,
           removeFromGutka: this.removeFromGutka,
           addToGutka: this.addToGutka,
-          isDataReady
+          isDataReady,
+          modalVisibile: false,
+          toggleModal: this.toggleModal,
         }} >
-
-          <ViewerContext.Provider value={{
-            gurmukhiSize,
-            translSize,
-            translitSize,
-            updateFontSize: this.updateFontSize,
-            displayEngTransl,
-            displayPunTansl,
-            displayTranslit,
-            updateDisplay: this.updateDisplay,
+          <SearchContext.Provider value={{
+            searchType,
+            updateSearchType: this.updateSearchType,
+            queryType,
+            updateQueryType: this.updateQueryType
           }}>
-            <PaperProvider theme={theme}>
-              <Routes />
-            </PaperProvider>
-          </ViewerContext.Provider>
+            <ViewerContext.Provider value={{
+              gurmukhiSize,
+              translSize,
+              translitSize,
+              updateFontSize: this.updateFontSize,
+              displayEngTransl,
+              displayPunTansl,
+              displayTranslit,
+              updateDisplay: this.updateDisplay,
+            }}>
+              <PaperProvider theme={theme}>
+                <Portal.Host>
+                  <Routes />
+                </Portal.Host>
+              </PaperProvider>
+            </ViewerContext.Provider>
+          </SearchContext.Provider>
         </GutkaContext.Provider>
       </GlobalContext.Provider>
     );

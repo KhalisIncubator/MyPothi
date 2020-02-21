@@ -1,5 +1,5 @@
 import React from 'react';
-import { IGutkaCtx, IGlobalCtx, IViewerCtx } from '../config/interfaces';
+import { IGutkaCtx, IGlobalCtx, IViewerCtx, ISearchCtx } from '../config/interfaces';
 
 export const GutkaContext = React.createContext<IGutkaCtx>({
   gutkas: [],
@@ -8,14 +8,20 @@ export const GutkaContext = React.createContext<IGutkaCtx>({
   removeFromGutka: () => { },
   addToGutka: () => { },
   isDataReady: false,
+  modalVisibile: false,
+  toggleModal: () => { }
 })
 export const GlobalContext = React.createContext<IGlobalCtx>({
   currentName: 'Loading...',
   updateCurrentGutka: () => { },
   isEditMode: false,
   toggleEditMode: () => { },
-  currShabadID: 0,
-  updateCurrShabadID: () => { }
+});
+export const SearchContext = React.createContext<ISearchCtx>({
+  searchType: 0,
+  updateSearchType: () => { },
+  queryType: 'Shabad',
+  updateQueryType: () => { },
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
   gurmukhiSize: 12,

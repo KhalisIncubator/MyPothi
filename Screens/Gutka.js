@@ -6,10 +6,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-import ShabadButton from '../Components/Main/ShabadButton';
-
 import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
-import { loadShabad } from '../config/database/database';
+import { loadShabad, remapLine } from '../config/database/database';
 import LineBlock from '../Components/Main/LineBlock';
 
 const Gutka = ({ navigation }) => {
@@ -20,6 +18,7 @@ const Gutka = ({ navigation }) => {
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
+      updateShabads([]);
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
         updateShabads(prevArr => [...prevArr, shabad]);
@@ -36,10 +35,11 @@ const Gutka = ({ navigation }) => {
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      return <LineBlock line={line} />
+      const normalized = remapLine(line);
+      return <LineBlock key={normalized.ID} line={normalized} />
     })
     return (
-      <View>
+      <View key='Viewer'>
         {lines}
       </View>
     )
