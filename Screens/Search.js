@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
@@ -21,7 +22,6 @@ const Search = (props) => {
   useEffect(() => {
     const fetchResults = async () => {
       const results = await query(searchQuery, SearchCtx.searchType);
-      console.log(results[0]);
       updateResults([]);
       results.forEach(result => updateResults(prevArr => [...prevArr, result]));
     }
@@ -71,7 +71,7 @@ const Search = (props) => {
           })}
         </Menu>
       </View>
-      <View>
+      <ScrollView>
         {results.length > 0 &&
           results.map(result => {
             return (
@@ -79,7 +79,7 @@ const Search = (props) => {
             )
           })
         }
-      </View>
+      </ScrollView>
     </View>
   );
 }

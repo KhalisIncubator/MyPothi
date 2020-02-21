@@ -41,7 +41,7 @@ const Header = ({ previous, navigation }) => {
       {isMain &&
         <Appbar.Action icon="magnify" onPress={() => { navigation.navigate('Stack', { screen: 'Search' }); }} />}
       {isMain &&
-        <Appbar.Action icon="dots-vertical" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />}
+        <Appbar.Action icon="circle-edit-outline" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />}
       {isMain &&
         <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />}
     </Appbar.Header>

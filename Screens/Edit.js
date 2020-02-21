@@ -23,6 +23,7 @@ const Edit = ({ navigation }) => {
         return (
           <Card.Title
             style={style.Card}
+            titleStyle={style.CardTitle}
             title={`${item.mainLine}`}
             subtitle={`Shaabd ID: ${item.id}`}
             left={(props) => <Avatar.Icon {...props} icon="book" />}
@@ -59,6 +60,9 @@ const style = StyleSheet.create({
   Card: {
     margin: 5,
     backgroundColor: 'white'
+  },
+  CardTitle: {
+    fontFamily: 'AnmolLipiTrue'
   },
   Snack: {
     alignSelf: 'flex-end'

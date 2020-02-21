@@ -111,6 +111,15 @@ const query = async (searchQuery: string, searchType: number) => {
       case consts.SEARCH_TYPES.FIRST_LETTERS_ANYWHERE: {
         searchColumn = 'FirstLetterStr';
         let operator = searchType === consts.SEARCH_TYPES.FIRST_LETTERS ? 'BEGINSWITH' : 'CONTAINS';
+        for (let x = 0, len = saniQuery.length; x < len; x += 1) {
+          let charCode = `${saniQuery.charCodeAt(x)}`;
+          if (charCode.length < 3) {
+            charCode = `0${charCode}`;
+          }
+          else {
+            dbQuery += `,${charCode}`;
+          }
+        }
         condition = `${searchColumn} ${operator} '${dbQuery}'`;
         if (saniQuery.length < 3) {
           resultsOrder.push('FirstLetterLen');
