@@ -11,7 +11,6 @@ const findGutka = (currentGutka: string, realm) => {
 const populateData = (realm) => {
   if (realm.empty) {
     Gutkas.forEach(gutka => {
-      console.log('populating...' + gutka.name);
       realm.write(() => {
         const newGutka = realm.create('Gutka', {
           name: gutka.name,
@@ -49,7 +48,7 @@ const removeFromGutka = (currentGutka: string, itemId: number, realm) => {
   });
 }
 
-const createGukta = (name: string, realm) => {
+const createNewGukta = (name: string, realm) => {
   realm.write(() => {
     const newGutka = realm.create('Gukta', {
       name: name,
@@ -67,6 +66,6 @@ export {
   populateData,
   addToGutka,
   removeFromGutka,
-  createGukta,
+  createNewGukta,
   deleteGukta
 }
