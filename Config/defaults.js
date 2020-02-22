@@ -5,23 +5,31 @@ const Gutkas = [
       {
         id: 3632,
         mainLine: "Bani Guru Guru Hai Bani",
-        type: 'Shabad'
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       }, {
         id: 40021,
         mainLine: "Siro na mitai avan jai",
-        type: 'Shabad'
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       },
       {
         id: 7738,
         mainLine: "kha(n)ddaa pirathamai saaj kai",
-        type: "Shabad"
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       },
       {
         id: 7402,
         mainLine: "Jaap Sahib",
-        type: "Bani"
+        type: 'Bani',
+        parentGutka: 'Nitnem'
       }]
   },
+  {
+    name: 'Kirtaan',
+    items: [],
+  }
 ]
 
 const Settings = {

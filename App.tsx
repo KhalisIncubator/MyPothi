@@ -4,9 +4,9 @@ import React from 'react';
 import { DefaultTheme, Portal, Provider as PaperProvider } from 'react-native-paper';
 import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
-import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/types';
+import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/dev_env/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './config/app_state/functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query, testSchemas } from './config/database/database';
 
 import { GlobalContext, GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
 import Routes from './Routes';
@@ -68,7 +68,7 @@ class App extends React.Component<IProps, IState> {
         await downloadDB();
       }
     });
-
+    testSchemas();
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
@@ -115,7 +115,8 @@ class App extends React.Component<IProps, IState> {
     const newEntry: entryObj = {
       id: entryid,
       mainLine: mainLine,
-      type: entrytype
+      type: entrytype,
+      parentGutka: this.state.currentName
     }
     const { gutkas, currentName } = this.state;
     const allGutkas = gutkas;

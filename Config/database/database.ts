@@ -1,6 +1,8 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
 import { ISchemaJSON, IConifg } from '../database/database-interfaces';
+import localRealmConfig, { GuktaSchema, EntrySchema } from '../realm_schema';
+import { populateData, addToGutka, removeFromGutka } from './local_database';
 
 const consts = require('./database_conts');
 const Realm = require('realm');
@@ -139,6 +141,12 @@ const query = async (searchQuery: string, searchType: number) => {
       .catch(reject);
   });
 }
+const testSchemas = () => {
+  Realm.open(localRealmConfig)
+    .then(realm => {
+      populateData(realm);
+    });
+}
 export {
   downloadDB,
   checkIfDbExists,
@@ -146,5 +154,6 @@ export {
   initSchema,
   loadShabad,
   remapLine,
-  query
+  query,
+  testSchemas,
 }

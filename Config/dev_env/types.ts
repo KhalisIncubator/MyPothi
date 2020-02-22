@@ -3,6 +3,7 @@ export type entryObj =
     id: number,
     mainLine: string,
     type: gutkaEntry,
+    parentGutka: string,
   };
 export type storedGutka = {
   name: string,

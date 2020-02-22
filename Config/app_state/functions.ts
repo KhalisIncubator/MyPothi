@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
 import { Gutkas, Settings } from '../defaults';
-import { storedGutka, entryObj } from '../types';
-import { gutkaFetched, setttingsFetched } from '../interfaces'
+import { storedGutka, entryObj } from '../dev_env/types';
+import { gutkaFetched, setttingsFetched } from '../dev_env/interfaces'
 const GUTKAS_KEY = 'Gutkas';
 const SETTINGS_KEY = 'Settings';
 
@@ -11,10 +11,10 @@ const SETTINGS_KEY = 'Settings';
 const fetchGutkas = async (currentGutkaName: string): Promise<gutkaFetched> => {
   try {
     let getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-    // if (getGutkas === null) {
-    await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
-    getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
-    // }
+    if (getGutkas === null) {
+      await AsyncStorage.setItem(`${GUTKAS_KEY}`, JSON.stringify(Gutkas));
+      getGutkas = await AsyncStorage.getItem(`${GUTKAS_KEY}`);
+    }
     const normalized = getGutkas !== null ? JSON.parse(getGutkas) : [];
     let currGutka: string = currentGutkaName;
     if (currentGutkaName === "" || currentGutkaName === undefined) {
