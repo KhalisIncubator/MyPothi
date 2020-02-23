@@ -7,7 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 import _ from 'lodash';
 import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from './config/dev_env/types';
 import { fetchGutkas, saveGutkas, fetchSettings, findCurrentGutka, getGutkaItems, findCurrentGutkaIndex, findEntry } from './config/app_state/functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query, testSchemas } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg, query } from './config/database/database';
 
 import { findGutka } from './config/database/local_database';
 import { useApi } from './config/app_state/Hooks';

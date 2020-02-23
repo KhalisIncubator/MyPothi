@@ -141,12 +141,6 @@ const query = async (searchQuery: string, searchType: number) => {
       .catch(reject);
   });
 }
-const testSchemas = () => {
-  Realm.open(localRealmConfig)
-    .then(realm => {
-      populateData(realm);
-    });
-}
 export {
   downloadDB,
   checkIfDbExists,
@@ -155,5 +149,4 @@ export {
   loadShabad,
   remapLine,
   query,
-  testSchemas,
 }
