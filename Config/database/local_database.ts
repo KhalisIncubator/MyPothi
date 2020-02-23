@@ -1,68 +1,71 @@
 // saved gutkas database
 import { Gutkas } from '../defaults';
-import { entryObj, gutkaEntry } from '../dev_env/types';
+import { entryObj, gutkaEntry, storedGutka } from '../dev_env/types';
+import localRealm from '../realm_schema';
 
-const findGutka = (currentGutka: string, realm) => {
-  const gutka = realm
-    .objects('Gutka')
+const findGutka = (currentGutka: string) => {
+  const gutka = localRealm
+    .objects<storedGutka>('Gutka')
     .filtered('name == $0', currentGutka)[0];
   return gutka;
 }
-const populateData = (realm) => {
-  if (realm.empty) {
+const populateData = () => {
+  if (localRealm.empty) {
     Gutkas.forEach(gutka => {
-      realm.write(() => {
-        const newGutka = realm.create('Gutka', {
+      localRealm.write(() => {
+        const newGutka = localRealm.create<storedGutka>('Gutka', {
           name: gutka.name,
           items: []
         })
-        gutka.items.forEach(item => {
+        gutka.items.forEach((item: entryObj) => {
           newGutka.items.push(item);
         })
       })
     })
   }
 }
-const addToGutka = (currentGutka: string, id: number, mainLine: string, type: gutkaEntry, realm) => {
-  const gutka = findGutka(currentGutka, realm);
-  realm.write(() => {
-    const entry = realm.create('Entry', {
+const addToGutka = (currentGutka: string, id: number, mainLine: string, type: gutkaEntry) => {
+  const gutka = findGutka(currentGutka);
+  localRealm.write(() => {
+    const entry = localRealm.create<entryObj>('Entry', {
       id: id,
       mainLine: mainLine,
-      type: type
+      type: type,
+      parentGutka: currentGutka
     })
     gutka.items.push(entry);
   })
 }
 
-const removeFromGutka = (currentGutka: string, itemId: number, realm) => {
-  const gutka = findGutka(currentGutka, realm);
+const removeFromGutka = (currentGutka: string, itemId: number) => {
+  const gutka = findGutka(currentGutka);
   const filter = `id == ${itemId} AND parentGutka == "${currentGutka}"`;
-  const item = realm
+  const item = localRealm
     .objects('Entry')
     .filtered(filter)[0];
   const itemIndex = gutka.items.findIndex((entry: entryObj) => entry.id === itemId)
-  realm.write(() => {
+  localRealm.write(() => {
     gutka.items.splice(itemIndex, 1);
-    realm.delete(item);
+    localRealm.delete(item);
   });
 }
 
-const createNewGukta = (name: string, realm) => {
-  realm.write(() => {
-    const newGutka = realm.create('Gukta', {
+const createNewGukta = (name: string) => {
+  localRealm.write(() => {
+    const newGutka = localRealm.create<storedGutka>('Gukta', {
       name: name,
       items: []
     })
   })
 }
-const deleteGukta = (name: string, realm) => {
-  const gutka = findGutka(name, realm);
-  realm.write(() => {
-    realm.delete(gutka);
+const deleteGukta = (name: string) => {
+  const gutka = findGutka(name);
+  localRealm.write(() => {
+    localRealm.delete(gutka);
   })
 }
 export {
+  findGutka,
   populateData,
   addToGutka,
   removeFromGutka,

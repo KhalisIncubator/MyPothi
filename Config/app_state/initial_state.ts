@@ -1,4 +1,4 @@
-const initalGutkaState = {
+const initialGutkaState = {
   gutkaNames: [],
   currentName: "",
   currentItems: [],
@@ -7,7 +7,7 @@ const initalGutkaState = {
 const initialGlobalState = {
   currentName: '',
 }
-const initalViewerState = {
+const initialViewerState = {
   gurmukhiSize: 12,
   translSize: 12,
   translitSize: 12,
@@ -20,8 +20,8 @@ const initalSearchState = {
   queryType: 'Shababd'
 }
 export {
-  initalGutkaState,
+  initialGutkaState,
   initialGlobalState,
-  initalViewerState,
+  initialViewerState,
   initalSearchState
 }

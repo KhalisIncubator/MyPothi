@@ -1,5 +1,6 @@
-// does not include db schema (it is parsed from download in ./database/database.ts)
-
+import RNFetchBlob from 'rn-fetch-blob';
+let dirs = RNFetchBlob.fs.dirs;
+const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
 
 const dbSchemas = [
   {
@@ -125,7 +126,14 @@ const localRealmConfig = {
   schema: [GuktaSchema, EntrySchema],
   schemaVersion: 3,
 }
-export default localRealmConfig;
+const baniDBRealm = {
+  path: $dbPath,
+  schema: dbSchemas,
+  schemaVersion: 2
+}
+
+export default new Realm(localRealmConfig);
+// export const BaniDB = new Realm(baniDBRealm);
 export {
   GuktaSchema,
   EntrySchema

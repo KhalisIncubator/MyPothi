@@ -88,5 +88,5 @@ export {
   gutkaAPIFactory,
   globalApiFactory,
   viewerApiFactory,
-
+  searchApiFactory
 }

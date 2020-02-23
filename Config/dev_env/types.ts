@@ -6,9 +6,27 @@ export type entryObj =
     parentGutka: string,
   };
 export type storedGutka = {
-  name: string,
   items: entryObj[],
+  name: string,
 }
 export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
 export type QueryType = 'Shabad' | 'Bani';
+
+export type GutkaApi = {
+  gutkaNames: string[],
+  currentName: string,
+  currentItems: storedGutka[],
+  isDataReady: boolean,
+
+  createGutka: () => void,
+}
+export type GlobalApi = {
+
+}
+export type ViewerApi = {
+
+}
+export type SearchApi = {
+
+}

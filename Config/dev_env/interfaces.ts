@@ -1,35 +1,15 @@
-import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from "./types";
+import { storedGutka, entryObj, GutkaApi, GlobalApi, SearchApi, ViewerApi } from "./types";
 export interface IGutkaCtx {
-  gutkas: storedGutka[],
-  createGutka: (newGutka: string) => void,
-  currentItems: entryObj[],
-  removeFromGutka: (id: number) => void,
-  addToGutka: (entryId: number, mainLine: string, entryType: gutkaEntry) => void,
-  isDataReady: boolean,
-  modalVisibile: boolean,
-  toggleModal: () => void,
+  gutkaApi: GutkaApi
 }
 export interface IGlobalCtx {
-  currentName: string,
-  updateCurrentGutka: (name: string) => void,
-  isEditMode: boolean,
-  toggleEditMode: () => void,
+  globalApi: GlobalApi
 }
 export interface ISearchCtx {
-  searchType: SearchType,
-  updateSearchType: (type: SearchType) => void,
-  queryType: QueryType,
-  updateQueryType: (type: QueryType) => void,
+  searchApi: SearchApi
 }
 export interface IViewerCtx {
-  gurmukhiSize: number,
-  translSize: number,
-  translitSize: number,
-  updateFontSize: (element: string, size: number) => void,
-  displayEngTransl: boolean,
-  displayPunTansl: boolean,
-  displayTranslit: boolean,
-  updateDisplay: (element: string, value: boolean) => void,
+  viewerApi: ViewerApi
 }
 
 export interface gutkaFetched {
