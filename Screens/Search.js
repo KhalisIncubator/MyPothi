@@ -34,8 +34,9 @@ const Search = (props) => {
       <Searchbar
         placeholder="Search"
         inputStyle={styles.input}
-        onChangeText={searchQuery => { updateQuery(searchQuery.toLowerCase()) }}
+        onChangeText={searchQuery => updateQuery(searchQuery)}
         value={searchQuery}
+        autoCapitalize='none'
         theme={{ colors: { primary: 'white' } }}
       />
       <View style={styles.row}>
@@ -86,7 +87,7 @@ const Search = (props) => {
 
 const styles = StyleSheet.create({
   input: {
-    fontFamily: 'AnmolLipiTrue'
+    fontFamily: 'AnmolLipiTrue',
   },
   button: {
     marginTop: 8,

@@ -68,7 +68,6 @@ class App extends React.Component<IProps, IState> {
         await downloadDB();
       }
     });
-    testSchemas();
     const gutkasFetched = await fetchGutkas(this.state.currentName);
     const { $isDataReady, $stored, $currentName, $currentItems } = gutkasFetched;
     this.setState({ isDataReady: $isDataReady, gutkas: $stored, currentName: $currentName, currentItems: $currentItems });
