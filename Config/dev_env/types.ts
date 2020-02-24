@@ -19,8 +19,11 @@ export type GutkaApi = {
   currentItems: entryObj[],
   isDataReady: boolean,
 
-  createGutka: () => void,
-  updateCurrentName: (newName: string) => void
+  createGutka: (newName: string) => void,
+  updateCurrentName: (newName: string) => void,
+  deleteAGutka: (name: string) => void,
+  addEntry: (id: number, mainLine: string, parentGutka: string, type: gutkaEntry) => void,
+  removeEntry: (id: number) => void
 }
 export type GlobalApi = {
 

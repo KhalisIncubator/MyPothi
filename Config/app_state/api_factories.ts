@@ -1,6 +1,6 @@
 import produce from 'immer';
-import { SearchType, QueryType } from '../dev_env/types';
-import { createNewGukta, fetchAllGutkas, getCurrentItems } from '../database/local_database';
+import { SearchType, QueryType, gutkaEntry } from '../dev_env/types';
+import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from '../database/local_database';
 
 const gutkaAPIFactory = ({ state, setState }) => {
   const createGutka = (newName: string) => {
@@ -18,6 +18,24 @@ const gutkaAPIFactory = ({ state, setState }) => {
       })
     )
   }
+  const deleteAGutka = (name: string) => {
+    deleteGukta(name);
+    setState(
+      produce(draftState => draftState.gutkaNames = fetchAllGutkas())
+    )
+  }
+  const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
+    addToGutka(state.currentName, id, mainLine, type);
+    setState(
+      produce(draftState => draftState.currentItems = getCurrentItems(state.currentName))
+    )
+  }
+  const removeEntry = (id: number) => {
+    removeFromGutka(state.currentName, id);
+    setState(
+      produce(draftState => draftState.currentItems = getCurrentItems(state.currentName))
+    )
+  }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {
     gutkaNames,
@@ -26,7 +44,10 @@ const gutkaAPIFactory = ({ state, setState }) => {
     isDataReady,
 
     createGutka,
-    updateCurrentName
+    updateCurrentName,
+    deleteAGutka,
+    addEntry,
+    removeEntry
   }
 }
 const globalApiFactory = ({ state, setState }) => {
