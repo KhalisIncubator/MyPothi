@@ -10,55 +10,62 @@ import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts
 import { loadShabad, remapLine } from '../config/database/database';
 import LineBlock from '../Components/Main/LineBlock';
 
-const Gutka = ({ navigation }) => {
+// { navigation }
+const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
-  const GlobalCtx = useContext(GlobalContext);
-  const [shabads, updateShabads] = useState([]);
-
-  //when items update, load their shabads
+  // const GlobalCtx = useContext(GlobalContext);
+  // const [shabads, updateShabads] = useState([]);
   useEffect(() => {
-    const getLines = async () => {
-      updateShabads([]);
-      for (const item of GutkaCtx.currentItems) {
-        const shabad = await loadShabad(item.id);
-        updateShabads(prevArr => [...prevArr, shabad]);
-      }
-    }
-    getLines();
-  }, [GutkaCtx.currentItems]);
-  //empty out array when name changes to refill array with correct items
-  useEffect(() => {
-    updateShabads([]);
-  }, [GlobalCtx.currentName])
+    console.log(GutkaCtx.currentName)
+  })
 
-  // render each shabad inside of flatlist
-  const renderItem = ({ item }) => {
-    let lines = [];
-    lines = item.map(line => {
-      const normalized = remapLine(line);
-      return <LineBlock key={normalized.ID} line={normalized} />
-    })
-    return (
-      <View key='Viewer'>
-        {lines}
-      </View>
-    )
-  }
+  // //when items update, load their shabads
+  // useEffect(() => {
+  //   const getLines = async () => {
+  //     updateShabads([]);
+  //     for (const item of GutkaCtx.currentItems) {
+  //       const shabad = await loadShabad(item.id);
+  //       updateShabads(prevArr => [...prevArr, shabad]);
+  //     }
+  //   }
+  //   getLines();
+  // }, [GutkaCtx.currentItems]);
+  // //empty out array when name changes to refill array with correct items
+  // useEffect(() => {
+  //   updateShabads([]);
+  // }, [GlobalCtx.currentName])
+
+  // // render each shabad inside of flatlist
+  // const renderItem = ({ item }) => {
+  //   let lines = [];
+  //   lines = item.map(line => {
+  //     const normalized = remapLine(line);
+  //     return <LineBlock key={normalized.ID} line={normalized} />
+  //   })
+  //   return (
+  //     <View key='Viewer'>
+  //       {lines}
+  //     </View>
+  //   )
+  // }
   return (
-    <View style={styles.View}>
-      {GutkaCtx.isDataReady &&
-        GutkaCtx.currentItems.length != undefined &&
-        shabads.length != 0 &&
-        <FlatList
-          data={shabads}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderItem}
-        />
-      }
-      {
-        !GutkaCtx.isDataReady &&
-        <Text>Loading...</Text>
-      }
+    // <View style={styles.View}>
+    //   {GutkaCtx.isDataReady &&
+    //     GutkaCtx.currentItems.length != undefined &&
+    //     shabads.length != 0 &&
+    //     <FlatList
+    //       data={shabads}
+    //       keyExtractor={(item, index) => index.toString()}
+    //       renderItem={renderItem}
+    //     />
+    //   }
+    //   {
+    //     !GutkaCtx.isDataReady &&
+    //     <Text>Loading...</Text>
+    //   }
+    // </View>
+    <View>
+      <Text>wat</Text>
     </View>
   );
 }

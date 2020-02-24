@@ -1,11 +1,22 @@
 import produce from 'immer';
 import { SearchType, QueryType } from '../dev_env/types';
+import { createNewGukta, fetchAllGutkas, getCurrentItems } from '../database/local_database';
 
 const gutkaAPIFactory = ({ state, setState }) => {
   const createGutka = (newName: string) => {
+    createNewGukta(newName);
+    const newNames = fetchAllGutkas();
     setState(
       produce(draftState =>
-        draftState.gutkaNames.push(newName)));
+        draftState.gutkaNames = newNames));
+  }
+  const updateCurrentName = (newName: string) => {
+    setState(
+      produce(draftState => {
+        draftState.currentName = newName;
+        draftState.currentItems = getCurrentItems(newName);
+      })
+    )
   }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {
@@ -15,6 +26,7 @@ const gutkaAPIFactory = ({ state, setState }) => {
     isDataReady,
 
     createGutka,
+    updateCurrentName
   }
 }
 const globalApiFactory = ({ state, setState }) => {

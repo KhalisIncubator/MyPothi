@@ -16,10 +16,11 @@ export type QueryType = 'Shabad' | 'Bani';
 export type GutkaApi = {
   gutkaNames: string[],
   currentName: string,
-  currentItems: storedGutka[],
+  currentItems: entryObj[],
   isDataReady: boolean,
 
   createGutka: () => void,
+  updateCurrentName: (newName: string) => void
 }
 export type GlobalApi = {
 

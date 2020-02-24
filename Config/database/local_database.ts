@@ -1,14 +1,45 @@
 // saved gutkas database
+import _ from 'lodash';
 import { Gutkas } from '../defaults';
 import { entryObj, gutkaEntry, storedGutka } from '../dev_env/types';
 import localRealm from '../realm_schema';
 
+/**
+ * fetches an array of all the gutkas' names (so that top level app state is not managing large amounts of data)
+ */
+const fetchAllGutkas = () => {
+  const names = [];
+  const gutkas = localRealm
+    .objects<storedGutka>('Gutka');
+  gutkas.forEach(gutka => {
+    names.push(gutka.name);
+  });
+  return names;
+}
+
+/**
+ * 
+ * @param {string} currentGutka the name of the current gutka
+ * @returns {storedGutka} the stored gutka object with the name property provided
+ */
 const findGutka = (currentGutka: string) => {
   const gutka = localRealm
     .objects<storedGutka>('Gutka')
     .filtered('name == $0', currentGutka)[0];
   return gutka;
 }
+/**
+ * 
+ * @param {string} currentGutka the name of the current gutka
+ * @returns {entryObj[]} an array of items stored within the gutka 
+ */
+const getCurrentItems = (currentGutka: string): entryObj[] => {
+  const gutka = findGutka(currentGutka);
+  return _.values(gutka.items);
+}
+/**
+ * if the realm is empty, then it is populated with the items in {@link ../defaults}
+ */
 const populateData = () => {
   if (localRealm.empty) {
     Gutkas.forEach(gutka => {
@@ -24,6 +55,13 @@ const populateData = () => {
     })
   }
 }
+/**
+ * 
+ * @param {string} currentGutka the name of the current gutka
+ * @param {number} id shabadID/baniID of the new entry
+ * @param {string} mainLine the main line identifier of the shabad
+ * @param {gutkaEntry} type shabad or bani
+ */
 const addToGutka = (currentGutka: string, id: number, mainLine: string, type: gutkaEntry) => {
   const gutka = findGutka(currentGutka);
   localRealm.write(() => {
@@ -64,8 +102,11 @@ const deleteGukta = (name: string) => {
     localRealm.delete(gutka);
   })
 }
+
 export {
+  fetchAllGutkas,
   findGutka,
+  getCurrentItems,
   populateData,
   addToGutka,
   removeFromGutka,

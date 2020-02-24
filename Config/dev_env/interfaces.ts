@@ -11,14 +11,6 @@ export interface ISearchCtx {
 export interface IViewerCtx {
   viewerApi: ViewerApi
 }
-
-export interface gutkaFetched {
-  $isDataReady: boolean,
-  $stored: storedGutka[],
-  $currentName: string,
-  $currentItems: entryObj[]
-}
-
 export interface setttingsFetched {
   $displayEngTransl: boolean,
   $displayPunTansl: boolean,
