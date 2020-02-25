@@ -13,59 +13,47 @@ import LineBlock from '../Components/Main/LineBlock';
 // { navigation }
 const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
-  // const GlobalCtx = useContext(GlobalContext);
-  // const [shabads, updateShabads] = useState([]);
+  const [shabads, updateShabads] = useState([]);
+
+  //when items update, load their shabads
   useEffect(() => {
-    console.log(GutkaCtx.currentName)
-  })
+    const getLines = async () => {
+      for (const item of GutkaCtx.currentItems) {
+        const shabad = await loadShabad(item.id);
+        updateShabads(prev => [...prev, shabad]);
+      }
+    }
+    getLines();
+  }, [GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName]);
 
-  // //when items update, load their shabads
-  // useEffect(() => {
-  //   const getLines = async () => {
-  //     updateShabads([]);
-  //     for (const item of GutkaCtx.currentItems) {
-  //       const shabad = await loadShabad(item.id);
-  //       updateShabads(prevArr => [...prevArr, shabad]);
-  //     }
-  //   }
-  //   getLines();
-  // }, [GutkaCtx.currentItems]);
-  // //empty out array when name changes to refill array with correct items
-  // useEffect(() => {
-  //   updateShabads([]);
-  // }, [GlobalCtx.currentName])
-
-  // // render each shabad inside of flatlist
-  // const renderItem = ({ item }) => {
-  //   let lines = [];
-  //   lines = item.map(line => {
-  //     const normalized = remapLine(line);
-  //     return <LineBlock key={normalized.ID} line={normalized} />
-  //   })
-  //   return (
-  //     <View key='Viewer'>
-  //       {lines}
-  //     </View>
-  //   )
-  // }
+  // render each shabad inside of flatlist
+  const renderItem = ({ item }) => {
+    let lines = [];
+    lines = item.map(line => {
+      const normalized = remapLine(line);
+      return <LineBlock key={normalized.ID} line={normalized} />
+    })
+    return (
+      <View key='Viewer'>
+        {lines}
+      </View>
+    )
+  }
   return (
-    // <View style={styles.View}>
-    //   {GutkaCtx.isDataReady &&
-    //     GutkaCtx.currentItems.length != undefined &&
-    //     shabads.length != 0 &&
-    //     <FlatList
-    //       data={shabads}
-    //       keyExtractor={(item, index) => index.toString()}
-    //       renderItem={renderItem}
-    //     />
-    //   }
-    //   {
-    //     !GutkaCtx.isDataReady &&
-    //     <Text>Loading...</Text>
-    //   }
-    // </View>
-    <View>
-      <Text>wat</Text>
+    <View style={styles.View}>
+      {GutkaCtx.isDataReady &&
+        GutkaCtx.currentItems.length != undefined &&
+        shabads.length != 0 &&
+        <FlatList
+          data={shabads}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
+        />
+      }
+      {
+        !GutkaCtx.isDataReady &&
+        <Text>Loading...</Text>
+      }
     </View>
   );
 }

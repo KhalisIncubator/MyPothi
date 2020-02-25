@@ -10,11 +10,31 @@ const gutkaAPIFactory = ({ state, setState }) => {
       produce(draftState =>
         draftState.gutkaNames = newNames));
   }
+  const updateGutkas = () => {
+    setState(
+      produce(draftState => {
+        draftState.gutkaNames = fetchAllGutkas();
+      })
+    )
+  }
+  const updateItems = () => {
+    setState(
+      produce(draftState => {
+        draftState.currentItems = getCurrentItems(state.currentName);
+      })
+    )
+  }
+  const updateIsReady = (newVal: boolean) => {
+    setState(
+      produce(draftState => {
+        draftState.isDataReady = newVal;
+      })
+    )
+  }
   const updateCurrentName = (newName: string) => {
     setState(
       produce(draftState => {
         draftState.currentName = newName;
-        draftState.currentItems = getCurrentItems(newName);
       })
     )
   }
@@ -26,15 +46,9 @@ const gutkaAPIFactory = ({ state, setState }) => {
   }
   const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
     addToGutka(state.currentName, id, mainLine, type);
-    setState(
-      produce(draftState => draftState.currentItems = getCurrentItems(state.currentName))
-    )
   }
   const removeEntry = (id: number) => {
     removeFromGutka(state.currentName, id);
-    setState(
-      produce(draftState => draftState.currentItems = getCurrentItems(state.currentName))
-    )
   }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {
@@ -44,19 +58,13 @@ const gutkaAPIFactory = ({ state, setState }) => {
     isDataReady,
 
     createGutka,
+    updateItems,
+    updateIsReady,
     updateCurrentName,
     deleteAGutka,
     addEntry,
     removeEntry
   }
-}
-const globalApiFactory = ({ state, setState }) => {
-  const { currentName } = state;
-  const updateCurrentName = (newName: string) => {
-    setState(newName);
-  }
-  return { currentName, updateCurrentName }
-
 }
 const viewerApiFactory = ({ state, setState }) => {
   const {
@@ -119,7 +127,6 @@ const searchApiFactory = ({ state, setState }) => {
 }
 export {
   gutkaAPIFactory,
-  globalApiFactory,
   viewerApiFactory,
   searchApiFactory
 }

@@ -1,24 +1,23 @@
 import 'react-native-gesture-handler';
 
-import React, { useEffect, useContext } from 'react';
-import { DefaultTheme, Portal, Provider as PaperProvider } from 'react-native-paper';
-import { View, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 import NetInfo from '@react-native-community/netinfo';
 import { fetchSettings } from './config/app_state/functions';
 import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
+import LocalRelam from './config/realm_schema';
 import { useApi } from './config/app_state/Hooks';
 import { initialGutkaState, initialGlobalState, initialViewerState, initalSearchState } from './config/app_state/initial_state';
-import { GlobalContext, GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
+import { GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
 import Routes from './Routes';
 import {
   gutkaAPIFactory,
-  globalApiFactory,
   viewerApiFactory,
   searchApiFactory
 } from './config/app_state/api_factories';
-import { GutkaApi, GlobalApi, ViewerApi, SearchApi } from './config/dev_env/types';
 import Gutka from './Screens/Gutka';
-import { fetchAllGutkas, getCurrentItems } from './config/database/local_database';
+import { fetchAllGutkas, getCurrentItems, populateData } from './config/database/local_database';
 
 const theme = {
   ...DefaultTheme,
@@ -32,10 +31,9 @@ const theme = {
 };
 
 const App = () => {
-  const gutkaApi: GutkaApi = useApi(gutkaAPIFactory, initialGutkaState);
-  const globalApi: GlobalApi = useApi(globalApiFactory, initialGlobalState);
-  const viewerApi: ViewerApi = useApi(viewerApiFactory, initialViewerState);
-  const searchApi: SearchApi = useApi(searchApiFactory, initalSearchState);
+  const gutkaApi = useApi(gutkaAPIFactory, initialGutkaState);
+  const viewerApi = useApi(viewerApiFactory, initialViewerState);
+  const searchApi = useApi(searchApiFactory, initalSearchState);
 
   useEffect(() => {
     const checkDB = async () => {
@@ -46,17 +44,18 @@ const App = () => {
       });
     }
     checkDB();
+    populateData();
     const gutkas = fetchAllGutkas();
     const currentName = gutkas[0];
 
+    const items = getCurrentItems(currentName)
     gutkaApi.updateCurrentName(currentName);
-    gutkaApi.gutkaNames = gutkas;
-    gutkaApi.currentItems = getCurrentItems(currentName);
+    gutkaApi.updateItems(items);
+    gutkaApi.updateIsReady(true);
   }, [])
   // pile contexts on top of each other dynamically
   const contexts = [
     [GutkaContext.Provider, gutkaApi],
-    [GlobalContext.Provider, globalApi],
     [ViewerContext.Provider, viewerApi],
     [SearchContext.Provider, searchApi],
   ]

@@ -6,6 +6,7 @@ const initialGutkaState = {
 }
 const initialGlobalState = {
   currentName: '',
+  isDBReady: false,
 }
 const initialViewerState = {
   gurmukhiSize: 12,
