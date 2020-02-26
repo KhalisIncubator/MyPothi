@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import { fetchSettings } from './config/app_state/functions';
 import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
 import LocalRelam from './config/realm_schema';
@@ -17,7 +17,7 @@ import {
   searchApiFactory
 } from './config/app_state/api_factories';
 import Gutka from './Screens/Gutka';
-import { fetchAllGutkas, getCurrentItems, populateData } from './config/database/local_database';
+import { fetchAllGutkas, populateData, isDataEmpty, getCurrentItems } from './config/database/local_database';
 
 const theme = {
   ...DefaultTheme,
@@ -35,23 +35,34 @@ const App = () => {
   const viewerApi = useApi(viewerApiFactory, initialViewerState);
   const searchApi = useApi(searchApiFactory, initalSearchState);
 
-  useEffect(() => {
-    const checkDB = async () => {
-      NetInfo.fetch().then(async state => {
-        if (state.isConnected && !(await checkIfDbExists())) {
-          await downloadDB();
-        }
-      });
-    }
-    checkDB();
-    populateData();
-    const gutkas = fetchAllGutkas();
-    const currentName = gutkas[0];
+  const netInfo = useNetInfo();
 
-    const items = getCurrentItems(currentName)
-    gutkaApi.updateCurrentName(currentName);
-    gutkaApi.updateItems(items);
-    gutkaApi.updateIsReady(true);
+  const checkDB = async () => {
+    let needToDownloadDb = false;
+    if (netInfo.isConnected && !(await checkIfDbExists())) {
+      needToDownloadDb = true;
+      await downloadDB();
+    }
+
+    if (isDataEmpty()) {
+      Promise.all([populateData()]);
+    }
+  }
+  const fetchItems = async () => {
+    const [gutkas, items] = await Promise.all([fetchAllGutkas(), getCurrentItems("Nitnem")]);
+    return { gutkas, items };
+  }
+  useEffect(() => {
+    checkDB()
+      .then(async () => {
+        if (gutkaApi.currentItems.length === 0) {
+          gutkaApi.updateCurrentName("Nitnem");
+          gutkaApi.updateGutkas();
+          gutkaApi.updateItems();
+          gutkaApi.updateIsReady(true);
+        }
+      })
+
   }, [])
   // pile contexts on top of each other dynamically
   const contexts = [

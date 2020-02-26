@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 /**
  * 
@@ -15,6 +15,8 @@ const useApi = (apiFactory, initialState) => {
   ]);
 };
 
+const useMountEffect = (fn) => useEffect(fn, []);
 export {
-  useApi
+  useApi,
+  useMountEffect
 }

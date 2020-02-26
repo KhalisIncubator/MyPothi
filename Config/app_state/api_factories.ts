@@ -11,16 +11,18 @@ const gutkaAPIFactory = ({ state, setState }) => {
         draftState.gutkaNames = newNames));
   }
   const updateGutkas = () => {
+    const names = fetchAllGutkas();
     setState(
       produce(draftState => {
-        draftState.gutkaNames = fetchAllGutkas();
+        draftState.gutkaNames = names;
       })
     )
   }
   const updateItems = () => {
+    const items = getCurrentItems("Nitnem");
     setState(
       produce(draftState => {
-        draftState.currentItems = getCurrentItems(state.currentName);
+        draftState.currentItems = items;
       })
     )
   }
@@ -59,6 +61,7 @@ const gutkaAPIFactory = ({ state, setState }) => {
 
     createGutka,
     updateItems,
+    updateGutkas,
     updateIsReady,
     updateCurrentName,
     deleteAGutka,

@@ -1,6 +1,7 @@
 import RNFetchBlob from 'rn-fetch-blob';
 let dirs = RNFetchBlob.fs.dirs;
 const $dbPath = dirs.DocumentDir + '/sttmdesktop-evergreen';
+import Realm from 'realm';
 
 const dbSchemas = [
   {

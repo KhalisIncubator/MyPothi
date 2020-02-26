@@ -1,16 +1,18 @@
 // saved gutkas database
 import _ from 'lodash';
 import { Gutkas } from '../defaults';
-import { entryObj, gutkaEntry, storedGutka } from '../dev_env/types';
 import localRealm from '../realm_schema';
 
+
+
+const isDataEmpty = () => localRealm.empty;
 /**
  * fetches an array of all the gutkas' names (so that top level app state is not managing large amounts of data)
  */
 const fetchAllGutkas = () => {
   const names = [];
   const gutkas = localRealm
-    .objects<storedGutka>('Gutka');
+    .objects('Gutka');
   gutkas.forEach(gutka => {
     names.push(gutka.name);
   });
@@ -22,18 +24,20 @@ const fetchAllGutkas = () => {
  * @param {string} currentGutka the name of the current gutka
  * @returns {storedGutka} the stored gutka object with the name property provided
  */
-const findGutka = (currentGutka: string) => {
+const findGutka = (currentGutka) => {
+  const filter = `name == "${currentGutka}"`;
   const gutka = localRealm
-    .objects<storedGutka>('Gutka')
-    .filtered('name == $0', currentGutka)[0];
+    .objects('Gutka')
+    .filtered(filter)[0];
   return gutka;
 }
 /**
  * 
  * @param {string} currentGutka the name of the current gutka
- * @returns {entryObj[]} an array of items stored within the gutka 
- */
-const getCurrentItems = (currentGutka: string): entryObj[] => {
+*/
+////  * @returns {Promise<entryObj[]>} an array of items stored within the gutka 
+// : Promise<entryObj[]>
+const getCurrentItems = (currentGutka) => {
   const gutka = findGutka(currentGutka);
   return _.values(gutka.items);
 }
@@ -44,11 +48,11 @@ const populateData = () => {
   if (localRealm.empty) {
     Gutkas.forEach(gutka => {
       localRealm.write(() => {
-        const newGutka = localRealm.create<storedGutka>('Gutka', {
+        const newGutka = localRealm.create('Gutka', {
           name: gutka.name,
           items: []
         })
-        gutka.items.forEach((item: entryObj) => {
+        gutka.items.forEach((item) => {
           newGutka.items.push(item);
         })
       })
@@ -62,10 +66,10 @@ const populateData = () => {
  * @param {string} mainLine the main line identifier of the shabad
  * @param {gutkaEntry} type shabad or bani
  */
-const addToGutka = (currentGutka: string, id: number, mainLine: string, type: gutkaEntry) => {
+const addToGutka = (currentGutka, id, mainLine, type) => {
   const gutka = findGutka(currentGutka);
   localRealm.write(() => {
-    const entry = localRealm.create<entryObj>('Entry', {
+    const entry = localRealm.create('Entry', {
       id: id,
       mainLine: mainLine,
       type: type,
@@ -75,28 +79,28 @@ const addToGutka = (currentGutka: string, id: number, mainLine: string, type: gu
   })
 }
 
-const removeFromGutka = (currentGutka: string, itemId: number) => {
+const removeFromGutka = (currentGutka, itemId) => {
   const gutka = findGutka(currentGutka);
   const filter = `id == ${itemId} AND parentGutka == "${currentGutka}"`;
   const item = localRealm
     .objects('Entry')
     .filtered(filter)[0];
-  const itemIndex = gutka.items.findIndex((entry: entryObj) => entry.id === itemId)
+  const itemIndex = gutka.items.findIndex((entry) => entry.id === itemId)
   localRealm.write(() => {
     gutka.items.splice(itemIndex, 1);
     localRealm.delete(item);
   });
 }
 
-const createNewGukta = (name: string) => {
+const createNewGukta = (name) => {
   localRealm.write(() => {
-    const newGutka = localRealm.create<storedGutka>('Gukta', {
+    const newGutka = localRealm.create('Gukta', {
       name: name,
       items: []
     })
   })
 }
-const deleteGukta = (name: string) => {
+const deleteGukta = (name) => {
   const gutka = findGutka(name);
   localRealm.write(() => {
     localRealm.delete(gutka);
@@ -104,6 +108,7 @@ const deleteGukta = (name: string) => {
 }
 
 export {
+  isDataEmpty,
   fetchAllGutkas,
   findGutka,
   getCurrentItems,

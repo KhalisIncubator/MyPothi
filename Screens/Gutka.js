@@ -18,14 +18,16 @@ const Gutka = () => {
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
+      let newItems = []
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
-        updateShabads(prev => [...prev, shabad]);
+        newItems.push(shabad);
       }
+      updateShabads(newItems);
     }
     getLines();
-  }, [GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName]);
-
+  }, [GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName, GutkaCtx.gutkaNames.length]);
+  //[GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName]
   // render each shabad inside of flatlist
   const renderItem = ({ item }) => {
     let lines = [];
