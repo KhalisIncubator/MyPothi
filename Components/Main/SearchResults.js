@@ -14,7 +14,7 @@ const SearchResult = (props) => {
   const { queryType } = useContext(SearchContext)
   return (
     <TouchableOpacity
-      onPress={() => GutkaCtx.addToGutka(Shabads[0].ShabadID, Gurmukhi, queryType)}>
+      onPress={() => GutkaCtx.addEntry(Shabads[0].ShabadID, Gurmukhi, queryType)}>
       <Card.Title
         style={style.Card}
         titleStyle={style.CardTitle}

@@ -48,10 +48,6 @@ const App = () => {
       Promise.all([populateData()]);
     }
   }
-  const fetchItems = async () => {
-    const [gutkas, items] = await Promise.all([fetchAllGutkas(), getCurrentItems("Nitnem")]);
-    return { gutkas, items };
-  }
   useEffect(() => {
     checkDB()
       .then(async () => {
@@ -60,6 +56,7 @@ const App = () => {
           gutkaApi.updateGutkas();
           gutkaApi.updateItems();
           gutkaApi.updateIsReady(true);
+
         }
       })
 
@@ -77,7 +74,7 @@ const App = () => {
     ), context => context);
   return contexts(
     <PaperProvider theme={theme}>
-      <Gutka />
+      <Routes />
     </PaperProvider>
   )
 }

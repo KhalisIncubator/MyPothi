@@ -34,9 +34,11 @@ const gutkaAPIFactory = ({ state, setState }) => {
     )
   }
   const updateCurrentName = (newName: string) => {
+    const newitems = getCurrentItems(newName);
     setState(
       produce(draftState => {
         draftState.currentName = newName;
+        draftState.currentItems = newitems;
       })
     )
   }

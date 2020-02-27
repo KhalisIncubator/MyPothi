@@ -25,10 +25,12 @@ const Gutka = () => {
       }
       updateShabads(newItems);
     }
-    getLines();
-  }, [GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName, GutkaCtx.gutkaNames.length]);
-  //[GutkaCtx.currentItems.length, GutkaCtx.isDataReady, GutkaCtx.currentName]
-  // render each shabad inside of flatlist
+    if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length > 0) {
+      getLines();
+    } else if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length === 0) {
+      updateShabads([]);
+    }
+  }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {

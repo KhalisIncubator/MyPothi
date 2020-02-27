@@ -39,7 +39,14 @@ const findGutka = (currentGutka) => {
 // : Promise<entryObj[]>
 const getCurrentItems = (currentGutka) => {
   const gutka = findGutka(currentGutka);
-  return _.values(gutka.items);
+
+  const items = [];
+  for (let i = 0; i < gutka.items.length; i++) {
+    if (gutka.items[i].isValid()) {
+      items.push(gutka.items[i]);
+    }
+  }
+  return items;
 }
 /**
  * if the realm is empty, then it is populated with the items in {@link ../defaults}

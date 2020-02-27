@@ -23,7 +23,7 @@ export const SearchContext = React.createContext<ISearchCtx>({
   updateQueryType: () => { },
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
-  gurmukhiSize: 12,
+  gurmukhiSize: 30,
   translSize: 12,
   translitSize: 12,
   displayEngTransl: true,

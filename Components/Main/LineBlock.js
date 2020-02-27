@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,12 @@ import { remapLine } from '../../config/database/database';
 
 const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
-  const { displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
+  const { gurmukhiSize, displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
   const { Gurmukhi, English, Punjabi, Transliteration } = props.line;
   return (
     <View style={style.View}>
       <View stlye={style.column}>
-        <Text style={[style.Gurmukhi, style.text, { fontSize: ViewerCtx.gurmukhiSize }]}>{Gurmukhi}</Text>
+        <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurmukhi}</Text>
         {
           displayEngTransl &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{English}</Text>

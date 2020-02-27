@@ -9,7 +9,7 @@ const initialGlobalState = {
   isDBReady: false,
 }
 const initialViewerState = {
-  gurmukhiSize: 12,
+  gurmukhiSize: 30,
   translSize: 12,
   translitSize: 12,
   displayEngTransl: true,
