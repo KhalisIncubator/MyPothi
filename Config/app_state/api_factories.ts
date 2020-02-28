@@ -5,10 +5,7 @@ import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutk
 const gutkaAPIFactory = ({ state, setState }) => {
   const createGutka = (newName: string) => {
     createNewGukta(newName);
-    const newNames = fetchAllGutkas();
-    setState(
-      produce(draftState =>
-        draftState.gutkaNames = newNames));
+    updateGutkas();
   }
   const updateGutkas = () => {
     const names = fetchAllGutkas();

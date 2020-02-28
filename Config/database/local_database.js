@@ -101,7 +101,7 @@ const removeFromGutka = (currentGutka, itemId) => {
 
 const createNewGukta = (name) => {
   localRealm.write(() => {
-    const newGutka = localRealm.create('Gukta', {
+    const newGutka = localRealm.create('Gutka', {
       name: name,
       items: []
     })
