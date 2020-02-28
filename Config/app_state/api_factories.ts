@@ -50,9 +50,11 @@ const gutkaAPIFactory = ({ state, setState }) => {
   }
   const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
     addToGutka(state.currentName, id, mainLine, type);
+    updateItems();
   }
   const removeEntry = (id: number) => {
     removeFromGutka(state.currentName, id);
+    updateItems();
   }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {

@@ -128,7 +128,7 @@ const localRealmConfig = {
   schemaVersion: 3,
 }
 const baniDBRealm = {
-  path: $dbPath,
+  // path: $dbPath,
   schema: dbSchemas,
   schemaVersion: 2
 }

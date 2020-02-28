@@ -5,7 +5,7 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import { fetchSettings } from './config/app_state/functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg } from './config/database/database';
+import { downloadDB, checkIfDbExists, loadShabad, downloadProg, $dbPath } from './config/database/database';
 import LocalRelam from './config/realm_schema';
 import { useApi } from './config/app_state/Hooks';
 import { initialGutkaState, initialGlobalState, initialViewerState, initalSearchState } from './config/app_state/initial_state';
@@ -40,18 +40,20 @@ const App = () => {
   const checkDB = async () => {
     let needToDownloadDb = false;
     if (netInfo.isConnected && !(await checkIfDbExists())) {
-      needToDownloadDb = true;
-      await downloadDB();
+
+      if (isDataEmpty()) {
+        Promise.all([populateData(), downloadDB()]);
+      } else {
+        Promise.all([downloadDB()])
+      }
     }
 
-    if (isDataEmpty()) {
-      Promise.all([populateData()]);
-    }
   }
   useEffect(() => {
     checkDB()
       .then(async () => {
         if (gutkaApi.currentItems.length === 0) {
+          console.log(isDataEmpty())
           gutkaApi.updateCurrentName("Nitnem");
           gutkaApi.updateGutkas();
           gutkaApi.updateItems();
