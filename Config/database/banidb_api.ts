@@ -11,8 +11,8 @@ const remapLine = raw => {
   Line.Translations = {
     English: raw.translation.en.bdb,
     Punjabi: {
-      ss: raw.translation.pu.ss.gurmukhi,
-      ft: raw.translation.pu.ft.gurmukhi
+      SS: raw.translation.pu.ss.gurmukhi,
+      FT: raw.translation.pu.ft.gurmukhi
     },
     Spanish: raw.translation.es.sn
   };

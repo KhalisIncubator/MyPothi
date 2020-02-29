@@ -10,20 +10,21 @@ const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
   const { gurmukhiSize, displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
   const { Gurbani, Translations, Transliteration } = props.line;
+  console.log(Translations.English);
   return (
     <View style={style.View}>
       <View stlye={style.column}>
         <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
         {
-          displayEngTransl &&
+          displayEngTransl && Translations.English !== "" &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.English}</Text>
         }
         {
-          displayPunTansl &&
-          <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.Punjabi.ss}</Text>
+          displayPunTansl && Translations.Punjabi.SS &&
+          <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.Punjabi.SS}</Text>
         }
         {
-          displayTranslit &&
+          displayTranslit && Transliteration.English !== "" &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Transliteration.English}</Text>
         }
       </View>
@@ -42,7 +43,7 @@ const style = StyleSheet.create({
     flexDirection: 'column',
   },
   Gurmukhi: {
-    marginVertical: 8,
+    marginVertical: 4,
     fontWeight: "400",
     fontFamily: "AnmolLipiTrue",
   },

@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Searchbar, useTheme, Menu, Button, Divider } from 'react-native-paper';
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
 } from 'react-native';
@@ -13,7 +12,6 @@ import SearchResult from '../Components/Main/SearchResults';
 const Search = () => {
   const SearchCtx = useContext(SearchContext);
 
-  const theme = useTheme();
   const [searchQuery, updateQuery] = useState('');
   const [results, updateResults] = useState([]);
   const [typeMenu, updateTypeM] = useState(false);
@@ -27,6 +25,7 @@ const Search = () => {
     if (searchQuery.length > 0) {
       fetchResults();
     }
+    return true
   }, [searchQuery]);
   return (
     <View>
