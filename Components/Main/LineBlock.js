@@ -10,21 +10,20 @@ const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
   const { gurmukhiSize, displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
   const { Gurbani, Translations, Transliteration } = props.line;
-  console.log(Translations.English);
   return (
     <View style={style.View}>
       <View stlye={style.column}>
         <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
         {
-          displayEngTransl && Translations.English !== "" &&
+          displayEngTransl && Translations.English !== null &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.English}</Text>
         }
         {
-          displayPunTansl && Translations.Punjabi.SS &&
+          displayPunTansl && Translations.Punjabi.SS !== null &&
           <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.Punjabi.SS}</Text>
         }
         {
-          displayTranslit && Transliteration.English !== "" &&
+          displayTranslit && Transliteration.English !== null &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Transliteration.English}</Text>
         }
       </View>

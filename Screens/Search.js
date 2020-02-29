@@ -17,15 +17,18 @@ const Search = () => {
   const [typeMenu, updateTypeM] = useState(false);
   const [searchMenu, updateSearchM] = useState(false);
   useEffect(() => {
+    let cancelSearch = false;
     const fetchResults = async () => {
       const results = await query(searchQuery, SearchCtx.searchType);
       updateResults([]);
       results.forEach(result => updateResults(prevArr => [...prevArr, result]))
     }
-    if (searchQuery.length > 0) {
+    if (searchQuery.length > 0 && !cancelSearch) {
       fetchResults();
     }
-    return true
+    return () => {
+      cancelSearch = true;
+    }
   }, [searchQuery]);
   return (
     <View>
