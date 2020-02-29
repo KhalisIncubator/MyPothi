@@ -45,7 +45,6 @@ const CustomDrawerComponent = (props) => {
   const GutkaCtx = useContext(GutkaContext);
   const [isCreating, toggleCreateMode] = useState(false);
   const [newGutkaName, changeText] = useState('');
-  useEffect(() => console.log(GutkaCtx.gutkaNames), [GutkaCtx.gutkaNames]);
   return (
     <DrawerContentScrollView {...props}>
       <View

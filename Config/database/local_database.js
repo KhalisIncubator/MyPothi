@@ -38,7 +38,14 @@ const findGutka = (currentGutka) => {
 ////  * @returns {Promise<entryObj[]>} an array of items stored within the gutka 
 // : Promise<entryObj[]>
 const getCurrentItems = (currentGutka) => {
-  const gutka = findGutka(currentGutka);
+  let gutka;
+  if (currentGutka) {
+    gutka = findGutka(currentGutka);
+  } else {
+    gutka = localRealm
+      .objects('Gutka')[0];
+  }
+
 
   const items = [];
   for (let i = 0; i < gutka.items.length; i++) {

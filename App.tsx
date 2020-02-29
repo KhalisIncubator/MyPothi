@@ -38,7 +38,6 @@ const App = () => {
   const netInfo = useNetInfo();
 
   const checkDB = async () => {
-    let needToDownloadDb = false;
     if (netInfo.isConnected && !(await checkIfDbExists())) {
 
       if (isDataEmpty()) {
@@ -52,14 +51,9 @@ const App = () => {
   useEffect(() => {
     checkDB()
       .then(async () => {
-        if (gutkaApi.currentItems.length === 0) {
-          console.log(isDataEmpty())
-          gutkaApi.updateCurrentName("Nitnem");
-          gutkaApi.updateGutkas();
-          gutkaApi.updateItems();
-          gutkaApi.updateIsReady(true);
-
-        }
+        gutkaApi.updateGutkas();
+        gutkaApi.updateItems();
+        gutkaApi.updateIsReady(true);
       })
 
   }, [])

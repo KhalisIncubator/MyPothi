@@ -6,7 +6,7 @@ export interface IGutkaCtx {
   isDataReady: boolean,
 
   createGutka: (newName: string) => void,
-  updateItems: () => void,
+  updateItems: (altName?: string) => void,
   updateGutkas: () => void,
   updateIsReady: (newVal: boolean) => void,
   updateCurrentName: (newName: string) => void,

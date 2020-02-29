@@ -5,20 +5,21 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import { getCurrentItems } from '../config/database/local_database';
 
-import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
+import { GutkaContext } from '../contexts/Contexts';
 import { loadShabad, remapLine } from '../config/database/database';
 import LineBlock from '../Components/Main/LineBlock';
+import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 
-// { navigation }
 const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
   const [shabads, updateShabads] = useState([]);
-
+  const [dataLoading] = useState(GutkaCtx.isDataReady);
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
-      let newItems = []
+      let newItems = [];
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
         newItems.push(shabad);
@@ -30,6 +31,7 @@ const Gutka = () => {
     } else if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length === 0) {
       updateShabads([]);
     }
+
   }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
   const renderItem = ({ item }) => {
     let lines = [];
@@ -45,6 +47,15 @@ const Gutka = () => {
   }
   return (
     <View style={styles.View}>
+      {
+        dataLoading &&
+        <>
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+        </>
+      }
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&

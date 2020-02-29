@@ -3,6 +3,7 @@ import { SearchType, QueryType, gutkaEntry } from '../dev_env/types';
 import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from '../database/local_database';
 
 const gutkaAPIFactory = ({ state, setState }) => {
+
   const createGutka = (newName: string) => {
     createNewGukta(newName);
     updateGutkas();
@@ -12,11 +13,14 @@ const gutkaAPIFactory = ({ state, setState }) => {
     setState(
       produce(draftState => {
         draftState.gutkaNames = names;
+        if (state.currentName === "") {
+          draftState.currentName = names[0];
+        }
       })
     )
   }
-  const updateItems = () => {
-    const items = getCurrentItems("Nitnem");
+  const updateItems = (altName?: string) => {
+    const items = getCurrentItems(state.currentName || altName);
     setState(
       produce(draftState => {
         draftState.currentItems = items;
@@ -47,11 +51,11 @@ const gutkaAPIFactory = ({ state, setState }) => {
   }
   const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
     addToGutka(state.currentName, id, mainLine, type);
-    updateItems();
+    updateItems(state.currentName);
   }
   const removeEntry = (id: number) => {
     removeFromGutka(state.currentName, id);
-    updateItems();
+    updateItems(state.currentName);
   }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {
