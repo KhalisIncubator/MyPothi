@@ -3,10 +3,11 @@ export type entryObj =
     id: number,
     mainLine: string,
     type: gutkaEntry,
+    parentGutka: string,
   };
 export type storedGutka = {
-  name: string,
   items: entryObj[],
+  name: string,
 }
 export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;

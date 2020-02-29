@@ -1,35 +1,35 @@
 import React from 'react';
-import { IGutkaCtx, IGlobalCtx, IViewerCtx, ISearchCtx } from '../config/interfaces';
+import { IGutkaCtx, IViewerCtx, ISearchCtx } from '../config/dev_env/interfaces';
 
 export const GutkaContext = React.createContext<IGutkaCtx>({
-  gutkas: [],
-  createGutka: () => { },
+  gutkaNames: [],
+  currentName: '',
   currentItems: [],
-  removeFromGutka: () => { },
-  addToGutka: () => { },
   isDataReady: false,
-  modalVisibile: false,
-  toggleModal: () => { }
+
+  createGutka: () => { },
+  updateGutkas: () => { },
+  updateItems: () => { },
+  updateIsReady: () => { },
+  updateCurrentName: () => { },
+  deleteAGutka: () => { },
+  addEntry: () => { },
+  removeEntry: () => { }
 })
-export const GlobalContext = React.createContext<IGlobalCtx>({
-  currentName: 'Loading...',
-  updateCurrentGutka: () => { },
-  isEditMode: false,
-  toggleEditMode: () => { },
-});
 export const SearchContext = React.createContext<ISearchCtx>({
   searchType: 0,
-  updateSearchType: () => { },
   queryType: 'Shabad',
+  updateSearchType: () => { },
   updateQueryType: () => { },
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
-  gurmukhiSize: 12,
+  gurmukhiSize: 30,
   translSize: 12,
   translitSize: 12,
-  updateFontSize: () => { },
   displayEngTransl: true,
   displayPunTansl: true,
   displayTranslit: true,
+
+  updateFontSize: () => { },
   updateDisplay: () => { },
 })

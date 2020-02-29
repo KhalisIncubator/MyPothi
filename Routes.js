@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -19,7 +19,7 @@ import Gutka from './Screens/Gutka';
 import SettingsScreen from './Screens/Settings';
 import Edit from './Screens/Edit';
 import { Header, BackHeader } from './Components/navigation/Headers';
-import { GutkaContext, GlobalContext } from './contexts/Contexts';
+import { GutkaContext } from './contexts/Contexts';
 import Search from './Screens/Search';
 
 const AppDrawer = createDrawerNavigator();
@@ -43,7 +43,6 @@ const ScreenStack = () => {
 }
 const CustomDrawerComponent = (props) => {
   const GutkaCtx = useContext(GutkaContext);
-  const GlobalCtx = useContext(GlobalContext);
   const [isCreating, toggleCreateMode] = useState(false);
   const [newGutkaName, changeText] = useState('');
   return (
@@ -60,19 +59,19 @@ const CustomDrawerComponent = (props) => {
           </View>
         </View>
         <Drawer.Section style={styles.drawerSection}>
-          {GutkaCtx.gutkas.map(gutka => (
+          {GutkaCtx.gutkaNames.map(name => (
             < DrawerItem
               icon={({ focused, color, size }) => (
                 <Icon name={focused ? "book-open-variant" : 'book'} color={color} size={size} />
               )}
-              key={gutka.name}
-              focused={gutka.name === GlobalCtx.currentName}
+              key={name}
+              focused={name === GutkaCtx.currentName}
               activeTintColor="#ff9a00"
               label={
-                ({ color }) => <Text style={[{ color }, styles.text]}>{gutka.name}</Text>
+                ({ color }) => <Text style={[{ color }, styles.text]}>{name}</Text>
               }
               onPress={() => {
-                GlobalCtx.updateCurrentGutka(gutka.name);
+                GutkaCtx.updateCurrentName(name);
                 props.navigation.closeDrawer();
               }}
             />

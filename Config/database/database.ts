@@ -10,7 +10,6 @@ const $dbSchema = `${$dbPath}/realm-schema-evergreen.json`;
 
 const anvaad = require('anvaad-js');
 let downloadProg: number;
-let hasDownloadFinished: boolean;
 
 // export db variables separate from functions
 export {
@@ -104,7 +103,7 @@ const query = async (searchQuery: string, searchType: number) => {
 
     // Sanitize query
     const saniQuery = searchQuery.trim().replace("'", "\\'");
-    const MAX_RESULTS = 10;
+    const MAX_RESULTS = 20;
     const resultsOrder = [];
     switch (searchType) {
       case consts.SEARCH_TYPES.FIRST_LETTERS: // First letter start
@@ -146,5 +145,5 @@ export {
   initSchema,
   loadShabad,
   remapLine,
-  query
+  query,
 }

@@ -6,12 +6,13 @@ import {
 } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { GlobalContext } from '../../contexts/Contexts';
+import { GutkaContext } from '../../contexts/Contexts';
+
 
 const Header = ({ previous, navigation }) => {
-  const GlobalCtx = useContext(GlobalContext);
+  const GutkaCtx = useContext(GutkaContext);
   const theme = useTheme();
-  const title = GlobalCtx.currentName;
+  const title = GutkaCtx.currentName;
   const route = useRoute();
   const isMain = route.name === 'Gutka';
   return (
@@ -39,11 +40,13 @@ const Header = ({ previous, navigation }) => {
         }
       />
       {isMain &&
-        <Appbar.Action icon="magnify" onPress={() => { navigation.navigate('Stack', { screen: 'Search' }); }} />}
-      {isMain &&
-        <Appbar.Action icon="circle-edit-outline" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />}
-      {isMain &&
-        <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />}
+        <>
+          <Appbar.Action icon="magnify" onPress={() => { navigation.navigate('Stack', { screen: 'Search' }); }} />
+          <Appbar.Action icon="circle-edit-outline" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />
+          <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />
+        </>
+      }
+
     </Appbar.Header>
   );
 };

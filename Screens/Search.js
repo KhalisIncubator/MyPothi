@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
-import { Results } from 'realm';
-import { query } from '../config/database/database';
+import query from '../config/database/banidb_api';
 import SearchResult from '../Components/Main/SearchResults';
-const Search = (props) => {
+const Search = () => {
   const SearchCtx = useContext(SearchContext);
 
   const theme = useTheme();
@@ -23,9 +22,9 @@ const Search = (props) => {
     const fetchResults = async () => {
       const results = await query(searchQuery, SearchCtx.searchType);
       updateResults([]);
-      results.forEach(result => updateResults(prevArr => [...prevArr, result]));
+      results.forEach(result => updateResults(prevArr => [...prevArr, result]))
     }
-    if (searchQuery.length > 3) {
+    if (searchQuery.length > 0) {
       fetchResults();
     }
   }, [searchQuery]);
@@ -34,8 +33,9 @@ const Search = (props) => {
       <Searchbar
         placeholder="Search"
         inputStyle={styles.input}
-        onChangeText={searchQuery => { updateQuery(searchQuery.toLowerCase()) }}
+        onChangeText={searchQuery => updateQuery(searchQuery)}
         value={searchQuery}
+        autoCapitalize='none'
         theme={{ colors: { primary: 'white' } }}
       />
       <View style={styles.row}>
@@ -86,7 +86,7 @@ const Search = (props) => {
 
 const styles = StyleSheet.create({
   input: {
-    fontFamily: 'AnmolLipiTrue'
+    fontFamily: 'AnmolLipiTrue',
   },
   button: {
     marginTop: 8,

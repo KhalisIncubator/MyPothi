@@ -13,25 +13,28 @@ const Edit = ({ navigation }) => {
   const [showSnack, updateShow] = useState(false);
   const GutkaCtx = useContext(GutkaContext);
   const currentGutka = GutkaCtx.currentItems;
-  const handleRemove = (id) => {
-    GutkaCtx.removeFromGutka(id);
+  const handleRemove = (id, index) => {
+    GutkaCtx.removeEntry(id, index);
     updateShow(true);
   }
   return (
     <View style={style.View}>
-      {currentGutka.map(item => {
-        return (
-          <Card.Title
-            style={style.Card}
-            titleStyle={style.CardTitle}
-            title={`${item.mainLine}`}
-            subtitle={`Shaabd ID: ${item.id}`}
-            left={(props) => <Avatar.Icon {...props} icon="book" />}
-            right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
-              handleRemove(item.id);
-            }} />}
-          />
-        )
+      {currentGutka.map((item, index) => {
+        if (item.isValid()) {
+          return (
+            <Card.Title
+              style={style.Card}
+              key={index}
+              titleStyle={style.CardTitle}
+              title={`${item.mainLine}`}
+              subtitle={`Shaabd ID: ${item.id}`}
+              left={(props) => <Avatar.Icon {...props} icon="book" />}
+              right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
+                handleRemove(item.id, index);
+              }} />}
+            />
+          )
+        }
       })}
       <Snackbar
         visible={showSnack}

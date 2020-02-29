@@ -6,37 +6,39 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { GutkaContext, GlobalContext, ViewerContext } from '../contexts/Contexts';
-import { loadShabad, remapLine } from '../config/database/database';
+import { GutkaContext } from '../contexts/Contexts';
+import { loadShabad } from '../config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
+import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 
-const Gutka = ({ navigation }) => {
+const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
-  const GlobalCtx = useContext(GlobalContext);
   const [shabads, updateShabads] = useState([]);
-
+  const [dataLoading, updateLoading] = useState(true);
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
-      updateShabads([]);
+      let newItems = [];
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
-        updateShabads(prevArr => [...prevArr, shabad]);
-      }
-    }
-    getLines();
-  }, [GutkaCtx.currentItems]);
-  //empty out array when name changes to refill array with correct items
-  useEffect(() => {
-    updateShabads([]);
-  }, [GlobalCtx.currentName])
 
-  // render each shabad inside of flatlist
+        newItems.push(shabad);
+      }
+      updateShabads(newItems);
+      updateLoading(false);
+    }
+    if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length > 0) {
+      getLines();
+    } else if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length === 0) {
+      updateShabads([]);
+      updateLoading(false);
+    }
+
+  }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      const normalized = remapLine(line);
-      return <LineBlock key={normalized.ID} line={normalized} />
+      return <LineBlock key={line.id} line={line} />
     })
     return (
       <View key='Viewer'>
@@ -46,6 +48,21 @@ const Gutka = ({ navigation }) => {
   }
   return (
     <View style={styles.View}>
+      {
+        (dataLoading || !GutkaCtx.isDataReady) &&
+        <>
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+        </>
+      }
       {GutkaCtx.isDataReady &&
         GutkaCtx.currentItems.length != undefined &&
         shabads.length != 0 &&
@@ -54,10 +71,6 @@ const Gutka = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderItem}
         />
-      }
-      {
-        !GutkaCtx.isDataReady &&
-        <Text>Loading...</Text>
       }
     </View>
   );

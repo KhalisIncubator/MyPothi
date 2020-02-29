@@ -9,17 +9,17 @@ import { Avatar, Card, IconButton, Button, Snackbar } from 'react-native-paper';
 import { GutkaContext, SearchContext } from '../../contexts/Contexts';
 
 const SearchResult = (props) => {
-  const { Gurmukhi, ID } = props.result;
+  const { verse, shabadId } = props.result;
   const GutkaCtx = useContext(GutkaContext);
   const { queryType } = useContext(SearchContext)
   return (
     <TouchableOpacity
-      onPress={() => GutkaCtx.addToGutka(ID, Gurmukhi, queryType)}>
+      onPress={() => GutkaCtx.addEntry(shabadId, verse.gurmukhi, queryType)}>
       <Card.Title
         style={style.Card}
         titleStyle={style.CardTitle}
-        title={`${Gurmukhi}`}
-        subtitle={`Shaabd ID: ${ID}`}
+        title={`${verse.gurmukhi}`}
+        subtitle={`Shaabd ID: ${shabadId}`}
         left={(props) => <Avatar.Icon {...props} icon="book" />
         }
       />
