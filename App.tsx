@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { useNetInfo } from '@react-native-community/netinfo';
+// import { useNetInfo } from '@react-native-community/netinfo';
 
 import { useApi } from './config/app_state/Hooks';
 import { populateData, isDataEmpty } from './config/database/local_database';
@@ -32,7 +32,7 @@ const App = () => {
   const viewerApi = useApi(viewerApiFactory, initialViewerState);
   const searchApi = useApi(searchApiFactory, initalSearchState);
 
-  const netInfo = useNetInfo();
+  // const netInfo = useNetInfo();
 
   const checkDB = async () => {
     if (isDataEmpty()) {

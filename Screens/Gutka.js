@@ -14,7 +14,7 @@ import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
   const [shabads, updateShabads] = useState([]);
-  const [dataLoading] = useState(GutkaCtx.isDataReady);
+  const [dataLoading, updateLoading] = useState(true);
   //when items update, load their shabads
   useEffect(() => {
     const getLines = async () => {
@@ -25,11 +25,13 @@ const Gutka = () => {
         newItems.push(shabad);
       }
       updateShabads(newItems);
+      updateLoading(false);
     }
     if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length > 0) {
       getLines();
     } else if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length === 0) {
       updateShabads([]);
+      updateLoading(false);
     }
 
   }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
@@ -47,8 +49,14 @@ const Gutka = () => {
   return (
     <View style={styles.View}>
       {
-        dataLoading &&
+        (dataLoading || !GutkaCtx.isDataReady) &&
         <>
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
+          <ShimmeringLine />
           <ShimmeringLine />
           <ShimmeringLine />
           <ShimmeringLine />
@@ -63,9 +71,6 @@ const Gutka = () => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderItem}
         />
-      }
-      {!GutkaCtx.isDataReady &&
-        <Text>Loading...</Text>
       }
     </View>
   );

@@ -1,10 +1,20 @@
 import React from 'react';
 import {
-  View,
-  Text
+  StyleSheet
 } from 'react-native';
 
 // import Shimmer from 'react-native-shimmer';
-import List from 'react-content-loader/native'
-const ShimmeringLine = () => <List />;
+import { Code } from 'react-content-loader/native'
+const ShimmeringLine = () => <Code
+  style={style.View}
+  backgroundColor="#ababab"
+  foregroundColor="#c9c9c9"
+/>;
+
+const style = StyleSheet.create({
+  View: {
+    margin: 5,
+    alignContent: 'center'
+  }
+})
 export default ShimmeringLine;

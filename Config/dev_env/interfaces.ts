@@ -1,4 +1,4 @@
-import { storedGutka, entryObj, gutkaEntry, SearchType, QueryType } from "./types";
+import { entryObj, gutkaEntry, SearchType, QueryType } from "./types";
 export interface IGutkaCtx {
   gutkaNames: string[],
   currentName: '',

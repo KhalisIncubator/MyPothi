@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItem,
