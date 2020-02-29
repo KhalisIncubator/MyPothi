@@ -13,24 +13,24 @@ const Edit = ({ navigation }) => {
   const [showSnack, updateShow] = useState(false);
   const GutkaCtx = useContext(GutkaContext);
   const currentGutka = GutkaCtx.currentItems;
-  const handleRemove = (id) => {
-    GutkaCtx.removeEntry(id);
+  const handleRemove = (id, index) => {
+    GutkaCtx.removeEntry(id, index);
     updateShow(true);
   }
   return (
     <View style={style.View}>
-      {currentGutka.map(item => {
+      {currentGutka.map((item, index) => {
         if (item.isValid()) {
           return (
             <Card.Title
               style={style.Card}
-              key={item.id}
+              key={index}
               titleStyle={style.CardTitle}
               title={`${item.mainLine}`}
               subtitle={`Shaabd ID: ${item.id}`}
               left={(props) => <Avatar.Icon {...props} icon="book" />}
               right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
-                handleRemove(item.id);
+                handleRemove(item.id, index);
               }} />}
             />
           )

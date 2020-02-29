@@ -7,6 +7,8 @@ import {
 import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GutkaContext } from '../../contexts/Contexts';
+
+
 const Header = ({ previous, navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
   const theme = useTheme();

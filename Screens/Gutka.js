@@ -5,10 +5,9 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import { getCurrentItems } from '../config/database/local_database';
 
 import { GutkaContext } from '../contexts/Contexts';
-import { loadShabad, remapLine } from '../config/database/database';
+import { loadShabad } from '../config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 
@@ -22,6 +21,7 @@ const Gutka = () => {
       let newItems = [];
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
+
         newItems.push(shabad);
       }
       updateShabads(newItems);
@@ -36,8 +36,7 @@ const Gutka = () => {
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
-      const normalized = remapLine(line);
-      return <LineBlock key={normalized.ID} line={normalized} />
+      return <LineBlock key={line.id} line={line} />
     })
     return (
       <View key='Viewer'>
@@ -65,8 +64,7 @@ const Gutka = () => {
           renderItem={renderItem}
         />
       }
-      {
-        !GutkaCtx.isDataReady &&
+      {!GutkaCtx.isDataReady &&
         <Text>Loading...</Text>
       }
     </View>

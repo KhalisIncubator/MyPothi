@@ -1,8 +1,6 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { unzip } from 'react-native-zip-archive'
 import { ISchemaJSON, IConifg } from '../database/database-interfaces';
-import localRealmConfig, { GuktaSchema, EntrySchema } from '../realm_schema';
-import { populateData, addToGutka, removeFromGutka } from './local_database';
 
 const consts = require('./database_conts');
 const Realm = require('realm');
@@ -12,7 +10,6 @@ const $dbSchema = `${$dbPath}/realm-schema-evergreen.json`;
 
 const anvaad = require('anvaad-js');
 let downloadProg: number;
-let hasDownloadFinished: boolean;
 
 // export db variables separate from functions
 export {

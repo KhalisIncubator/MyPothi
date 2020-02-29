@@ -1,27 +1,26 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
   StyleSheet
 } from 'react-native';
 import { ViewerContext } from '../../contexts/Contexts';
-import { remapLine } from '../../config/database/database';
 
 const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
   const { gurmukhiSize, displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
-  const { Gurmukhi, English, Punjabi, Transliteration } = props.line;
+  const { Gurbani, Translations, Transliteration } = props.line;
   return (
     <View style={style.View}>
       <View stlye={style.column}>
-        <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurmukhi}</Text>
+        <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
         {
           displayEngTransl &&
-          <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{English}</Text>
+          <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.English}</Text>
         }
         {
           displayPunTansl &&
-          <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Punjabi}</Text>
+          <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.Punjabi.ss}</Text>
         }
         {
           displayTranslit &&

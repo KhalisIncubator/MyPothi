@@ -24,11 +24,11 @@ const fetchAllGutkas = () => {
  * @param {string} currentGutka the name of the current gutka
  * @returns {storedGutka} the stored gutka object with the name property provided
  */
-const findGutka = (currentGutka) => {
+const findGutka = (currentGutka, index) => {
   const filter = `name == "${currentGutka}"`;
   const gutka = localRealm
     .objects('Gutka')
-    .filtered(filter)[0];
+    .filtered(filter)[index || 0];
   return gutka;
 }
 /**
@@ -114,8 +114,8 @@ const createNewGukta = (name) => {
     })
   })
 }
-const deleteGukta = (name) => {
-  const gutka = findGutka(name);
+const deleteGukta = (name, index) => {
+  const gutka = findGutka(name, index);
   localRealm.write(() => {
     localRealm.delete(gutka);
   })

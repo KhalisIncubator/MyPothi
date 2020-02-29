@@ -2,13 +2,12 @@ import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { useNetInfo } from '@react-native-community/netinfo';
 
-import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
-import { fetchSettings } from './config/app_state/functions';
-import { downloadDB, checkIfDbExists, loadShabad, downloadProg, $dbPath } from './config/database/database';
-import LocalRelam from './config/realm_schema';
 import { useApi } from './config/app_state/Hooks';
-import { initialGutkaState, initialGlobalState, initialViewerState, initalSearchState } from './config/app_state/initial_state';
+import { populateData, isDataEmpty } from './config/database/local_database';
+
+import { initialGutkaState, initialViewerState, initalSearchState } from './config/app_state/initial_state';
 import { GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
 import Routes from './Routes';
 import {
@@ -16,8 +15,6 @@ import {
   viewerApiFactory,
   searchApiFactory
 } from './config/app_state/api_factories';
-import Gutka from './Screens/Gutka';
-import { fetchAllGutkas, populateData, isDataEmpty, getCurrentItems } from './config/database/local_database';
 
 const theme = {
   ...DefaultTheme,
@@ -38,13 +35,8 @@ const App = () => {
   const netInfo = useNetInfo();
 
   const checkDB = async () => {
-    if (netInfo.isConnected && !(await checkIfDbExists())) {
-
-      if (isDataEmpty()) {
-        Promise.all([populateData(), downloadDB()]);
-      } else {
-        Promise.all([downloadDB()])
-      }
+    if (isDataEmpty()) {
+      await populateData();
     }
 
   }
