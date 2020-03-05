@@ -43,6 +43,7 @@ const App = () => {
   useEffect(() => {
     checkDB()
       .then(async () => {
+
         gutkaApi.updateGutkas();
         gutkaApi.updateItems();
         gutkaApi.updateIsReady(true);

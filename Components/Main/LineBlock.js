@@ -15,7 +15,7 @@ const LineBlock = (props) => {
       <View stlye={style.column}>
         <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
         {
-          displayEngTransl && Translations.English !== null &&
+          displayEngTransl && !(Translations.English !== null || Translations.English !== " ") &&
           <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.English}</Text>
         }
         {

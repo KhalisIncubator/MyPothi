@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { GutkaContext } from '../contexts/Contexts';
 import { loadShabad } from '../config/database/banidb_api';
@@ -16,6 +17,7 @@ const Gutka = () => {
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
   //when items update, load their shabads
+  const net = useNetInfo();
   useEffect(() => {
     const getLines = async () => {
       let newItems = [];
@@ -33,7 +35,6 @@ const Gutka = () => {
       updateShabads([]);
       updateLoading(false);
     }
-
   }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
   const renderItem = ({ item }) => {
     let lines = [];
@@ -49,7 +50,7 @@ const Gutka = () => {
   return (
     <View style={styles.View}>
       {
-        (dataLoading || !GutkaCtx.isDataReady) &&
+        (dataLoading && GutkaCtx.isDataReady) &&
         <>
           <ShimmeringLine />
           <ShimmeringLine />
