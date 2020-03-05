@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import TextBlock from './TextBlock';
 import { ViewerContext } from '../../contexts/Contexts';
 
 const LineBlock = (props) => {
@@ -15,8 +16,8 @@ const LineBlock = (props) => {
       <View stlye={style.column}>
         <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
         {
-          displayEngTransl && !(Translations.English !== null || Translations.English !== " ") &&
-          <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.English}</Text>
+          displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
+          <TextBlock value={Translations.English} isGurmukhi={false} />
         }
         {
           displayPunTansl && Translations.Punjabi.SS !== null &&
