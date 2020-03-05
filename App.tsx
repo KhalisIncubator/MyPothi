@@ -7,13 +7,14 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { useApi } from './config/app_state/Hooks';
 import { populateData, isDataEmpty } from './config/database/local_database';
 
-import { initialGutkaState, initialViewerState, initalSearchState } from './config/app_state/initial_state';
-import { GutkaContext, ViewerContext, SearchContext } from './contexts/Contexts';
+import { initialGutkaState, initialViewerState, initalSearchState, initialEditState } from './config/app_state/initial_state';
+import { GutkaContext, ViewerContext, SearchContext, EditContext } from './contexts/Contexts';
 import Routes from './Routes';
 import {
   gutkaAPIFactory,
   viewerApiFactory,
-  searchApiFactory
+  searchApiFactory,
+  editApiFactory
 } from './config/app_state/api_factories';
 
 const theme = {
@@ -30,6 +31,7 @@ const theme = {
 const App = () => {
   const gutkaApi = useApi(gutkaAPIFactory, initialGutkaState);
   const viewerApi = useApi(viewerApiFactory, initialViewerState);
+  const editApi = useApi(editApiFactory, initialEditState);
   const searchApi = useApi(searchApiFactory, initalSearchState);
 
   // const netInfo = useNetInfo();
@@ -54,6 +56,7 @@ const App = () => {
   const contexts = [
     [GutkaContext.Provider, gutkaApi],
     [ViewerContext.Provider, viewerApi],
+    [EditContext, editApi],
     [SearchContext.Provider, searchApi],
   ]
     .reduce((piledContexts: any, [CtxProvider, value]) => children => piledContexts(

@@ -1,31 +1,56 @@
 import React, { useContext } from 'react';
 import {
   View,
-  Text,
   StyleSheet
 } from 'react-native';
 import TextBlock from './TextBlock';
-import { ViewerContext } from '../../contexts/Contexts';
+import { ViewerContext, EditContext } from '../../contexts/Contexts';
 
 const LineBlock = (props) => {
   const ViewerCtx = useContext(ViewerContext);
-  const { gurmukhiSize, displayEngTransl, displayPunTansl, displayTranslit } = ViewerCtx;
+  const EditCtx = useContext(EditContext);
+  const {
+    gurmukhiSize,
+    translSize,
+    translitSize,
+    displayEngTransl,
+    displayPunTansl,
+    displayTranslit,
+  } = ViewerCtx;
+  const {
+    isEditMode
+  } = EditCtx;
   const { Gurbani, Translations, Transliteration } = props.line;
   return (
     <View style={style.View}>
       <View stlye={style.column}>
-        <Text style={[style.Gurmukhi, style.text, { fontSize: gurmukhiSize }]}>{Gurbani.ascii}</Text>
+        <TextBlock
+          isSelectable={isEditMode}
+          style={{ fontSize: gurmukhiSize }}
+          value={Gurbani.ascii}
+          isPangtee={true} />
         {
           displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
-          <TextBlock value={Translations.English} isGurmukhi={false} />
+          <TextBlock
+            isSelectable={isEditMode}
+            value={Translations.English}
+            style={{ fontSize: translSize }} />
         }
         {
           displayPunTansl && Translations.Punjabi.SS !== null &&
-          <Text style={[style.PunjabiTranslation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Translations.Punjabi.SS}</Text>
+          <TextBlock
+            isSelectable={isEditMode}
+            value={Translations.Punjabi.SS}
+            isGurmukhi={true}
+            style={{ fontSize: translSize }}
+          />
         }
         {
           displayTranslit && Transliteration.English !== null &&
-          <Text style={[style.Translation, style.text, { fontSize: ViewerCtx.translationSize }]}>{Transliteration.English}</Text>
+          <TextBlock
+            value={Transliteration.English}
+            isSelectable={isEditMode}
+            style={{ fontSize: translitSize }} />
         }
       </View>
     </View>

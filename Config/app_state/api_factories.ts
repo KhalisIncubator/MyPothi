@@ -2,6 +2,8 @@ import produce from 'immer';
 import { SearchType, QueryType, gutkaEntry } from '../dev_env/types';
 import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from '../database/local_database';
 
+import _ from 'lodash';
+
 const gutkaAPIFactory = ({ state, setState }) => {
 
   const createGutka = (newName: string) => {
@@ -21,6 +23,7 @@ const gutkaAPIFactory = ({ state, setState }) => {
   }
   const updateItems = (altName?: string) => {
     const items = getCurrentItems(state.currentName || altName);
+    // use _.isEquals to compare the modified lines
     setState(
       produce(draftState => {
         draftState.currentItems = items;
@@ -74,6 +77,28 @@ const gutkaAPIFactory = ({ state, setState }) => {
     removeEntry
   }
 }
+const editApiFactory = ({ state, setState }) => {
+  const {
+    isEditMode,
+    selectedLineID
+  } = state;
+
+
+  const updateEditMode = () => {
+
+  }
+  const updateLineID = () => {
+
+  }
+
+  return {
+    isEditMode,
+    selectedLineID,
+
+    updateEditMode,
+    updateLineID
+  }
+}
 const viewerApiFactory = ({ state, setState }) => {
   const {
     gurmukhiSize,
@@ -81,7 +106,7 @@ const viewerApiFactory = ({ state, setState }) => {
     translitSize,
     displayEngTransl,
     displayPunTansl,
-    displayTranslit
+    displayTranslit,
   } = state;
 
   const updateElementDisplay = (newVal: number, element: string) => {
@@ -112,7 +137,7 @@ const viewerApiFactory = ({ state, setState }) => {
     displayTranslit,
 
     updateElementDisplay,
-    updateFontSize
+    updateFontSize,
   }
 }
 const searchApiFactory = ({ state, setState }) => {
@@ -136,5 +161,6 @@ const searchApiFactory = ({ state, setState }) => {
 export {
   gutkaAPIFactory,
   viewerApiFactory,
+  editApiFactory,
   searchApiFactory
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IGutkaCtx, IViewerCtx, ISearchCtx } from '../config/dev_env/interfaces';
+import { IGutkaCtx, IViewerCtx, ISearchCtx, IEditCtx } from '../config/dev_env/interfaces';
 
 export const GutkaContext = React.createContext<IGutkaCtx>({
   gutkaNames: [],
@@ -21,6 +21,13 @@ export const SearchContext = React.createContext<ISearchCtx>({
   queryType: 'Shabad',
   updateSearchType: () => { },
   updateQueryType: () => { },
+});
+export const EditContext = React.createContext<IEditCtx>({
+  isEditMode: false,
+  selectedLineID: 0,
+
+  updateEditMode: () => { },
+  updateLineID: () => { },
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
   gurmukhiSize: 30,

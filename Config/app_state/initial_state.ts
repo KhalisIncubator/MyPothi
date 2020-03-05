@@ -4,17 +4,17 @@ const initialGutkaState = {
   currentItems: [],
   isDataReady: false,
 }
-const initialGlobalState = {
-  currentName: '',
-  isDBReady: false,
-}
 const initialViewerState = {
   gurmukhiSize: 30,
-  translSize: 12,
-  translitSize: 12,
+  translSize: 16,
+  translitSize: 16,
   displayEngTransl: true,
   displayPunTansl: true,
-  displayTranslit: true,
+  displayTranslsit: true,
+}
+const initialEditState = {
+  isEditMode: false,
+  selectedLineID: 0,
 }
 const initalSearchState = {
   searchType: 0,
@@ -22,7 +22,7 @@ const initalSearchState = {
 }
 export {
   initialGutkaState,
-  initialGlobalState,
+  initialEditState,
   initialViewerState,
   initalSearchState
 }

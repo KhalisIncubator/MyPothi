@@ -21,6 +21,14 @@ export interface ISearchCtx {
   updateSearchType: (newType: SearchType) => void,
   updateQueryType: () => void,
 }
+
+export interface IEditCtx {
+  isEditMode: boolean,
+  selectedLineID: number,
+
+  updateEditMode: () => void,
+  updateLineID: (id: number) => void,
+}
 export interface IViewerCtx {
   gurmukhiSize: number,
   translSize: number,
