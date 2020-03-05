@@ -21,7 +21,6 @@ const LineBlock = (props) => {
     isEditMode
   } = EditCtx;
   const { Gurbani, Translations, Transliteration } = props.line;
-  console.log(displayTranslit)
   return (
     <View stlye={style.column}>
       <TextBlock

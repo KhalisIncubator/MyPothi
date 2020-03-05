@@ -16,14 +16,12 @@ const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
-  //when items update, load their shabads
-  const net = useNetInfo();
   useEffect(() => {
+    updateLoading(true);
     const getLines = async () => {
       let newItems = [];
       for (const item of GutkaCtx.currentItems) {
         const shabad = await loadShabad(item.id);
-
         newItems.push(shabad);
       }
       updateShabads(newItems);
