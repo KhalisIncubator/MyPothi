@@ -10,7 +10,7 @@ const initialViewerState = {
   translitSize: 16,
   displayEngTransl: true,
   displayPunTansl: true,
-  displayTranslsit: true,
+  displayTranslit: true,
 }
 const initialEditState = {
   isEditMode: false,

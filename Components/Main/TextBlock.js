@@ -34,10 +34,7 @@ const TextBlock = (props) => {
 
 const styles = StyleSheet.create({
   View: {
-    borderColor: 'black',
     width: '100%',
-    borderWidth: 1,
-
   },
   Text: {
     paddingHorizontal: 10,

@@ -1,6 +1,11 @@
 import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView
+} from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 // import { useNetInfo } from '@react-native-community/netinfo';
 
@@ -56,14 +61,15 @@ const App = () => {
   const contexts = [
     [GutkaContext.Provider, gutkaApi],
     [ViewerContext.Provider, viewerApi],
-    [EditContext, editApi],
     [SearchContext.Provider, searchApi],
+    [EditContext.Provider, editApi]
   ]
     .reduce((piledContexts: any, [CtxProvider, value]) => children => piledContexts(
       <CtxProvider value={value}>
         {children}
       </CtxProvider>
     ), context => context);
+
   return contexts(
     <PaperProvider theme={theme}>
       <Routes />

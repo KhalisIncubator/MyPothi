@@ -21,46 +21,42 @@ const LineBlock = (props) => {
     isEditMode
   } = EditCtx;
   const { Gurbani, Translations, Transliteration } = props.line;
+  console.log(displayTranslit)
   return (
-    <View style={style.View}>
-      <View stlye={style.column}>
+    <View stlye={style.column}>
+      <TextBlock
+        isSelectable={isEditMode}
+        style={{ fontSize: gurmukhiSize }}
+        value={Gurbani.ascii}
+        isPangtee={true} />
+      {
+        displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
         <TextBlock
           isSelectable={isEditMode}
-          style={{ fontSize: gurmukhiSize }}
-          value={Gurbani.ascii}
-          isPangtee={true} />
-        {
-          displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
-          <TextBlock
-            isSelectable={isEditMode}
-            value={Translations.English}
-            style={{ fontSize: translSize }} />
-        }
-        {
-          displayPunTansl && Translations.Punjabi.SS !== null &&
-          <TextBlock
-            isSelectable={isEditMode}
-            value={Translations.Punjabi.SS}
-            isGurmukhi={true}
-            style={{ fontSize: translSize }}
-          />
-        }
-        {
-          displayTranslit && Transliteration.English !== null &&
-          <TextBlock
-            value={Transliteration.English}
-            isSelectable={isEditMode}
-            style={{ fontSize: translitSize }} />
-        }
-      </View>
+          value={Translations.English}
+          style={{ fontSize: translSize }} />
+      }
+      {
+        displayPunTansl && Translations.Punjabi.SS !== null &&
+        <TextBlock
+          isSelectable={isEditMode}
+          value={Translations.Punjabi.SS}
+          isGurmukhi={true}
+          style={{ fontSize: translSize }}
+        />
+      }
+      {
+        displayTranslit && Transliteration.English &&
+        <TextBlock
+          value={Transliteration.English}
+          isSelectable={isEditMode}
+          style={{ fontSize: translitSize }} />
+      }
     </View>
   );
 }
 
 const style = StyleSheet.create({
-  View: {
-    flexDirection: 'row',
-  },
   text: {
     paddingLeft: 5,
   },

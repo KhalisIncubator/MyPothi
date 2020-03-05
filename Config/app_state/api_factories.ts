@@ -87,7 +87,7 @@ const editApiFactory = ({ state, setState }) => {
   const updateEditMode = () => {
 
   }
-  const updateLineID = () => {
+  const updateLineID = (id: number) => {
 
   }
 

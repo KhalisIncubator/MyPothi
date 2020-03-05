@@ -29,6 +29,7 @@ export interface IEditCtx {
   updateEditMode: () => void,
   updateLineID: (id: number) => void,
 }
+
 export interface IViewerCtx {
   gurmukhiSize: number,
   translSize: number,
