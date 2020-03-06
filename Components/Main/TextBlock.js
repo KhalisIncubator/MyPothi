@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontFamily: "AnmolLipiTrue",
   },
   Selected: {
-    backgroundColor: 'blue',
+    backgroundColor: '#a5a5a5',
   }
 });
 export default TextBlock;
