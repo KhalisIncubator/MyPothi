@@ -7,11 +7,12 @@ import {
   SafeAreaView
 } from 'react-native';
 
-import { IconButton, Colors } from 'react-native-paper';
+import { IconButton, useTheme } from 'react-native-paper';
 
 const Toolbar = ({ showMain, updateMode }) => {
+  const theme = useTheme();
   return (
-    <SafeAreaView style={[styles.View, showMain ? { backgroundColor: '#D3D3D3' } : { backgroundColor: '#FFA500' }]}>
+    <SafeAreaView style={[styles.View, showMain ? { backgroundColor: '#D3D3D3' } : theme.Header]}>
       <View style={styles.Header}>
         <IconButton
           icon={showMain ? "chevron-down" : "chevron-up"}
