@@ -5,10 +5,14 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
+
 import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
 import query from '../config/database/banidb_api';
+
 import SearchResult from '../Components/Main/SearchResults';
+import { Icon, Text } from 'react-native-paper';
 const Search = () => {
   const SearchCtx = useContext(SearchContext);
 
@@ -16,8 +20,10 @@ const Search = () => {
   const [results, updateResults] = useState([]);
   const [typeMenu, updateTypeM] = useState(false);
   const [searchMenu, updateSearchM] = useState(false);
+
+  const net = useNetInfo();
   useEffect(() => {
-    let cancelSearch = false;
+    let cancelSearch = net.isConnected ? false : true;
     const fetchResults = async () => {
       const results = await query(searchQuery, SearchCtx.searchType);
       updateResults([]);
@@ -64,13 +70,19 @@ const Search = () => {
             <Button style={styles.button} onPress={() => updateSearchM(true)}>{SEARCH_TEXTS[SearchCtx.searchType]}</Button>
           }
         >
-          {Object.entries(SEARCH_TEXTS).map((text) => {
-            const [id, desc] = text;
-            return <Menu.Item onPress={() => {
-              SearchCtx.updateSearchType(id);
-              updateSearchM(false);
-            }} title={`${desc}`} />
-          })}
+          {net.isConnected &&
+            Object.entries(SEARCH_TEXTS).map((text) => {
+              const [id, desc] = text;
+              return <Menu.Item onPress={() => {
+                SearchCtx.updateSearchType(id);
+                updateSearchM(false);
+              }} title={`${desc}`} />
+            })}
+          {!net.isConnected &&
+            <View>
+              <Icon name="wifi-off" size={30} />
+              <Text>Sorry you are not connected to the internet!</Text>
+            </View>}
         </Menu>
       </View>
       <ScrollView>

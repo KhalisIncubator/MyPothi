@@ -1,12 +1,9 @@
 import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Feather';
+
 // import { useNetInfo } from '@react-native-community/netinfo';
 
 import { useApi } from './config/app_state/Hooks';
@@ -28,7 +25,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#3498db',
-    accent: '#FFA500',
+    // accent: '#FFA500',
     header: "#FFA500"
   },
 };
@@ -71,7 +68,11 @@ const App = () => {
     ), context => context);
 
   return contexts(
-    <PaperProvider theme={theme}>
+    <PaperProvider
+      theme={theme}
+      settings={{
+        icon: props => <Icon {...props} />,
+      }}>
       <Routes />
     </PaperProvider>
   )

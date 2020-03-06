@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#EE5407',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
+    // position: 'absolute',
     bottom: 0,
   }
 })

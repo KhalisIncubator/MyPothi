@@ -13,7 +13,7 @@ const initialViewerState = {
   displayTranslit: true,
 }
 const initialEditState = {
-  isEditMode: true,
+  isEditMode: false,
   selectedLineID: 0,
 }
 const initalSearchState = {

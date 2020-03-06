@@ -31,7 +31,6 @@ const Gutkas = [
     items: [],
   }
 ]
-
 const Settings = {
   displayEngTransl: true,
   displayPunTransl: true,
