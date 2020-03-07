@@ -3,21 +3,33 @@ const Gutkas = [
     name: "Nitnem",
     items: [
       {
-        id: "Bani Guru Guru Hai Bani",
-        type: 'Shabad'
+        id: 3632,
+        mainLine: "Bani Guru Guru Hai Bani",
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       }, {
-        id: "Siro na mitai avan jai",
-        type: 'Shabad'
+        id: 40021,
+        mainLine: "Siro na mitai avan jai",
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       },
       {
-        id: "Vaho Vaho Gobin Singh Aape Gur Chela",
-        type: "Shabad"
+        id: 7738,
+        mainLine: "kha(n)ddaa pirathamai saaj kai",
+        type: 'Shabad',
+        parentGutka: 'Nitnem'
       },
       {
-        id: "Jaap Sahib",
-        type: "Bani"
+        id: 7402,
+        mainLine: "Jaap Sahib",
+        type: 'Bani',
+        parentGutka: 'Nitnem'
       }]
   },
+  {
+    name: 'Kirtaan',
+    items: [],
+  }
 ]
 
 const Settings = {
