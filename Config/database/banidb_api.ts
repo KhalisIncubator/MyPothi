@@ -49,18 +49,16 @@ const query = async (search: string, type: number) => {
 const loadShabad = async (id: number) => {
   const API_URL = "https://api.banidb.com/v2/";
   const url = encodeURI(buildApiUrl({ id, API_URL }));
-  return new Promise((resolve, reject) => {
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        const remapped = [];
-        data.verses.forEach(pg => {
-          remapped.push(remapLine(pg));
-        });
-        resolve(remapped);
-      })
-      .catch(err => reject(err));
-  })
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const remapped = [];
+      data.verses.forEach(pg => {
+        remapped.push(remapLine(pg));
+      });
+      return remapped;
+    })
+    .catch(err => err);
 
 }
 export default query;
