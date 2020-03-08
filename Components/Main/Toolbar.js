@@ -9,14 +9,17 @@ import {
 
 import { IconButton, useTheme } from 'react-native-paper';
 
-const Toolbar = ({ showMain, updateMode }) => {
+const Toolbar = ({ showMain, updateMode, updateLine }) => {
   const theme = useTheme();
   return (
     <SafeAreaView style={[styles.View, { backgroundColor: theme.colors.header }]}>
       <View style={[styles.Header, { backgroundColor: theme.colors.header }]}>
         <IconButton
           icon={showMain ? "chevron-down" : "chevron-up"}
-          onPress={() => updateMode()}
+          onPress={() => {
+            updateMode()
+            updateLine(null);
+          }}
         />
         <Text>Toolbar</Text>
       </View>

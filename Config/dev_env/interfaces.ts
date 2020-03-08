@@ -1,4 +1,4 @@
-import { entryObj, gutkaEntry, SearchType, QueryType } from "./types";
+import { entryObj, gutkaEntry, SearchType, QueryType, Element } from "./types";
 export interface IGutkaCtx {
   gutkaNames: string[],
   currentName: '',
@@ -25,9 +25,11 @@ export interface ISearchCtx {
 export interface IEditCtx {
   isEditMode: boolean,
   selectedLineID: number | null,
+  selectedElement: Element,
 
   updateEditMode: () => void,
   updateLineID: (id: number) => void,
+  updateSelectedE: (newE: Element) => void,
 }
 
 export interface IViewerCtx {
@@ -50,3 +52,28 @@ export interface setttingsFetched {
   $translitSize: number,
 }
 
+export interface Line {
+  id: number,
+  sID: number,
+  Gurbani: {
+    ascii: string,
+    unicode: string
+  };
+  Translations: {
+    English: string | null,
+    Punjabi: {
+      SS: string | null,
+      FT: string | null
+    },
+    Spanish: string | null,
+  };
+  Transliteration: {
+    English: string,
+    Hindi: string,
+  };
+  Vishraams: {
+    sttm: string[],
+    ig: string[],
+    sttm2: string[],
+  };
+}

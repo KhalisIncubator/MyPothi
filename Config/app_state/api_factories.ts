@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { SearchType, QueryType, gutkaEntry } from '../dev_env/types';
+import { SearchType, QueryType, gutkaEntry, Element } from '../dev_env/types';
 import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from '../database/local_database';
 
 import _ from 'lodash';
@@ -78,7 +78,8 @@ const gutkaAPIFactory = ({ state, setState }) => {
 const editApiFactory = ({ state, setState }) => {
   const {
     isEditMode,
-    selectedLineID
+    selectedLineID,
+    selectedElement,
   } = state;
 
 
@@ -87,16 +88,25 @@ const editApiFactory = ({ state, setState }) => {
       draftState.isEditMode = !draftState.isEditMode
     }))
   }
-  const updateLineID = (id: number) => {
-
+  const updateLineID = (id: number | null) => {
+    setState(produce(draftState => {
+      draftState.selectedLineID = id
+    }))
+  }
+  const updateSelectedE = (element: Element) => {
+    setState(produce(draftState => {
+      draftState.selectedElement = element
+    }))
   }
 
   return {
     isEditMode,
     selectedLineID,
+    selectedElement,
 
     updateEditMode,
-    updateLineID
+    updateLineID,
+    updateSelectedE,
   }
 }
 const viewerApiFactory = ({ state, setState }) => {

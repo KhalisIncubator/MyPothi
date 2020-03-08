@@ -14,7 +14,8 @@ const initialViewerState = {
 }
 const initialEditState = {
   isEditMode: false,
-  selectedLineID: 0,
+  selectedLineID: null,
+  selectedElement: null,
 }
 const initalSearchState = {
   searchType: 0,

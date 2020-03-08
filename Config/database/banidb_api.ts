@@ -1,8 +1,9 @@
 import { buildApiUrl } from '@sttm/banidb';
+import { Line } from '../dev_env/interfaces';
 
 const remapLine = raw => {
-  const Line = Object.assign(raw, {});
-  Line.id = raw.id;
+  const Line: Line = {} as any;
+  Line.id = raw.verseId;
   Line.sID = raw.shabadId;
   Line.Gurbani = {
     ascii: raw.verse.gurmukhi,

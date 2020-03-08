@@ -25,9 +25,11 @@ export const SearchContext = React.createContext<ISearchCtx>({
 export const EditContext = React.createContext<IEditCtx>({
   isEditMode: false,
   selectedLineID: null,
+  selectedElement: null,
 
   updateEditMode: () => { },
   updateLineID: () => { },
+  updateSelectedE: () => { }
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
   gurmukhiSize: 30,
