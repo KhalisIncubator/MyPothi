@@ -20,8 +20,9 @@ const Edit = ({ route, navigation }) => {
     updateShow(true);
   }
   const handleRemoveGutka = (name, index) => {
+    const position = index !== 0 ? index - 1 : index + 1
+    GutkaCtx.updateCurrentName(GutkaCtx.gutkaNames[position]);
     GutkaCtx.deleteAGutka(name, index);
-    GutkaCtx.updateCurrentName(GutkaCtx.gutkaNames[index - 1]);
     updateShow(true);
   }
   return (

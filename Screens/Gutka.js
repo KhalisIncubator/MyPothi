@@ -2,11 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
   FlatList,
-  SafeAreaView,
-  Text,
   StyleSheet
 } from 'react-native';
-import { useNetInfo } from '@react-native-community/netinfo';
+// import { useNetInfo } from '@react-native-community/netinfo';
 
 import { GutkaContext, EditContext } from '../contexts/Contexts';
 import { loadShabad } from '../config/database/banidb_api';
@@ -19,8 +17,10 @@ const Gutka = () => {
   const { isEditMode, updateEditMode } = useContext(EditContext);
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
+
+  useEffect(() => { updateLoading(true) }, [GutkaCtx.currentName]);
+
   useEffect(() => {
-    updateLoading(true);
     const getLines = async () => {
       let newItems = [];
       for (const item of GutkaCtx.currentItems) {

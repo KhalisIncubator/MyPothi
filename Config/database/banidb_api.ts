@@ -34,17 +34,15 @@ const query = async (search: string, type: number) => {
   if (search !== "") {
     const q = search;
     const url = encodeURI(buildApiUrl({ q, type, results, API_URL }));
-    return new Promise((resolve, reject) => {
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          data.verses.forEach(shabad => {
-            shabads.push(shabad)
-          });
-          resolve(shabads);
-        })
-        .catch(err => reject(err));
-    })
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        data.verses.forEach(shabad => {
+          shabads.push(shabad)
+        });
+        return shabads;
+      })
+      .catch(err => err);
   }
 }
 
