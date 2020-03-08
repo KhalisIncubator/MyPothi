@@ -24,12 +24,13 @@ export const SearchContext = React.createContext<ISearchCtx>({
 });
 export const EditContext = React.createContext<IEditCtx>({
   isEditMode: false,
-  selectedLineID: null,
-  selectedElement: null,
+  selectedLineID: 40935,
+  selectedElement: "Pangtee",
 
   updateEditMode: () => { },
   updateLineID: () => { },
-  updateSelectedE: () => { }
+  updateSelectedE: () => { },
+  removeSelection: () => { }
 });
 export const ViewerContext = React.createContext<IViewerCtx>({
   gurmukhiSize: 30,

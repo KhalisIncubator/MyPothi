@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import {
   View,
   StyleSheet
@@ -18,29 +18,71 @@ const LineBlock = (props) => {
     displayTranslit,
   } = ViewerCtx;
   const {
-    isEditMode
+    isEditMode,
+    selectedElement,
+    selectedLineID,
+    updateLineID,
+    updateSelectedE,
+    removeSelection
   } = EditCtx;
-  const { Gurbani, Translations, Transliteration } = props.line;
+  const { Gurbani, Translations, Transliteration, id } = props.line;
+
+  const gurmukhiSelection = useMemo(() =>
+    isEditMode && (selectedLineID === id && selectedElement === 'Pangtee'),
+    [isEditMode,
+      selectedLineID === id,
+      selectedElement === 'Pangtee']
+  );
+  const translationSelection = useMemo(() =>
+    isEditMode && (selectedLineID === id && selectedElement === 'EngTransl'),
+    [isEditMode,
+      selectedLineID === id,
+      selectedElement === 'EngTransl']
+  );
+  const teekaSelection = useMemo(() =>
+    isEditMode && (selectedLineID === id && selectedElement === 'Teeka'),
+    [isEditMode,
+      selectedLineID === id,
+      selectedElement === 'Teeka']
+  );
+  const translitSelection = useMemo(() =>
+    isEditMode && (selectedLineID === id && selectedElement === 'Translit'),
+    [isEditMode,
+      selectedLineID === id,
+      selectedElement === 'Translit']);
+
+  const textBlockClick = (selectionVal, element) => {
+    if (selectionVal) {
+      removeSelection();
+    } else {
+      updateLineID(id);
+      updateSelectedE(element);
+    }
+
+  }
   return (
     <View stlye={style.column}>
       <TextBlock
-        isSelectable={isEditMode}
+        isSelected={gurmukhiSelection}
         style={{ fontSize: gurmukhiSize }}
         value={Gurbani.ascii}
+        onClick={() => textBlockClick(gurmukhiSelection, 'Pangtee')}
         isPangtee={true} />
       {
         displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
         <TextBlock
-          isSelectable={isEditMode}
+          isSelected={translationSelection}
           value={Translations.English}
+          onClick={() => textBlockClick(gurmukhiSelection, 'EngTransl')}
           style={{ fontSize: translSize }} />
       }
       {
         displayPunTansl && Translations.Punjabi.SS !== null &&
         <TextBlock
-          isSelectable={isEditMode}
+          isSelected={teekaSelection}
           value={Translations.Punjabi.SS}
           isGurmukhi={true}
+          onClick={() => textBlockClick(gurmukhiSelection, 'Teeka')}
           style={{ fontSize: translSize }}
         />
       }
@@ -48,7 +90,8 @@ const LineBlock = (props) => {
         displayTranslit && Transliteration.English &&
         <TextBlock
           value={Transliteration.English}
-          isSelectable={isEditMode}
+          isSelected={translitSelection}
+          onClick={() => textBlockClick(gurmukhiSelection, 'Translit')}
           style={{ fontSize: translitSize }} />
       }
     </View>

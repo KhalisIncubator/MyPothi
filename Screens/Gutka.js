@@ -14,7 +14,7 @@ import Toolbar from '../Components/Main/Toolbar';
 
 const Gutka = () => {
   const GutkaCtx = useContext(GutkaContext);
-  const { isEditMode, updateEditMode, updateLineID } = useContext(EditContext);
+  const { isEditMode, updateEditMode, selectedLineID, removeSelection } = useContext(EditContext);
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
 
@@ -75,7 +75,7 @@ const Gutka = () => {
         />
       }
       <View style={styles.Footer}>
-        <Toolbar showMain={isEditMode} updateMode={updateEditMode} updateLine={updateLineID} />
+        <Toolbar showMain={isEditMode} updateMode={updateEditMode} removeSelection={removeSelection} currentLine={selectedLineID} />
       </View>
     </View>
   );

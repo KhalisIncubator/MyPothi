@@ -98,6 +98,12 @@ const editApiFactory = ({ state, setState }) => {
       draftState.selectedElement = element
     }))
   }
+  const removeSelection = () => {
+    setState(produce(draftState => {
+      draftState.selectedLineID = null;
+      draftState.selectedElement = null;
+    }))
+  }
 
   return {
     isEditMode,
@@ -107,6 +113,7 @@ const editApiFactory = ({ state, setState }) => {
     updateEditMode,
     updateLineID,
     updateSelectedE,
+    removeSelection,
   }
 }
 const viewerApiFactory = ({ state, setState }) => {

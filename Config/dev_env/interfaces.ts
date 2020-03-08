@@ -30,6 +30,7 @@ export interface IEditCtx {
   updateEditMode: () => void,
   updateLineID: (id: number) => void,
   updateSelectedE: (newE: Element) => void,
+  removeSelection: () => void,
 }
 
 export interface IViewerCtx {

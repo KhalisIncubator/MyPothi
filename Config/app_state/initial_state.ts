@@ -13,9 +13,9 @@ const initialViewerState = {
   displayTranslit: true,
 }
 const initialEditState = {
-  isEditMode: false,
-  selectedLineID: null,
-  selectedElement: null,
+  isEditMode: true,
+  selectedLineID: 40935,
+  selectedElement: 'Pangtee',
 }
 const initalSearchState = {
   searchType: 0,

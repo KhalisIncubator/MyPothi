@@ -7,18 +7,12 @@ import {
 } from 'react-native';
 
 const TextBlock = (props) => {
-  const { style, value, isGurmukhi, isPangtee, isSelectable } = props;
-  const [isSelected, toggleSelect] = useState(false);
-  const toggleSelectionMode = (newVal) => {
-    toggleSelect(newVal)
-  }
+  const { style, value, isGurmukhi, isPangtee, isSelected, onClick } = props;
   return (
     <View style={styles.View}>
       <Text
         onPress={() => {
-          if (isSelectable) {
-            toggleSelectionMode(!isSelected);
-          }
+          onClick();
         }}
         selectable={false}
         style={[style,
