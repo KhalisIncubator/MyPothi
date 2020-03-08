@@ -1,48 +1,79 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
-  TextInput
 } from 'react-native';
-import { Avatar, Card, IconButton, Button, Snackbar } from 'react-native-paper';
+import { Avatar, Card, IconButton, Snackbar } from 'react-native-paper';
 import { GutkaContext } from '../contexts/Contexts';
 
 
-const Edit = ({ navigation }) => {
+const Edit = ({ route, navigation }) => {
   const [showSnack, updateShow] = useState(false);
+  const [showError, updateErr] = useState(false);
   const GutkaCtx = useContext(GutkaContext);
   const currentGutka = GutkaCtx.currentItems;
-  const handleRemove = (id, index) => {
+  const { type } = route.params;
+
+  const snack = `${type} Removed!`
+  const handleRemoveShabad = (id, index) => {
     GutkaCtx.removeEntry(id, index);
+    updateShow(true);
+  }
+  const handleRemoveGutka = (name, index) => {
+    GutkaCtx.deleteAGutka(name, index);
+    GutkaCtx.updateCurrentName(GutkaCtx.gutkaNames[index - 1]);
     updateShow(true);
   }
   return (
     <View style={style.View}>
-      {currentGutka.map((item, index) => {
+      {type === 'Shabad' && currentGutka.map((item, index) => {
         if (item.isValid()) {
           return (
             <Card.Title
               style={style.Card}
               key={index}
-              titleStyle={style.CardTitle}
+              titleStyle={style.CardTitleG}
               title={`${item.mainLine}`}
               subtitle={`Shaabd ID: ${item.id}`}
               left={(props) => <Avatar.Icon {...props} icon="book" />}
               right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
-                handleRemove(item.id, index);
+                handleRemoveShabad(item.id, index);
               }} />}
             />
           )
         }
+      })}
+      {type === 'Gutka' && GutkaCtx.gutkaNames.map((name, index) => {
+        return (
+          <Card.Title
+            style={style.Card}
+            key={index}
+            title={`${name}`}
+            left={(props) => <Avatar.Icon {...props} icon="book" />}
+            right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
+              if (GutkaCtx.gutkaNames.length === 1) {
+                updateErr(true);
+              } else {
+                handleRemoveGutka(name, index);
+              }
+            }} />}
+          />
+        )
       })}
       <Snackbar
         visible={showSnack}
         onDismiss={() => updateShow(false)}
         style={style.Snack}
       >
-        Shabad Removed!
-        </Snackbar>
+        {snack}
+      </Snackbar>
+      <Snackbar
+        visible={showError}
+        onDismiss={() => updateErr(false)}
+        style={style.Snack}
+      >
+        You cannot have less than one gutka!
+      </Snackbar>
     </View>
   );
 }
@@ -64,7 +95,7 @@ const style = StyleSheet.create({
     margin: 5,
     backgroundColor: 'white'
   },
-  CardTitle: {
+  CardTitleG: {
     fontFamily: 'AnmolLipiTrue'
   },
   Snack: {

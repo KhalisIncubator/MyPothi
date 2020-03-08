@@ -46,11 +46,9 @@ const gutkaAPIFactory = ({ state, setState }) => {
       })
     )
   }
-  const deleteAGutka = (name: string) => {
-    deleteGukta(name);
-    setState(
-      produce(draftState => draftState.gutkaNames = fetchAllGutkas())
-    )
+  const deleteAGutka = (name: string, index: number) => {
+    deleteGukta(name, index);
+    updateGutkas();
   }
   const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
     addToGutka(state.currentName, id, mainLine, type);

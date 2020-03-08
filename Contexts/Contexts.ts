@@ -24,7 +24,7 @@ export const SearchContext = React.createContext<ISearchCtx>({
 });
 export const EditContext = React.createContext<IEditCtx>({
   isEditMode: false,
-  selectedLineID: 0,
+  selectedLineID: null,
 
   updateEditMode: () => { },
   updateLineID: () => { },

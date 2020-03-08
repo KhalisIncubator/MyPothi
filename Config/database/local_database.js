@@ -114,8 +114,9 @@ const createNewGukta = (name) => {
     })
   })
 }
+
 const deleteGukta = (name, index) => {
-  const gutka = findGutka(name, index);
+  const gutka = findGutka(name);
   localRealm.write(() => {
     localRealm.delete(gutka);
   })

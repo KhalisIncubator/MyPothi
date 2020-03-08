@@ -42,7 +42,7 @@ const Header = ({ previous, navigation }) => {
       {isMain &&
         [
           <Appbar.Action icon="search" onPress={() => { navigation.navigate('Stack', { screen: 'Search' }); }} />,
-          <Appbar.Action icon="list" onPress={() => { navigation.navigate('Stack', { screen: 'Edit' }); }} />,
+          <Appbar.Action icon="list" onPress={() => { navigation.navigate('Stack', { screen: 'Edit', params: { type: 'Shabad' } }); }} />,
           <Appbar.Action icon="settings" onPress={() => { navigation.navigate('Stack', { screen: 'Settings' }); }} />,
         ]
       }

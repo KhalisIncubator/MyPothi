@@ -45,6 +45,8 @@ const CustomDrawerComponent = (props) => {
   const GutkaCtx = useContext(GutkaContext);
   const [isCreating, toggleCreateMode] = useState(false);
   const [newGutkaName, changeText] = useState('');
+
+  const { navigation } = props;
   return (
     <DrawerContentScrollView {...props}>
       <View
@@ -91,14 +93,33 @@ const CustomDrawerComponent = (props) => {
         </Drawer.Section>
         {isCreating &&
           <View>
-            <Button onPress={() => {
-              GutkaCtx.createGutka(newGutkaName);
-              toggleCreateMode(false);
-            }} mode="outlined" style={styles.button}>Create Gutka!</Button>
-            <Button onPress={() => {
-              toggleCreateMode(false);
-            }} mode="outlined" style={styles.button}>Cancel</Button>
+            <Drawer.Section>
+              <Button
+                icon="plus"
+                style={styles.button}
+                color="green"
+                onPress={() => {
+                  GutkaCtx.createGutka(newGutkaName);
+                  toggleCreateMode(false);
+                }}>
+                Create Gutka!
+            </Button>
+              <Button
+                color="red"
+                icon="x"
+                style={styles.button}
+                onPress={() => {
+                  toggleCreateMode(false);
+                }}>
+                Cancel
+            </Button>
+            </Drawer.Section>
           </View>}
+        <Drawer.Section>
+          <Button icon="list" style={styles.button} color="black" onPress={() => navigation.navigate('Stack', { screen: 'Edit', params: { type: 'Gutka' } })}>
+            Edit Gutkas
+         </Button>
+        </Drawer.Section>
       </View>
     </DrawerContentScrollView>
   );

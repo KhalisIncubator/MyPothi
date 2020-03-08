@@ -10,7 +10,7 @@ export interface IGutkaCtx {
   updateGutkas: () => void,
   updateIsReady: (newVal: boolean) => void,
   updateCurrentName: (newName: string) => void,
-  deleteAGutka: (name: string) => void,
+  deleteAGutka: (name: string, index: number) => void,
   addEntry: (id: number, mainLine: string, parentGutka: string, type: gutkaEntry) => void,
   removeEntry: (id: number) => void
 }
@@ -24,7 +24,7 @@ export interface ISearchCtx {
 
 export interface IEditCtx {
   isEditMode: boolean,
-  selectedLineID: number,
+  selectedLineID: number | null,
 
   updateEditMode: () => void,
   updateLineID: (id: number) => void,

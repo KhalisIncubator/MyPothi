@@ -12,7 +12,7 @@ import { IconButton, useTheme } from 'react-native-paper';
 const Toolbar = ({ showMain, updateMode }) => {
   const theme = useTheme();
   return (
-    <SafeAreaView style={styles.View}>
+    <SafeAreaView style={[styles.View, { backgroundColor: theme.colors.header }]}>
       <View style={[styles.Header, { backgroundColor: theme.colors.header }]}>
         <IconButton
           icon={showMain ? "chevron-down" : "chevron-up"}
@@ -66,7 +66,6 @@ const Toolbar = ({ showMain, updateMode }) => {
 const styles = StyleSheet.create({
   View: {
     width: '100%',
-    backgroundColor: '#D3D3D3'
   },
   Header: {
     display: "flex",
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
   },
   Main: {
     width: '100%',
+    backgroundColor: '#D3D3D3',
     paddingHorizontal: 5,
     paddingTop: 2.5,
     flexDirection: 'row',
