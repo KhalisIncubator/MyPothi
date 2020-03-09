@@ -70,14 +70,13 @@ const Search = () => {
             <Button style={styles.button} onPress={() => updateSearchM(true)}>{SEARCH_TEXTS[SearchCtx.searchType]}</Button>
           }
         >
-          {net.isConnected &&
-            Object.entries(SEARCH_TEXTS).map((text) => {
-              const [id, desc] = text;
-              return <Menu.Item onPress={() => {
-                SearchCtx.updateSearchType(id);
-                updateSearchM(false);
-              }} title={`${desc}`} />
-            })}
+          {Object.entries(SEARCH_TEXTS).map((text) => {
+            const [id, desc] = text;
+            return <Menu.Item onPress={() => {
+              SearchCtx.updateSearchType(id);
+              updateSearchM(false);
+            }} title={`${desc}`} />
+          })}
           {!net.isConnected &&
             <View>
               <Icon name="wifi-off" size={30} />

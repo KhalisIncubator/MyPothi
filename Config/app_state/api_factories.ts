@@ -161,12 +161,14 @@ const searchApiFactory = ({ state, setState }) => {
   const { searchType, queryType } = state;
   const updateSearchType = (newType: SearchType) => {
     setState(
-      produce(draftState =>
+      produce(draftState => {
         draftState.searchType = newType
-      ));
+      })
+    );
   }
   const updateQueryType = (newType: QueryType) => {
-    setState(produce(draftState => draftState.queryType = newType));
+    setState
+      (produce(draftState => { draftState.queryType = newType }));
   }
   return {
     searchType,

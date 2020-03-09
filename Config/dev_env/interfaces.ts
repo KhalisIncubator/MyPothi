@@ -19,7 +19,7 @@ export interface ISearchCtx {
   queryType: QueryType,
 
   updateSearchType: (newType: SearchType) => void,
-  updateQueryType: () => void,
+  updateQueryType: (newType: QueryType) => void,
 }
 
 export interface IEditCtx {
