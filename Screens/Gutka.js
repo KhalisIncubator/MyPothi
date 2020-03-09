@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
+  Text,
   FlatList,
   StyleSheet
 } from 'react-native';
@@ -91,6 +92,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
-  }
+  },
 })
 export default Gutka;
