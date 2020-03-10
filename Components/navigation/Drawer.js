@@ -34,19 +34,19 @@ const CustomDrawerComponent = (props) => {
           </View>
         </View>
         <Drawer.Section style={styles.drawerSection}>
-          {GutkaCtx.gutkaNames.map(name => (
+          {GutkaCtx.gutkaNames.map(data => (
             < DrawerItem
               icon={({ focused, color, size }) => (
                 <Icon name={focused ? "book-open-variant" : 'book'} color={color} size={size} />
               )}
-              key={name}
-              focused={name === GutkaCtx.currentName}
+              key={data[0]}
+              focused={data[0] === GutkaCtx.currentName[0]}
               activeTintColor="#ff9a00"
               label={
-                ({ color }) => <Text style={[{ color }, styles.text]}>{name}</Text>
+                ({ color }) => <Text style={[{ color }, styles.text]}>{data[0]}</Text>
               }
               onPress={() => {
-                GutkaCtx.updateCurrentName(name);
+                GutkaCtx.updateCurrentName(data[0], data[1]);
                 props.navigation.closeDrawer();
               }}
             />

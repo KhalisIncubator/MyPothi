@@ -1,16 +1,16 @@
 import { entryObj, gutkaEntry, SearchType, QueryType, Element } from "./types";
 export interface IGutkaCtx {
   gutkaNames: string[],
-  currentName: '',
+  currentName: string[],
   currentItems: entryObj[],
   isDataReady: boolean,
 
   createGutka: (newName: string) => void,
-  updateItems: (altName?: string) => void,
+  updateItems: (gutkaID?: string, altName?: string) => void,
   updateGutkas: () => void,
   updateIsReady: (newVal: boolean) => void,
-  updateCurrentName: (newName: string) => void,
-  deleteAGutka: (name: string, index: number) => void,
+  updateCurrentName: (newName: string, gutkaID: string) => void,
+  deleteAGutka: (name: string, gutkaID: string) => void,
   addEntry: (id: number, mainLine: string, parentGutka: string, type: gutkaEntry) => void,
   removeEntry: (id: number) => void
 }

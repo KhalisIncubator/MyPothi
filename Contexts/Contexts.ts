@@ -3,7 +3,7 @@ import { IGutkaCtx, IViewerCtx, ISearchCtx, IEditCtx } from '../config/dev_env/i
 
 export const GutkaContext = React.createContext<IGutkaCtx>({
   gutkaNames: [],
-  currentName: '',
+  currentName: ["", ""],
   currentItems: [],
   isDataReady: false,
 

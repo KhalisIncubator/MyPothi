@@ -19,13 +19,13 @@ const Gutka = () => {
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
 
-  useEffect(() => { updateLoading(true) }, [GutkaCtx.currentName]);
+  useEffect(() => { updateLoading(true) }, [GutkaCtx.currentName[0]]);
 
   useEffect(() => {
     const getLines = async () => {
       let newItems = [];
       for (const item of GutkaCtx.currentItems) {
-        const shabad = await loadShabad(item.id);
+        const shabad = await loadShabad(item.shabadId);
         newItems.push(shabad);
       }
       updateShabads(newItems);
@@ -37,7 +37,7 @@ const Gutka = () => {
       updateShabads([]);
       updateLoading(false);
     }
-  }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName]);
+  }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName[0]]);
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {

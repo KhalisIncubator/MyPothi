@@ -15,14 +15,14 @@ const gutkaAPIFactory = ({ state, setState }) => {
     setState(
       produce(draftState => {
         draftState.gutkaNames = names;
-        if (state.currentName === "") {
-          draftState.currentName = names[0];
+        if (state.currentName[0] === "") {
+          draftState.currentName = [names[0][0], names[0][1]];
         }
       })
     )
   }
-  const updateItems = (altName?: string) => {
-    const items = getCurrentItems(state.currentName || altName);
+  const updateItems = (gutkaID?: string, altName?: string) => {
+    const items = getCurrentItems(state.currentName[0] || altName, gutkaID);
     // use _.isEquals to compare the modified lines
     setState(
       produce(draftState => {
@@ -37,26 +37,26 @@ const gutkaAPIFactory = ({ state, setState }) => {
       })
     )
   }
-  const updateCurrentName = (newName: string) => {
-    const newitems = getCurrentItems(newName);
+  const updateCurrentName = (newName: string, gutkaID: string) => {
+    const newitems = getCurrentItems(newName, gutkaID);
     setState(
       produce(draftState => {
-        draftState.currentName = newName;
+        draftState.currentName = [newName, gutkaID];
         draftState.currentItems = newitems;
       })
     )
   }
-  const deleteAGutka = (name: string, index: number) => {
-    deleteGukta(name, index);
+  const deleteAGutka = (name: string, gutkaID: string) => {
+    deleteGukta(name, gutkaID);
     updateGutkas();
   }
   const addEntry = (id: number, mainLine: string, type: gutkaEntry) => {
-    addToGutka(state.currentName, id, mainLine, type);
-    updateItems(state.currentName);
+    addToGutka(state.currentName[0], state.currentName[1], id, mainLine, type);
+    updateItems(state.currentName[1]);
   }
   const removeEntry = (id: number) => {
-    removeFromGutka(state.currentName, id);
-    updateItems(state.currentName);
+    removeFromGutka(state.currentName[0], id);
+    updateItems(state.currentName[1]);
   }
   const { gutkaNames, currentName, currentItems, isDataReady } = state;
   return {

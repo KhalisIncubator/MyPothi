@@ -12,7 +12,7 @@ import { GutkaContext } from '../../contexts/Contexts';
 const Header = ({ previous, navigation }) => {
   const GutkaCtx = useContext(GutkaContext);
   const theme = useTheme();
-  const title = GutkaCtx.currentName;
+  const title = GutkaCtx.currentName[0];
   const route = useRoute();
   const isMain = route.name === 'Gutka';
   return (

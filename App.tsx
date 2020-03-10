@@ -42,12 +42,10 @@ const App = () => {
     if (isDataEmpty()) {
       await populateData();
     }
-
   }
   useEffect(() => {
     checkDB()
       .then(async () => {
-
         gutkaApi.updateGutkas();
         gutkaApi.updateItems();
         gutkaApi.updateIsReady(true);

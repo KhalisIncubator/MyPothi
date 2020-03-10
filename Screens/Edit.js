@@ -15,14 +15,14 @@ const Edit = ({ route, navigation }) => {
   const { type } = route.params;
 
   const snack = `${type} Removed!`
-  const handleRemoveShabad = (id, index) => {
-    GutkaCtx.removeEntry(id, index);
+  const handleRemoveShabad = (entryID, index) => {
+    GutkaCtx.removeEntry(entryID, index);
     updateShow(true);
   }
-  const handleRemoveGutka = (name, index) => {
+  const handleRemoveGutka = (name, gutkaID, index) => {
     const position = index !== 0 ? index - 1 : index + 1
-    GutkaCtx.updateCurrentName(GutkaCtx.gutkaNames[position]);
-    GutkaCtx.deleteAGutka(name, index);
+    GutkaCtx.updateCurrentName(GutkaCtx.gutkaNames[position][0], GutkaCtx.gutkaNames[position][1]);
+    GutkaCtx.deleteAGutka(name, gutkaID, index);
     updateShow(true);
   }
   return (
@@ -35,27 +35,27 @@ const Edit = ({ route, navigation }) => {
               key={index}
               titleStyle={style.CardTitleG}
               title={`${item.mainLine}`}
-              subtitle={`Shaabd ID: ${item.id}`}
+              subtitle={`Shaabd ID: ${item.shabadId}`}
               left={(props) => <Avatar.Icon {...props} icon="book" />}
               right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
-                handleRemoveShabad(item.id, index);
+                handleRemoveShabad(item.entryID, index);
               }} />}
             />
           )
         }
       })}
-      {type === 'Gutka' && GutkaCtx.gutkaNames.map((name, index) => {
+      {type === 'Gutka' && GutkaCtx.gutkaNames.map((data, index) => {
         return (
           <Card.Title
             style={style.Card}
             key={index}
-            title={`${name}`}
+            title={`${data[0]}`}
             left={(props) => <Avatar.Icon {...props} icon="book" />}
             right={(props) => <IconButton {...props} color="red" icon="minus-circle" onPress={() => {
               if (GutkaCtx.gutkaNames.length === 1) {
                 updateErr(true);
               } else {
-                handleRemoveGutka(name, index);
+                handleRemoveGutka(data[0], data[1], index);
               }
             }} />}
           />

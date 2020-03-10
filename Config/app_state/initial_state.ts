@@ -1,6 +1,6 @@
 const initialGutkaState = {
   gutkaNames: [],
-  currentName: "",
+  currentName: ["", ""],
   currentItems: [],
   isDataReady: false,
 }
