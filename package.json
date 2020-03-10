@@ -21,6 +21,7 @@
     "anvaad-js": "^1.4.1",
     "immer": "^5.3.6",
     "lodash": "^4.17.15",
+    "nanoid": "^2.1.11",
     "react": "16.9.0",
     "react-content-loader": "^5.0.2",
     "react-native": "0.61.5",
@@ -28,6 +29,7 @@
     "react-native-elements": "^1.2.7",
     "react-native-fs": "^2.16.4",
     "react-native-gesture-handler": "^1.6.0",
+    "react-native-get-random-values": "^1.2.0",
     "react-native-paper": "^3.6.0",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
@@ -39,7 +41,8 @@
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-stack": "^1.10.3",
     "realm": "^3.6.3",
-    "rn-fetch-blob": "^0.12.0"
+    "rn-fetch-blob": "^0.12.0",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
