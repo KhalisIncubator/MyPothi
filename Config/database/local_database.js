@@ -39,6 +39,13 @@ const findGutka = (currentGutka, gutkaID) => {
     .filtered(filter)[0];
   return gutka;
 }
+const findItem = (parentG, entryID) => {
+  const filter = `parentGutka == "${parentG}" AND entryID == "${entryID}"`;
+  const item = localRealm
+    .objects('Entry')
+    .filtered(filter)[0];
+  return item;
+}
 /**
  * 
  * @param {string} currentGutka the name of the current gutka
@@ -127,9 +134,13 @@ const createNewGukta = (name) => {
 
 const deleteGukta = (name, gutkaID) => {
   const gutka = findGutka(name, gutkaID);
-  localRealm.write(() => {
+  localRealm.write(async () => {
+    for await (const item of gutka.items) {
+      localRealm.delete(item)
+    }
     localRealm.delete(gutka);
   })
+
 }
 
 export {
