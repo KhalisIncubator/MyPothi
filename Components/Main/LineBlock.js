@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 import {
   View,
   StyleSheet
@@ -51,7 +51,7 @@ const LineBlock = (props) => {
       selectedLineID === id,
       selectedElement === 'Translit']);
 
-  const textBlockClick = (selectionVal, element) => {
+  const textBlockClick = useCallback(() => (selectionVal, element) => {
     if (selectionVal) {
       removeSelection();
     } else {
@@ -59,7 +59,7 @@ const LineBlock = (props) => {
       updateSelectedE(element);
     }
 
-  }
+  }, [selectedLineID, selectedElement])
   return (
     <View stlye={style.column}>
       <TextBlock
