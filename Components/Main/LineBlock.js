@@ -51,7 +51,7 @@ const LineBlock = (props) => {
       selectedLineID === id,
       selectedElement === 'Translit']);
 
-  const textBlockClick = useCallback(() => (selectionVal, element) => {
+  const textBlockClick = useCallback( (selectionVal, element) => {
     if (selectionVal) {
       removeSelection();
     } else {
@@ -59,7 +59,7 @@ const LineBlock = (props) => {
       updateSelectedE(element);
     }
 
-  }, [selectedLineID, selectedElement])
+  }, [isEditMode, selectedElement, selectedLineID])
   return (
     <View stlye={style.column}>
       <TextBlock

@@ -27,7 +27,7 @@ const Search = () => {
     const fetchResults = async () => {
       const results = await query(searchQuery, SearchCtx.searchType);
       updateResults([]);
-      results.forEach(result => updateResults(prevArr => [...prevArr, result]))
+      updateResults([...results]);
     }
     if (searchQuery.length > 0 && !cancelSearch) {
       fetchResults();
