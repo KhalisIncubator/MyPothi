@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - 10.15.3
-  
+
+before_install:
+  - npm i -g npm
+
 script:
-  - npm
+  - npm test
