@@ -1,43 +1,57 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
   FlatList,
   StyleSheet
 } from 'react-native';
-// import { useNetInfo } from '@react-native-community/netinfo';
+import { useMainStoreState } from '../config/app_state/easy-peasy/hooks';
 
-import { GutkaContext, EditContext } from '../contexts/Contexts';
+import shallowEqual from 'shallowequal';
 import { loadShabad } from '../config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
+import { EditCtx } from '../config/app_state/easy-peasy/models';
 
 const Gutka = () => {
-  const GutkaCtx = useContext(GutkaContext);
-  const { isEditMode, updateEditMode, selectedLineID, removeSelection } = useContext(EditContext);
   const [shabads, updateShabads] = useState([]);
   const [dataLoading, updateLoading] = useState(true);
+  // const { isEditMode, updateEditMode, selectedLineID, removeSelection } = useContext(EditContext);
+  const [isEditMode, selectedInfo] = EditCtx.useStoreState(store => [
+    store.isEditMode,
+    store.selectedInfo
+  ], shallowEqual);
 
-  useEffect(() => { updateLoading(true) }, [GutkaCtx.currentName[0]]);
+  const [currentName, currentItems] = useMainStoreState(store => [
+    store.currentModel.currentName,
+    store.currentModel.currentItems
+  ], shallowEqual);
 
+  const isDataReady = useMainStoreState(store => store.gutkaModel.isDataReady);
+
+  const [updateEditMode, updatedSelectedInfo] = EditCtx.useStoreActions(actions => [
+    actions.updateEditMode,
+    actions.updatedSelectedInfo
+  ], shallowEqual)
+
+  useEffect(() => { updateLoading(true) }, [currentName[0]]);
   useEffect(() => {
     const getLines = async () => {
       let newItems = [];
-      for (const item of GutkaCtx.currentItems) {
+      for (const item of currentItems) {
         const shabad = await loadShabad(item.shabadId);
         newItems.push(shabad);
       }
       updateShabads(newItems);
       updateLoading(false);
     }
-    if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length > 0) {
+    if (isDataReady && currentItems.length > 0) {
       getLines();
-    } else if (GutkaCtx.isDataReady && GutkaCtx.currentItems.length === 0) {
+    } else if (isDataReady && currentItems.length === 0) {
       updateShabads([]);
       updateLoading(false);
     }
-  }, [GutkaCtx.currentItems, GutkaCtx.isDataReady, GutkaCtx.currentName[0]]);
+  }, [currentItems, isDataReady, currentName[0]]);
   const renderItem = ({ item }) => {
     let lines = [];
     lines = item.map(line => {
@@ -52,7 +66,7 @@ const Gutka = () => {
   return (
     <View style={styles.View}>
       {
-        (dataLoading && GutkaCtx.isDataReady) &&
+        (dataLoading && isDataReady) &&
         <>
           <ShimmeringLine />
           <ShimmeringLine />
@@ -66,8 +80,8 @@ const Gutka = () => {
           <ShimmeringLine />
         </>
       }
-      {GutkaCtx.isDataReady &&
-        GutkaCtx.currentItems.length != undefined &&
+      {isDataReady &&
+        currentItems.length != undefined &&
         shabads.length != 0 &&
         <FlatList
           data={shabads}
@@ -76,7 +90,7 @@ const Gutka = () => {
         />
       }
       <View style={styles.Footer}>
-        <Toolbar showMain={isEditMode} updateMode={updateEditMode} removeSelection={removeSelection} currentLine={selectedLineID} />
+        <Toolbar showMain={isEditMode} updateMode={updateEditMode} currentLine={selectedInfo} />
       </View>
     </View>
   );
@@ -94,4 +108,6 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 })
-export default Gutka;
+
+const withEditCtx = () => (<EditCtx.Provider><Gutka /></EditCtx.Provider>);
+export default withEditCtx;

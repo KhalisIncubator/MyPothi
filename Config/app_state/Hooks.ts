@@ -1,5 +1,8 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, } from 'react';
+import { useMainStoreState, useMainStoreActions } from './easy-peasy/hooks';
+import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from '../database/local_database';
 
+import shallowEqual from 'shallowequal';
 /**
  * 
  * @param apiFactory a factory that produces all the functions for an 'api' (container for context values)
@@ -15,8 +18,18 @@ const useApi = (apiFactory, initialState) => {
   ]);
 };
 
-const useMountEffect = (fn) => useEffect(fn, []);
+const useValues = (model: string) => useMainStoreState(store => {
+  // console.log('ur values rerendered');
+  return { ...store[model] }
+}, shallowEqual)
+const useUpdaters = (model: string) => useMainStoreActions(actions => {
+  return { ...actions[model] }
+})
+
+
+
 export {
   useApi,
-  useMountEffect
+  useValues,
+  useUpdaters,
 }

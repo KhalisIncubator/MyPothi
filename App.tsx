@@ -2,11 +2,18 @@ import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+import store from './config/app_state/easy-peasy/models';
+
+import { useMainStoreState, useMainStoreActions } from './config/app_state/easy-peasy/hooks';
+import { createNewGukta, fetchAllGutkas, getCurrentItems, deleteGukta, addToGutka, removeFromGutka } from './config/database/local_database';
+
+import { StoreProvider } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 
 // import { useNetInfo } from '@react-native-community/netinfo';
 
-import { useApi } from './config/app_state/Hooks';
+import { useApi } from './config/app_state/hooks';
 import { populateData, isDataEmpty } from './config/database/local_database';
 
 import { initialGutkaState, initialViewerState, initalSearchState, initialEditState } from './config/app_state/initial_state';
@@ -36,6 +43,9 @@ const App = () => {
   const editApi = useApi(editApiFactory, initialEditState);
   const searchApi = useApi(searchApiFactory, initalSearchState);
 
+  const initCurrUpdate = useMainStoreActions(actions => actions.currentModel.initialUpdate);
+  const initialGutkaUpdate = useMainStoreActions(actions => actions.gutkaModel.initialUpdate);
+
   // const netInfo = useNetInfo();
 
   const checkDB = async () => {
@@ -49,6 +59,13 @@ const App = () => {
         gutkaApi.updateGutkas();
         gutkaApi.updateItems();
         gutkaApi.updateIsReady(true);
+
+
+
+        const names = fetchAllGutkas();
+        const items = getCurrentItems(names[0][0], names[0][1]);
+        initCurrUpdate([names[0][0], items]);
+        initialGutkaUpdate([names, true]);
       })
 
   }, [])
@@ -75,4 +92,9 @@ const App = () => {
     </PaperProvider>
   )
 }
-export default App;
+const withStore = () => (
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>);
+
+export default withStore;

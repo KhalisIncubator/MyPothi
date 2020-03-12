@@ -1,31 +1,24 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import {
   View,
   StyleSheet
 } from 'react-native';
 import TextBlock from './TextBlock';
-import { ViewerContext, EditContext } from '../../contexts/Contexts';
+import { EditCtx } from '../../config/app_state/easy-peasy/models';
+import { useValues } from '../../config/app_state/hooks';
+
 
 const LineBlock = (props) => {
-  const ViewerCtx = useContext(ViewerContext);
-  const EditCtx = useContext(EditContext);
-  const {
-    gurmukhiSize,
-    translSize,
-    translitSize,
-    displayEngTransl,
-    displayPunTansl,
-    displayTranslit,
-  } = ViewerCtx;
-  const {
-    isEditMode,
-    selectedElement,
-    selectedLineID,
-    updateLineID,
-    updateSelectedE,
-    removeSelection
-  } = EditCtx;
+  const { fontSizes, displayElements } = useValues("viewerModel");
+  const { isEditMode, selectedInfo } = EditCtx.useStoreState(store => { return { ...store } });
+  const updatedSelectedInfo = EditCtx.useStoreActions(actions => actions.updatedSelectedInfo);
+
+  const selectedLineID = selectedInfo[0];
+  const selectedElement = selectedInfo[1];
+
   const { Gurbani, Translations, Transliteration, id } = props.line;
+  const { gurmukhi, eng, teeka, translit } = fontSizes;
+  const { displayEng, displayTeeka, displayTranslit } = displayElements
 
   const gurmukhiSelection = useMemo(() =>
     isEditMode && (selectedLineID === id && selectedElement === 'Pangtee'),
@@ -51,12 +44,12 @@ const LineBlock = (props) => {
       selectedLineID === id,
       selectedElement === 'Translit']);
 
-  const textBlockClick = useCallback( (selectionVal, element) => {
+  const textBlockClick = useCallback((selectionVal, element) => {
     if (selectionVal) {
-      removeSelection();
+      updatedSelectedInfo([null, null]);
     } else {
-      updateLineID(id);
-      updateSelectedE(element);
+      updatedSelectedInfo([id, element]);
+
     }
 
   }, [isEditMode, selectedElement, selectedLineID])
@@ -64,26 +57,26 @@ const LineBlock = (props) => {
     <View stlye={style.column}>
       <TextBlock
         isSelected={gurmukhiSelection}
-        style={{ fontSize: gurmukhiSize }}
+        style={{ fontSize: gurmukhi }}
         value={Gurbani.ascii}
         onClick={() => textBlockClick(gurmukhiSelection, 'Pangtee')}
         isPangtee={true} />
       {
-        displayEngTransl && !(Translations.English == null || Translations.English == " ") &&
+        displayEng && !(Translations.English == null || Translations.English == " ") &&
         <TextBlock
           isSelected={translationSelection}
           value={Translations.English}
           onClick={() => textBlockClick(gurmukhiSelection, 'EngTransl')}
-          style={{ fontSize: translSize }} />
+          style={{ fontSize: eng }} />
       }
       {
-        displayPunTansl && Translations.Punjabi.SS !== null &&
+        displayTeeka && Translations.Punjabi.SS !== null &&
         <TextBlock
           isSelected={teekaSelection}
           value={Translations.Punjabi.SS}
           isGurmukhi={true}
           onClick={() => textBlockClick(gurmukhiSelection, 'Teeka')}
-          style={{ fontSize: translSize }}
+          style={{ fontSize: teeka }}
         />
       }
       {
@@ -92,7 +85,7 @@ const LineBlock = (props) => {
           value={Transliteration.English}
           isSelected={translitSelection}
           onClick={() => textBlockClick(gurmukhiSelection, 'Translit')}
-          style={{ fontSize: translitSize }} />
+          style={{ fontSize: translit }} />
       }
     </View>
   );

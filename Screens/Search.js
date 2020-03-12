@@ -5,8 +5,10 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+
 import { useNetInfo } from '@react-native-community/netinfo';
 
+import { SearchCtx } from '../config/app_state/easy-peasy/models';
 import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
 import query from '../config/database/banidb_api';
@@ -111,4 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly'
   }
 });
-export default Search;
+
+const withSearchCtx = () => <SearchCtx.Provider><Search /></SearchCtx.Provider>
+export default withSearchCtx;

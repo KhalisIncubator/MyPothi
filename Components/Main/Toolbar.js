@@ -10,7 +10,7 @@ import {
 import { IconButton, useTheme } from 'react-native-paper';
 import HighlightSelector from './HighlightSelector';
 
-const Toolbar = ({ showMain, updateMode, removeSelection }) => {
+const Toolbar = ({ showMain, updateMode }) => {
   const theme = useTheme();
 
   const [isHighlighterVis, toggleHighligher] = useState(false);
@@ -26,7 +26,6 @@ const Toolbar = ({ showMain, updateMode, removeSelection }) => {
             icon={showMain ? "chevron-down" : "chevron-up"}
             onPress={() => {
               updateMode();
-              removeSelection();
             }}
           />
           <Text>Toolbar</Text>

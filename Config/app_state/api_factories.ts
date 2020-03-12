@@ -128,6 +128,7 @@ const viewerApiFactory = ({ state, setState }) => {
 
   const updateElementDisplay = (newVal: number, element: string) => {
     const displaySetting = `display${element}`;
+
     setState(prevState =>
       ({
         ...prevState,

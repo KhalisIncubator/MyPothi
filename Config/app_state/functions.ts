@@ -23,6 +23,7 @@ const fetchSettings = async (): Promise<setttingsFetched> => {
   }
 
 }
+
 export {
   fetchSettings,
 }
