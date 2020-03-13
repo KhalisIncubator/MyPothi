@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
-import { StoreProvider } from 'easy-peasy';
+import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 import store from './config/app_state/easy-peasy/models';
 
@@ -46,6 +46,7 @@ const darkTheme = {
   },
 };
 const App = () => {
+  const rehydrated = useStoreRehydrated();
   const { isDarkMode } = useValues( 'themeModel' );
   const initCurrUpdate = useMainStoreActions(
     ( actions ) => actions.currentModel.initialUpdate,
@@ -56,13 +57,13 @@ const App = () => {
 
   // const netInfo = useNetInfo();
 
-  const checkDB = async () => {
+  const checkStore = async () => {
     if ( isDataEmpty() ) {
       await populateData();
     }
   };
   useEffect( () => {
-    checkDB().then( async () => {
+    checkStore().then( async () => {
       const names = fetchAllGutkas();
       const items = getCurrentItems( names[0][0], names[0][1] );
       initCurrUpdate( [ names[0], items ] );
@@ -76,7 +77,7 @@ const App = () => {
     settings={{
       icon: ( props ) => <Icon {...props} />,
     }}>
-        <Routes />
+        {rehydrated && <Routes />}
     </PaperProvider>
   );
 };

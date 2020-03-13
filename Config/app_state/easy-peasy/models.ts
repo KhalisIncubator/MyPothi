@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
-import { createStore, action, createContextStore } from 'easy-peasy';
-
+import {
+  createStore, action, createContextStore, persist,
+} from 'easy-peasy';
 import {
   SearchModel,
   StoreModel,
@@ -19,6 +20,7 @@ import {
   addToGutka,
   removeFromGutka,
 } from '../../database/local_database';
+import AsyncStore from './storage';
 
 const searchModel: SearchModel = {
   searchType: 0,
@@ -161,4 +163,4 @@ const storeModel: StoreModel = {
 };
 
 export { storeModel };
-export default createStore( storeModel );
+export default createStore( persist( storeModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ) );
