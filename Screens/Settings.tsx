@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { useValues, useUpdaters } from '../config/app_state/hooks';
+import { useValues, useUpdaters } from '../config/app_state/state_hooks';
 
 
 const SettingsScreen = ( { navigation } ) => {

@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import TextBlock from './TextBlock';
 import { EditCtx } from '../../config/app_state/easy-peasy/models';
-import { useValues } from '../../config/app_state/hooks';
+import { useValues } from '../../config/app_state/state_hooks';
 
 const LineBlock = ( props ) => {
   const { fontSizes, displayElements } = useValues( 'viewerModel' );

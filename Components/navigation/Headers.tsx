@@ -4,7 +4,7 @@ import { Appbar, useTheme } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useValues } from '../../config/app_state/hooks';
+import { useValues } from '../../config/app_state/state_hooks';
 
 
 const Header = ( { previous, navigation } ) => {

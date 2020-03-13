@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar,
 } from 'react-native-paper';
-import { useUpdaters, useValues } from '../config/app_state/hooks';
+import { useUpdaters, useValues } from '../config/app_state/state_hooks';
 
 const Edit = ( { route } ) => {
   const [ showSnack, updateShow ] = useState( false );

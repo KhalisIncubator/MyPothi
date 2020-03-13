@@ -6,7 +6,7 @@ import {
   Avatar, Card,
 } from 'react-native-paper';
 import { SearchCtx } from '../../config/app_state/easy-peasy/models';
-import { useUpdaters } from '../../config/app_state/hooks';
+import { useUpdaters } from '../../config/app_state/state_hooks';
 
 const SearchResult = ( props ) => {
   const { verse, shabadId } = props.result;
