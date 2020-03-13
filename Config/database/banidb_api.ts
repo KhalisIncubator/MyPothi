@@ -1,8 +1,7 @@
 import { buildApiUrl } from '@sttm/banidb';
-import { Line } from '../dev_env/interfaces';
 
 const remapLine = ( raw ) => {
-  const line: Line = {} as any;
+  const line = {} as any;
   line.id = raw.verseId;
   line.sID = raw.shabadId;
   line.Gurbani = {
