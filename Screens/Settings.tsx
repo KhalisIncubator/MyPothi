@@ -4,18 +4,18 @@ import { useFontSize } from '../config/app_state/hooks';
 
 import { ViewerContext } from '../contexts/Contexts';
 
-const SettingsScreen = ({ navigation }) => {
-    const viewer = useContext(ViewerContext);
-    const hook = useFontSize();
-    return (
+const SettingsScreen = ( { navigation } ) => {
+  const viewer = useContext( ViewerContext );
+  const hook = useFontSize();
+  return (
         <View>
             <Text>{viewer.gurmukhiSize}</Text>
             <Button
-                onPress={() => viewer.updateFontSize(12, 'translit')}
+                onPress={() => viewer.updateFontSize( 12, 'translit' )}
                 title="mhmmm"
             />
         </View>
-    );
+  );
 };
 
 export default SettingsScreen;

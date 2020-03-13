@@ -11,10 +11,10 @@ const ShimmeringLine = () => (
     />
 );
 
-const style = StyleSheet.create({
-    View: {
-        alignContent: 'center',
-        margin: 5,
-    },
-});
+const style = StyleSheet.create( {
+  View: {
+    alignContent: 'center',
+    margin: 5,
+  },
+} );
 export default ShimmeringLine;

@@ -12,37 +12,31 @@ import Search from './Screens/Search';
 
 const AppDrawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const ScreenStack = () => {
-    return (
+const ScreenStack = () => (
         <Stack.Navigator
             initialRouteName="Gutka"
             headerMode="screen"
             screenOptions={{
-                header: ({ previous, navigation }) => (
+              header: ( { previous, navigation } ) => (
                     <Header previous={previous} navigation={navigation} />
-                ),
+              ),
             }}>
             <Stack.Screen name="Gutka" component={Gutka} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Search" component={Search} />
             <Stack.Screen name="Edit" component={Edit} />
         </Stack.Navigator>
-    );
-};
+);
 
-const DrawerNav = () => {
-    return (
-        <AppDrawer.Navigator drawerContent={props => <Drawer {...props} />}>
+const DrawerNav = () => (
+        <AppDrawer.Navigator drawerContent={( props ) => <Drawer {...props} />}>
             <AppDrawer.Screen name="Stack" component={ScreenStack} />
         </AppDrawer.Navigator>
-    );
-};
+);
 
-const Routes = () => {
-    return (
+const Routes = () => (
         <NavigationContainer>
             <DrawerNav />
         </NavigationContainer>
-    );
-};
+);
 export default Routes;

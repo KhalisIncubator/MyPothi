@@ -8,25 +8,25 @@ import { useValues } from '../../config/app_state/hooks';
 
 import { GutkaContext } from '../../contexts/Contexts';
 
-const Header = ({ previous, navigation }) => {
-    const GutkaCtx = useContext(GutkaContext);
-    const theme = useTheme();
-    const { currentName } = useValues('currentModel');
-    const route = useRoute();
-    const isMain = route.name === 'Gutka';
-    return (
+const Header = ( { previous, navigation } ) => {
+  const GutkaCtx = useContext( GutkaContext );
+  const theme = useTheme();
+  const { currentName } = useValues( 'currentModel' );
+  const route = useRoute();
+  const isMain = route.name === 'Gutka';
+  return (
         <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
             {previous ? (
                 <Appbar.BackAction
                     onPress={() => {
-                        navigation.navigate('Gutka');
+                      navigation.navigate( 'Gutka' );
                     }}
                     color={theme.colors.primary}
                 />
             ) : (
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.openDrawer();
+                      navigation.openDrawer();
                     }}>
                     <Icon name="menu" size={30} />
                 </TouchableOpacity>
@@ -37,29 +37,29 @@ const Header = ({ previous, navigation }) => {
                     key="Search"
                     icon="search"
                     onPress={() => {
-                        navigation.navigate('Stack', { screen: 'Search' });
+                      navigation.navigate( 'Stack', { screen: 'Search' } );
                     }}
                 />,
                 <Appbar.Action
                     key="Edit"
                     icon="list"
                     onPress={() => {
-                        navigation.navigate('Stack', {
-                            screen: 'Edit',
-                            params: { type: 'Shabad' },
-                        });
+                      navigation.navigate( 'Stack', {
+                        screen: 'Edit',
+                        params: { type: 'Shabad' },
+                      } );
                     }}
                 />,
                 <Appbar.Action
                     key="Settings"
                     icon="settings"
                     onPress={() => {
-                        navigation.navigate('Stack', { screen: 'Settings' });
+                      navigation.navigate( 'Stack', { screen: 'Settings' } );
                     }}
                 />,
             ]}
         </Appbar.Header>
-    );
+  );
 };
 
 export { Header };
