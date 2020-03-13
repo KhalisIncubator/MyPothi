@@ -5,11 +5,13 @@ export type entryObj = {
     parentGutka: string;
     mods: Modification[];
     entryID: string;
+    isValid: () => boolean;
 };
 export type storedGutka = {
     items: entryObj[];
     name: string;
     gutkaID: string;
+    isValid: () => boolean;
 };
 export type Modification = {
     lineID: number;

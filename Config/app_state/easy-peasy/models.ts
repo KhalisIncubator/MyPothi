@@ -117,7 +117,8 @@ const gutkaModel: GutkaModel = {
     state.gutkaNames = fetchAllGutkas();
   } ),
   deleteAGutka: action( ( state, payload ) => {
-    deleteGukta( [ ...payload ] );
+    const [ name, id ] = payload;
+    deleteGukta( name, id );
     state.gutkaNames = fetchAllGutkas();
   } ),
   initialUpdate: action( ( state, payload ) => {
@@ -139,8 +140,15 @@ const viewerModel: ViewerModel = {
     displayTeeka: true,
     displayTranslit: true,
   },
-  updateFontSize: action( ( state, payload ) => {} ),
-  updateDisplayElement: action( ( state, payload ) => {} ),
+  updateFontSize: action( ( state, payload ) => {
+    const [ element, val ] = payload;
+    console.log( state.fontSizes[element] );
+    state.fontSizes[element] = val;
+  } ),
+  updateDisplayElement: action( ( state, payload ) => {
+    const [ element, val ] = payload;
+    state.displayElements[element] = val;
+  } ),
 };
 
 const storeModel: StoreModel = { currentModel, gutkaModel, viewerModel };

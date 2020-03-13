@@ -2,11 +2,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 
 import { Settings } from '../defaults';
-import { setttingsFetched } from '../dev_env/interfaces';
+import { SettingsFetched } from '../dev_env/interfaces';
 
 const SETTINGS_KEY = 'Settings';
 
-const fetchSettings = async (): Promise<setttingsFetched> => {
+const fetchSettings = async (): Promise<SettingsFetched> => {
   let getSettings = await AsyncStorage.getItem( `${SETTINGS_KEY}` );
   if ( getSettings === null ) {
     await AsyncStorage.setItem( `${SETTINGS_KEY}`, JSON.stringify( Settings ) );

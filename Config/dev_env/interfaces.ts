@@ -52,7 +52,7 @@ export interface IViewerCtx {
     updateFontSize: ( newSize: number, element: number ) => void;
     updateDisplay: ( newVal: number, element: string ) => void;
 }
-export interface setttingsFetched {
+export interface SettingsFetched {
     $displayEngTransl: boolean;
     $displayPunTansl: boolean;
     $displayTranslit: boolean;

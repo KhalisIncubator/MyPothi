@@ -12,11 +12,7 @@ import { EditCtx } from '../config/app_state/easy-peasy/models';
 const Gutka = () => {
   const [ shabads, updateShabads ] = useState( [] );
   const [ dataLoading, updateLoading ] = useState( true );
-  // const { isEditMode, updateEditMode, selectedLineID, removeSelection } = useContext(EditContext);
-  const [ isEditMode, selectedInfo ] = EditCtx.useStoreState(
-    ( store ) => [ store.isEditMode, store.selectedInfo ],
-    shallowEqual,
-  );
+  const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
 
   const [ currentName, currentItems ] = useMainStoreState(
     ( store ) => [
@@ -30,21 +26,14 @@ const Gutka = () => {
     ( store ) => store.gutkaModel.isDataReady,
   );
 
-  const [ updateEditMode, updatedSelectedInfo ] = EditCtx.useStoreActions(
-    ( actions ) => [ actions.updateEditMode, actions.updatedSelectedInfo ],
-    shallowEqual,
-  );
+  const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
 
   useEffect( () => {
     updateLoading( true );
   }, [ currentName[0] ] );
   useEffect( () => {
     const getLines = async () => {
-      let newItems = [];
-      for ( const item of currentItems ) {
-        const shabad = await loadShabad( item.shabadId );
-        newItems.push( shabad );
-      }
+      const newItems = await Promise.all( currentItems.map( ( item ) => loadShabad( item.shabadId ) ) );
       updateShabads( newItems );
       updateLoading( false );
     };
@@ -77,8 +66,8 @@ const Gutka = () => {
               </>
             )}
             {isDataReady
-                && currentItems.length != undefined
-                && shabads.length != 0 && (
+                && currentItems.length !== undefined
+                && shabads.length !== 0 && (
                     <FlatList
                         data={shabads}
                         keyExtractor={( item, index ) => index.toString()}
@@ -97,12 +86,11 @@ const Gutka = () => {
 };
 const styles = StyleSheet.create( {
   Footer: {
-    width: '100%',
-    // backgroundColor: '#EE5407',
-    justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
     bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
   },
   View: {
     flex: 1,

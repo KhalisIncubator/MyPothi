@@ -7,7 +7,7 @@ import {
 import { IconButton, useTheme } from 'react-native-paper';
 import HighlightSelector from './HighlightSelector';
 
-const Toolbar = ( { showMain, updateMode } ) => {
+const Toolbar = ( { showMain, updateMode, currentLine } ) => {
   const theme = useTheme();
 
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
@@ -37,7 +37,7 @@ const Toolbar = ( { showMain, updateMode } ) => {
                             icon="bold"
                             size={20}
                             onPress={() => {
-                              console.log( 'Bold' );
+                              console.log( currentLine );
                             }}
                         />
                         <IconButton

@@ -1,19 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
+  StyleSheet, TouchableOpacity,
 } from 'react-native';
 import {
   Avatar, Card,
 } from 'react-native-paper';
-import { GutkaContext, SearchContext } from '../../contexts/Contexts';
+import { SearchCtx } from '../../config/app_state/easy-peasy/models';
+import { useUpdaters } from '../../config/app_state/hooks';
 
 const SearchResult = ( props ) => {
   const { verse, shabadId } = props.result;
-  const GutkaCtx = useContext( GutkaContext );
-  const { queryType } = useContext( SearchContext );
+  const { addEntry } = useUpdaters( 'currentModel' );
+  const queryType = SearchCtx.useStoreState( ( store ) => store.queryType );
   return (
         <TouchableOpacity
-            onPress={() => GutkaCtx.addEntry( shabadId, verse.gurmukhi, queryType )
+            onPress={() => { addEntry( [ shabadId, verse.gurmukhi, queryType ] ); }
             }>
             <Card.Title
                 style={style.Card}

@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Searchbar, useTheme, Menu, Button, Divider,
-  Icon, Text,
+  Searchbar, Menu, Button, Text,
 } from 'react-native-paper';
 import { View, StyleSheet, ScrollView } from 'react-native';
 
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { SearchCtx } from '../config/app_state/easy-peasy/models';
-import { SearchContext } from '../contexts/Contexts';
 import { SEARCH_TEXTS } from '../config/database/database_conts';
 import query from '../config/database/banidb_api';
 
@@ -16,18 +14,18 @@ import SearchResult from '../Components/Main/SearchResults';
 
 
 const Search = () => {
-  const SearchCtx = useContext( SearchContext );
-
   const [ searchQuery, updateQuery ] = useState( '' );
   const [ results, updateResults ] = useState( [] );
   const [ typeMenu, updateTypeM ] = useState( false );
   const [ searchMenu, updateSearchM ] = useState( false );
 
+  const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
+  const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   const net = useNetInfo();
   useEffect( () => {
     let cancelSearch = !net.isConnected;
     const fetchResults = async () => {
-      const dbResults = await query( searchQuery, SearchCtx.searchType );
+      const dbResults = await query( searchQuery, searchType );
       updateResults( [] );
       updateResults( [ ...dbResults ] );
     };
@@ -43,7 +41,7 @@ const Search = () => {
             <Searchbar
                 placeholder="Search"
                 inputStyle={styles.input}
-                onChangeText={( searchQuery ) => updateQuery( searchQuery )}
+                onChangeText={( newQuery ) => updateQuery( newQuery )}
                 value={searchQuery}
                 autoCapitalize="none"
                 theme={{ colors: { primary: 'white' } }}
@@ -56,20 +54,20 @@ const Search = () => {
                         <Button
                             style={styles.button}
                             onPress={() => updateTypeM( true )}>
-                            {SearchCtx.queryType}
+                            {queryType}
                         </Button>
                     }>
                     <Menu.Item
                         onPress={() => {
                           updateTypeM( false );
-                          SearchCtx.updateQueryType( 'Shabad' );
+                          updateQueryType( 'Shabad' );
                         }}
                         title="Shabad"
                     />
                     <Menu.Item
                         onPress={() => {
                           updateTypeM( false );
-                          SearchCtx.updateQueryType( 'Bani' );
+                          updateQueryType( 'Bani' );
                         }}
                         title="Bani"
                     />
@@ -81,7 +79,7 @@ const Search = () => {
                         <Button
                             style={styles.button}
                             onPress={() => updateSearchM( true )}>
-                            {SEARCH_TEXTS[SearchCtx.searchType]}
+                            {SEARCH_TEXTS[searchType]}
                         </Button>
                     }>
                     {Object.entries( SEARCH_TEXTS ).map( ( text ) => {
@@ -89,7 +87,7 @@ const Search = () => {
                       return (
                             <Menu.Item
                                 onPress={() => {
-                                  SearchCtx.updateSearchType( id );
+                                  updateSeachType( id );
                                   updateSearchM( false );
                                 }}
                                 title={`${desc}`}
@@ -98,7 +96,6 @@ const Search = () => {
                     } )}
                     {!net.isConnected && (
                         <View>
-                            <Icon name="wifi-off" size={30} />
                             <Text>
                                 Sorry you are not connected to the internet!
                             </Text>

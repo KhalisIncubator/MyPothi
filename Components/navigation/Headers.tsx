@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
@@ -6,10 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useValues } from '../../config/app_state/hooks';
 
-import { GutkaContext } from '../../contexts/Contexts';
 
 const Header = ( { previous, navigation } ) => {
-  const GutkaCtx = useContext( GutkaContext );
   const theme = useTheme();
   const { currentName } = useValues( 'currentModel' );
   const route = useRoute();

@@ -16,10 +16,7 @@ const useApi = ( apiFactory, initialState ) => {
   ] );
 };
 
-const useValues = ( model: string ) => useMainStoreState( ( store ) =>
-// console.log('ur values rerendered');
-  ( { ...store[model] } ),
-shallowEqual );
+const useValues = ( model: string ) => useMainStoreState( ( store ) => ( { ...store[model] } ), shallowEqual );
 const useUpdaters = ( model: string ) => useMainStoreActions( ( actions ) => ( { ...actions[model] } ) );
 
 export { useApi, useValues, useUpdaters };

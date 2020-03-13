@@ -1,68 +1,66 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar,
 } from 'react-native-paper';
-import { GutkaContext } from '../contexts/Contexts';
+import { useUpdaters, useValues } from '../config/app_state/hooks';
 
-const Edit = ( { route, navigation } ) => {
+const Edit = ( { route } ) => {
   const [ showSnack, updateShow ] = useState( false );
   const [ showError, updateErr ] = useState( false );
-  const GutkaCtx = useContext( GutkaContext );
-  const currentGutka = GutkaCtx.currentItems;
+
+  const { currentItems } = useValues( 'currentModel' );
+  const { removeEntry, updateCurrentName } = useUpdaters( 'currentModel' );
+  const { gutkaNames } = useValues( 'gutkaModel' );
+  const { deleteAGutka } = useUpdaters( 'gutkaModel' );
+
   const { type } = route.params;
 
   const snack = `${type} Removed!`;
-  const handleRemoveShabad = ( entryID, index ) => {
-    GutkaCtx.removeEntry( entryID, index );
+  const handleRemoveShabad = ( entryID ) => {
+    removeEntry( entryID );
     updateShow( true );
   };
   const handleRemoveGutka = ( name, gutkaID, index ) => {
     const position = index !== 0 ? index - 1 : index + 1;
-    GutkaCtx.updateCurrentName(
-      GutkaCtx.gutkaNames[position][0],
-      GutkaCtx.gutkaNames[position][1],
+    updateCurrentName(
+      [ gutkaNames[position][0],
+        gutkaNames[position][1] ],
     );
-    GutkaCtx.deleteAGutka( name, gutkaID, index );
+    deleteAGutka( [ name, gutkaID ] );
     updateShow( true );
   };
   return (
         <View style={style.View}>
             {type === 'Shabad'
-                && currentGutka.map( ( item, index ) => {
-                  if ( item.isValid() ) {
-                    return (
-                            <Card.Title
-                                style={style.Card}
-                                key={index}
-                                titleStyle={style.CardTitleG}
-                                title={`${item.mainLine}`}
-                                subtitle={`Shaabd ID: ${item.shabadId}`}
-                                left={( props ) => (
-                                    <Avatar.Icon {...props} icon="book" />
-                                )}
-                                right={( props ) => (
-                                    <IconButton
-                                        {...props}
-                                        color="red"
-                                        icon="minus-circle"
-                                        onPress={() => {
-                                          handleRemoveShabad(
-                                            item.entryID,
-                                            index,
-                                          );
-                                        }}
-                                    />
-                                )}
+                && currentItems.map( ( item, index ) => (
+                    <Card.Title
+                        style={style.Card}
+                        key={`${item.shabadId}/${item.entryID}`}
+                        titleStyle={style.CardTitleG}
+                        title={`${item.mainLine}`}
+                        subtitle={`Shaabd ID: ${item.shabadId}`}
+                        left={( props ) => (
+                            <Avatar.Icon {...props} icon="book" />
+                        )}
+                        right={( props ) => (
+                            <IconButton
+                                {...props}
+                                color="red"
+                                icon="minus-circle"
+                                onPress={() => {
+                                  handleRemoveShabad(
+                                    item.entryID,
+                                  );
+                                }}
                             />
-                    );
-                  }
-                } )}
+                        )}
+                            /> ) )}
             {type === 'Gutka'
-                && GutkaCtx.gutkaNames.map( ( data, index ) => (
+                && gutkaNames.map( ( data, index ) => (
                         <Card.Title
                             style={style.Card}
-                            key={index}
+                            key={data[0]}
                             title={`${data[0]}`}
                             left={( props ) => (
                                 <Avatar.Icon {...props} icon="book" />
@@ -73,7 +71,7 @@ const Edit = ( { route, navigation } ) => {
                                     color="red"
                                     icon="minus-circle"
                                     onPress={() => {
-                                      if ( GutkaCtx.gutkaNames.length === 1 ) {
+                                      if ( gutkaNames.length === 1 ) {
                                         updateErr( true );
                                       } else {
                                         handleRemoveGutka(
@@ -111,14 +109,6 @@ const style = StyleSheet.create( {
   CardTitleG: {
     fontFamily: 'AnmolLipiTrue',
   },
-  Searchbar: {
-    alignItems: 'center',
-    backgroundColor: '#FEFEFE',
-    flexDirection: 'row',
-    marginHorizontal: 15,
-    marginTop: 15,
-    minHeight: 40,
-  },
   Snack: {
     alignSelf: 'flex-end',
   },
@@ -127,14 +117,5 @@ const style = StyleSheet.create( {
     flexDirection: 'column',
   },
 
-  // IconContainer: {
-  //   marginLeft: 5,
-  // },
-  // Icon: {
-  //   color: '#b0b0b0'
-  // },
-  // TextIn: {
-  //   height: 40, borderColor: 'gray', borderWidth: 1, flex: 1,
-  // }
 } );
 export default Edit;
