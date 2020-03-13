@@ -1,17 +1,18 @@
 const Gutkas = [
   {
-    name: "Nitnem",
+    name: 'Nitnem',
     items: [
       {
         shabadId: 3632,
-        mainLine: "Bani Guru Guru Hai Bani",
+        mainLine: 'Bani Guru Guru Hai Bani',
         type: 'Shabad',
         parentGutka: 'Nitnem',
         mods: [],
         entryID: 'V1StGXR8_Z5jdHi6B-myT',
-      }, {
+      },
+      {
         shabadId: 40021,
-        mainLine: "Siro na mitai avan jai",
+        mainLine: 'Siro na mitai avan jai',
         type: 'Shabad',
         parentGutka: 'Nitnem',
         mods: [],
@@ -19,7 +20,7 @@ const Gutkas = [
       },
       {
         shabadId: 7738,
-        mainLine: "kha(n)ddaa pirathamai saaj kai",
+        mainLine: 'kha(n)ddaa pirathamai saaj kai',
         type: 'Shabad',
         parentGutka: 'Nitnem',
         mods: [],
@@ -27,15 +28,16 @@ const Gutkas = [
       },
       {
         shabadId: 7402,
-        mainLine: "Jaap Sahib",
+        mainLine: 'Jaap Sahib',
         type: 'Bani',
         parentGutka: 'Nitnem',
         mods: [],
         entryID: 'y6HyVADBiyvJV1NRS1p9o',
-      }],
-    gutkaID: 'Uakgb_J5m9g-0JDMbcJqLJ'
+      },
+    ],
+    gutkaID: 'Uakgb_J5m9g-0JDMbcJqLJ',
   },
-]
+];
 const Settings = {
   displayEngTransl: true,
   displayPunTransl: true,
@@ -44,9 +46,5 @@ const Settings = {
   gurmukhiFont: 30,
   translFont: 12,
   translitFont: 12,
-
-}
-export {
-  Gutkas,
-  Settings
-}
+};
+export { Gutkas, Settings };
