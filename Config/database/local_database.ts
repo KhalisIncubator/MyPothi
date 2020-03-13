@@ -4,6 +4,7 @@ import { Gutkas } from '../defaults';
 import localRealm from '../realm_schema';
 
 import generateID from './functions';
+import { storedGutka, entryObj } from '../dev_env/types';
 
 const isDataEmpty = () => localRealm.empty;
 
@@ -15,9 +16,9 @@ const emptyDB = () => {
 /**
  * fetches an array of all the gutkas' names (so that top level app state is not managing large amounts of data)
  */
-const fetchAllGutkas = () => {
+const fetchAllGutkas = (): string[][] => {
   const names = [];
-  const gutkas = localRealm.objects( 'Gutka' );
+  const gutkas = localRealm.objects<storedGutka>( 'Gutka' );
   gutkas.forEach( ( gutka ) => {
     names.push( [ gutka.name, gutka.gutkaID ] );
   } );
@@ -31,19 +32,18 @@ const fetchAllGutkas = () => {
  */
 const findGutka = ( currentGutka, gutkaID ) => {
   const filter = `name == "${currentGutka}" AND gutkaID == "${gutkaID}"`;
-  const [ gutka ] = localRealm.objects( 'Gutka' ).filtered( filter );
+  const [ gutka ] = localRealm.objects<storedGutka>( 'Gutka' ).filtered( filter );
   return gutka;
 };
 const findItem = ( parentG, entryID ) => {
   const filter = `parentGutka == "${parentG}" AND entryID == "${entryID}"`;
-  const [ item ] = localRealm.objects( 'Entry' ).filtered( filter );
+  const [ item ] = localRealm.objects<entryObj>( 'Entry' ).filtered( filter );
   return item;
 };
 /**
  *
  * @param {string} currentGutka the name of the current gutka
  */
-// : Promise<entryObj[]>
 const getCurrentItems = ( currentGutka, gutkaID ) => {
   let gutka;
   if ( currentGutka !== undefined && gutkaID !== undefined ) {
@@ -52,7 +52,7 @@ const getCurrentItems = ( currentGutka, gutkaID ) => {
     [ gutka ] = localRealm.objects( 'Gutka' );
   }
 
-  const items = [];
+  const items: entryObj[] = [];
   for ( let i = 0; i < gutka.items.length; i++ ) {
     if ( gutka.items[i].isValid() ) {
       items.push( gutka.items[i] );
@@ -87,7 +87,7 @@ const populateData = () => {
  * @param {gutkaEntry} type shabad or bani
  */
 const addToGutka = ( currentGutka, gutkaID, id, mainLine, type ) => {
-  const gutka = findGutka( currentGutka, gutkaID );
+  const gutka: storedGutka = findGutka( currentGutka, gutkaID );
   const newID = generateID();
   localRealm.write( () => {
     const entry = localRealm.create( 'Entry', {

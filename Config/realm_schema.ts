@@ -26,17 +26,18 @@ const ModificationSchema = {
   primaryKey: 'modID',
   properties: {
     lineID: 'int',
+    parentEntryID: 'string',
+    element: 'string',
+    modID: 'string',
     backgroundColor: 'string?',
     bold: 'bool?',
     italics: 'bool?',
     fontSize: 'int?',
-    element: 'string',
-    modID: 'string',
   },
 };
 const localRealmConfig = {
   schema: [ GuktaSchema, EntrySchema, ModificationSchema ],
-  schemaVersion: 9,
+  schemaVersion: 10,
 };
 
 export default new Realm( localRealmConfig );

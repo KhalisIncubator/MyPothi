@@ -5,22 +5,21 @@ export type entryObj = {
     parentGutka: string;
     mods: Modification[];
     entryID: string;
-    isValid: () => boolean;
 };
 export type storedGutka = {
     items: entryObj[];
     name: string;
     gutkaID: string;
-    isValid: () => boolean;
 };
 export type Modification = {
-    lineID: number;
-    backgroundColor?: string;
-    bold?: boolean;
-    italics?: boolean;
-    fontSize?: number;
-    element: string;
-    modID: string;
+    lineID: number,
+    parentEntryID: string,
+    element: string,
+    modID: string,
+    backgroundColor? : string,
+    bold? : boolean,
+    italics? : boolean,
+    fontSize? : boolean,
 };
 export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
