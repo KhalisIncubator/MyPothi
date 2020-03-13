@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 import {
-  Title, Drawer, Text, Button, TextInput,
+  Title, Drawer, Text, Button, TextInput, useTheme,
 } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useValues, useUpdaters } from '../../config/app_state/state_hooks';
 
 const CustomDrawerComponent = ( props ) => {
+  const theme = useTheme();
+
   const { gutkaNames } = useValues( 'gutkaModel' );
   const { currentName } = useValues( 'currentModel' );
 
@@ -21,7 +23,7 @@ const CustomDrawerComponent = ( props ) => {
   const [ newGutkaName, changeText ] = useState( '' );
   const { navigation } = props;
   return (
-        <DrawerContentScrollView {...props}>
+        <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
             <View style={styles.drawerContent}>
                 <View style={styles.titleSection}>
                     <View style={styles.row}>
@@ -51,6 +53,7 @@ const CustomDrawerComponent = ( props ) => {
                                     />
                                 )}
                                 key={data[0]}
+                                style={{ borderRadius: theme.roundness }}
                                 focused={data[0] === currentName[0]}
                                 activeTintColor="#ff9a00"
                                 label={( { color } ) => (
@@ -75,11 +78,12 @@ const CustomDrawerComponent = ( props ) => {
                                 />
                             )}
                             onPress={() => null}
-                            activeTintColor="#ff9a00"
+                            // activeTintColor="#ff9a00"
                             label={() => (
                                 <TextInput
                                     mode="outlined"
-                                    style={styles.input}
+                                    theme={{ colors: { ...theme.colors, background: theme.colors.backdrop } }}
+                                    dense
                                     placeholder="Enter Gutka Name"
                                     onChangeText={( text ) => {
                                       changeText( text );
@@ -117,8 +121,8 @@ const CustomDrawerComponent = ( props ) => {
                 <Drawer.Section>
                     <Button
                         icon="list"
+                        color={theme.colors.text}
                         style={styles.button}
-                        color="black"
                         onPress={() => navigation.navigate( 'Stack', {
                           screen: 'Edit',
                           params: { type: 'Gutka' },
@@ -143,10 +147,6 @@ const styles = StyleSheet.create( {
   drawerSection: {
     marginTop: 15,
   },
-  input: {
-    height: 25,
-  },
-
   row: {
     alignItems: 'baseline',
     flexDirection: 'row',

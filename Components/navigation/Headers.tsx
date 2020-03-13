@@ -13,7 +13,7 @@ const Header = ( { previous, navigation } ) => {
   const route = useRoute();
   const isMain = route.name === 'Gutka';
   return (
-        <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
+        <Appbar.Header theme={{ colors: { primary: theme.colors.backdrop } }}>
             {previous ? (
                 <Appbar.BackAction
                     onPress={() => {

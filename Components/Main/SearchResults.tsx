@@ -9,6 +9,7 @@ import { SearchCtx } from '../../config/app_state/easy-peasy/models';
 import { useUpdaters } from '../../config/app_state/state_hooks';
 
 const SearchResult = ( props ) => {
+  const styling = props.theme;
   const { verse, shabadId } = props.result;
   const { addEntry } = useUpdaters( 'currentModel' );
   const queryType = SearchCtx.useStoreState( ( store ) => store.queryType );
@@ -17,7 +18,7 @@ const SearchResult = ( props ) => {
             onPress={() => { addEntry( [ shabadId, verse.gurmukhi, queryType ] ); }
             }>
             <Card.Title
-                style={style.Card}
+                style={[ style.Card, { borderRadius: styling.roundness, backgroundColor: styling.colors.surface } ]}
                 titleStyle={style.CardTitle}
                 title={`${verse.gurmukhi}`}
                 subtitle={`Shaabd ID: ${shabadId}`}
@@ -29,7 +30,6 @@ const SearchResult = ( props ) => {
 
 const style = StyleSheet.create( {
   Card: {
-    backgroundColor: 'white',
     margin: 5,
   },
   CardTitle: {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Searchbar, Menu, Button, Text,
+  Searchbar, Menu, Button, Text, useTheme,
 } from 'react-native-paper';
 import { View, StyleSheet, ScrollView } from 'react-native';
 
@@ -14,6 +14,7 @@ import SearchResult from '../Components/Main/SearchResults';
 
 
 const Search = () => {
+  const theme = useTheme();
   const [ searchQuery, updateQuery ] = useState( '' );
   const [ results, updateResults ] = useState( [] );
   const [ typeMenu, updateTypeM ] = useState( false );
@@ -37,22 +38,25 @@ const Search = () => {
     };
   }, [ searchQuery ] );
   return (
-        <View>
-            <Searchbar
-                placeholder="Search"
-                inputStyle={styles.input}
-                onChangeText={( newQuery ) => updateQuery( newQuery )}
-                value={searchQuery}
-                autoCapitalize="none"
-                theme={{ colors: { primary: 'white' } }}
-            />
+        <View style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
+            <View style={{ padding: 5 }}>
+              <Searchbar
+                  placeholder="Search"
+                  inputStyle={ styles.input }
+                  onChangeText={( newQuery ) => updateQuery( newQuery )}
+                  value={searchQuery}
+                  autoCapitalize="none"
+                  theme={{ colors: { primary: 'white' } }}
+              />
+            </View>
             <View style={styles.row}>
                 <Menu
                     visible={typeMenu}
                     onDismiss={() => updateTypeM( false )}
                     anchor={
                         <Button
-                            style={styles.button}
+                            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+                            color={theme.colors.text}
                             onPress={() => updateTypeM( true )}>
                             {queryType}
                         </Button>
@@ -77,17 +81,19 @@ const Search = () => {
                     onDismiss={() => updateSearchM( false )}
                     anchor={
                         <Button
-                            style={styles.button}
+                            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+                            color={theme.colors.text}
                             onPress={() => updateSearchM( true )}>
                             {SEARCH_TEXTS[searchType]}
                         </Button>
                     }>
                     {Object.entries( SEARCH_TEXTS ).map( ( text ) => {
                       const [ id, desc ] = text;
+                      const newID = parseInt( id, 10 );
                       return (
                             <Menu.Item
                                 onPress={() => {
-                                  updateSeachType( id );
+                                  updateSeachType( newID );
                                   updateSearchM( false );
                                 }}
                                 title={`${desc}`}
@@ -105,7 +111,7 @@ const Search = () => {
             </View>
             <ScrollView>
                 {results.length > 0
-                    && results.map( ( result ) => <SearchResult result={result} /> )}
+                    && results.map( ( result ) => <SearchResult theme={theme} result={result} /> )}
             </ScrollView>
         </View>
   );
@@ -113,7 +119,6 @@ const Search = () => {
 
 const styles = StyleSheet.create( {
   button: {
-    backgroundColor: 'white',
     marginTop: 8,
   },
   input: {

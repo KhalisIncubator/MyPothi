@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
-  Avatar, Card, IconButton, Snackbar,
+  Avatar, Card, IconButton, Snackbar, useTheme,
 } from 'react-native-paper';
 import { useUpdaters, useValues } from '../config/app_state/state_hooks';
 
 const Edit = ( { route } ) => {
+  const theme = useTheme();
+
   const [ showSnack, updateShow ] = useState( false );
   const [ showError, updateErr ] = useState( false );
 
@@ -31,11 +33,11 @@ const Edit = ( { route } ) => {
     updateShow( true );
   };
   return (
-        <View style={style.View}>
+        <View style={[ style.View, { backgroundColor: theme.colors.background } ]}>
             {type === 'Shabad'
                 && currentItems.map( ( item, index ) => (
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: '#99AAB5' } ]}>
                     <Card.Title
-                        style={style.Card}
                         key={`${item.shabadId}/${item.entryID}`}
                         titleStyle={style.CardTitleG}
                         title={`${item.mainLine}`}
@@ -55,11 +57,12 @@ const Edit = ( { route } ) => {
                                 }}
                             />
                         )}
-                            /> ) )}
+                            />
+                            </Card> ) )}
             {type === 'Gutka'
                 && gutkaNames.map( ( data, index ) => (
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: '#99AAB5' } ]}>
                         <Card.Title
-                            style={style.Card}
                             key={data[0]}
                             title={`${data[0]}`}
                             left={( props ) => (
@@ -84,17 +87,18 @@ const Edit = ( { route } ) => {
                                 />
                             )}
                         />
+                        </Card>
                 ) )}
             <Snackbar
                 visible={showSnack}
                 onDismiss={() => updateShow( false )}
-                style={style.Snack}>
+                style={[ style.Snack, { backgroundColor: '#99AAB5' } ]}>
                 {snack}
             </Snackbar>
             <Snackbar
                 visible={showError}
                 onDismiss={() => updateErr( false )}
-                style={style.Snack}>
+                style={[ style.Snack, { backgroundColor: '#99AAB5' } ]}>
                 You cannot have less than one gutka!
             </Snackbar>
         </View>

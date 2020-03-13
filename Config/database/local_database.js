@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 // saved gutkas database
-import _ from 'lodash';
 import { Gutkas } from '../defaults';
 import localRealm from '../realm_schema';
 
@@ -104,8 +103,7 @@ const addToGutka = ( currentGutka, gutkaID, id, mainLine, type ) => {
 };
 
 const removeFromGutka = ( currentGutka, itemId ) => {
-  const filter = `entryID == "${itemId}" AND parentGutka == "${currentGutka}"`;
-  const [ item ] = localRealm.objects( 'Entry' ).filtered( filter );
+  const item = findItem( currentGutka, itemId );
   localRealm.write( () => {
     localRealm.delete( item );
   } );

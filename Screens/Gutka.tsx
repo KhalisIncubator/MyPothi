@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import shallowEqual from 'shallowequal';
+import { useTheme } from 'react-native-paper';
 import { useMainStoreState } from '../config/app_state/easy-peasy/hooks';
 
 import { loadShabad } from '../config/database/banidb_api';
@@ -10,6 +11,7 @@ import Toolbar from '../Components/Main/Toolbar';
 import { EditCtx } from '../config/app_state/easy-peasy/models';
 
 const Gutka = () => {
+  const theme = useTheme();
   const [ shabads, updateShabads ] = useState( [] );
   const [ dataLoading, updateLoading ] = useState( true );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
@@ -50,7 +52,7 @@ const Gutka = () => {
     return <View key="Viewer">{lines}</View>;
   };
   return (
-        <View style={styles.View}>
+        <View style={[ styles.View, { backgroundColor: theme.colors.background } ]}>
             {dataLoading && isDataReady && (
               <>
                     <ShimmeringLine />

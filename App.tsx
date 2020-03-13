@@ -17,19 +17,36 @@ import {
 } from './config/database/local_database';
 
 import Routes from './Routes';
+import { useValues } from './config/app_state/state_hooks';
 
 const theme = {
   ...DefaultTheme,
-  roundness: 2,
+  dark: false,
+  roundness: 10,
   colors: {
     ...DefaultTheme.colors,
     primary: '#3498db',
-    accent: '#FFA500',
-    surface: '#FFA500',
+    accent: '#99AAB5',
+    backdrop: '#FFA500',
   },
 };
 
+const darkTheme = {
+  ...DefaultTheme,
+  dark: true,
+  roundness: 10,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#99AAB5',
+    surface: '#99AAB5',
+    background: '#2C2F33',
+    backdrop: '#FFA500',
+    text: '#FFFFFF',
+  },
+};
 const App = () => {
+  const { isDarkMode } = useValues( 'themeModel' );
   const initCurrUpdate = useMainStoreActions(
     ( actions ) => actions.currentModel.initialUpdate,
   );
@@ -55,7 +72,7 @@ const App = () => {
 
   return (
     <PaperProvider
-    theme={theme}
+    theme={isDarkMode ? darkTheme : theme}
     settings={{
       icon: ( props ) => <Icon {...props} />,
     }}>

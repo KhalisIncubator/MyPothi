@@ -17,11 +17,11 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                 <HighlightSelector style={styles.Highlighter} />
             )}
             <SafeAreaView
-                style={[ styles.View, { backgroundColor: theme.colors.surface } ]}>
+                style={[ styles.View, { backgroundColor: theme.colors.backdrop } ]}>
                 <View
                     style={[
                       styles.Header,
-                      { backgroundColor: theme.colors.surface },
+                      { backgroundColor: theme.colors.backdrop },
                     ]}>
                     <IconButton
                         icon={showMain ? 'chevron-down' : 'chevron-up'}
@@ -32,7 +32,7 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                     <Text>Toolbar</Text>
                 </View>
                 {showMain && (
-                    <View style={styles.Main}>
+                    <View style={[ styles.Main, { backgroundColor: theme.colors.surface } ]}>
                         <IconButton
                             icon="bold"
                             size={20}
@@ -97,7 +97,6 @@ const styles = StyleSheet.create( {
     width: '100%',
   },
   Main: {
-    backgroundColor: '#D3D3D3',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     paddingHorizontal: 5,

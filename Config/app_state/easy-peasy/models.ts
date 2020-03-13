@@ -8,6 +8,7 @@ import {
   GutkaModel,
   ViewerModel,
   EditModel,
+  ThemeModel,
 } from './interfaces';
 
 import {
@@ -55,6 +56,10 @@ const EditCtx = createContextStore( editModel );
 
 export { EditCtx };
 
+const themeModel: ThemeModel = {
+  isDarkMode: true,
+  updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
+};
 const currentModel: CurrentModel = {
   currentName: [],
   currentItems: [],
@@ -151,7 +156,9 @@ const viewerModel: ViewerModel = {
   } ),
 };
 
-const storeModel: StoreModel = { currentModel, gutkaModel, viewerModel };
+const storeModel: StoreModel = {
+  themeModel, currentModel, gutkaModel, viewerModel,
+};
 
 export { storeModel };
 export default createStore( storeModel );

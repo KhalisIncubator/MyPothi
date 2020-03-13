@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { Text, StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
 
 const TextBlock = ( props ) => {
+  const theme = useTheme();
+
   const {
     style, value, isGurmukhi, isPangtee, isSelected, onClick,
   } = props;
@@ -15,6 +18,7 @@ const TextBlock = ( props ) => {
                 selectable={false}
                 style={[
                   style,
+                  { color: theme.colors.text },
                   isGurmukhi ? styles.Gurmukhi : styles.English,
                   isSelected ? styles.Selected : {},
                   isPangtee ? styles.Pangtee : {},
@@ -28,7 +32,6 @@ const TextBlock = ( props ) => {
 
 const styles = StyleSheet.create( {
   English: {
-    color: 'black',
     fontWeight: '200',
     marginVertical: 3,
   },

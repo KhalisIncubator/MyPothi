@@ -18,6 +18,11 @@ interface DisplayElements {
 export type Models = 'currentModel' | 'gutkaModel' | 'viewerModel';
 
 type Element = 'Pangtee' | 'EngTransl' | 'Teeka' | 'Translit' | null;
+
+export interface ThemeModel {
+    isDarkMode: boolean,
+    updateDarkMode: Action<ThemeModel>
+}
 export interface CurrentModel {
     currentName: string[];
     currentItems: entryObj[];
@@ -63,6 +68,7 @@ export interface EditModel {
     updatedSelectedInfo: Action<EditModel, [number, Element]>;
 }
 export interface StoreModel {
+    themeModel : ThemeModel;
     currentModel: CurrentModel;
     gutkaModel: GutkaModel;
     viewerModel: ViewerModel;
