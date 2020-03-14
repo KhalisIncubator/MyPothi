@@ -31,8 +31,8 @@ const LineBlock = ( props ) => {
   const translationSelection = useMemo(
     () => isEditMode
             && selectedLineID === id
-            && selectedElement === 'EngTransl',
-    [ isEditMode, selectedLineID === id, selectedElement === 'EngTransl' ],
+            && selectedElement === 'Eng',
+    [ isEditMode, selectedLineID === id, selectedElement === 'Eng' ],
   );
   const teekaSelection = useMemo(
     () => isEditMode && selectedLineID === id && selectedElement === 'Teeka',
