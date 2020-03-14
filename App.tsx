@@ -45,6 +45,7 @@ const darkTheme = {
     text: '#FFFFFF',
   },
 };
+
 const App = () => {
   const rehydrated = useStoreRehydrated();
   const { isDarkMode } = useValues( 'themeModel' );

@@ -26,8 +26,9 @@ const ModificationSchema = {
   primaryKey: 'modID',
   properties: {
     lineID: 'int',
-    parentEntryID: 'string',
     element: 'string',
+    // only needed to asign mod to correct entry
+    parentID: 'string',
     modID: 'string',
     backgroundColor: 'string?',
     bold: 'bool?',
@@ -37,7 +38,7 @@ const ModificationSchema = {
 };
 const localRealmConfig = {
   schema: [ GuktaSchema, EntrySchema, ModificationSchema ],
-  schemaVersion: 10,
+  schemaVersion: 12,
 };
 
 export default new Realm( localRealmConfig );

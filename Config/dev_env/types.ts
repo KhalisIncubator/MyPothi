@@ -13,8 +13,8 @@ export type storedGutka = {
 };
 export type Modification = {
     lineID: number,
-    parentEntryID: string,
     element: string,
+    parentID: string,
     modID: string,
     backgroundColor? : string,
     bold? : boolean,
@@ -25,3 +25,5 @@ export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
 export type QueryType = 'Shabad' | 'Bani';
 export type Element = 'Pangtee' | 'EngTransl' | 'Teeka' | 'Translit' | null;
+
+export type ModType = 'backgroundColor' | 'bold' | 'italics' | 'fontSize';
