@@ -186,8 +186,20 @@ const getModification = ( lineid: number, element: string, modID: string ) => {
   const [ mod ] = localRealm.objects<Modification>( 'Modification' ).filtered( filter );
   return mod;
 };
-const existsModification = ( lineid: number, element: string, modID: string ) => getModification( lineid, element, modID );
-const createModification = ( lineid: number, element: string, parentID: string, modID: string, type: ModType ) => 0;
+const existsModification = ( lineid: number, element: string, modID: string ) => getModification( lineid, element, modID ) !== undefined;
+const createModification = ( lineid: number, element: string, currentName: string, parentID: string, modID: string, type: ModType, value:any ) => {
+  const item = findItem( currentName, parentID );
+  const newMod = {
+    lineID: lineid,
+    element,
+    modID,
+    [type]: value,
+  };
+  localRealm.write( () => {
+    const mod = localRealm.create( 'Modification', { ...newMod } );
+    item.mods.push( mod );
+  } );
+};
 const editModification = ( lineid: number, element: string, modID: string, newMod: ModType ) => 0;
 const deleteModification = ( lineid: number, element: string, modID: string ) => {
   const mod = getModification( lineid, element, modID );

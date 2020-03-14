@@ -1,4 +1,4 @@
-import Realm from 'realm';
+import Realm, { Configuration } from 'realm';
 
 const GuktaSchema = {
   name: 'Gutka',
@@ -27,8 +27,6 @@ const ModificationSchema = {
   properties: {
     lineID: 'int',
     element: 'string',
-    // only needed to asign mod to correct entry
-    parentID: 'string',
     modID: 'string',
     backgroundColor: 'string?',
     bold: 'bool?',
@@ -36,9 +34,10 @@ const ModificationSchema = {
     fontSize: 'int?',
   },
 };
-const localRealmConfig = {
+const localRealmConfig: Configuration = {
   schema: [ GuktaSchema, EntrySchema, ModificationSchema ],
-  schemaVersion: 12,
+  schemaVersion: 11,
+  deleteRealmIfMigrationNeeded: true,
 };
 
 export default new Realm( localRealmConfig );
