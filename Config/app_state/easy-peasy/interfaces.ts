@@ -17,7 +17,7 @@ interface DisplayElements {
 
 export type Models = 'currentModel' | 'gutkaModel' | 'viewerModel';
 
-type Element = 'Pangtee' | 'EngTransl' | 'Teeka' | 'Translit' | null;
+type Element = 'Pangtee' | 'Eng' | 'Teeka' | 'Translit' | null;
 
 export interface ThemeModel {
     isDarkMode: boolean,

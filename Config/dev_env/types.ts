@@ -13,7 +13,7 @@ export type storedGutka = {
 };
 export type Modification = {
     lineID: number,
-    element: string,
+    element: Element,
     modID: string,
     backgroundColor? : string,
     bold? : boolean,

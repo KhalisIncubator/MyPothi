@@ -5,7 +5,7 @@ import localRealm from '../realm_schema';
 
 import generateID from './functions';
 import {
-  storedGutka, entryObj, Modification, ModType,
+  storedGutka, entryObj, Modification, ModType, Element,
 } from '../dev_env/types';
 
 
@@ -187,7 +187,7 @@ const getModification = ( lineid: number, element: string, modID: string ) => {
   return mod;
 };
 const existsModification = ( lineid: number, element: string, modID: string ) => getModification( lineid, element, modID ) !== undefined;
-const createModification = ( lineid: number, element: string, currentName: string, parentID: string, modID: string, type: ModType, value:any ) => {
+const createModification = ( lineid: number, element: Element, currentName: string, parentID: string, modID: string, type: ModType, value:any ) => {
   const item = findItem( currentName, parentID );
   const newMod = {
     lineID: lineid,
@@ -200,8 +200,8 @@ const createModification = ( lineid: number, element: string, currentName: strin
     item.mods.push( mod );
   } );
 };
-const editModification = ( lineid: number, element: string, modID: string, newMod: ModType ) => 0;
-const deleteModification = ( lineid: number, element: string, modID: string ) => {
+const editModification = ( lineid: number, element: Element, modID: string, newMod: ModType ) => 0;
+const deleteModification = ( lineid: number, element: Element, modID: string ) => {
   const mod = getModification( lineid, element, modID );
   localRealm.write( () => {
     localRealm.delete( mod );

@@ -71,7 +71,7 @@ const LineBlock = ( props ) => {
                     <TextBlock
                         isSelected={translationSelection}
                         value={Translations.English}
-                        onClick={() => textBlockClick( gurmukhiSelection, 'EngTransl' )
+                        onClick={() => textBlockClick( gurmukhiSelection, 'Eng' )
                         }
                         style={{ fontSize: eng }}
                     />
