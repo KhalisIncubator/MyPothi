@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar, useTheme,
 } from 'react-native-paper';
@@ -92,14 +92,14 @@ const Edit = ( { route } ) => {
             <Snackbar
                 visible={showSnack}
                 onDismiss={() => updateShow( false )}
-                style={[ style.Snack, { backgroundColor: '#99AAB5' } ]}>
-                {snack}
+                style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
+                <Text style={{ color: theme.colors.text }}>{snack}</Text>
             </Snackbar>
             <Snackbar
                 visible={showError}
                 onDismiss={() => updateErr( false )}
-                style={[ style.Snack, { backgroundColor: '#99AAB5' } ]}>
-                You cannot have less than one gutka!
+                style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
+                <Text style={{ color: theme.colors.text }}>You cannot have less than one gutka!</Text>
             </Snackbar>
         </View>
   );

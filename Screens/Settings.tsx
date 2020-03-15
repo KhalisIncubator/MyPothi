@@ -4,14 +4,14 @@ import { useValues, useUpdaters } from '../config/app_state/state_hooks';
 
 
 const SettingsScreen = ( { navigation } ) => {
-  const { fontSizes } = useValues( 'viewerModel' );
-  const { updateFontSize } = useUpdaters( 'viewerModel' );
+  const { isDarkMode } = useValues( 'themeModel' );
+  const { updateDarkMode } = useUpdaters( 'themeModel' );
 
   return (
         <View>
-            <Text>{fontSizes.gurmukhi}</Text>
+            <Text>{isDarkMode}</Text>
             <Button
-                onPress={() => { updateFontSize( [ 'gurmukhi', 12 ] ); }}
+                onPress={() => { updateDarkMode(); }}
                 title="mhmmm"
             />
         </View>

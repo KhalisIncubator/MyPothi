@@ -25,9 +25,11 @@ const theme = {
   roundness: 10,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3498db',
+    primary: '#2C2F33',
     accent: '#99AAB5',
     backdrop: '#FFA500',
+    surface: '#99AAB5',
+    text: '#000',
   },
 };
 

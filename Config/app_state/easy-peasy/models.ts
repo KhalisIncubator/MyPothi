@@ -59,7 +59,7 @@ const EditCtx = createContextStore( editModel );
 export { EditCtx };
 
 const themeModel: ThemeModel = {
-  isDarkMode: true,
+  isDarkMode: false,
   updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
 };
 const currentModel: CurrentModel = {
