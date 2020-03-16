@@ -97,6 +97,7 @@ const currentModel: CurrentModel = {
   } ),
   removeEntry: action( ( state, payload ) => {
     removeFromGutka( state.currentName[0], payload );
+
     state.currentItems = getCurrentItems(
       state.currentName[0],
       state.currentName[1],
@@ -149,7 +150,6 @@ const viewerModel: ViewerModel = {
   },
   updateFontSize: action( ( state, payload ) => {
     const [ element, val ] = payload;
-    console.log( state.fontSizes[element] );
     state.fontSizes[element] = val;
   } ),
   updateDisplayElement: action( ( state, payload ) => {
