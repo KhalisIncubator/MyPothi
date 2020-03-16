@@ -38,13 +38,5 @@ const Gutkas = [
     gutkaID: 'Uakgb_J5m9g-0JDMbcJqLJ',
   },
 ];
-const Settings = {
-  displayEngTransl: true,
-  displayPunTransl: true,
-  displayTranslit: true,
 
-  gurmukhiFont: 30,
-  translFont: 12,
-  translitFont: 12,
-};
-export { Gutkas, Settings };
+export default Gutkas;

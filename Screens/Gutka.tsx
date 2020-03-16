@@ -35,7 +35,7 @@ const Gutka = () => {
   }, [ currentName[0] ] );
   useEffect( () => {
     const getLines = async () => {
-      const newItems = await Promise.all( currentItems.map( ( item ) => loadShabad( item.shabadId ) ) );
+      const newItems = currentItems.length > 0 ? await Promise.all( currentItems.map( ( item ) => loadShabad( item.shabadId ) ) ) : [ ];
       updateShabads( newItems );
       updateLoading( false );
     };
@@ -47,8 +47,7 @@ const Gutka = () => {
     }
   }, [ currentItems, isDataReady, currentName[0] ] );
   const renderItem = ( { item, index } ) => {
-    let lines = [];
-    lines = item.map( ( line ) => <LineBlock key={line.id} line={line} entryID={currentItems[index].entryID} /> );
+    const lines = item.map( ( line ) => <LineBlock key={line.id} line={line} entryID={currentItems.length === 0 ? null : currentItems[index].entryID} /> );
     return <View key="Viewer">{lines}</View>;
   };
   return (

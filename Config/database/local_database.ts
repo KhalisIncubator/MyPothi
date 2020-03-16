@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 // saved gutkas database
-import { Gutkas } from '../defaults';
+import Gutkas from '../defaults';
 import localRealm from '../realm_schema';
 
 import generateID from './functions';
