@@ -40,17 +40,17 @@ export { SearchCtx };
 
 const editModel: EditModel = {
   isEditMode: false,
-  selectedInfo: [ null, null ],
+  selectedInfo: [ null, null, null ],
 
   updateEditMode: action( ( state ) => {
     if ( state.isEditMode ) {
-      state.selectedInfo = [ null, null ];
+      state.selectedInfo = [ null, null, null ];
     }
     state.isEditMode = !state.isEditMode;
   } ),
   updatedSelectedInfo: action( ( state, payload ) => {
-    const [ lineID, element ] = payload;
-    state.selectedInfo = [ lineID, element ];
+    const [ lineID, element, entryID ] = payload;
+    state.selectedInfo = [ lineID, element, entryID ];
   } ),
 };
 

@@ -62,10 +62,10 @@ export interface SearchModel {
 }
 export interface EditModel {
     isEditMode: boolean;
-    selectedInfo: [number | null, Element];
+    selectedInfo: [number | null, Element, string | null];
 
     updateEditMode: Action<EditModel>;
-    updatedSelectedInfo: Action<EditModel, [number, Element]>;
+    updatedSelectedInfo: Action<EditModel, [number | null, Element, string | null]>;
 }
 export interface StoreModel {
     themeModel : ThemeModel;

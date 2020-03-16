@@ -14,6 +14,9 @@ import {
   getCurrentItems,
   populateData,
   isDataEmpty,
+  createModification,
+  getModification,
+  existsModification,
 } from './config/database/local_database';
 
 import Routes from './Routes';
@@ -71,6 +74,9 @@ const App = () => {
       const items = getCurrentItems( names[0][0], names[0][1] );
       initCurrUpdate( [ names[0], items ] );
       initialGutkaUpdate( [ names, true ] );
+      console.log( items );
+      // modID: string, type: ModType, value:any
+      // createModification( names[0][0], '1zjFaKV6xdSoUnfmWkMvg' )( 207390, 'Teeka', 'ddd', 'bold', true );
     } );
   }, [] );
 

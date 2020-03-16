@@ -17,6 +17,7 @@ const LineBlock = ( props ) => {
   const {
     Gurbani, Translations, Transliteration, id,
   } = props.line;
+  const { entryID } = props;
   const {
     gurmukhi, eng, teeka, translit,
   } = fontSizes;
@@ -48,9 +49,9 @@ const LineBlock = ( props ) => {
   const textBlockClick = useCallback(
     ( selectionVal, element ) => {
       if ( selectionVal ) {
-        updatedSelectedInfo( [ null, null ] );
+        updatedSelectedInfo( [ null, null, null ] );
       } else {
-        updatedSelectedInfo( [ id, element ] );
+        updatedSelectedInfo( [ id, element, entryID ] );
       }
     },
     [ isEditMode, selectedElement, selectedLineID ],

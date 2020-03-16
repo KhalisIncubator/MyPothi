@@ -79,7 +79,7 @@ const findGutka = ( currentGutka, gutkaID ) => {
 const createNewGukta = ( name ) => {
   const newID = generateID();
   localRealm.write( () => {
-    const newGutka = localRealm.create( 'Gutka', {
+    localRealm.create( 'Gutka', {
       name,
       items: [],
       gutkaID: newID,
@@ -187,18 +187,20 @@ const getModification = ( lineid: number, element: string, modID: string ) => {
   return mod;
 };
 const existsModification = ( lineid: number, element: string, modID: string ) => getModification( lineid, element, modID ) !== undefined;
-const createModification = ( lineid: number, element: Element, currentName: string, parentID: string, modID: string, type: ModType, value:any ) => {
+const createModification = ( currentName: string, parentID: string ) => {
   const item = findItem( currentName, parentID );
-  const newMod = {
-    lineID: lineid,
-    element,
-    modID,
-    [type]: value,
+  return ( lineid: number, element: Element, modID: string, type: ModType, value:any ) => {
+    const newMod = {
+      lineID: lineid,
+      element,
+      modID,
+      [type]: value,
+    };
+    localRealm.write( () => {
+      const mod = localRealm.create( 'Modification', { ...newMod } );
+      item.mods.push( mod );
+    } );
   };
-  localRealm.write( () => {
-    const mod = localRealm.create( 'Modification', { ...newMod } );
-    item.mods.push( mod );
-  } );
 };
 const editModification = ( lineid: number, element: Element, modID: string, newMod: ModType ) => 0;
 const deleteModification = ( lineid: number, element: Element, modID: string ) => {

@@ -46,9 +46,9 @@ const Gutka = () => {
       updateLoading( false );
     }
   }, [ currentItems, isDataReady, currentName[0] ] );
-  const renderItem = ( { item } ) => {
+  const renderItem = ( { item, index } ) => {
     let lines = [];
-    lines = item.map( ( line ) => <LineBlock key={line.id} line={line} /> );
+    lines = item.map( ( line ) => <LineBlock key={line.id} line={line} entryID={currentItems[index].entryID} /> );
     return <View key="Viewer">{lines}</View>;
   };
   return (
