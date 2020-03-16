@@ -103,6 +103,15 @@ const currentModel: CurrentModel = {
       state.currentName[1],
     );
   } ),
+  createMod: action( ( state, {
+    lineid, element, type, value, parentInfo,
+  } ) => {
+    const [ currentName, parentID, modID ] = parentInfo;
+    if ( modID ) {
+      console.log( 'nice' );
+    }
+  } ),
+  deleteMod: action( ( state, payload ) => { console.log( payload ); } ),
   initialUpdate: action( ( state, payload ) => {
     const [ name, items ] = payload;
     state.currentName = name;

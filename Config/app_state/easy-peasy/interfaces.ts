@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 import { Action } from 'easy-peasy';
-import { QueryType, entryObj, gutkaEntry } from '../../dev_env/types';
+import {
+  QueryType, entryObj, gutkaEntry, ModType,
+} from '../../dev_env/types';
 
 interface FontSizes {
     gurmukhi: number;
@@ -29,8 +31,12 @@ export interface CurrentModel {
 
     updateItems: Action<CurrentModel, [string?, string?]>;
     updateCurrentName: Action<CurrentModel, [string, string]>;
+
     addEntry: Action<CurrentModel, [number, string, gutkaEntry]>;
     removeEntry: Action<CurrentModel, string>;
+
+    createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentInfo: [string, string, string]}>;
+    deleteMod: Action<CurrentModel, []>;
     initialUpdate: Action<CurrentModel, [string[], entryObj[]]>;
 }
 

@@ -180,13 +180,13 @@ const removeFromGutka = ( currentGutka, itemId ) => {
 export { getCurrentItems, addToGutka, removeFromGutka };
 
 // modification related functions
-
-const getModification = ( lineid: number, element: string, modID: string ) => {
+const getAllModifications = () => localRealm.objects<Modification>( 'Modification' );
+const getModification = ( lineid: number, element: Element, modID: string ) => {
   const filter = `lineID == "${lineid}" AND element == "${element}" AND modID == "${modID}"`;
   const [ mod ] = localRealm.objects<Modification>( 'Modification' ).filtered( filter );
   return mod;
 };
-const existsModification = ( lineid: number, element: string, modID: string ) => getModification( lineid, element, modID ) !== undefined;
+const existsModification = ( lineid: number, element: Element, modID: string ) => getModification( lineid, element, modID ) !== undefined;
 const createModification = ( currentName: string, parentID: string ) => {
   const item = findItem( currentName, parentID );
   return ( lineid: number, element: Element, modID: string, type: ModType, value:any ) => {
@@ -202,7 +202,15 @@ const createModification = ( currentName: string, parentID: string ) => {
     } );
   };
 };
-const editModification = ( lineid: number, element: Element, modID: string, newMod: ModType ) => 0;
+const editModification = ( lineid: number, element: Element, modID: string, newMod: ModType, value:any ) => {
+  let mod = getModification( lineid, element, modID );
+  localRealm.write( () => {
+    mod = {
+      ...mod,
+      [newMod]: value,
+    };
+  } );
+};
 const deleteModification = ( lineid: number, element: Element, modID: string ) => {
   const mod = getModification( lineid, element, modID );
   localRealm.write( () => {
@@ -211,5 +219,5 @@ const deleteModification = ( lineid: number, element: Element, modID: string ) =
 };
 
 export {
-  getModification, existsModification, createModification, editModification, deleteModification,
+  getAllModifications, getModification, existsModification, createModification, editModification, deleteModification,
 };
