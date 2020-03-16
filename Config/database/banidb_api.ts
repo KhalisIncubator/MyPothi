@@ -30,7 +30,6 @@ const remapLine = ( raw ) => {
 const query = async ( search: string, type: number ) => {
   const API_URL = 'https://api.banidb.com/v2/';
   const results = 50;
-  const shabads = [];
   if ( search !== '' ) {
     const q = search;
     const url = encodeURI( buildApiUrl( {
@@ -38,12 +37,7 @@ const query = async ( search: string, type: number ) => {
     } ) );
     return fetch( url )
       .then( ( response ) => response.json() )
-      .then( ( data ) => {
-        data.verses.forEach( ( shabad ) => {
-          shabads.push( shabad );
-        } );
-        return shabads;
-      } )
+      .then( ( data ) => data.verses )
       .catch( ( err ) => err );
   }
   return [ {} ];
@@ -54,13 +48,7 @@ const loadShabad = async ( id: number ) => {
   const url = encodeURI( buildApiUrl( { id, API_URL } ) );
   return fetch( url )
     .then( ( res ) => res.json() )
-    .then( ( data ) => {
-      const remapped = [];
-      data.verses.forEach( ( pg ) => {
-        remapped.push( remapLine( pg ) );
-      } );
-      return remapped;
-    } )
+    .then( ( data ) => ( data.verses.map( ( verse ) => remapLine( verse ) ) ) )
     .catch( ( err ) => err );
 };
 export default query;
