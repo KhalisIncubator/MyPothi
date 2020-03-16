@@ -14,9 +14,6 @@ import {
   getCurrentItems,
   populateData,
   isDataEmpty,
-  createModification,
-  getModification,
-  existsModification,
 } from './config/database/local_database';
 
 import Routes from './Routes';
