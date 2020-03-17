@@ -14,7 +14,6 @@ import {
   getCurrentItems,
   populateData,
   isDataEmpty,
-  getAllModifications,
 } from './app_config/database/local_database';
 
 import Routes from './Routes';
@@ -72,7 +71,6 @@ const App = () => {
       const items = getCurrentItems( names[0][0], names[0][1] );
       initCurrUpdate( [ names[0], items ] );
       initialGutkaUpdate( [ names, true ] );
-      console.log( getAllModifications() );
     } );
   }, [] );
 

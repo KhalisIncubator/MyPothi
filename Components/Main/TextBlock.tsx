@@ -20,7 +20,7 @@ const TextBlock = ( props ) => {
       if ( mod?.underline ) modStyle.textDecorationLine = 'underline';
       if ( mod?.backgroundColor ) modStyle.backgroundColor = mod.backgroundColor;
       if ( mod?.fontSize ) modStyle.fontSize = mod.fontSize;
-      console.log( modStyle, type );
+      // console.log( type, mod?.element, type === mod?.element, modStyle );
     }
   } );
   const flatten = StyleSheet.flatten(

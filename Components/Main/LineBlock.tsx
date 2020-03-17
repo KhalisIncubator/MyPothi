@@ -23,7 +23,8 @@ const LineBlock = ( props ) => {
   } = fontSizes;
   const { displayEng, displayTeeka, displayTranslit } = displayElements;
 
-  const filteredMod = mods.filter( ( mod ) => mod.lineID === id );
+  const filteredMod = mods ? mods.filter( ( mod ) => mod.lineID === id ) : [];
+
   const gurmukhiSelection = useMemo(
     () => isEditMode
             && selectedLineID === id
