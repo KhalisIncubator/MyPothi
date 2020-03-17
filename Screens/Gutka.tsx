@@ -48,7 +48,8 @@ const Gutka = () => {
     // if currentItems is not length of 0, and if the item at the index has a entryID (need to check because is null when item is deleted and state is
     // uodated). Otherwise if currentItems has length of 0, then set id to null
       entryID={ currentItems[index]?.entryID ?? null}
-      mods={ mods ? Object.values( mods ) : null }/> );
+      // bug with realm where on first load this stuff is not an array for some reason
+      mods={ mods ? Object.values( mods ) : null}/> );
     return <View key="Viewer">{lines}</View>;
   };
   return (
