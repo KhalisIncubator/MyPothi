@@ -69,6 +69,9 @@ const App = () => {
     checkStore().then( async () => {
       const names = fetchAllGutkas();
       const items = getCurrentItems( names[0][0], names[0][1] );
+      // items.map(item => {
+      //   const mods = getAllModifications(item.);
+      // })
       initCurrUpdate( [ names[0], items ] );
       initialGutkaUpdate( [ names, true ] );
     } );
