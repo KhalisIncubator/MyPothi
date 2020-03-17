@@ -5,8 +5,8 @@ import {
 import {
   Avatar, Card,
 } from 'react-native-paper';
-import { SearchCtx } from '../../config/app_state/easy-peasy/models';
-import { useUpdaters } from '../../config/app_state/state_hooks';
+import { SearchCtx } from '../../app_config/app_state/easy-peasy/models';
+import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const SearchResult = ( props ) => {
   const styling = props.theme;

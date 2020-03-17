@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useMainStoreState } from '../config/app_state/easy-peasy/hooks';
+import { useMainStoreState } from '../app_config/app_state/easy-peasy/hooks';
 
-import { loadShabad } from '../config/database/banidb_api';
+import { loadShabad } from '../app_config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
-import { EditCtx } from '../config/app_state/easy-peasy/models';
-import { useValues } from '../config/app_state/state_hooks';
+import { EditCtx } from '../app_config/app_state/easy-peasy/models';
+import { useValues } from '../app_config/app_state/state_hooks';
 
 const Gutka = () => {
   const theme = useTheme();

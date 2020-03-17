@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar, useTheme,
 } from 'react-native-paper';
-import { useUpdaters, useValues } from '../config/app_state/state_hooks';
+import { useUpdaters, useValues } from '../app_config/app_state/state_hooks';
 
 const Edit = ( { route } ) => {
   const theme = useTheme();

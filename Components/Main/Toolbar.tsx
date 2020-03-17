@@ -6,7 +6,7 @@ import {
 
 import { IconButton, useTheme } from 'react-native-paper';
 import HighlightSelector from './HighlightSelector';
-import { useUpdaters } from '../../config/app_state/state_hooks';
+import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const Toolbar = ( { showMain, updateMode, currentLine } ) => {
   const theme = useTheme();

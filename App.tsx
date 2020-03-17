@@ -6,19 +6,19 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
-import store from './config/app_state/easy-peasy/models';
+import store from './app_config/app_state/easy-peasy/models';
 
-import { useMainStoreActions } from './config/app_state/easy-peasy/hooks';
+import { useMainStoreActions } from './app_config/app_state/easy-peasy/hooks';
 import {
   fetchAllGutkas,
   getCurrentItems,
   populateData,
   isDataEmpty,
   getAllModifications,
-} from './config/database/local_database';
+} from './app_config/database/local_database';
 
 import Routes from './Routes';
-import { useValues } from './config/app_state/state_hooks';
+import { useValues } from './app_config/app_state/state_hooks';
 
 const theme = {
   ...DefaultTheme,

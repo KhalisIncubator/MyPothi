@@ -8,7 +8,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useValues, useUpdaters } from '../../config/app_state/state_hooks';
+import { useValues, useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const CustomDrawerComponent = ( props ) => {
   const theme = useTheme();
