@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* mypothijsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mypothijsTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -19,6 +20,7 @@
 		56F2A72E2074AFCAB6E73D51 /* libPods-mypothijs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7AF36CBA36B4D0879086B6 /* libPods-mypothijs.a */; };
 		6879A5C58C383AA0BD563532 /* libPods-mypothijs-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 357B7A015D3840FE64BE7E1D /* libPods-mypothijs-tvOS.a */; };
 		6F0AED62586900B1C9F0A45D /* libPods-mypothijs-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D04023E33F89392E1CA523A3 /* libPods-mypothijs-tvOSTests.a */; };
+		886301B6C4764011984100B5 /* AnmolLipiBoldTrue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 155E74EA9B944A76B9DBD52F /* AnmolLipiBoldTrue.ttf */; };
 		D7BA989C4E3A28501E8C3123 /* libPods-mypothijsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A97D2843B53F0597C98BE5C /* libPods-mypothijsTests.a */; };
 /* End PBXBuildFile section */
 
@@ -53,13 +55,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = mypothijs/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mypothijs/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mypothijs/main.m; sourceTree = "<group>"; };
+		155E74EA9B944A76B9DBD52F /* AnmolLipiBoldTrue.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AnmolLipiBoldTrue.ttf; path = ../assets/fonts/AnmolLipiBoldTrue.ttf; sourceTree = "<group>"; };
 		1F7AF36CBA36B4D0879086B6 /* libPods-mypothijs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mypothijs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* mypothijs-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mypothijs-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mypothijs-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mypothijs-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		357B7A015D3840FE64BE7E1D /* libPods-mypothijs-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mypothijs-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CF704740FDC126B46A5B084 /* Pods-mypothijs-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mypothijs-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-mypothijs-tvOSTests/Pods-mypothijs-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74FA4D61FAD58A0205DF5F9D /* Pods-mypothijsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mypothijsTests.debug.xcconfig"; path = "Target Support Files/Pods-mypothijsTests/Pods-mypothijsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		999B3BF830A04786B21ADCEF /* AnmolLipiTrue.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AnmolLipiTrue.ttf; path = ../assets/fonts/AnmolLipiTrue.ttf; sourceTree = "<group>"; };
+		999B3BF830A04786B21ADCEF /* AnmolLipiTrue.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AnmolLipiTrue.ttf; path = ../assets/fonts/AnmolLipiTrue.ttf; sourceTree = "<group>"; };
 		B317C980BCA2C9C988210BCA /* Pods-mypothijs-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mypothijs-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-mypothijs-tvOSTests/Pods-mypothijs-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C29E2D8DD24D517030C7912E /* Pods-mypothijs-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mypothijs-tvOS.release.xcconfig"; path = "Target Support Files/Pods-mypothijs-tvOS/Pods-mypothijs-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		D04023E33F89392E1CA523A3 /* libPods-mypothijs-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mypothijs-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,9 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				999B3BF830A04786B21ADCEF /* AnmolLipiTrue.ttf */,
+				155E74EA9B944A76B9DBD52F /* AnmolLipiBoldTrue.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* mypothijs */ = {
@@ -240,7 +243,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				BFE8D4234CD5A52F760E841A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -354,6 +356,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3F10EE1B0926403A972BC4B5 /* AnmolLipiTrue.ttf in Resources */,
+				886301B6C4764011984100B5 /* AnmolLipiBoldTrue.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,54 +448,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BFE8D4234CD5A52F760E841A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mypothijs/Pods-mypothijs-resources.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mypothijs/Pods-mypothijs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E7CD6E6A17C3D0F4710D5586 /* [CP] Check Pods Manifest.lock */ = {
