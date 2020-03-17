@@ -35,7 +35,7 @@ export interface CurrentModel {
     addEntry: Action<CurrentModel, [number, string, gutkaEntry]>;
     removeEntry: Action<CurrentModel, string>;
 
-    createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentInfo: [string, string, string]}>;
+    createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
     deleteMod: Action<CurrentModel, []>;
     initialUpdate: Action<CurrentModel, [string[], entryObj[]]>;
 }

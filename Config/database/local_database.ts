@@ -186,14 +186,21 @@ const getModification = ( lineid: number, element: Element, modID: string ) => {
   const [ mod ] = localRealm.objects<Modification>( 'Modification' ).filtered( filter );
   return mod;
 };
-const existsModification = ( lineid: number, element: Element, modID: string ) => getModification( lineid, element, modID ) !== undefined;
+const getModWithParent = ( lineid: number, element: Element, parentID: string ) => {
+  const filter = `lineID == "${lineid}" AND element == "${element}" AND parentID == "${[ parentID ]}"`;
+  const [ mod ] = localRealm.objects<Modification>( 'Modification' ).filtered( filter );
+  return mod;
+};
+const existsModification = ( lineid: number, element: Element, parentID: string ) => getModWithParent( lineid, element, parentID ) !== undefined;
 const createModification = ( currentName: string, parentID: string ) => {
   const item = findItem( currentName, parentID );
-  return ( lineid: number, element: Element, modID: string, type: ModType, value:any ) => {
+  return ( lineid: number, element: Element, type: ModType, value:any ) => {
+    const modID = generateID();
     const newMod = {
       lineID: lineid,
       element,
       modID,
+      parentID,
       [type]: value,
     };
     localRealm.write( () => {
@@ -202,8 +209,8 @@ const createModification = ( currentName: string, parentID: string ) => {
     } );
   };
 };
-const editModification = ( lineid: number, element: Element, modID: string, newMod: ModType, value:any ) => {
-  let mod = getModification( lineid, element, modID );
+const editModification = ( lineid: number, element: Element, parentID: string, newMod: ModType, value:any ) => {
+  let mod = getModWithParent( lineid, element, parentID );
   localRealm.write( () => {
     mod = {
       ...mod,
@@ -211,8 +218,8 @@ const editModification = ( lineid: number, element: Element, modID: string, newM
     };
   } );
 };
-const deleteModification = ( lineid: number, element: Element, modID: string ) => {
-  const mod = getModification( lineid, element, modID );
+const deleteModification = ( lineid: number, element: Element, parentID: string ) => {
+  const mod = getModWithParent( lineid, element, parentID );
   localRealm.write( () => {
     localRealm.delete( mod );
   } );

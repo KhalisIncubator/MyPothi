@@ -17,12 +17,13 @@ const LineBlock = ( props ) => {
   const {
     Gurbani, Translations, Transliteration, id,
   } = props.line;
-  const { entryID } = props;
+  const { entryID, mods } = props;
   const {
     gurmukhi, eng, teeka, translit,
   } = fontSizes;
   const { displayEng, displayTeeka, displayTranslit } = displayElements;
 
+  const filteredMod = mods.filter( ( mod ) => mod.lineID === id );
   const gurmukhiSelection = useMemo(
     () => isEditMode
             && selectedLineID === id
@@ -59,7 +60,9 @@ const LineBlock = ( props ) => {
   return (
         <View style={style.column}>
             <TextBlock
+                type="Pangtee"
                 isSelected={gurmukhiSelection}
+                mods={filteredMod}
                 style={{ fontSize: gurmukhi }}
                 value={Gurbani.ascii}
                 onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
@@ -70,6 +73,8 @@ const LineBlock = ( props ) => {
                   Translations.English == null || Translations.English === ' '
                 ) && (
                     <TextBlock
+                        type="Eng"
+                        mods={filteredMod}
                         isSelected={translationSelection}
                         value={Translations.English}
                         onClick={() => textBlockClick( gurmukhiSelection, 'Eng' )
@@ -79,6 +84,8 @@ const LineBlock = ( props ) => {
             )}
             {displayTeeka && Translations.Punjabi.SS !== null && (
                 <TextBlock
+                    type="Teeka"
+                    mods={filteredMod}
                     isSelected={teekaSelection}
                     value={Translations.Punjabi.SS}
                     isGurmukhi
@@ -88,6 +95,8 @@ const LineBlock = ( props ) => {
             )}
             {displayTranslit && Transliteration.English && (
                 <TextBlock
+                    type="Translit"
+                    mods={filteredMod}
                     value={Transliteration.English}
                     isSelected={translitSelection}
                     onClick={() => textBlockClick( gurmukhiSelection, 'Translit' )

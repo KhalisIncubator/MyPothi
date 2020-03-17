@@ -1,14 +1,37 @@
 import React from 'react';
 
-import { Text, StyleSheet, View } from 'react-native';
+import {
+  Text, StyleSheet, View,
+} from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 const TextBlock = ( props ) => {
   const theme = useTheme();
-
   const {
-    style, value, isGurmukhi, isPangtee, isSelected, onClick,
+    style, value, isSelected, onClick, mods, type,
   } = props;
+  const isGurmukhi = type === 'Teeka';
+  const isPangtee = type === 'Pangtee';
+  const modStyle: any = { };
+  mods.forEach( ( mod ) => {
+    if ( type === mod?.element ) {
+      if ( mod?.bold ) modStyle.fontWeight = 'bold';
+      if ( mod?.italics ) modStyle.fontStyle = 'italics';
+      if ( mod?.underline ) modStyle.textDecorationLine = 'underline';
+      if ( mod?.backgroundColor ) modStyle.backgroundColor = mod.backgroundColor;
+      if ( mod?.fontSize ) modStyle.fontSize = mod.fontSize;
+      console.log( modStyle, type );
+    }
+  } );
+  const flatten = StyleSheet.flatten(
+    [ style,
+      { ...modStyle },
+      { color: theme.colors.text },
+      isGurmukhi ? styles.Gurmukhi : styles.English,
+      isSelected ? styles.Selected : {},
+      isPangtee ? styles.Pangtee : {},
+      styles.Text ],
+  );
   return (
         <View style={styles.View}>
             <Text
@@ -16,14 +39,7 @@ const TextBlock = ( props ) => {
                   onClick();
                 }}
                 selectable={false}
-                style={[
-                  style,
-                  { color: theme.colors.text },
-                  isGurmukhi ? styles.Gurmukhi : styles.English,
-                  isSelected ? styles.Selected : {},
-                  isPangtee ? styles.Pangtee : {},
-                  styles.Text,
-                ]}>
+                style={flatten}>
                 {value}
             </Text>
         </View>
@@ -32,17 +48,14 @@ const TextBlock = ( props ) => {
 
 const styles = StyleSheet.create( {
   English: {
-    fontWeight: '200',
     marginVertical: 3,
   },
   Gurmukhi: {
     fontFamily: 'AnmolLipiTrue',
-    fontWeight: '200',
     marginVertical: 3,
   },
   Pangtee: {
     fontFamily: 'AnmolLipiTrue',
-    fontWeight: '400',
     marginVertical: 4,
   },
   Selected: {

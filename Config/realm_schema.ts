@@ -28,6 +28,7 @@ const ModificationSchema = {
     lineID: 'int',
     element: 'string',
     modID: 'string',
+    parentID: 'string',
     backgroundColor: 'string?',
     bold: 'bool?',
     italics: 'bool?',
@@ -36,7 +37,7 @@ const ModificationSchema = {
 };
 const localRealmConfig: Configuration = {
   schema: [ GuktaSchema, EntrySchema, ModificationSchema ],
-  schemaVersion: 11,
+  schemaVersion: 1,
   deleteRealmIfMigrationNeeded: true,
 };
 

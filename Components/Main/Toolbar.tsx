@@ -6,11 +6,14 @@ import {
 
 import { IconButton, useTheme } from 'react-native-paper';
 import HighlightSelector from './HighlightSelector';
+import { useUpdaters } from '../../config/app_state/state_hooks';
 
 const Toolbar = ( { showMain, updateMode, currentLine } ) => {
   const theme = useTheme();
 
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
+
+  const { createMod } = useUpdaters( 'currentModel' );
   return (
     <>
             {isHighlighterVis && (
@@ -37,14 +40,19 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                             icon="bold"
                             size={20}
                             onPress={() => {
-                              console.log( currentLine );
+                              // createMod();
+                              const [ lineid, element, parentID ] = currentLine;
+                              createMod( {
+                                lineid, element, type: 'bold', value: true, parentID,
+                              } );
                             }}
                         />
                         <IconButton
                             icon="italic"
                             size={20}
                             onPress={() => {
-                              console.log( 'Italicize' );
+                              // console.log( 'Italicize' );
+                              console.log( currentLine );
                             }}
                         />
                         <IconButton
@@ -74,6 +82,10 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                             onPress={() => {
                               toggleHighligher( ( prev ) => !prev );
                             }}
+                        />
+                        <IconButton
+                        icon ="x"
+                        size={20}
                         />
                     </View>
                 )}

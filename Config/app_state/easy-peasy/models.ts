@@ -19,6 +19,9 @@ import {
   deleteGukta,
   addToGutka,
   removeFromGutka,
+  editModification,
+  createModification,
+  existsModification,
 } from '../../database/local_database';
 import AsyncStore from './storage';
 
@@ -104,16 +107,20 @@ const currentModel: CurrentModel = {
     );
   } ),
   createMod: action( ( state, {
-    lineid, element, type, value, parentInfo,
+    lineid, element, type, value, parentID,
   } ) => {
-    const [ currentName, parentID, modID ] = parentInfo;
-    if ( modID ) {
-      console.log( 'nice' );
+    if ( existsModification( lineid, element, parentID ) ) {
+      editModification( lineid, element, parentID, type, value );
+    } else {
+      createModification( state.currentName[0], parentID )( lineid, element, type, value );
     }
+    state.currentItems = getCurrentItems(
+      state.currentName[0],
+      state.currentName[1],
+    );
   } ),
   deleteMod: action( ( state, payload ) => { console.log( payload ); } ),
-  initialUpdate: action( ( state, payload ) => {
-    const [ name, items ] = payload;
+  initialUpdate: action( ( state, [ name, items ] ) => {
     state.currentName = name;
     state.currentItems = items;
   } ),
@@ -133,13 +140,11 @@ const gutkaModel: GutkaModel = {
     createNewGukta( payload );
     state.gutkaNames = fetchAllGutkas();
   } ),
-  deleteAGutka: action( ( state, payload ) => {
-    const [ name, id ] = payload;
+  deleteAGutka: action( ( state, [ name, id ] ) => {
     deleteGukta( name, id );
     state.gutkaNames = fetchAllGutkas();
   } ),
-  initialUpdate: action( ( state, payload ) => {
-    const [ names, bool ] = payload;
+  initialUpdate: action( ( state, [ names, bool ] ) => {
     state.gutkaNames = names;
     state.isDataReady = bool;
   } ),

@@ -15,6 +15,7 @@ export type Modification = {
     lineID: number,
     element: Element,
     modID: string,
+    parentID: string,
     backgroundColor? : string,
     bold? : boolean,
     italics? : boolean,
