@@ -9,6 +9,7 @@ import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
 import { EditCtx } from '../app_config/app_state/easy-peasy/models';
 import { useValues } from '../app_config/app_state/state_hooks';
+import { mapModsToArray } from '../app_config/functions';
 
 const Gutka = () => {
   const theme = useTheme();
@@ -43,16 +44,12 @@ const Gutka = () => {
   }, [ currentItems, isDataReady, currentName[0] ] );
 
   const renderItem = ( { item, index } ) => {
-    // bug with realm where on first load this stuff is not an array for some reason
-
     const mods = currentItems[index]?.mods ?? null;
-    const toMapArray = { ...mods, length: Object.keys( mods ).length };
-    const modsArr = Array.from( toMapArray );
-    const lines = item.map( ( line ) => <LineBlock key={line.id} line={line}
+    const lines = item.map( ( line ) => ( <LineBlock key={line.id} line={line}
     // if currentItems is not length of 0, and if the item at the index has a entryID (need to check because is null when item is deleted and state is
     // uodated). Otherwise if currentItems has length of 0, then set id to null
       entryID={ currentItems[index]?.entryID ?? null}
-      mods={modsArr}/> );
+      mods={mapModsToArray( mods )}/> ) );
     return <View key="Viewer">{lines}</View>;
   };
   return (
