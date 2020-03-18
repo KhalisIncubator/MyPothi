@@ -126,7 +126,7 @@ const findItem = ( parentG, entryID ) => {
  */
 const getCurrentItems = ( currentGutka, gutkaID ) => {
   let gutka;
-  if ( currentGutka !== undefined && gutkaID !== undefined ) {
+  if ( currentGutka && gutkaID ) {
     gutka = findGutka( currentGutka, gutkaID );
   } else {
     [ gutka ] = localRealm.objects( 'Gutka' );
@@ -180,7 +180,12 @@ const removeFromGutka = ( currentGutka, itemId ) => {
 export { getCurrentItems, addToGutka, removeFromGutka };
 
 // modification related functions
-const getAllModifications = () => localRealm.objects<Modification>( 'Modification' );
+
+const getAllModifications = ( parentID: string ) => {
+  const fetched = localRealm.objects<Modification>( 'Modification' ).filtered( `parentID == "${parentID}"` );
+  const mapped: Modification[] = fetched.map( ( mod ) => mod );
+  return mapped;
+};
 const getModification = ( lineid: number, element: Element, modID: string ) => {
   const filter = `lineID == "${lineid}" AND element == "${element}" AND modID == "${modID}"`;
   const [ mod ] = localRealm.objects<Modification>( 'Modification' ).filtered( filter );
