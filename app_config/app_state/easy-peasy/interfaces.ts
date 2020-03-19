@@ -56,7 +56,7 @@ export interface ViewerModel {
     displayElements: DisplayElements;
 
     updateFontSize: Action<ViewerModel, [string, number]>;
-    updateDisplayElement: Action<ViewerModel, [string, boolean]>;
+    updateDisplayElement: Action<ViewerModel, string>;
 }
 
 export interface SearchModel {

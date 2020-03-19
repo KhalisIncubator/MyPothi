@@ -167,8 +167,7 @@ const viewerModel: ViewerModel = {
     state.fontSizes[element] = val;
   } ),
   updateDisplayElement: action( ( state, payload ) => {
-    const [ element, val ] = payload;
-    state.displayElements[element] = val;
+    state.displayElements[payload] = !state.displayElements[payload];
   } ),
 };
 
