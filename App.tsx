@@ -6,7 +6,6 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
-import { defaultPath } from 'realm';
 import store from './app_config/app_state/easy-peasy/models';
 
 import { useMainStoreActions } from './app_config/app_state/easy-peasy/hooks';
