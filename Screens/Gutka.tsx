@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import {
+  View, FlatList, StyleSheet, SafeAreaView,
+} from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useMainStoreState } from '../app_config/app_state/easy-peasy/hooks';
 
@@ -53,7 +55,7 @@ const Gutka = () => {
   };
   return (
     <View style={ styles.View}>
-        <View style={{ backgroundColor: theme.colors.background }}>
+        <View style={{ backgroundColor: theme.colors.background, flexGrow: 1, flexShrink: 1 }}>
             {dataLoading && isDataReady && (
               <>
                     <ShimmeringLine />
@@ -77,18 +79,28 @@ const Gutka = () => {
                         renderItem={renderItem}
                     />
             )}
-                <Toolbar
-                    showMain={isEditMode}
-                    updateMode={updateEditMode}
-                    currentLine={selectedInfo}
-                />
+
     </View>
+    <Toolbar
+        style={styles.Footer}
+        showMain={isEditMode}
+        updateMode={updateEditMode}
+        currentLine={selectedInfo}
+      />
     </View>
   );
 };
 const styles = StyleSheet.create( {
+  Footer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   View: {
+    alignContent: 'space-between',
+    display: 'flex',
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
 } );
 

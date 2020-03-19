@@ -8,7 +8,9 @@ import { IconButton, useTheme } from 'react-native-paper';
 import HighlightSelector from './HighlightSelector';
 import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
-const Toolbar = ( { showMain, updateMode, currentLine } ) => {
+const Toolbar = ( {
+  showMain, updateMode, currentLine, style,
+} ) => {
   const theme = useTheme();
 
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
@@ -20,7 +22,7 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                 <HighlightSelector style={styles.Highlighter} />
             )}
             <SafeAreaView
-                style={[ styles.View, { backgroundColor: theme.colors.backdrop }, styles.Footer ]}>
+                style={[ styles.View, { backgroundColor: theme.colors.backdrop }, style ]}>
                 <View
                     style={[
                       styles.Header,
@@ -95,13 +97,7 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
 };
 
 const styles = StyleSheet.create( {
-  Footer: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-  },
+
   Header: {
     alignItems: 'center',
     display: 'flex',
