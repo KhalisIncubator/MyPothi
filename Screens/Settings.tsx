@@ -7,7 +7,7 @@ import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
 import SettingWithSwitch, { SettingWithFonts } from '../Components/Main/SettingsComponents';
 
 
-const SettingsScreen = ( { navigation } ) => {
+const SettingsScreen = () => {
   const theme = useTheme();
 
   const { fontSizes, displayElements } = useValues( 'viewerModel' );
