@@ -9,6 +9,9 @@ import { loadShabad, loadBani } from '../app_config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
+import HighlightSelector from '../Components/Main/HighlightSelector';
+
+
 import { EditCtx } from '../app_config/app_state/easy-peasy/models';
 import { useValues } from '../app_config/app_state/state_hooks';
 import { mapModsToArray } from '../app_config/functions';
@@ -17,8 +20,8 @@ const Gutka = () => {
   const theme = useTheme();
   const [ shabads, updateShabads ] = useState( [] );
   const [ dataLoading, updateLoading ] = useState( true );
+  const [ isHighlighterVis, toggleHighligher ] = useState( false );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
-
   const { currentName, currentItems } = useValues( 'currentModel' );
 
   const isDataReady = useMainStoreState(
@@ -88,14 +91,18 @@ const Gutka = () => {
                         renderItem={renderItem}
                     />
             )}
-
+                            {isHighlighterVis && (
+                <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
+                            )}
     </View>
-    <Toolbar
-        style={styles.Footer}
-        showMain={isEditMode}
-        updateMode={updateEditMode}
-        currentLine={selectedInfo}
-      />
+
+        <Toolbar
+        toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
+            style={styles.Footer}
+            showMain={isEditMode}
+            updateMode={updateEditMode}
+            currentLine={selectedInfo}
+          />
     </View>
   );
 };
@@ -103,6 +110,12 @@ const styles = StyleSheet.create( {
   Footer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  Highlighter: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    paddingBottom: 5,
+    width: '100%',
   },
   View: {
     alignContent: 'space-between',

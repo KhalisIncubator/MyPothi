@@ -5,22 +5,18 @@ import {
 } from 'react-native';
 
 import { IconButton, useTheme } from 'react-native-paper';
-import HighlightSelector from './HighlightSelector';
 import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const Toolbar = ( {
-  showMain, updateMode, currentLine, style,
+  showMain, updateMode, currentLine, style, toggleHighligher,
 } ) => {
   const theme = useTheme();
 
-  const [ isHighlighterVis, toggleHighligher ] = useState( false );
 
-  const { createMod } = useUpdaters( 'currentModel' );
+  const { createMod, deleteMod } = useUpdaters( 'currentModel' );
+  const [ lineid, element, parentID ] = currentLine;
   return (
-    <>
-            {isHighlighterVis && (
-                <HighlightSelector style={styles.Highlighter} />
-            )}
+
             <SafeAreaView
                 style={[ styles.View, { backgroundColor: theme.colors.backdrop }, style ]}>
                 <View
@@ -43,7 +39,7 @@ const Toolbar = ( {
                             size={20}
                             onPress={() => {
                               // createMod();
-                              const [ lineid, element, parentID ] = currentLine;
+
                               createMod( {
                                 lineid, element, type: 'bold', value: true, parentID,
                               } );
@@ -68,18 +64,20 @@ const Toolbar = ( {
                             icon="edit-2"
                             size={20}
                             onPress={() => {
-                              toggleHighligher( ( prev ) => !prev );
+                              toggleHighligher();
                             }}
                         />
                         <IconButton
                         icon ="x"
                         size={20}
+                        onPress={() => {
+                          deleteMod( { lineid, element, parentID } );
+                        }}
                         />
                     </View>
                 )}
                 {!showMain && <View />}
             </SafeAreaView>
-    </>
   );
 };
 
@@ -90,12 +88,6 @@ const styles = StyleSheet.create( {
     display: 'flex',
     flexDirection: 'row',
     minHeight: 10,
-    width: '100%',
-  },
-  Highlighter: {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    paddingBottom: 5,
     width: '100%',
   },
   Main: {

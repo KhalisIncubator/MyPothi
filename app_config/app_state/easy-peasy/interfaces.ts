@@ -36,7 +36,7 @@ export interface CurrentModel {
     removeEntry: Action<CurrentModel, string>;
 
     createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
-    deleteMod: Action<CurrentModel, []>;
+    deleteMod: Action<CurrentModel, { lineid: number, element: Element, parentID: string}>;
     initialUpdate: Action<CurrentModel, [string[], entryObj[]]>;
 }
 

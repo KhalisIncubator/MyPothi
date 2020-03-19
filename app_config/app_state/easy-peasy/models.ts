@@ -22,6 +22,7 @@ import {
   editModification,
   createModification,
   existsModification,
+  deleteModification,
 } from '../../database/local_database';
 import AsyncStore from './storage';
 
@@ -109,18 +110,26 @@ const currentModel: CurrentModel = {
   createMod: action( ( state, {
     lineid, element, type, value, parentID,
   } ) => {
-    if ( existsModification( lineid, element, parentID ) ) {
-      editModification( lineid, element, parentID, type, value );
-    } else {
-      createModification( state.currentName[0], parentID )( lineid, element, type, value );
+    if ( lineid && element && parentID ) {
+      if ( existsModification( lineid, element, parentID ) ) {
+        editModification( lineid, element, parentID, type, value );
+      } else {
+        createModification( state.currentName[0], parentID )( lineid, element, type, value );
+      }
     }
     state.currentItems = getCurrentItems(
       state.currentName[0],
       state.currentName[1],
     );
   } ),
-  deleteMod: action( ( state, payload ) => {
-    // console.log( payload );
+  deleteMod: action( ( state, { lineid, element, parentID } ) => {
+    if ( existsModification( lineid, element, parentID ) ) {
+      deleteModification( lineid, element, parentID );
+    }
+    state.currentItems = getCurrentItems(
+      state.currentName[0],
+      state.currentName[1],
+    );
   } ),
   initialUpdate: action( ( state, [ name, items ] ) => {
     state.currentName = name;
