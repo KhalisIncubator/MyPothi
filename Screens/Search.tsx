@@ -8,13 +8,14 @@ import { useNetInfo } from '@react-native-community/netinfo';
 
 import { SearchCtx } from '../app_config/app_state/easy-peasy/models';
 import { SEARCH_TEXTS } from '../app_config/database/database_conts';
-import query from '../app_config/database/banidb_api';
-
+import query, { fetchBanis } from '../app_config/database/banidb_api';
+import BaniResult from '../Components/Main/BaniResult';
 import SearchResult from '../Components/Main/SearchResults';
 
 
 const Search = () => {
   const theme = useTheme();
+  const [ banis, updateBanis ] = useState( [] );
   const [ searchQuery, updateQuery ] = useState( '' );
   const [ results, updateResults ] = useState( [] );
   const [ typeMenu, updateTypeM ] = useState( false );
@@ -23,6 +24,13 @@ const Search = () => {
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   const net = useNetInfo();
+  useEffect( () => {
+    const baniFetcher = async () => {
+      const fetched = await fetchBanis();
+      updateBanis( [ ...fetched ] );
+    };
+    baniFetcher();
+  }, [] );
   useEffect( () => {
     let cancelSearch = !net.isConnected;
     const fetchResults = async () => {
@@ -39,7 +47,7 @@ const Search = () => {
   }, [ searchQuery ] );
   return (
         <View style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
-            <View style={{ padding: 5 }}>
+        <View style={{ padding: 5 }}>
               <Searchbar
                   placeholder="Search"
                   inputStyle={ styles.input }
@@ -110,8 +118,9 @@ const Search = () => {
                 </Menu>
             </View>
             <ScrollView>
-                {results.length > 0
+                {queryType === 'Shabad' && results.length > 0
                     && results.map( ( result ) => <SearchResult theme={theme} result={result} /> )}
+                    {queryType === 'Bani' && banis.map( ( bani ) => <BaniResult theme={theme} result={bani} /> )}
             </ScrollView>
         </View>
   );

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, FlatList, StyleSheet, SafeAreaView,
+  View, FlatList, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useMainStoreState } from '../app_config/app_state/easy-peasy/hooks';
 
-import { loadShabad } from '../app_config/database/banidb_api';
+import { loadShabad, loadBani } from '../app_config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
@@ -33,7 +33,11 @@ const Gutka = () => {
   useEffect( () => {
     const getLines = async () => {
       // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
-      const newItems = currentItems ? await Promise.all( currentItems.map( ( item ) => loadShabad( item.shabadId ) ) ) : [ ];
+      const newItems = currentItems
+        ? await Promise.all(
+          currentItems.map( ( item ) => ( item.type === 'Bani' ? loadBani( item.shabadId ) : loadShabad( item.shabadId ) ) ),
+        )
+        : [ ];
       updateShabads( newItems );
       updateLoading( false );
     };

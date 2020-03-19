@@ -27,6 +27,11 @@ const remapLine = ( raw ) => {
   };
   return line;
 };
+
+const remapBani = ( verseObj ) => {
+  const { verse } = verseObj;
+  return remapLine( verse );
+};
 const query = async ( search: string, type: number ) => {
   const API_URL = 'https://api.banidb.com/v2/';
   const results = 50;
@@ -51,6 +56,18 @@ const loadShabad = async ( id: number ) => {
     .then( ( data ) => ( data.verses.map( ( verse ) => remapLine( verse ) ) ) )
     .catch( ( err ) => err );
 };
+
+const fetchBanis = async () => fetch( 'https://api.banidb.com/v2/banis' )
+  .then( ( res ) => res.json() )
+  .then( ( data ) => data.map( ( bani ) => bani ) )
+  .catch( ( err ) => err );
+
+const loadBani = async ( id: number ) => fetch( `https://api.banidb.com/v2/banis/${id}` )
+  .then( ( res ) => res.json() )
+  .then( ( data ) => data.verses.map( ( verse ) => remapBani( verse ) ) )
+  .catch( ( err ) => err );
 export default query;
 
-export { remapLine, loadShabad };
+export {
+  remapLine, loadShabad, fetchBanis, loadBani,
+};
