@@ -29,7 +29,7 @@ const theme = {
     accent: '#99AAB5',
     backdrop: '#FFA500',
     background: '#e7e7e7',
-    surface: '#99AAB5',
+    surface: '#c6cfd4',
     text: '#000',
   },
 };

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import {
-  useTheme, Switch, Text, Card, Subheading, Button, Paragraph,
+  useTheme, Card,
 } from 'react-native-paper';
 import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
+import SettingWithSwitch, { SettingWithFonts } from '../Components/Main/SettingsComponents';
 
 
 const SettingsScreen = ( { navigation } ) => {
@@ -11,9 +12,15 @@ const SettingsScreen = ( { navigation } ) => {
 
   const { fontSizes, displayElements } = useValues( 'viewerModel' );
   const { updateFontSize, updateDisplayElement } = useUpdaters( 'viewerModel' );
-
   const { isDarkMode } = useValues( 'themeModel' );
   const { updateDarkMode } = useUpdaters( 'themeModel' );
+
+  const toggleElement = useCallback( ( element: string ) => { updateDisplayElement( element ); }, [
+    displayElements.displayEng,
+    displayElements.displayTeeka,
+    displayElements.displayTranslit,
+
+  ] );
   return (
         <View style={{ flex: 1, backgroundColor: theme.colors.background }} >
           <View>
@@ -21,151 +28,33 @@ const SettingsScreen = ( { navigation } ) => {
               <Card.Title title="Font Size" />
               <Card.Content>
                   <View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                       <View style={{
-                         alignSelf: 'flex-start',
-                         display: 'flex',
-                         flexDirection: 'row',
-                         alignItems: 'center',
-                       }}>
-                        <Subheading style={{ paddingRight: 10 }}>Gurmukhi Font</Subheading>
-                        <Paragraph>{fontSizes.gurmukhi}</Paragraph>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button
-                            mode="contained"
-                            icon="plus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'gurmukhi', fontSizes.gurmukhi + 1 ] ); }} compact>
-                              {}
-                              </Button>
-                            <Button
-                            mode="contained"
-                            icon="minus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'gurmukhi', fontSizes.gurmukhi - 1 ] ); }}
-                            compact>
-                              {}</Button>
-                            </View>
-                      </View>
-                    </View>
-
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                       <View style={{
-                         alignSelf: 'flex-start',
-                         display: 'flex',
-                         flexDirection: 'row',
-                         alignItems: 'center',
-                       }}>
-                        <Subheading style={{ paddingRight: 10 }}>English Font</Subheading>
-                        <Paragraph>{fontSizes.eng}</Paragraph>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button
-                            mode="contained"
-                            icon="plus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'eng', fontSizes.eng + 1 ] ); }} compact>
-                              {}
-                              </Button>
-                            <Button
-                            mode="contained"
-                            icon="minus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'eng', fontSizes.eng - 1 ] ); }}
-                            compact>
-                              {}</Button>
-                            </View>
-                      </View>
-                    </View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                       <View style={{
-                         alignSelf: 'flex-start',
-                         display: 'flex',
-                         flexDirection: 'row',
-                         alignItems: 'center',
-                       }}>
-                        <Subheading style={{ paddingRight: 10 }}>Teeka Font</Subheading>
-                        <Paragraph>{fontSizes.teeka}</Paragraph>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button
-                            mode="contained"
-                            icon="plus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'teeka', fontSizes.teeka + 1 ] ); }} compact>
-                              {}
-                              </Button>
-                            <Button
-                            mode="contained"
-                            icon="minus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'teeka', fontSizes.teeka - 1 ] ); }}
-                            compact>
-                              {}</Button>
-                            </View>
-                      </View>
-                    </View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                       <View style={{
-                         alignSelf: 'flex-start',
-                         display: 'flex',
-                         flexDirection: 'row',
-                         alignItems: 'center',
-                       }}>
-                        <Subheading style={{ paddingRight: 10 }}>Transliteration Font</Subheading>
-                        <Paragraph>{fontSizes.translit}</Paragraph>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button
-                            mode="contained"
-                            icon="plus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'translit', fontSizes.translit + 1 ] ); }} compact>
-                              {}
-                              </Button>
-                            <Button
-                            mode="contained"
-                            icon="minus"
-                            color={theme.colors.backdrop}
-                            theme={{ roundness: 0 }}
-                            onPress={() => { updateFontSize( [ 'translit', fontSizes.translit - 1 ] ); }}
-                            compact>
-                              {}</Button>
-                            </View>
-                      </View>
-                    </View>
+                    <SettingWithFonts
+                      theme={theme}
+                      text="Gurmukhi Font"
+                      value={fontSizes.gurmukhi}
+                      positiveUpdater={() => updateFontSize( [ 'gurmukhi', fontSizes.gurmukhi + 1 ] ) }
+                      negativeUpdater={() => updateFontSize( [ 'gurmukhi', fontSizes.gurmukhi - 1 ] ) }
+                    />
+                    <SettingWithFonts
+                      theme={theme} text="English Font"
+                      value={fontSizes.eng}
+                      positiveUpdater={() => updateFontSize( [ 'eng', fontSizes.eng + 1 ] ) }
+                      negativeUpdater={() => updateFontSize( [ 'eng', fontSizes.eng - 1 ] ) }
+                    />
+                    <SettingWithFonts
+                      theme={theme}
+                      text="Teeka Font"
+                      value={fontSizes.teeka}
+                      positiveUpdater={() => updateFontSize( [ 'teeka', fontSizes.teeka + 1 ] ) }
+                      negativeUpdater={() => updateFontSize( [ 'teeka', fontSizes.teeka - 1 ] ) }
+                    />
+                    <SettingWithFonts
+                      theme={theme}
+                      text="Transliteration Font"
+                      value={fontSizes.translit}
+                      positiveUpdater={() => updateFontSize( [ 'translit', fontSizes.translit + 1 ] ) }
+                      negativeUpdater={() => updateFontSize( [ 'translit', fontSizes.translit - 1 ] ) }
+                    />
                     </View>
               </Card.Content>
             </Card>
@@ -173,65 +62,20 @@ const SettingsScreen = ( { navigation } ) => {
               <Card.Title title="Display" />
               <Card.Content>
                 <View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                          <Subheading>English</Subheading>
-                          <Switch
-                          value={displayElements.displayEng}
-                          onValueChange={() => updateDisplayElement( 'displayEng' )}
-                          color="lightgreen" />
-                    </View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                            <Subheading>Teeka</Subheading>
-                            <Switch
-                            value={displayElements.displayTeeka}
-                            onValueChange={() => updateDisplayElement( 'displayTeeka' )}
-                            color="lightgreen" />
-                    </View>
-                    <View style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingVertical: 3,
-                    }}>
-                            <Subheading>Transliteration</Subheading>
-                            <Switch
-                            value={displayElements.displayTranslit}
-                            onValueChange={() => updateDisplayElement( 'displayTranslit' )}
-                            color="lightgreen" />
-                    </View>
+                      <SettingWithSwitch text="English" value={displayElements.displayEng} updater={() => toggleElement( 'displayEng' )} />
+                      <SettingWithSwitch text="Teeka" value={displayElements.displayTeeka} updater={() => toggleElement( 'displayTeeka' )} />
+                      <SettingWithSwitch text="Translit" value={displayElements.displayTranslit} updater={() => toggleElement( 'displayTranslit' )} />
                 </View>
               </Card.Content>
             </Card>
             <Card theme={theme} style={{ margin: 5 }}>
               <Card.Title title="Theme" />
               <Card.Content>
-              <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: 3,
-              }}>
-                      <Subheading>Dark Theme</Subheading>
-                      <Switch
-                            value={isDarkMode}
-                            onValueChange={() => { updateDarkMode(); } }
-                            color="lightgreen" />
-                    </View>
+                <SettingWithSwitch text="Dark Theme" value={isDarkMode} updater={() => updateDarkMode()} />
               </Card.Content>
             </Card>
           </View>
         </View>
   );
 };
-
 export default SettingsScreen;
