@@ -50,19 +50,6 @@ const Toolbar = ( {
                             }}
                         />
                         <IconButton
-                            icon="italic"
-                            size={20}
-                            onPress={() => {
-
-                            }}
-                        />
-                        <IconButton
-                            icon="underline"
-                            size={20}
-                            onPress={() => {
-                            }}
-                        />
-                        <IconButton
                             icon="plus-square"
                             size={20}
                             onPress={() => {
