@@ -36,7 +36,7 @@ const Edit = ( { route } ) => {
         <View style={[ style.View, { backgroundColor: theme.colors.background } ]}>
             {type === 'Shabad'
                 && currentItems.map( ( item, index ) => (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: '#99AAB5' } ]}>
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
                     <Card.Title
                         key={`${item.shabadId}/${item.entryID}`}
                         titleStyle={style.CardTitleG}
@@ -61,7 +61,7 @@ const Edit = ( { route } ) => {
                             </Card> ) )}
             {type === 'Gutka'
                 && gutkaNames.map( ( data, index ) => (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: '#99AAB5' } ]}>
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
                         <Card.Title
                             key={data[0]}
                             title={`${data[0]}`}
