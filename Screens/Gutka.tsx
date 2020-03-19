@@ -40,6 +40,7 @@ const Gutka = () => {
         // since banis take time to load, show this while its loading
         updateLoading( true );
       }
+      console.log( await loadBani( currentItems[0].shabadId ), currentItems[0] );
       // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
       const newItems = currentItems
         ? await Promise.all(

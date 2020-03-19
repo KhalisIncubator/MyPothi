@@ -11,19 +11,19 @@ const remapLine = ( raw ) => {
   line.Translations = {
     English: raw.translation.en.bdb,
     Punjabi: {
-      SS: raw.translation.pu.ss.gurmukhi,
-      FT: raw.translation.pu.ft.gurmukhi,
+      SS: raw.translation.pu.ss?.gurmukhi,
+      FT: raw.translation.pu.ft?.gurmukhi,
     },
-    Spanish: raw.translation.es.sn,
+    Spanish: raw.translation.es?.sn,
   };
   line.Transliteration = {
     English: raw.transliteration.en,
     Hindi: raw.transliteration.hi,
   };
   line.Vishraams = {
-    sttm: raw.visraam.sttm,
-    ig: raw.visraam.igurbani,
-    sttm2: raw.visraam.sttm2,
+    sttm: raw.visraam?.sttm,
+    ig: raw.visraam?.igurbani,
+    sttm2: raw.visraam?.sttm2,
   };
   return line;
 };
