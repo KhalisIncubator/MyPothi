@@ -15,7 +15,7 @@ const TextBlock = ( props ) => {
   const modStyle: any = { };
   mods.forEach( ( mod ) => {
     if ( type === mod?.element ) {
-      if ( mod?.bold ) modStyle.fontWeight = 'bold';
+      if ( mod?.bold ) { ( isPangtee || isGurmukhi ) ? modStyle.fontFamily = 'AnmolLipiBoldTrue' : modStyle.fontWeight = 'bold'; }
       if ( mod?.italics ) modStyle.fontStyle = 'italics';
       if ( mod?.underline ) modStyle.textDecorationLine = 'underline';
       if ( mod?.backgroundColor ) modStyle.backgroundColor = mod.backgroundColor;
@@ -27,6 +27,7 @@ const TextBlock = ( props ) => {
       { ...modStyle },
       { color: theme.colors.text },
       isGurmukhi ? styles.Gurmukhi : styles.English,
+      !modStyle.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
       isSelected ? styles.Selected : {},
       isPangtee ? styles.Pangtee : {},
       styles.Text ],
@@ -50,11 +51,9 @@ const styles = StyleSheet.create( {
     marginVertical: 3,
   },
   Gurmukhi: {
-    fontFamily: 'AnmolLipiTrue',
     marginVertical: 3,
   },
   Pangtee: {
-    fontFamily: 'AnmolLipiTrue',
     marginVertical: 4,
   },
   Selected: {

@@ -96,6 +96,9 @@ const deleteGukta = ( name, gutkaID ) => {
   const gutka = findGutka( name, gutkaID );
   localRealm.write( async () => {
     for await ( const item of gutka.items ) {
+      for await ( const mod of item.mods ) {
+        localRealm.delete( mod );
+      }
       localRealm.delete( item );
     }
     localRealm.delete( gutka );
@@ -171,7 +174,10 @@ const addToGutka = ( currentGutka, gutkaID, id, mainLine, type ) => {
  */
 const removeFromGutka = ( currentGutka, itemId ) => {
   const item = findItem( currentGutka, itemId );
-  localRealm.write( () => {
+  localRealm.write( async () => {
+    for await ( const mod of item.mods ) {
+      localRealm.delete( mod );
+    }
     localRealm.delete( item );
   } );
 };

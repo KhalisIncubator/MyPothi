@@ -32,7 +32,7 @@ const Gutka = () => {
 
   useEffect( () => {
     const getLines = async () => {
-      const numBanis = currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? 1 : 0 ), 0 );
+      const numBanis = currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? count + 1 : 0 ), 0 );
       if ( numBanis !== 0 ) {
         // since banis take time to load, show this while its loading
         updateLoading( true );
