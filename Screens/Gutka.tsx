@@ -44,12 +44,11 @@ const Gutka = () => {
   }, [ currentItems, isDataReady, currentName[0] ] );
 
   const renderItem = ( { item, index } ) => {
-    const mods = currentItems[index]?.mods ?? null;
     const lines = item.map( ( line ) => ( <LineBlock key={line.id} line={line}
     // if currentItems is not length of 0, and if the item at the index has a entryID (need to check because is null when item is deleted and state is
     // uodated). Otherwise if currentItems has length of 0, then set id to null
       entryID={ currentItems[index]?.entryID ?? null}
-      mods={mapModsToArray( mods )}/> ) );
+      mods={mapModsToArray( currentItems[index]?.mods )}/> ) );
     return <View key="Viewer">{lines}</View>;
   };
   return (
