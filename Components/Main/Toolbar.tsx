@@ -20,7 +20,7 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                 <HighlightSelector style={styles.Highlighter} />
             )}
             <SafeAreaView
-                style={[ styles.View, { backgroundColor: theme.colors.backdrop } ]}>
+                style={[ styles.View, { backgroundColor: theme.colors.backdrop }, styles.Footer ]}>
                 <View
                     style={[
                       styles.Header,
@@ -51,29 +51,28 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
                             icon="italic"
                             size={20}
                             onPress={() => {
-                              // console.log( 'Italicize' );
-                              console.log( currentLine );
+
                             }}
                         />
                         <IconButton
                             icon="underline"
                             size={20}
                             onPress={() => {
-                              console.log( 'Underline' );
                             }}
                         />
                         <IconButton
                             icon="plus-square"
                             size={20}
                             onPress={() => {
-                              console.log( 'Increase Size' );
                             }}
                         />
                         <IconButton
                             icon="minus-square"
                             size={20}
                             onPress={() => {
-                              console.log( 'decrease Size' );
+                              // createMod( {
+                              //   lineid, element, type: 'bold', value: true, parentID,
+                              // } );
                             }}
                         />
                         <IconButton
@@ -96,10 +95,18 @@ const Toolbar = ( { showMain, updateMode, currentLine } ) => {
 };
 
 const styles = StyleSheet.create( {
+  Footer: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
+  },
   Header: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
+    minHeight: 10,
     width: '100%',
   },
   Highlighter: {
@@ -111,6 +118,7 @@ const styles = StyleSheet.create( {
   Main: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    minHeight: 20,
     paddingHorizontal: 5,
     paddingTop: 2.5,
     width: '100%',

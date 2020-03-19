@@ -12,7 +12,6 @@ const SettingWithSwitch = ( props ) => {
   const {
     text, value, updater,
   } = props;
-  console.log( props );
   return (
     <View style={styles.MainViewLine}>
         <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>

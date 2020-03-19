@@ -119,7 +119,9 @@ const currentModel: CurrentModel = {
       state.currentName[1],
     );
   } ),
-  deleteMod: action( ( state, payload ) => { console.log( payload ); } ),
+  deleteMod: action( ( state, payload ) => {
+    // console.log( payload );
+  } ),
   initialUpdate: action( ( state, [ name, items ] ) => {
     state.currentName = name;
     state.currentItems = items;

@@ -52,7 +52,8 @@ const Gutka = () => {
     return <View key="Viewer">{lines}</View>;
   };
   return (
-        <View style={[ styles.View, { backgroundColor: theme.colors.background } ]}>
+    <View style={ styles.View}>
+        <View style={{ backgroundColor: theme.colors.background }}>
             {dataLoading && isDataReady && (
               <>
                     <ShimmeringLine />
@@ -76,24 +77,16 @@ const Gutka = () => {
                         renderItem={renderItem}
                     />
             )}
-            <View style={styles.Footer}>
                 <Toolbar
                     showMain={isEditMode}
                     updateMode={updateEditMode}
                     currentLine={selectedInfo}
                 />
-            </View>
-        </View>
+    </View>
+    </View>
   );
 };
 const styles = StyleSheet.create( {
-  Footer: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-  },
   View: {
     flex: 1,
   },
