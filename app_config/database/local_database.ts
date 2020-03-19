@@ -223,10 +223,7 @@ const createModification = ( currentName: string, parentID: string ) => {
 const editModification = ( lineid: number, element: Element, parentID: string, newMod: ModType, value:any ) => {
   let mod = getModWithParent( lineid, element, parentID );
   localRealm.write( () => {
-    mod = {
-      ...mod,
-      [newMod]: value,
-    };
+    mod[newMod] = value;
   } );
 };
 const deleteModification = ( lineid: number, element: Element, parentID: string ) => {
