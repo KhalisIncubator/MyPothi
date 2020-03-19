@@ -32,6 +32,11 @@ const Gutka = () => {
 
   useEffect( () => {
     const getLines = async () => {
+      const numBanis = currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? 1 : 0 ), 0 );
+      if ( numBanis !== 0 ) {
+        // since banis take time to load, show this while its loading
+        updateLoading( true );
+      }
       // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
       const newItems = currentItems
         ? await Promise.all(
