@@ -38,7 +38,7 @@ const searchModel: SearchModel = {
   } ),
 };
 
-const SearchCtx = createContextStore( searchModel );
+const SearchCtx = createContextStore( persist( searchModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ) );
 
 export { SearchCtx };
 
