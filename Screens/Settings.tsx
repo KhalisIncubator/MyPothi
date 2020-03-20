@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import {
-  useTheme, Card, Divider,
+  useTheme, Card, Menu, Divider,
 } from 'react-native-paper';
 import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
 import SettingWithSwitch, { SettingWithFonts, SettingWithList } from '../Components/Main/SettingsComponents';
