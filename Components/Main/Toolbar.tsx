@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 
 import { IconButton, useTheme } from 'react-native-paper';
-import { useUpdaters } from '../../app_config/app_state/state_hooks';
+import { useValues, useUpdaters } from '../../app_config/app_state/state_hooks';
+import { getCurrentFontSize } from '../../app_config/functions';
 
 const Toolbar = ( {
   showMain, updateMode, currentLine, style, toggleHighligher,
@@ -14,6 +15,7 @@ const Toolbar = ( {
 
 
   const { createMod, deleteMod } = useUpdaters( 'currentModel' );
+  const { fontSizes } = useValues( 'viewerModel' );
   const [ lineid, element, parentID ] = currentLine;
   return (
 
@@ -38,8 +40,6 @@ const Toolbar = ( {
                             icon="bold"
                             size={20}
                             onPress={() => {
-                              // createMod();
-
                               createMod( {
                                 lineid, element, type: 'bold', value: true, parentID,
                               } );
@@ -49,15 +49,22 @@ const Toolbar = ( {
                             icon="plus-square"
                             size={20}
                             onPress={() => {
+                              const newSize = getCurrentFontSize( currentLine,
+                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) + 1;
+                              createMod( {
+                                lineid, element, type: 'fontSize', value: newSize, parentID,
+                              } );
                             }}
                         />
                         <IconButton
                             icon="minus-square"
                             size={20}
                             onPress={() => {
-                              // createMod( {
-                              //   lineid, element, type: 'bold', value: true, parentID,
-                              // } );
+                              const newSize = getCurrentFontSize( currentLine,
+                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) - 1;
+                              createMod( {
+                                lineid, element, type: 'fontSize', value: newSize, parentID,
+                              } );
                             }}
                         />
                         <IconButton

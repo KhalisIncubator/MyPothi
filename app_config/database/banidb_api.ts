@@ -1,4 +1,6 @@
 import { buildApiUrl } from '@sttm/banidb';
+import { lengthType } from '../dev_env/types';
+import { baniLengths } from './database_conts';
 
 const remapLine = ( raw ) => {
   const line = {} as any;
@@ -62,9 +64,11 @@ const fetchBanis = async () => fetch( 'https://api.banidb.com/v2/banis' )
   .then( ( data ) => data.map( ( bani ) => bani ) )
   .catch( ( err ) => err );
 
-const loadBani = async ( id: number ) => fetch( `https://api.banidb.com/v2/banis/${id}` )
+const loadBani = async ( id: number, length: lengthType ) => fetch( `https://api.banidb.com/v2/banis/${id}` )
   .then( ( res ) => res.json() )
-  .then( ( data ) => data.verses.map( ( verse ) => remapBani( verse ) ) )
+  .then( ( json ) => json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) )
+  .then( ( filtered ) => filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) )
+  .then( ( data ) => data.map( ( verse ) => remapBani( verse ) ) )
   .catch( ( err ) => err );
 export default query;
 

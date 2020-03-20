@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TextInput } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 import {
-  Title, Drawer, Text, Button, TextInput, useTheme,
+  Title, Drawer, Text, Button, useTheme,
 } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,9 +27,10 @@ const CustomDrawerComponent = ( props ) => {
             <View style={styles.drawerContent}>
                 <View style={styles.titleSection}>
                     <View style={styles.row}>
-                        <Title style={styles.title}>Gutkas</Title>
+                        <Title style={styles.title}>Pothis</Title>
                         <Icon
                             name="plus-circle"
+                            color={theme.colors.text}
                             size={20}
                             onPress={() => {
                               toggleCreateMode( true );
@@ -48,7 +49,7 @@ const CustomDrawerComponent = ( props ) => {
                                               ? 'book-open-variant'
                                               : 'book'
                                         }
-                                        color={color}
+                                        color={focused ? color : theme.colors.text}
                                         size={size}
                                     />
                                 )}
@@ -56,8 +57,8 @@ const CustomDrawerComponent = ( props ) => {
                                 style={{ borderRadius: theme.roundness }}
                                 focused={data[0] === currentName[0]}
                                 activeTintColor="#ff9a00"
-                                label={( { color } ) => (
-                                    <Text style={[ { color }, styles.text ]}>
+                                label={( { focused, color } ) => (
+                                    <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>
                                         {data[0]}
                                     </Text>
                                 )}
@@ -73,21 +74,22 @@ const CustomDrawerComponent = ( props ) => {
                             icon={( { color, size } ) => (
                                 <Icon
                                     name="pencil-outline"
-                                    color={color}
+                                    color={theme.colors.text}
                                     size={size}
                                 />
                             )}
                             onPress={() => null}
                             // activeTintColor="#ff9a00"
-                            label={() => (
+                            label={( ) => (
                                 <TextInput
-                                    mode="outlined"
-                                    theme={{ colors: { ...theme.colors, background: theme.colors.backdrop } }}
-                                    dense
-                                    placeholder="Enter Gutka Name"
-                                    onChangeText={( text ) => {
-                                      changeText( text );
-                                    }}
+                                style={ { color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent } }
+                                autoCorrect={false}
+                                autoCompleteType="off"
+                                placeholder="Enter Pothi Name"
+                                underlineColorAndroid="transparent"
+                                onChangeText={( text ) => {
+                                  changeText( text );
+                                }}
                                 />
                             )}
                         />
@@ -104,7 +106,7 @@ const CustomDrawerComponent = ( props ) => {
                                   createGutka( newGutkaName );
                                   toggleCreateMode( false );
                                 }}>
-                                Create Gutka!
+                                Create Pothi!
                             </Button>
                             <Button
                                 color="red"
@@ -125,10 +127,10 @@ const CustomDrawerComponent = ( props ) => {
                         style={styles.button}
                         onPress={() => navigation.navigate( 'Stack', {
                           screen: 'Edit',
-                          params: { type: 'Gutka' },
+                          params: { type: 'Pothi' },
                         } )
                         }>
-                        Edit Gutkas
+                        Edit Pothis
                     </Button>
                 </Drawer.Section>
             </View>

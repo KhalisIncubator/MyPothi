@@ -59,7 +59,7 @@ const Edit = ( { route } ) => {
                         )}
                             />
                             </Card> ) )}
-            {type === 'Gutka'
+            {type === 'Pothi'
                 && gutkaNames.map( ( data, index ) => (
                   <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
                         <Card.Title
@@ -99,7 +99,7 @@ const Edit = ( { route } ) => {
                 visible={showError}
                 onDismiss={() => updateErr( false )}
                 style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
-                <Text style={{ color: theme.colors.text }}>You cannot have less than one gutka!</Text>
+                <Text style={{ color: theme.colors.text }}>You cannot have less than one pothi!</Text>
             </Snackbar>
         </View>
   );

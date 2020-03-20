@@ -23,6 +23,7 @@ const Gutka = () => {
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { currentName, currentItems } = useValues( 'currentModel' );
+  const { baniLength } = useValues( 'viewerModel' );
 
   const isDataReady = useMainStoreState(
     ( store ) => store.gutkaModel.isDataReady,
@@ -43,7 +44,7 @@ const Gutka = () => {
       // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
       const newItems = currentItems
         ? await Promise.all(
-          currentItems.map( ( item ) => ( item.type === 'Bani' ? loadBani( item.shabadId ) : loadShabad( item.shabadId ) ) ),
+          currentItems.map( ( item ) => ( item.type === 'Bani' ? loadBani( item.shabadId, baniLength ) : loadShabad( item.shabadId ) ) ),
         )
         : [ ];
       updateShabads( newItems );

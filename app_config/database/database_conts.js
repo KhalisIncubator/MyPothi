@@ -46,6 +46,13 @@ const SOURCE_TEXTS = {
   [SOURCE_TYPES.REHATNAMAS]: 'Rehatnamas & Panthic sources',
 };
 
+const baniLengths = {
+  short: 'existsSGPC',
+  medium: 'existsMedium',
+  long: 'existsTaksal',
+  extralong: 'existsBuddhaDal',
+};
+
 export {
   SEARCH_TYPES,
   GURMUKHI_SEARCH_TEXTS,
@@ -53,4 +60,5 @@ export {
   SEARCH_TEXTS,
   SOURCE_TEXTS,
   SOURCE_TYPES,
+  baniLengths,
 };

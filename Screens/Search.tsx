@@ -11,6 +11,7 @@ import { SEARCH_TEXTS } from '../app_config/database/database_conts';
 import query, { fetchBanis } from '../app_config/database/banidb_api';
 import BaniResult from '../Components/Main/BaniResult';
 import SearchResult from '../Components/Main/SearchResults';
+import { useValues } from '../app_config/app_state/state_hooks';
 
 
 const Search = () => {
@@ -23,6 +24,7 @@ const Search = () => {
 
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
+  const { currentItems } = useValues( 'currentModel' );
   const net = useNetInfo();
   useEffect( () => {
     const baniFetcher = async () => {
@@ -119,8 +121,14 @@ const Search = () => {
             </View>
             <ScrollView>
                 {queryType === 'Shabad' && results.length > 0
-                    && results.map( ( result ) => <SearchResult theme={theme} result={result} /> )}
-                    {queryType === 'Bani' && banis.map( ( bani ) => <BaniResult theme={theme} result={bani} /> )}
+                    && results.map( ( result ) => {
+                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1;
+                      return <SearchResult theme={theme} result={result} isAdded={isAdded}/>;
+                    } )}
+                    {queryType === 'Bani' && banis.map( ( bani ) => {
+                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1;
+                      return <BaniResult theme={theme} result={bani} isAdded={isAdded}/>;
+                    } )}
             </ScrollView>
         </View>
   );
