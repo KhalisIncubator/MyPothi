@@ -116,20 +116,22 @@ const currentModel: CurrentModel = {
       } else {
         createModification( state.currentName[0], parentID )( lineid, element, type, value );
       }
+      state.currentItems = getCurrentItems(
+        state.currentName[0],
+        state.currentName[1],
+      );
     }
-    state.currentItems = getCurrentItems(
-      state.currentName[0],
-      state.currentName[1],
-    );
   } ),
   deleteMod: action( ( state, { lineid, element, parentID } ) => {
-    if ( existsModification( lineid, element, parentID ) ) {
-      deleteModification( lineid, element, parentID );
+    if ( lineid && element && parentID ) {
+      if ( existsModification( lineid, element, parentID ) ) {
+        deleteModification( lineid, element, parentID );
+        state.currentItems = getCurrentItems(
+          state.currentName[0],
+          state.currentName[1],
+        );
+      }
     }
-    state.currentItems = getCurrentItems(
-      state.currentName[0],
-      state.currentName[1],
-    );
   } ),
   initialUpdate: action( ( state, [ name, items ] ) => {
     state.currentName = name;
