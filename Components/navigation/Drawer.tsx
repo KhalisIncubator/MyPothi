@@ -30,6 +30,7 @@ const CustomDrawerComponent = ( props ) => {
                         <Title style={styles.title}>Gutkas</Title>
                         <Icon
                             name="plus-circle"
+                            color={theme.colors.text}
                             size={20}
                             onPress={() => {
                               toggleCreateMode( true );
@@ -48,7 +49,7 @@ const CustomDrawerComponent = ( props ) => {
                                               ? 'book-open-variant'
                                               : 'book'
                                         }
-                                        color={color}
+                                        color={focused ? color : theme.colors.text}
                                         size={size}
                                     />
                                 )}
@@ -56,8 +57,8 @@ const CustomDrawerComponent = ( props ) => {
                                 style={{ borderRadius: theme.roundness }}
                                 focused={data[0] === currentName[0]}
                                 activeTintColor="#ff9a00"
-                                label={( { color } ) => (
-                                    <Text style={[ { color }, styles.text ]}>
+                                label={( { focused, color } ) => (
+                                    <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>
                                         {data[0]}
                                     </Text>
                                 )}
@@ -73,7 +74,7 @@ const CustomDrawerComponent = ( props ) => {
                             icon={( { color, size } ) => (
                                 <Icon
                                     name="pencil-outline"
-                                    color={color}
+                                    color={theme.colors.text}
                                     size={size}
                                 />
                             )}
