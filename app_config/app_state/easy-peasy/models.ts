@@ -173,12 +173,16 @@ const viewerModel: ViewerModel = {
     displayTeeka: true,
     displayTranslit: true,
   },
+  baniLength: 'long',
   updateFontSize: action( ( state, payload ) => {
     const [ element, val ] = payload;
     state.fontSizes[element] = val;
   } ),
   updateDisplayElement: action( ( state, payload ) => {
     state.displayElements[payload] = !state.displayElements[payload];
+  } ),
+  updateLength: action( ( state, payload ) => {
+    state.baniLength = payload;
   } ),
 };
 

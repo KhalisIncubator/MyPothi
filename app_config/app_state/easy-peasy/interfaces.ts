@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { Action } from 'easy-peasy';
 import {
-  QueryType, entryObj, gutkaEntry, ModType,
+  QueryType, entryObj, gutkaEntry, ModType, lengthType,
 } from '../../dev_env/types';
 
 interface FontSizes {
@@ -54,9 +54,11 @@ export interface GutkaModel {
 export interface ViewerModel {
     fontSizes: FontSizes;
     displayElements: DisplayElements;
+    baniLength: lengthType;
 
     updateFontSize: Action<ViewerModel, [string, number]>;
     updateDisplayElement: Action<ViewerModel, string>;
+    updateLength: Action<ViewerModel, lengthType>
 }
 
 export interface SearchModel {

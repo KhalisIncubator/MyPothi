@@ -25,5 +25,5 @@ export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
 export type QueryType = 'Shabad' | 'Bani';
 export type Element = 'Pangtee' | 'Eng' | 'Teeka' | 'Translit' | null;
-
+export type lengthType = 'short' | 'medium' | 'long' | 'extraLong';
 export type ModType = 'backgroundColor' | 'bold' | 'italics' | 'fontSize';

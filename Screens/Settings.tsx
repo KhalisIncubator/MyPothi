@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import {
-  useTheme, Card,
+  useTheme, Card, Menu, Divider,
 } from 'react-native-paper';
 import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
-import SettingWithSwitch, { SettingWithFonts } from '../Components/Main/SettingsComponents';
-
+import SettingWithSwitch, { SettingWithFonts, SettingWithList } from '../Components/Main/SettingsComponents';
+import { baniLengths } from '../app_config/database/database_conts';
 
 const SettingsScreen = ( ) => {
   const theme = useTheme();
 
-  const { fontSizes, displayElements } = useValues( 'viewerModel' );
-  const { updateFontSize, updateDisplayElement } = useUpdaters( 'viewerModel' );
+  const { fontSizes, displayElements, baniLength } = useValues( 'viewerModel' );
+  const { updateFontSize, updateDisplayElement, updateLength } = useUpdaters( 'viewerModel' );
   const { isDarkMode } = useValues( 'themeModel' );
   const { updateDarkMode } = useUpdaters( 'themeModel' );
 
@@ -65,6 +65,10 @@ const SettingsScreen = ( ) => {
                       <SettingWithSwitch text="English" value={displayElements.displayEng} updater={() => toggleElement( 'displayEng' )} />
                       <SettingWithSwitch text="Teeka" value={displayElements.displayTeeka} updater={() => toggleElement( 'displayTeeka' )} />
                       <SettingWithSwitch text="Translit" value={displayElements.displayTranslit} updater={() => toggleElement( 'displayTranslit' )} />
+                </View>
+                <Divider />
+                <View>
+                  <SettingWithList text="Bani Length" values={baniLengths} current={baniLength} updater={updateLength} theme={theme}/>
                 </View>
               </Card.Content>
             </Card>

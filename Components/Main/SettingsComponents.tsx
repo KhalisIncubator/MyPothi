@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   View,
   StyleSheet,
 } from 'react-native';
 import {
-  Switch, Subheading, Button, Paragraph,
+  Switch, Subheading, Button, Paragraph, Menu,
 } from 'react-native-paper';
 
 const SettingWithSwitch = ( props ) => {
@@ -62,6 +62,45 @@ const SettingWithFonts = ( props ) => {
  </View>
   );
 };
+
+const SettingWithList = ( props ) => {
+  const {
+    values, current, theme, updater, text,
+  } = props;
+  const [ lengthListVis, updateLengthList ] = useState( false );
+
+  return (
+    <View style={styles.MainViewLine}>
+        <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
+      <View style={{ alignSelf: 'flex-end' }}>
+    <Menu
+    visible={lengthListVis}
+    onDismiss={() => updateLengthList( false )}
+    anchor={
+        <Button
+            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+            color={theme.colors.text}
+            onPress={() => updateLengthList( true )}>
+            {current}
+        </Button>
+    }>
+      {
+        Object.keys( values ).map( ( length ) => (
+          <Menu.Item
+        onPress={() => {
+          updateLengthList( false );
+          updater( length );
+        }}
+        title={length}
+    />
+        ) )
+      }
+    </Menu>
+    </View>
+</View>
+
+  );
+};
 const styles = StyleSheet.create( {
   Buttons: {
     display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
@@ -73,11 +112,15 @@ const styles = StyleSheet.create( {
     flexDirection: 'row',
   },
   MainViewLine: {
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 3,
   },
+  button: {
+    marginTop: 8,
+  },
 } );
 
-export { SettingWithFonts };
+export { SettingWithFonts, SettingWithList };
