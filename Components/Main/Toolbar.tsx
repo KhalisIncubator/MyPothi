@@ -51,7 +51,6 @@ const Toolbar = ( {
                             onPress={() => {
                               const newSize = getCurrentFontSize( currentLine,
                                 fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
-                              console.log( newSize );
                               createMod( {
                                 lineid, element, type: 'fontSize', value: newSize, parentID,
                               } );

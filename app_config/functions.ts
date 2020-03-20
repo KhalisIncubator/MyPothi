@@ -6,7 +6,7 @@ const mapModsToArray = ( mods ) => ( mods ? Array.from( { ...mods, length: Objec
 // get current font size on selected element
 const getCurrentFontSize = ( [ lineid, element, parentID ], globalFontSize ) => {
   if ( lineid && element && parentID ) {
-    getModWithParent( lineid, element, parentID )?.fontSize
+    return getModWithParent( lineid, element, parentID )?.fontSize
  ?? globalFontSize;
   }
   return null;
