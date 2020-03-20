@@ -27,7 +27,7 @@ const CustomDrawerComponent = ( props ) => {
             <View style={styles.drawerContent}>
                 <View style={styles.titleSection}>
                     <View style={styles.row}>
-                        <Title style={styles.title}>Gutkas</Title>
+                        <Title style={styles.title}>Pothis</Title>
                         <Icon
                             name="plus-circle"
                             color={theme.colors.text}
@@ -85,7 +85,7 @@ const CustomDrawerComponent = ( props ) => {
                                 style={ { color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent } }
                                 autoCorrect={false}
                                 autoCompleteType="off"
-                                placeholder="Enter Gutka Name"
+                                placeholder="Enter Pothi Name"
                                 underlineColorAndroid="transparent"
                                 onChangeText={( text ) => {
                                   changeText( text );
@@ -106,7 +106,7 @@ const CustomDrawerComponent = ( props ) => {
                                   createGutka( newGutkaName );
                                   toggleCreateMode( false );
                                 }}>
-                                Create Gutka!
+                                Create Pothi!
                             </Button>
                             <Button
                                 color="red"
@@ -127,10 +127,10 @@ const CustomDrawerComponent = ( props ) => {
                         style={styles.button}
                         onPress={() => navigation.navigate( 'Stack', {
                           screen: 'Edit',
-                          params: { type: 'Gutka' },
+                          params: { type: 'Pothi' },
                         } )
                         }>
-                        Edit Gutkas
+                        Edit Pothis
                     </Button>
                 </Drawer.Section>
             </View>
