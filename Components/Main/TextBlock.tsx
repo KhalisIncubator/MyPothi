@@ -28,7 +28,7 @@ const TextBlock = ( props ) => {
       { color: theme.colors.text },
       isGurmukhi ? styles.Gurmukhi : styles.English,
       !modStyle.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
-      isSelected ? styles.Selected : {},
+      !modStyle.backgroundColor && isSelected ? styles.Selected : {},
       isPangtee ? styles.Pangtee : {},
       styles.Text ],
   );

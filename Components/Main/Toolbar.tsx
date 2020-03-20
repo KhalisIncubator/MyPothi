@@ -49,7 +49,8 @@ const Toolbar = ( {
                             icon="plus-square"
                             size={20}
                             onPress={() => {
-                              const newSize = getCurrentFontSize( currentLine, fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) + 1;
+                              const newSize = getCurrentFontSize( currentLine,
+                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) + 1;
                               createMod( {
                                 lineid, element, type: 'fontSize', value: newSize, parentID,
                               } );
@@ -59,7 +60,8 @@ const Toolbar = ( {
                             icon="minus-square"
                             size={20}
                             onPress={() => {
-                              const newSize = getCurrentFontSize( currentLine, fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) - 1;
+                              const newSize = getCurrentFontSize( currentLine,
+                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : element.toLowerCase()] ) - 1;
                               createMod( {
                                 lineid, element, type: 'fontSize', value: newSize, parentID,
                               } );
