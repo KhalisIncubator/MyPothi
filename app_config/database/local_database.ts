@@ -234,5 +234,5 @@ const deleteModification = ( lineid: number, element: Element, parentID: string 
 };
 
 export {
-  getAllModifications, getModification, existsModification, createModification, editModification, deleteModification,
+  getAllModifications, getModification, existsModification, createModification, editModification, deleteModification, getModWithParent,
 };
