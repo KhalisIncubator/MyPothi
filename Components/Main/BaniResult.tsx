@@ -5,12 +5,14 @@ import {
 import {
   Avatar, Card,
 } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Feather';
 import { SearchCtx } from '../../app_config/app_state/easy-peasy/models';
 import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const BaniResult = ( props ) => {
   const styling = props.theme;
   const { gurmukhi, ID } = props.result;
+  const { isAdded } = props;
   const { addEntry } = useUpdaters( 'currentModel' );
   const queryType = SearchCtx.useStoreState( ( store ) => store.queryType );
   return (
@@ -18,11 +20,14 @@ const BaniResult = ( props ) => {
             onPress={() => { addEntry( [ ID, gurmukhi, queryType ] ); }}
             >
             <Card.Title
-                style={[ style.Card, { borderRadius: styling.roundness, backgroundColor: styling.colors.surface } ]}
+                style={[ style.Card,
+                  { borderRadius: styling.roundness, backgroundColor: isAdded ? styling.colors.backdrop : styling.colors.surface } ]}
                 titleStyle={style.CardTitle}
                 title={`${gurmukhi}`}
                 subtitle={`Bani ID: ${ID}`}
                 left={( properties ) => <Avatar.Icon {...properties} icon="book" />}
+                right={() => ( isAdded ? <Icon name="check" /> : null ) }
+
             />
         </TouchableOpacity>
   );
