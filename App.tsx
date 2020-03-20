@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-
+import SplashScreen from 'react-native-splash-screen';
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 import store from './app_config/app_state/easy-peasy/models';
@@ -66,6 +66,7 @@ const App = () => {
       await populateData();
     }
   };
+  useEffect( () => { SplashScreen.hide(); }, [] );
   useEffect( () => {
     checkStore().then( async () => {
       const names = fetchAllGutkas();

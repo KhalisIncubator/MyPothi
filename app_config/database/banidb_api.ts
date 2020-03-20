@@ -64,7 +64,8 @@ const fetchBanis = async () => fetch( 'https://api.banidb.com/v2/banis' )
 
 const loadBani = async ( id: number ) => fetch( `https://api.banidb.com/v2/banis/${id}` )
   .then( ( res ) => res.json() )
-  .then( ( data ) => data.verses.map( ( verse ) => remapBani( verse ) ) )
+  .then( ( json ) => json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) )
+  .then( ( data ) => data.map( ( verse ) => remapBani( verse ) ) )
   .catch( ( err ) => err );
 export default query;
 
