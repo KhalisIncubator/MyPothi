@@ -11,7 +11,6 @@ const HighlightSelector = ( { currentLine, style } ) => {
   return (
         <View style={style}>
             <View style={styles.Main}>
-                <View style={styles.Row}>
                     <TouchableOpacity
                         style={[ styles.Surface, { backgroundColor: 'red' } ]}
                         onPress={() => createMod( {
@@ -24,8 +23,6 @@ const HighlightSelector = ( { currentLine, style } ) => {
                           lineid, element, type: 'backgroundColor', value: 'orange', parentID,
                         } )}
                     />
-                </View>
-                <View style={styles.Row}>
                 <TouchableOpacity
                         style={[ styles.Surface, { backgroundColor: 'yellow' } ]}
                         onPress={() => createMod( {
@@ -38,8 +35,6 @@ const HighlightSelector = ( { currentLine, style } ) => {
                           lineid, element, type: 'backgroundColor', value: 'green', parentID,
                         } )}
                     />
-                </View>
-                <View style={styles.Row}>
                 <TouchableOpacity
                         style={[ styles.Surface, { backgroundColor: 'blue' } ]}
                         onPress={() => createMod( {
@@ -52,9 +47,6 @@ const HighlightSelector = ( { currentLine, style } ) => {
                           lineid, element, type: 'backgroundColor', value: 'indigo', parentID,
                         } )}
                     />
-
-                </View>
-                <View style={styles.Row}>
                 <TouchableOpacity
                         style={[ styles.Surface, { backgroundColor: 'violet' } ]}
                         onPress={() => createMod( {
@@ -73,7 +65,6 @@ const HighlightSelector = ( { currentLine, style } ) => {
                           lineid, element, type: 'backgroundColor', value: 'black', parentID,
                         } )}
                     />
-                </View>
             </View>
         </View>
   );
@@ -86,10 +77,6 @@ const styles = StyleSheet.create( {
     justifyContent: 'space-evenly',
     width: '100%',
 
-  },
-  Row: {
-    display: 'flex',
-    flexDirection: 'row',
   },
   Surface: {
     margin: 5,

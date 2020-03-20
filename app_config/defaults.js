@@ -1,12 +1,12 @@
 const Gutkas = [
   {
-    name: 'Nitnem',
+    name: 'Kirtaan',
     items: [
       {
-        shabadId: 40021,
-        mainLine: 'isro n imty Awvix jwxy',
+        shabadId: 2333,
+        mainLine: 'myrw bYdu gurU goivMdw',
         type: 'Shabad',
-        parentGutka: 'Nitnem',
+        parentGutka: 'Kirtaan',
         mods: [],
         entryID: 'LVNmEoz1Ro-M8Ms3iCJm1',
       },
