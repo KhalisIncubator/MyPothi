@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TextInput } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 import {
-  Title, Drawer, Text, Button, TextInput, useTheme,
+  Title, Drawer, Text, Button, useTheme,
 } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -80,15 +80,16 @@ const CustomDrawerComponent = ( props ) => {
                             )}
                             onPress={() => null}
                             // activeTintColor="#ff9a00"
-                            label={() => (
+                            label={( ) => (
                                 <TextInput
-                                    mode="outlined"
-                                    theme={{ colors: { ...theme.colors, background: theme.colors.backdrop } }}
-                                    dense
-                                    placeholder="Enter Gutka Name"
-                                    onChangeText={( text ) => {
-                                      changeText( text );
-                                    }}
+                                style={ { color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent } }
+                                autoCorrect={false}
+                                autoCompleteType="off"
+                                placeholder="Enter Gutka Name"
+                                underlineColorAndroid="transparent"
+                                onChangeText={( text ) => {
+                                  changeText( text );
+                                }}
                                 />
                             )}
                         />
