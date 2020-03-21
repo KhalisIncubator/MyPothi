@@ -18,6 +18,7 @@ const EntrySchema = {
     type: 'string',
     parentGutka: 'string',
     mods: 'Modification[]',
+    lines: 'Line[]',
     entryID: 'string',
   },
 };
@@ -35,8 +36,16 @@ const ModificationSchema = {
     fontSize: 'int?',
   },
 };
+const LineSchema = {
+  name: 'Line',
+  properties: {
+    // JSON.stringify the data for storage space
+    data: 'string',
+    lineId: 'int',
+  },
+};
 const localRealmConfig: Configuration = {
-  schema: [ GuktaSchema, EntrySchema, ModificationSchema ],
+  schema: [ GuktaSchema, EntrySchema, ModificationSchema, LineSchema ],
   schemaVersion: 1,
   deleteRealmIfMigrationNeeded: true,
 };

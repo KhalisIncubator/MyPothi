@@ -42,6 +42,7 @@ const populateData = () => {
           gutkaID: gutka.gutkaID,
         } );
         gutka.items.forEach( ( item ) => {
+          console.log( item );
           newGutka.items.push( item );
         } );
       } );
@@ -99,6 +100,9 @@ const deleteGukta = ( name, gutkaID ) => {
       for await ( const mod of item.mods ) {
         localRealm.delete( mod );
       }
+      for await ( const line of item.lines ) {
+        localRealm.delete( line );
+      }
       localRealm.delete( item );
     }
     localRealm.delete( gutka );
@@ -151,7 +155,7 @@ const getCurrentItems = ( currentGutka, gutkaID ) => {
  * @param {string} mainLine the main line identifier of the shabad
  * @param {gutkaEntry} type shabad or bani
  */
-const addToGutka = ( currentGutka, gutkaID, id, mainLine, type ) => {
+const addToGutka = ( currentGutka, gutkaID, id, mainLine, lines, type ) => {
   const gutka: storedGutka = findGutka( currentGutka, gutkaID );
   const newID = generateID();
   localRealm.write( () => {
@@ -160,6 +164,7 @@ const addToGutka = ( currentGutka, gutkaID, id, mainLine, type ) => {
       mainLine,
       type,
       parentGutka: currentGutka,
+      lines,
       mods: [],
       entryID: newID,
     } );
@@ -177,6 +182,9 @@ const removeFromGutka = ( currentGutka, itemId ) => {
   localRealm.write( async () => {
     for await ( const mod of item.mods ) {
       localRealm.delete( mod );
+    }
+    for await ( const line of item.lines ) {
+      localRealm.delete( line );
     }
     localRealm.delete( item );
   } );

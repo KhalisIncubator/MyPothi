@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  createStore, action, createContextStore, persist,
+  createStore, action, createContextStore, persist, thunk,
 } from 'easy-peasy';
 import {
   SearchModel,
@@ -10,6 +10,7 @@ import {
   ViewerModel,
   EditModel,
   ThemeModel,
+  AddedModel,
 } from './interfaces';
 
 import {
@@ -25,6 +26,7 @@ import {
   deleteModification,
 } from '../../database/local_database';
 import AsyncStore from './storage';
+import { loadBani, loadShabad } from '../../database/banidb_api';
 
 const searchModel: SearchModel = {
   searchType: 0,
@@ -62,6 +64,16 @@ const EditCtx = createContextStore( editModel );
 
 export { EditCtx };
 
+const addedModel: AddedModel = {
+  addedItems: [],
+  updateAddedItems: action( ( state, id ) => {
+    state.addedItems.push( id );
+  } ),
+};
+
+const AddedCtx = createContextStore( addedModel );
+export { AddedCtx };
+
 const themeModel: ThemeModel = {
   isDarkMode: false,
   updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
@@ -85,13 +97,14 @@ const currentModel: CurrentModel = {
     state.currentName = [ name, id ];
     state.currentItems = getCurrentItems( name, id );
   } ),
-  addEntry: action( ( state, payload ) => {
-    const [ id, mainLine, type ] = payload;
+  addedEntry: action( ( state, payload ) => {
+    const [ id, mainLine, lines, type ] = payload;
     addToGutka(
       state.currentName[0],
       state.currentName[1],
       id,
       mainLine,
+      lines,
       type,
     );
     state.currentItems = getCurrentItems(
@@ -136,6 +149,15 @@ const currentModel: CurrentModel = {
   initialUpdate: action( ( state, [ name, items ] ) => {
     state.currentName = name;
     state.currentItems = items;
+  } ),
+
+  addEntry: thunk( async ( actions, [ id, mainLine, type ], { injections, getStoreState } ) => {
+    // eslint-disable-next-line no-shadow
+    const { loadShabad, loadBani } = injections;
+    const length = getStoreState().viewerModel.baniLength;
+    const lines = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
+
+    actions.addedEntry( [ id, mainLine, lines, type ] );
   } ),
 };
 
@@ -193,4 +215,4 @@ const storeModel: StoreModel = {
 };
 
 export { storeModel };
-export default createStore( persist( storeModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ) );
+export default createStore( persist( storeModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ), { injections: { loadShabad, loadBani } } );

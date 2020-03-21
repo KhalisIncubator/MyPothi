@@ -6,7 +6,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 
 import { useNetInfo } from '@react-native-community/netinfo';
 
-import { SearchCtx } from '../app_config/app_state/easy-peasy/models';
+import { SearchCtx, AddedCtx } from '../app_config/app_state/easy-peasy/models';
 import { SEARCH_TEXTS } from '../app_config/database/database_conts';
 import query, { fetchBanis } from '../app_config/database/banidb_api';
 import BaniResult from '../Components/Main/BaniResult';
@@ -25,6 +25,8 @@ const Search = () => {
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   const { currentItems } = useValues( 'currentModel' );
+
+  const addedItems = AddedCtx.useStoreState( ( state ) => state.addedItems );
   const net = useNetInfo();
   useEffect( () => {
     const baniFetcher = async () => {
@@ -122,11 +124,13 @@ const Search = () => {
             <ScrollView>
                 {queryType === 'Shabad' && results.length > 0
                     && results.map( ( result ) => {
-                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1;
+                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
+                                    || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
                       return <SearchResult theme={theme} result={result} isAdded={isAdded}/>;
                     } )}
                     {queryType === 'Bani' && banis.map( ( bani ) => {
-                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1;
+                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
+                      || addedItems.findIndex( ( id ) => id === bani.shabadId ) !== -1;
                       return <BaniResult theme={theme} result={bani} isAdded={isAdded}/>;
                     } )}
             </ScrollView>
@@ -148,9 +152,12 @@ const styles = StyleSheet.create( {
   },
 } );
 
-const withSearchCtx = () => (
+const withCtxs = () => (
+  <AddedCtx.Provider>
     <SearchCtx.Provider>
-        <Search />
+          <Search />
     </SearchCtx.Provider>
+    </AddedCtx.Provider>
+
 );
-export default withSearchCtx;
+export default withCtxs;

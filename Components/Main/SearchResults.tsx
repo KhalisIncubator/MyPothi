@@ -7,7 +7,7 @@ import {
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { SearchCtx } from '../../app_config/app_state/easy-peasy/models';
+import { SearchCtx, AddedCtx } from '../../app_config/app_state/easy-peasy/models';
 import { useUpdaters } from '../../app_config/app_state/state_hooks';
 
 const SearchResult = ( props ) => {
@@ -16,9 +16,13 @@ const SearchResult = ( props ) => {
   const { verse, shabadId } = props.result;
   const { addEntry } = useUpdaters( 'currentModel' );
   const queryType = SearchCtx.useStoreState( ( store ) => store.queryType );
+
+  console.log( queryType );
   return (
         <TouchableOpacity
-            onPress={() => { addEntry( [ shabadId, verse.gurmukhi, queryType ] ); }
+            onPress={() => {
+              addEntry( [ shabadId, verse.gurmukhi, queryType ] );
+            }
             }>
             <Card.Title
                 style={[ style.Card,

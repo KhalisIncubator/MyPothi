@@ -3,6 +3,7 @@ export type entryObj = {
     mainLine: string;
     type: gutkaEntry;
     parentGutka: string;
+    lines: Line[],
     mods: Modification[];
     entryID: string;
 };
@@ -21,6 +22,10 @@ export type Modification = {
     italics? : boolean,
     fontSize? : boolean,
 };
+export type Line ={
+  data: string,
+  lineId: string
+}
 export type gutkaEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
 export type QueryType = 'Shabad' | 'Bani';

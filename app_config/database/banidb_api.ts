@@ -1,5 +1,5 @@
 import { buildApiUrl } from '@sttm/banidb';
-import { lengthType } from '../dev_env/types';
+import { lengthType, Line, entryObj } from '../dev_env/types';
 import { baniLengths } from './database_conts';
 
 const remapLine = ( raw ) => {
@@ -56,22 +56,27 @@ const loadShabad = async ( id: number ) => {
   return fetch( url )
     .then( ( res ) => res.json() )
     .then( ( data ) => ( data.verses.map( ( verse ) => remapLine( verse ) ) ) )
+    .then( ( remapped ) => remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) ) )
     .catch( ( err ) => err );
 };
-
 const fetchBanis = async () => fetch( 'https://api.banidb.com/v2/banis' )
   .then( ( res ) => res.json() )
   .then( ( data ) => data.map( ( bani ) => bani ) )
   .catch( ( err ) => err );
 
-const loadBani = async ( id: number, length: lengthType ) => fetch( `https://api.banidb.com/v2/banis/${id}` )
-  .then( ( res ) => res.json() )
-  .then( ( json ) => json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) )
-  .then( ( filtered ) => filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) )
-  .then( ( data ) => data.map( ( verse ) => remapBani( verse ) ) )
-  .catch( ( err ) => err );
+const loadBani = async ( id: number, length: lengthType ) => (
+  fetch( `https://api.banidb.com/v2/banis/${id}` )
+    .then( ( res ) => res.json() )
+    .then( ( json ) => json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) )
+    .then( ( filtered ) => filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) )
+    .then( ( data ) => data.map( ( verse ) => remapBani( verse ) ) )
+    .then( ( remapped ) => remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) ) )
+    .catch( ( err ) => err ) );
+
+const parseLines = ( item: entryObj ) => ( item.lines.length ? item.lines.map( ( line ) => JSON.parse( line.data ) ) : [] );
+
 export default query;
 
 export {
-  remapLine, loadShabad, fetchBanis, loadBani,
+  remapLine, loadShabad, fetchBanis, loadBani, parseLines,
 };

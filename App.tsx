@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
 
@@ -15,6 +16,8 @@ import {
   populateData,
   isDataEmpty,
 } from './app_config/database/local_database';
+
+import Gutkas from './app_config/defaults';
 
 import Routes from './Routes';
 import { useValues } from './app_config/app_state/state_hooks';
@@ -65,6 +68,7 @@ const App = () => {
     if ( isDataEmpty() ) {
       await populateData();
     }
+    console.log( );
   };
   useEffect( () => { SplashScreen.hide(); }, [] );
   useEffect( () => {

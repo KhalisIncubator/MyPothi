@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View, FlatList, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useMainStoreState } from '../app_config/app_state/easy-peasy/hooks';
 
-import { loadShabad, loadBani } from '../app_config/database/banidb_api';
+import { loadShabad, loadBani, parseLines } from '../app_config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
@@ -18,12 +18,17 @@ import { mapModsToArray } from '../app_config/functions';
 
 const Gutka = () => {
   const theme = useTheme();
+
   const [ shabads, updateShabads ] = useState( [] );
   const [ dataLoading, updateLoading ] = useState( true );
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
+
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { currentName, currentItems } = useValues( 'currentModel' );
   const { baniLength } = useValues( 'viewerModel' );
+
+  const numBanis = useMemo( () => currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? count + 1 : 0 ), 0 ), [ currentItems.length ] );
+
 
   const isDataReady = useMainStoreState(
     ( store ) => store.gutkaModel.isDataReady,
@@ -32,21 +37,12 @@ const Gutka = () => {
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   useEffect( () => {
     updateLoading( true );
-  }, [ currentName[0] ] );
+  }, [ currentName[0], numBanis ] );
 
   useEffect( () => {
     const getLines = async () => {
-      const numBanis = currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? count + 1 : 0 ), 0 );
-      if ( numBanis !== 0 ) {
-        // since banis take time to load, show this while its loading
-        updateLoading( true );
-      }
       // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
-      const newItems = currentItems
-        ? await Promise.all(
-          currentItems.map( ( item ) => ( item.type === 'Bani' ? loadBani( item.shabadId, baniLength ) : loadShabad( item.shabadId ) ) ),
-        )
-        : [ ];
+      const newItems = currentItems ? currentItems.map( ( item ) => parseLines( item ) ) : [];
       updateShabads( newItems );
       updateLoading( false );
     };
