@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Searchbar, Menu, Button, Text, useTheme,
 } from 'react-native-paper';
@@ -11,7 +11,7 @@ import { SEARCH_TEXTS } from '../app_config/database/database_conts';
 import query, { fetchBanis } from '../app_config/database/banidb_api';
 import BaniResult from '../Components/Main/BaniResult';
 import SearchResult from '../Components/Main/SearchResults';
-import { useValues } from '../app_config/app_state/state_hooks';
+import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
 
 
 const Search = () => {
@@ -25,9 +25,17 @@ const Search = () => {
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   const { currentItems } = useValues( 'currentModel' );
+  const { addEntry } = useUpdaters( 'currentModel' );
+
 
   const addedItems = AddedCtx.useStoreState( ( state ) => state.addedItems );
+  const updateItems = AddedCtx.useStoreActions( ( actions ) => actions.updateAddedItems );
   const net = useNetInfo();
+
+  const onPress = useCallback( ( sID, gurmukhi ) => {
+    addEntry( [ sID, gurmukhi, queryType ] );
+    updateItems( sID );
+  }, [ addEntry, queryType, updateItems ] );
   useEffect( () => {
     const baniFetcher = async () => {
       const fetched = await fetchBanis();
@@ -48,7 +56,8 @@ const Search = () => {
     return () => {
       cancelSearch = true;
     };
-  }, [ searchQuery ] );
+  }, [ searchQuery, net.isConnected, searchType ] );
+
   return (
         <View style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
         <View style={{ padding: 5 }}>
@@ -126,12 +135,13 @@ const Search = () => {
                     && results.map( ( result ) => {
                       const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
-                      return <SearchResult theme={theme} result={result} isAdded={isAdded}/>;
+                      return <SearchResult theme={theme} result={result} isAdded={isAdded}
+                      onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}/>;
                     } )}
                     {queryType === 'Bani' && banis.map( ( bani ) => {
                       const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
-                      || addedItems.findIndex( ( id ) => id === bani.shabadId ) !== -1;
-                      return <BaniResult theme={theme} result={bani} isAdded={isAdded}/>;
+                      || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
+                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
                     } )}
             </ScrollView>
         </View>

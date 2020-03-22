@@ -66,8 +66,8 @@ export { EditCtx };
 
 const addedModel: AddedModel = {
   addedItems: [],
-  updateAddedItems: action( ( state, id ) => {
-    state.addedItems.push( id );
+  updateAddedItems: action( ( state, payload ) => {
+    state.addedItems.push( payload );
   } ),
 };
 

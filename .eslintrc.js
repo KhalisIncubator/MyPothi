@@ -11,7 +11,7 @@ module.exports = {
         'prettier/@typescript-eslint',
     ],
     parser: '@typescript-eslint/parser',
-    plugins: ['react', 'react-native'],
+    plugins: ['react', 'react-native', "react-hooks"],
     settings: {
         'import/resolver': {
             typescript: {},
@@ -29,6 +29,8 @@ module.exports = {
         'space-in-parens': ['error', 'always'],
         'array-bracket-spacing': ['error', 'always'],
         'object-curly-spacing': ['error', 'always'],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         'import/extensions': ['error', 'never'],
         'global-require': 0,
         'linebreak-style': [2, 'unix'],

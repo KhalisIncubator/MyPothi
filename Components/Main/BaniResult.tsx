@@ -6,18 +6,16 @@ import {
   Avatar, Card,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
-import { SearchCtx } from '../../app_config/app_state/easy-peasy/models';
-import { useUpdaters } from '../../app_config/app_state/state_hooks';
+
 
 const BaniResult = ( props ) => {
   const styling = props.theme;
   const { gurmukhi, ID } = props.result;
-  const { isAdded } = props;
-  const { addEntry } = useUpdaters( 'currentModel' );
-  const queryType = SearchCtx.useStoreState( ( store ) => store.queryType );
+  const { isAdded, onPress } = props;
+
   return (
         <TouchableOpacity
-            onPress={() => { addEntry( [ ID, gurmukhi, queryType ] ); }}
+            onPress={() => { onPress(); }}
             >
             <Card.Title
                 style={[ style.Card,

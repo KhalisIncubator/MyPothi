@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, FlatList, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useMainStoreState } from '../app_config/app_state/easy-peasy/hooks';
 
-import { loadShabad, loadBani, parseLines } from '../app_config/database/banidb_api';
+import { parseLines } from '../app_config/database/banidb_api';
 import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
@@ -20,39 +19,36 @@ const Gutka = () => {
   const theme = useTheme();
 
   const [ shabads, updateShabads ] = useState( [] );
-  const [ dataLoading, updateLoading ] = useState( true );
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
+
+  const [ isLoadingData, updateLoading ] = useState( true );
 
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { currentName, currentItems } = useValues( 'currentModel' );
-  const { baniLength } = useValues( 'viewerModel' );
 
-  const numBanis = useMemo( () => currentItems.reduce( ( count, { type } ) => ( type === 'Bani' ? count + 1 : 0 ), 0 ), [ currentItems.length ] );
+  const [ gutkaName ] = currentName;
 
-
-  const isDataReady = useMainStoreState(
-    ( store ) => store.gutkaModel.isDataReady,
-  );
 
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   useEffect( () => {
     updateLoading( true );
-  }, [ currentName[0], numBanis ] );
-
+  }, [ gutkaName ] );
   useEffect( () => {
     const getLines = async () => {
-      // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
-      const newItems = currentItems ? currentItems.map( ( item ) => parseLines( item ) ) : [];
-      updateShabads( newItems );
-      updateLoading( false );
+      if ( currentItems.length > 0 ) {
+        // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
+        // console.log( isLoadingData );
+        const newItems = currentItems.length ? await Promise.all( currentItems.map( ( item ) => parseLines( item ) ) ) : [];
+        console.log( 'items', newItems.length );
+        updateShabads( newItems );
+        updateLoading( false );
+      } else if ( currentItems.length === 0 ) {
+        updateShabads( [] );
+        updateLoading( false );
+      }
     };
-    if ( isDataReady && currentItems.length > 0 ) {
-      getLines();
-    } else if ( isDataReady && currentItems.length === 0 ) {
-      updateShabads( [] );
-      updateLoading( false );
-    }
-  }, [ currentItems, isDataReady, currentName[0] ] );
+    setTimeout( () => getLines(), 0 );
+  }, [ currentItems, gutkaName ] );
 
   const renderItem = ( { item, index } ) => {
     const lines = item.map( ( line ) => ( <LineBlock key={line.id} line={line}
@@ -60,12 +56,16 @@ const Gutka = () => {
     // uodated). Otherwise if currentItems has length of 0, then set id to null
       entryID={ currentItems[index]?.entryID ?? null}
       mods={mapModsToArray( currentItems[index]?.mods )}/> ) );
+    if ( index === shabads.length - 1 ) {
+      console.log( 'finished flatlist' );
+    }
     return <View key="Viewer">{lines}</View>;
   };
+
   return (
     <View style={styles.View}>
         <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
-            {dataLoading && isDataReady && (
+            {isLoadingData && (
               <>
                     <ShimmeringLine />
                     <ShimmeringLine />
@@ -79,9 +79,7 @@ const Gutka = () => {
                     <ShimmeringLine />
               </>
             )}
-            {isDataReady
-                && currentItems.length !== undefined
-                && shabads.length !== 0 && (
+            { !isLoadingData && shabads.length !== 0 && (
                     <FlatList
                         data={shabads}
                         keyExtractor={( item, index ) => index.toString()}

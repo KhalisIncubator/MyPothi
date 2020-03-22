@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import {
-  useTheme, Card, Divider,
+  useTheme, Card, Divider, Paragraph,
 } from 'react-native-paper';
 import { useValues, useUpdaters } from '../app_config/app_state/state_hooks';
 import SettingWithSwitch, { SettingWithFonts, SettingWithList } from '../Components/Main/SettingsComponents';
@@ -15,6 +15,7 @@ const SettingsScreen = ( ) => {
   const { isDarkMode } = useValues( 'themeModel' );
   const { updateDarkMode } = useUpdaters( 'themeModel' );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const toggleElement = useCallback( ( element: string ) => { updateDisplayElement( element ); }, [
     displayElements.displayEng,
     displayElements.displayTeeka,
@@ -68,7 +69,8 @@ const SettingsScreen = ( ) => {
                 </View>
                 <Divider />
                 <View>
-                  <SettingWithList text="Bani Length" values={baniLengths} current={baniLength} updater={updateLength} theme={theme}/>
+                  <SettingWithList text="Bani Length*" values={baniLengths} current={baniLength} updater={updateLength} theme={theme}/>
+                  <Paragraph>*If you have any banis currently added, please remove and re-add</Paragraph>
                 </View>
               </Card.Content>
             </Card>

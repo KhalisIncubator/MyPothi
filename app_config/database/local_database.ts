@@ -42,7 +42,6 @@ const populateData = () => {
           gutkaID: gutka.gutkaID,
         } );
         gutka.items.forEach( ( item ) => {
-          console.log( item );
           newGutka.items.push( item );
         } );
       } );
