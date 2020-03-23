@@ -58,7 +58,7 @@ const App = () => {
       await populateData();
     }
   };
-  useEffect( () => { SplashScreen.hide(); }, [] );
+  useEffect( () => { if ( rehydrated ) { SplashScreen.hide(); } }, [ rehydrated ] );
   useEffect( () => {
     checkStore();
   }, [] );
