@@ -42,7 +42,6 @@ const Gutka = () => {
     setTimeout( () => getLines(), 0 );
   }, [ currentItems ] );
 
-  useEffect( () => { console.log( 'loading....', isLoadingData ); }, [ isLoadingData ] );
 
   return (
     <View style={styles.View}>
