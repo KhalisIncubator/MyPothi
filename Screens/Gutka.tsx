@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, FlatList, StyleSheet,
+  View, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import { parseLines } from '../app_config/database/banidb_api';
-import LineBlock from '../Components/Main/LineBlock';
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
 import HighlightSelector from '../Components/Main/HighlightSelector';
@@ -13,18 +11,20 @@ import HighlightSelector from '../Components/Main/HighlightSelector';
 
 import { EditCtx } from '../app_config/app_state/easy-peasy/models';
 import { useValues } from '../app_config/app_state/state_hooks';
-import { mapModsToArray } from '../app_config/functions';
+import Viewer from '../Components/Main/Viewer';
+import { parseLines } from '../app_config/database/banidb_api';
 
 const Gutka = () => {
   const theme = useTheme();
 
   const [ shabads, updateShabads ] = useState( [] );
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
-
   const [ isLoadingData, updateLoading ] = useState( true );
 
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
-  const { currentName, currentItems } = useValues( 'currentModel' );
+  const {
+    currentName, currentItems,
+  } = useValues( 'currentModel' );
 
   const [ gutkaName ] = currentName;
 
@@ -35,38 +35,20 @@ const Gutka = () => {
   }, [ gutkaName ] );
   useEffect( () => {
     const getLines = async () => {
-      if ( currentItems.length > 0 ) {
-        // if currentItems has a length greater than 0, get all the lines, otherwise set the array to empty
-        // console.log( isLoadingData );
-        const newItems = currentItems.length ? await Promise.all( currentItems.map( ( item ) => parseLines( item ) ) ) : [];
-        console.log( 'items', newItems.length );
-        updateShabads( newItems );
-        updateLoading( false );
-      } else if ( currentItems.length === 0 ) {
-        updateShabads( [] );
-        updateLoading( false );
-      }
+      const newLines = currentItems.length ? await Promise.all( currentItems.map( ( item ) => parseLines( item ) ) ) : [];
+      updateShabads( newLines );
+      updateLoading( false );
     };
     setTimeout( () => getLines(), 0 );
-  }, [ currentItems, gutkaName ] );
+  }, [ currentItems ] );
 
-  const renderItem = ( { item, index } ) => {
-    const lines = item.map( ( line ) => ( <LineBlock key={line.id} line={line}
-    // if currentItems is not length of 0, and if the item at the index has a entryID (need to check because is null when item is deleted and state is
-    // uodated). Otherwise if currentItems has length of 0, then set id to null
-      entryID={ currentItems[index]?.entryID ?? null}
-      mods={mapModsToArray( currentItems[index]?.mods )}/> ) );
-    if ( index === shabads.length - 1 ) {
-      console.log( 'finished flatlist' );
-    }
-    return <View key="Viewer">{lines}</View>;
-  };
+  useEffect( () => { console.log( 'loading....', isLoadingData ); }, [ isLoadingData ] );
 
   return (
     <View style={styles.View}>
         <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
-            {isLoadingData && (
-              <>
+        {isLoadingData && (
+          <>
                     <ShimmeringLine />
                     <ShimmeringLine />
                     <ShimmeringLine />
@@ -77,15 +59,13 @@ const Gutka = () => {
                     <ShimmeringLine />
                     <ShimmeringLine />
                     <ShimmeringLine />
-              </>
-            )}
-            { !isLoadingData && shabads.length !== 0 && (
-                    <FlatList
-                        data={shabads}
-                        keyExtractor={( item, index ) => index.toString()}
-                        renderItem={renderItem}
-                    />
-            )}
+                    <ShimmeringLine />
+
+
+          </>
+        )}
+         {!isLoadingData
+                   && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
                             {isHighlighterVis && (
                 <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
                             )}

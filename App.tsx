@@ -7,12 +7,9 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
+import { View } from 'react-native';
 import store from './app_config/app_state/easy-peasy/models';
-
-import { useMainStoreActions } from './app_config/app_state/easy-peasy/hooks';
 import {
-  fetchAllGutkas,
-  getCurrentItems,
   populateData,
   isDataEmpty,
 } from './app_config/database/local_database';
@@ -54,13 +51,6 @@ const darkTheme = {
 const App = () => {
   const rehydrated = useStoreRehydrated();
   const { isDarkMode } = useValues( 'themeModel' );
-  const initCurrUpdate = useMainStoreActions(
-    ( actions ) => actions.currentModel.initialUpdate,
-  );
-  const initialGutkaUpdate = useMainStoreActions(
-    ( actions ) => actions.gutkaModel.initialUpdate,
-  );
-
   // const netInfo = useNetInfo();
 
   const checkStore = async () => {
@@ -70,13 +60,7 @@ const App = () => {
   };
   useEffect( () => { SplashScreen.hide(); }, [] );
   useEffect( () => {
-    checkStore().then( async () => {
-      const names = fetchAllGutkas();
-      const items = getCurrentItems( names[0][0], names[0][1] );
-      initCurrUpdate( [ names[0], items ] );
-      initialGutkaUpdate( [ names, true ] );
-    } );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    checkStore();
   }, [] );
 
   return (
@@ -85,6 +69,7 @@ const App = () => {
     settings={{
       icon: ( props ) => <Icon {...props} />,
     }}>
+      {!rehydrated && <View style={{ flex: 1, backgroundColor: '#FFA500' }}/>}
         {rehydrated && <Routes />}
     </PaperProvider>
   );

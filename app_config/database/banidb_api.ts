@@ -1,5 +1,4 @@
 import { buildApiUrl } from '@sttm/banidb';
-import { Response } from 'react-native/Libraries/Network/fetch';
 import { lengthType, entryObj } from '../dev_env/types';
 import { baniLengths } from './database_conts';
 
@@ -75,11 +74,10 @@ const loadBani = async ( id: number, length: lengthType ) => (
     .catch( ( err ) => err ) );
 
 const parseLines = async ( item: entryObj ) => {
-  // because once again the realm returns the array as an object, we have to map to object
   const linesArray = item.lines ? Array.from( { ...item.lines, length: Object.keys( item.lines ).length } ) : [];
-  // console.log( );
   return Promise.resolve( linesArray.map( ( { data } ) => JSON.parse( data ) ) );
 };
+// because once again the realm returns the array as an object, we have to map to object
 export default query;
 
 export {
