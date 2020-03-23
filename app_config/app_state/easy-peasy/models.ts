@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  createStore, action, createContextStore, persist, thunk,
+  createStore, action, createContextStore, persist, thunk, computed,
 } from 'easy-peasy';
 import {
   SearchModel,
@@ -79,23 +79,14 @@ const themeModel: ThemeModel = {
   updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
 };
 const currentModel: CurrentModel = {
-  currentName: [],
-  currentItems: [],
-  updateItems: action( ( state, payload ) => {
-    if ( payload ) {
-      state.currentName = payload;
-      state.currentItems = getCurrentItems( payload[0], payload[1] );
-    } else {
-      state.currentItems = getCurrentItems(
-        state.currentName[0],
-        state.currentName[1],
-      );
-    }
+  currentName: fetchAllGutkas()[0],
+  currentItems: computed( ( state ) => {
+    const [ name, id ] = state.currentName;
+    return getCurrentItems( name, id );
   } ),
   updateCurrentName: action( ( state, payload ) => {
     const [ name, id ] = payload;
     state.currentName = [ name, id ];
-    state.currentItems = getCurrentItems( name, id );
   } ),
   addedEntry: action( ( state, payload ) => {
     const [ id, mainLine, lines, type ] = payload;
@@ -145,10 +136,6 @@ const currentModel: CurrentModel = {
         );
       }
     }
-  } ),
-  initialUpdate: action( ( state, [ name, items ] ) => {
-    state.currentName = name;
-    state.currentItems = items;
   } ),
 
   addEntry: thunk( async ( actions, [ id, mainLine, type ], { injections, getStoreState } ) => {
@@ -215,4 +202,4 @@ const storeModel: StoreModel = {
 };
 
 export { storeModel };
-export default createStore( persist( storeModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ), { injections: { loadShabad, loadBani } } );
+export default createStore( persist( storeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ), { injections: { loadShabad, loadBani } } );

@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { Action, Thunk } from 'easy-peasy';
+import { Action, Thunk, Computed } from 'easy-peasy';
 import {
   QueryType, entryObj, gutkaEntry, ModType, lengthType,
 } from '../../dev_env/types';
@@ -29,9 +29,8 @@ export interface ThemeModel {
 }
 export interface CurrentModel {
     currentName: string[];
-    currentItems: entryObj[];
+    currentItems: Computed<CurrentModel, entryObj[]>;
 
-    updateItems: Action<CurrentModel, [string?, string?]>;
     updateCurrentName: Action<CurrentModel, [string, string]>;
 
     addedEntry: Action<CurrentModel, [number, string, string[], gutkaEntry]>;
@@ -39,7 +38,6 @@ export interface CurrentModel {
 
     createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
     deleteMod: Action<CurrentModel, { lineid: number, element: Element, parentID: string}>;
-    initialUpdate: Action<CurrentModel, [string[], entryObj[]]>;
 
     addEntry: Thunk<CurrentModel, [number, string, gutkaEntry], Injections,
     StoreModel>
