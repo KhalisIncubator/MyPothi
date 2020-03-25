@@ -149,7 +149,7 @@ const currentModel: CurrentModel = {
 };
 
 const gutkaModel: GutkaModel = {
-  gutkaNames: [],
+  gutkaNames: fetchAllGutkas(),
   isDataReady: false,
 
   updateGutkas: action( ( state ) => {
