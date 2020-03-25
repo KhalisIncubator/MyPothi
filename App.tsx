@@ -53,15 +53,7 @@ const App = () => {
   const { isDarkMode } = useValues( 'themeModel' );
   // const netInfo = useNetInfo();
 
-  const checkStore = async () => {
-    if ( isDataEmpty() ) {
-      await populateData();
-    }
-  };
   useEffect( () => { if ( rehydrated ) { SplashScreen.hide(); } }, [ rehydrated ] );
-  useEffect( () => {
-    checkStore();
-  }, [] );
 
   return (
     <PaperProvider

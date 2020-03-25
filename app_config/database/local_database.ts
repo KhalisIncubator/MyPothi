@@ -59,6 +59,9 @@ export {
  */
 const fetchAllGutkas = (): string[][] => {
   const names = [];
+  if ( isDataEmpty() ) {
+    populateData();
+  }
   const gutkas = localRealm.objects<storedGutka>( 'Gutka' );
   gutkas.forEach( ( gutka ) => {
     names.push( [ gutka.name, gutka.gutkaID ] );
