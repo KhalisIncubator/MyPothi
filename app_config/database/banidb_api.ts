@@ -73,9 +73,9 @@ const loadBani = async ( id: number, length: lengthType ) => (
     .then( ( remapped ) => remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) ) )
     .catch( ( err ) => err ) );
 
-const parseLines = async ( item: entryObj ) => {
+const parseLines = ( item: entryObj ) => {
   const linesArray = item.lines ? Array.from( { ...item.lines, length: Object.keys( item.lines ).length } ) : [];
-  return Promise.resolve( linesArray.map( ( { data } ) => JSON.parse( data ) ) );
+  return ( linesArray.map( ( { data } ) => JSON.parse( data ) ) );
 };
 // because once again the realm returns the array as an object, we have to map to object
 export default query;

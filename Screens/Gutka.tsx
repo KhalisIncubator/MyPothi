@@ -1,26 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useCallback,
+} from 'react';
 import {
-  View, StyleSheet,
+  View, StyleSheet, Text,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import ShimmeringLine from '../Components/Main/ShimmeringBlock';
 import Toolbar from '../Components/Main/Toolbar';
 import HighlightSelector from '../Components/Main/HighlightSelector';
-
+import Gutkas from '../app_config/defaults';
 
 import { EditCtx } from '../app_config/app_state/easy-peasy/models';
 import { useValues } from '../app_config/app_state/state_hooks';
 import Viewer from '../Components/Main/Viewer';
 import { parseLines } from '../app_config/database/banidb_api';
+import { entryObj } from '../app_config/dev_env/types';
+import Skeleton from '../Components/Main/Skeleton';
 
 const Gutka = () => {
   const theme = useTheme();
 
-  const [ shabads, updateShabads ] = useState( [] );
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
   const [ isLoadingData, updateLoading ] = useState( true );
-
+  const [ shabads, updateShabads ] = useState( [] );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const {
     currentName, currentItems,
@@ -33,41 +36,33 @@ const Gutka = () => {
   useEffect( () => {
     updateLoading( true );
   }, [ gutkaName ] );
+  // useEffect( () => {
+  //   const getLines = async () => {
+  //     const newLines = currentItems.length ? currentItems.map( ( item ) => parseLines( item ) ) : [];
+  //     updateShabads( newLines );
+  //     updateLoading( false );
+  //   };
+  //   setTimeout( () => getLines(), 0 );
+  // }, [ currentItems ] );
   useEffect( () => {
-    const getLines = async () => {
-      const newLines = currentItems.length ? await Promise.all( currentItems.map( ( item ) => parseLines( item ) ) ) : [];
-      updateShabads( newLines );
-      updateLoading( false );
-    };
-    setTimeout( () => getLines(), 0 );
-  }, [ currentItems ] );
-
-
+    updateShabads( currentItems.map( ( item ) => parseLines( item ) ) );
+    console.log( currentItems.length );
+  }, [ currentItems, isLoadingData ] );
+  // useEffect( () => {
+  //   updateLoading( false );
+  // }, [ shabads ] );
+  useEffect( () => { console.log( 'changed', isLoadingData ); }, [ isLoadingData ] );
+  const setLoadingFalse = useCallback( () => { updateLoading( false ); }, [] );
   return (
     <View style={styles.View}>
         <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
         {isLoadingData && (
-          <>
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-
-
-          </>
+            <Skeleton />
         )}
-         {!isLoadingData
-                   && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
-                            {isHighlighterVis && (
+             <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]} updateLoading={setLoadingFalse} isLoading={isLoadingData}/>
+        {isHighlighterVis && (
                 <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
-                            )}
+        )}
     </View>
 
         <Toolbar
