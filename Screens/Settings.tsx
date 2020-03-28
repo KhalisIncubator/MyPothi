@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import {
   useTheme, Card, Divider, Paragraph,
 } from 'react-native-paper';
@@ -23,7 +23,7 @@ const SettingsScreen = ( ) => {
 
   ] );
   return (
-        <View style={{ flex: 1, backgroundColor: theme.colors.background }} >
+        <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }} >
           <View>
             <Card theme={theme} style={{ margin: 5 }}>
               <Card.Title title="Font Size" />
@@ -81,7 +81,7 @@ const SettingsScreen = ( ) => {
               </Card.Content>
             </Card>
           </View>
-        </View>
+        </ScrollView>
   );
 };
 export default SettingsScreen;

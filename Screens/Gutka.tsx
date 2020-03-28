@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useState, useEffect, useCallback,
+  useState, useEffect, useCallback, useLayoutEffect,
 } from 'react';
 import {
   View, StyleSheet, Text,
@@ -17,12 +18,13 @@ import Viewer from '../Components/Main/Viewer';
 import { parseLines } from '../app_config/database/banidb_api';
 import { entryObj } from '../app_config/dev_env/types';
 import Skeleton from '../Components/Main/Skeleton';
+import { useLoading } from '../app_config/app_state/easy-peasy/isolated_stores';
 
 const Gutka = () => {
   const theme = useTheme();
 
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
-  const [ isLoadingData, updateLoading ] = useState( true );
+  const [ loadingState, loadingUpdater ] = useLoading();
   const [ shabads, updateShabads ] = useState( [] );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const {
@@ -31,35 +33,25 @@ const Gutka = () => {
 
   const [ gutkaName ] = currentName;
 
-
+  const { isLoading } = loadingState;
+  const { updateLoading } = loadingUpdater;
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   useEffect( () => {
     updateLoading( true );
   }, [ gutkaName ] );
-  // useEffect( () => {
-  //   const getLines = async () => {
-  //     const newLines = currentItems.length ? currentItems.map( ( item ) => parseLines( item ) ) : [];
-  //     updateShabads( newLines );
-  //     updateLoading( false );
-  //   };
-  //   setTimeout( () => getLines(), 0 );
-  // }, [ currentItems ] );
   useEffect( () => {
-    updateShabads( currentItems.map( ( item ) => parseLines( item ) ) );
-    console.log( currentItems.length );
-  }, [ currentItems, isLoadingData ] );
-  // useEffect( () => {
-  //   updateLoading( false );
-  // }, [ shabads ] );
-  useEffect( () => { console.log( 'changed', isLoadingData ); }, [ isLoadingData ] );
-  const setLoadingFalse = useCallback( () => { updateLoading( false ); }, [] );
+    updateShabads( ( currentItems.map( ( item ) => parseLines( item ) ) ) );
+    // return ( () => false );
+  }, [ currentItems ] );
+  useEffect( () => { console.log( 'changed', isLoading ); }, [ isLoading ] );
+  const setLoadingFalse = useCallback( () => { updateLoading( false ); }, [ updateLoading ] );
   return (
     <View style={styles.View}>
         <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
-        {isLoadingData && (
+        {isLoading && (
             <Skeleton />
         )}
-             <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]} updateLoading={setLoadingFalse} isLoading={isLoadingData}/>
+             <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]} updateLoading={setLoadingFalse} isLoading={isLoading}/>
         {isHighlighterVis && (
                 <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
         )}

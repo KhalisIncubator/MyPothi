@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
+import { useIsDrawerOpen } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useValues } from '../../app_config/app_state/state_hooks';
@@ -11,6 +12,7 @@ const Header = ( { previous, navigation } ) => {
   const theme = useTheme();
   const { currentName } = useValues( 'currentModel' );
   const route = useRoute();
+  const isDrawerOpen = useIsDrawerOpen();
   const isMain = route.name === 'Gutka';
   return (
         <Appbar.Header theme={{ colors: { primary: theme.colors.backdrop } }}>
@@ -22,12 +24,14 @@ const Header = ( { previous, navigation } ) => {
                     color={theme.colors.primary}
                 />
             ) : (
+              !isDrawerOpen && (
                 <TouchableOpacity
-                    onPress={() => {
-                      navigation.openDrawer();
-                    }}>
-                    <Icon name="menu" size={30} />
+                onPress={() => {
+                  navigation.openDrawer();
+                }}>
+                  <Icon name="menu" size={30} />
                 </TouchableOpacity>
+              )
             )}
             <Appbar.Content title={isMain ? currentName[0] : route.name} />
             {isMain && [

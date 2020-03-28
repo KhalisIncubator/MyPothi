@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View, Text, StyleSheet, ScrollView,
+} from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar, useTheme,
 } from 'react-native-paper';
@@ -33,7 +35,8 @@ const Edit = ( { route } ) => {
     updateShow( true );
   };
   return (
-        <View style={[ style.View, { backgroundColor: theme.colors.background } ]}>
+    <View style={style.View}>
+        <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
             {type === 'Shabad'
                 && currentItems.map( ( item, index ) => (
                   <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
@@ -89,6 +92,8 @@ const Edit = ( { route } ) => {
                         />
                         </Card>
                 ) )}
+        </ScrollView>
+
             <Snackbar
                 visible={showSnack}
                 onDismiss={() => updateShow( false )}
@@ -119,7 +124,7 @@ const style = StyleSheet.create( {
   View: {
     flex: 1,
     flexDirection: 'column',
-  },
 
+  },
 } );
 export default Edit;
