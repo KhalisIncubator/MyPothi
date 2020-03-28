@@ -15,7 +15,7 @@ const BaniResult = ( props ) => {
 
   return (
         <TouchableOpacity
-            onPress={() => { onPress(); }}
+            onPress={onPress}
             >
             <Card.Title
                 style={[ style.Card,

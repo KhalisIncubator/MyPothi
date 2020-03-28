@@ -15,10 +15,7 @@ const SearchResult = ( props ) => {
 
   return (
         <TouchableOpacity
-            onPress={() => {
-              onPress();
-            }
-            }>
+            onPress={onPress }>
             <Card.Title
                 style={[ style.Card,
                   { borderRadius: styling.roundness, backgroundColor: isAdded ? styling.colors.backdrop : styling.colors.surface } ]}

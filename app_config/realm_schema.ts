@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import Realm, { Configuration, schemaVersion } from 'realm';
+import Realm, { Configuration } from 'realm';
 import { loadBani, loadShabad } from './database/banidb_api';
 import { entryObj } from './dev_env/types';
 

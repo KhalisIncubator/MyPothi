@@ -9,10 +9,6 @@ import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 import { View } from 'react-native';
 import store from './app_config/app_state/easy-peasy/models';
-import {
-  populateData,
-  isDataEmpty,
-} from './app_config/database/local_database';
 
 
 import Routes from './Routes';
