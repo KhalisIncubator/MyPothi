@@ -1,4 +1,7 @@
-import Realm, { Configuration } from 'realm';
+/* eslint-disable no-restricted-syntax */
+import Realm, { Configuration, schemaVersion } from 'realm';
+import { loadBani, loadShabad } from './database/banidb_api';
+import { entryObj } from './dev_env/types';
 
 const GuktaSchema = {
   name: 'Gutka',
@@ -46,8 +49,16 @@ const LineSchema = {
 };
 const localRealmConfig: Configuration = {
   schema: [ GuktaSchema, EntrySchema, ModificationSchema, LineSchema ],
-  schemaVersion: 1,
-  deleteRealmIfMigrationNeeded: true,
+  schemaVersion: 2,
+  migration: async ( oldRealm, newRealm ) => {
+    if ( oldRealm.schemaVersion < 2 ) {
+      const newItems = newRealm.objects<entryObj>( 'Entry' );
+      for await ( const item of newItems ) {
+        item.lines = item.type === 'Bani' ? await loadBani( item.shabadId, 'long' ) : await loadShabad( item.shabadId );
+      }
+    }
+  },
+  // deleteRealmIfMigrationNeeded: true,
 };
 
 export default new Realm( localRealmConfig );

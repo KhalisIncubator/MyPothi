@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useState, useEffect, useCallback, useLayoutEffect,
+  useState, useEffect,
 } from 'react';
 import {
   View, StyleSheet,
