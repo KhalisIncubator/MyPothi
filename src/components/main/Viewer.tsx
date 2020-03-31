@@ -25,7 +25,7 @@ const Viewer = ( props ) => {
     <FlatList
     data={currentLines}
     extraData={currentMods}
-    initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined ?? undefined}
+    initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
     keyExtractor={( item, index ) => index.toString()}
     renderItem={renderItem}
 />
