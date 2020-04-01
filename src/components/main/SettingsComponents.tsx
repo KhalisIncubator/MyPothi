@@ -20,7 +20,7 @@ const SettingWithSwitch = ( props ) => {
         <Switch
         value={value}
           onValueChange={() => { updater(); }}
-          color="lightgreen" />
+          color="#FFA500" />
         </View>
         </View>
     </View>
