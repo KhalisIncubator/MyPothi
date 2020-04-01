@@ -66,11 +66,11 @@ const LineBlock = ( props ) => {
                 isSelected={gurmukhiSelection}
                 mods={filteredMod}
                 style={{ fontSize: gurmukhi }}
-                value={Gurbani.ascii}
+                value={Gurbani.ascii === '‚' ? Gurbani.unicode : Gurbani.ascii}
                 onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
                 isPangtee
             />
-            {displayEng
+             {displayEng
                 && !(
                   Translations.English == null || Translations.English === ' '
                 ) && (
@@ -83,7 +83,7 @@ const LineBlock = ( props ) => {
                         }
                         style={{ fontSize: eng }}
                     />
-            )}
+             )}
             {displayTeeka && Translations.Punjabi.SS !== null && (
                 <TextBlock
                     type="Teeka"
@@ -95,7 +95,7 @@ const LineBlock = ( props ) => {
                     style={{ fontSize: teeka }}
                 />
             )}
-            {displayTranslit && Transliteration.English && (
+             {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
                 <TextBlock
                     type="Translit"
                     mods={filteredMod}
@@ -105,7 +105,7 @@ const LineBlock = ( props ) => {
                     }
                     style={{ fontSize: translit }}
                 />
-            )}
+             )}
         </View>
   );
 };

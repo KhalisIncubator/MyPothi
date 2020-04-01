@@ -24,14 +24,15 @@ const TextBlock = ( props ) => {
   } );
   const flatten = StyleSheet.flatten(
     [ style,
-      { ...modStyle },
+      modStyle,
       { color: theme.colors.text },
       isGurmukhi ? styles.Gurmukhi : styles.English,
       !modStyle.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
-      !modStyle.backgroundColor && isSelected ? styles.Selected : {},
+      isSelected ? styles.Selected : {},
       isPangtee ? styles.Pangtee : {},
       styles.Text ],
   );
+
   return (
         <View style={styles.View}>
             <Text
@@ -57,7 +58,8 @@ const styles = StyleSheet.create( {
     marginVertical: 4,
   },
   Selected: {
-    backgroundColor: '#a5a5a5',
+    borderColor: '#FFA500',
+    borderWidth: 5,
   },
   Text: {
     paddingHorizontal: 10,
