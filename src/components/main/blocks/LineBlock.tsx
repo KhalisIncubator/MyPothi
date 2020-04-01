@@ -79,7 +79,7 @@ const LineBlock = ( props ) => {
                         mods={filteredMod}
                         isSelected={translationSelection}
                         value={Translations.English}
-                        onClick={() => textBlockClick( gurmukhiSelection, 'Eng' )
+                        onClick={() => textBlockClick( translationSelection, 'Eng' )
                         }
                         style={{ fontSize: eng }}
                     />
