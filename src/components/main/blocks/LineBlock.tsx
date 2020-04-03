@@ -16,7 +16,7 @@ const LineBlock = ( props ) => {
   const [ selectedLineID, selectedElement ] = selectedInfo;
 
   const {
-    Gurbani, Translations, Transliteration, id,
+    Gurbani, Translations, Transliteration, id, Vishraams,
   } = props.line;
   const { entryID, mods } = props;
   const {
@@ -63,6 +63,7 @@ const LineBlock = ( props ) => {
         <View style={style.column}>
             <TextBlock
                 type="Pangtee"
+                vishraams={Vishraams}
                 isSelected={gurmukhiSelection}
                 mods={filteredMod}
                 style={{ fontSize: gurmukhi }}
@@ -91,7 +92,7 @@ const LineBlock = ( props ) => {
                     isSelected={teekaSelection}
                     value={Translations.Punjabi.SS}
                     isGurmukhi
-                    onClick={() => textBlockClick( gurmukhiSelection, 'Teeka' )}
+                    onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
                     style={{ fontSize: teeka }}
                 />
             )}
@@ -101,7 +102,7 @@ const LineBlock = ( props ) => {
                     mods={filteredMod}
                     value={Transliteration.English}
                     isSelected={translitSelection}
-                    onClick={() => textBlockClick( gurmukhiSelection, 'Translit' )
+                    onClick={() => textBlockClick( translitSelection, 'Translit' )
                     }
                     style={{ fontSize: translit }}
                 />
