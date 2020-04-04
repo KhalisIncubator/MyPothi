@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import {
   useTheme, Card, Paragraph,
 } from 'react-native-paper';
@@ -19,12 +19,11 @@ const mapToComponent = ( type, key, value, updater, theme, menuList ) => {
     case 'switch':
       return <SettingWithSwitch text={DisplayConsts[key]} value={value} updater={updater} objKey={key} />;
     case 'menu':
-      return <SettingWithList values={menuList} current={value} theme={theme} updater={updater} text={key}/>;
+      return <SettingWithList values={menuList} current={menuList[value]} theme={theme} updater={updater} text={key}/>;
     case 'BaniLength':
-      return ( <>
+      return (
       <SettingWithList values={menuList} current={value} theme={theme} updater={updater} text="Bani Length" isBani/>
-      <Paragraph>If you have previously added banis, please remove and then add again</Paragraph>
-      </> );
+      );
     default:
   }
   return <Text>Mope</Text>;

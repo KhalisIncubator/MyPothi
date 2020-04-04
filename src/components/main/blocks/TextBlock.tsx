@@ -9,15 +9,14 @@ import { mapVishraams } from '../../../Functions';
 const TextBlock = ( props ) => {
   const theme = useTheme();
   const {
-    style, value, isSelected, onClick, mods, type, vishraams,
+    style, value, isSelected, onClick, mods, type, vishraams, source,
   } = props;
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
   const modStyle: any = { };
 
-  if ( isGurmukhi ) console.log( value );
   let pangteeWithVishraams;
-  if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, 'sttm' );
+  if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
 
   mods.forEach( ( mod ) => {
     if ( type === mod?.element ) {

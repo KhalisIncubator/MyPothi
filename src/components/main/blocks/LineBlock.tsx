@@ -13,7 +13,7 @@ interface Props {
   mods: Modification[],
 }
 const LineBlock = ( props: Props ) => {
-  const { fontSizes, displayElements } = useValues( 'viewerModel' );
+  const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const updatedSelectedInfo = EditCtx.useStoreActions(
     ( actions ) => actions.updatedSelectedInfo,
@@ -70,6 +70,7 @@ const LineBlock = ( props: Props ) => {
             <TextBlock
                 type="Pangtee"
                 vishraams={Vishraams}
+                source={sources.vishraamSource}
                 isSelected={gurmukhiSelection}
                 mods={filteredMod}
                 style={{ fontSize: gurmukhi }}

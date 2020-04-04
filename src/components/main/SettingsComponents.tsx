@@ -97,7 +97,7 @@ const SettingWithList = ( {
           <Menu.Item
         onPress={() => {
           updateLengthList( false );
-          updater( key );
+          isBani ? updater( key ) : updater( [ 'vishraamSource', key ] );
         }}
         title={isBani ? key : value}
     />
@@ -106,6 +106,7 @@ const SettingWithList = ( {
     </Menu>
     </View>
 </View>
+
 
   );
 };
