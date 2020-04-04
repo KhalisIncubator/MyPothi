@@ -6,6 +6,12 @@ import {
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
 
+interface Sources {
+    vishraamSource: 'sttm' | 'sttm2' | 'ig',
+    // teeakSource: 'FT' | 'SS',
+    // translationLang: 'English' | 'Spanish'
+    // translitLang: 'English' | 'Hindi'
+}
 interface FontSizes {
     gurmukhi: number;
     eng: number;
@@ -57,10 +63,15 @@ export interface ViewerModel {
     fontSizes: FontSizes;
     displayElements: DisplayElements;
     baniLength: lengthType;
+    sources: Sources
 
     updateFontSize: Action<ViewerModel, [string, number]>;
     updateDisplayElement: Action<ViewerModel, string>;
-    updateLength: Action<ViewerModel, lengthType>
+    updateSource: Action<ViewerModel, [
+        'vishraamSource' | 'teekaSource' | 'translationLang' | 'translitLang',
+        string
+    ]>;
+    updateLength: Action<ViewerModel, lengthType>;
 }
 
 export interface SearchModel {
