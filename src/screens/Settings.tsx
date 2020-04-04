@@ -55,7 +55,7 @@ const SettingsScreen = ( ) => {
                   {
                     title !== 'Banis'
                       ? Object.entries( modelVals ).map( ( [ key, value ] ) => mapToComponent( type, key, value, storeUpdater, theme, menuValues ) )
-                      : mapToComponent( 'BaniLength', 'Length', modelVals, storeUpdater, theme, menuValues )
+                      : mapToComponent( type, 'Length', modelVals, storeUpdater, theme, menuValues )
                   }
                 </SettingsCard>
                 );

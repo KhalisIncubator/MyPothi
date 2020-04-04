@@ -74,7 +74,7 @@ const ViewerSettings = [
   {
     title: 'Banis',
     values: 'baniLength',
-    type: 'menu',
+    type: 'BaniLength',
     updater: 'updateLength',
     menuValues: baniLengths,
   },
