@@ -15,6 +15,7 @@ const TextBlock = ( props ) => {
   const isPangtee = type === 'Pangtee';
   const modStyle: any = { };
 
+  if ( isGurmukhi ) console.log( value );
   let pangteeWithVishraams;
   if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, 'sttm' );
 
@@ -46,7 +47,7 @@ const TextBlock = ( props ) => {
     ],
   );
   return (
-        <TouchableWithoutFeedback onPress={onClick} onLongPress={() => console.log( 'hi' )}>
+        <TouchableWithoutFeedback onPress={onClick} >
           <View style={ViewStyle} pointerEvents="box-none">
             {
               pangteeWithVishraams ? (

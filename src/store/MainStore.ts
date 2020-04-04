@@ -132,6 +132,12 @@ const viewerModel: ViewerModel = {
     displayTranslit: true,
   },
   baniLength: 'long',
+  sources: {
+    vishraamSource: 'sttm',
+    // teeakSource: 'SS',
+    // translationLang: 'English',
+    // translitLang: 'English',
+  },
   updateFontSize: action( ( state, payload ) => {
     const [ element, val ] = payload;
     state.fontSizes[element] = val;
@@ -139,17 +145,23 @@ const viewerModel: ViewerModel = {
   updateDisplayElement: action( ( state, payload ) => {
     state.displayElements[payload] = !state.displayElements[payload];
   } ),
+  updateSource: action( ( state, [ type, value ] ) => {
+    state.sources[type] = value;
+  } ),
   updateLength: action( ( state, payload ) => {
     state.baniLength = payload;
   } ),
 };
 
 const storeModel: StoreModel = {
-  themeModel, currentModel, pothiModel, viewerModel,
+  themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
+  pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  viewerModel: persist( viewerModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ),
 };
 
 export { storeModel };
 export default createStore(
-  persist( storeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  storeModel,
   { injections: { loadShabad, loadBani } },
 );

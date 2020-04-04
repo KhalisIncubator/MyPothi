@@ -1,31 +1,72 @@
-import React, { useCallback } from 'react';
-import { View, ScrollView } from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
+import { ScrollView, Text } from 'react-native';
 import {
-  useTheme, Card, Divider, Paragraph,
+  useTheme, Card, Paragraph,
 } from 'react-native-paper';
-import { useValues, useUpdaters } from '../store/StateHooks';
-import SettingWithSwitch, { SettingWithFonts, SettingWithList } from '../components/main/SettingsComponents';
-import { baniLengths } from '../database/DatabaseConts';
 
+import { useValues, useUpdaters } from '../store/StateHooks';
+
+import SettingsCard, { SettingWithSwitch, SettingWithFonts, SettingWithList } from '../components/main/SettingsComponents';
+
+import { ViewerSettings } from '../Defaults';
+import { FontConsts, DisplayConsts } from '../store/StoreConsts';
+
+const mapToComponent = ( type, key, value, updater, theme, menuList ) => {
+  switch ( type ) {
+    case 'font-size':
+      return <SettingWithFonts text={FontConsts[key]} value={value} updater={updater} theme={theme} objKey={key}/>;
+    case 'switch':
+      return <SettingWithSwitch text={DisplayConsts[key]} value={value} updater={updater} objKey={key} />;
+    case 'menu':
+      return <SettingWithList values={menuList} current={value} theme={theme} updater={updater} text={key}/>;
+    case 'BaniLength':
+      return ( <>
+      <SettingWithList values={menuList} current={value} theme={theme} updater={updater} text="Bani Length" isBani/>
+      <Paragraph>If you have previously added banis, please remove and then add again</Paragraph>
+      </> );
+    default:
+  }
+  return <Text>Mope</Text>;
+};
 const SettingsScreen = ( ) => {
   const theme = useTheme();
 
-  const { fontSizes, displayElements, baniLength } = useValues( 'viewerModel' );
-  const { updateFontSize, updateDisplayElement, updateLength } = useUpdaters( 'viewerModel' );
+  const viewerValues = useValues( 'viewerModel' );
+  const viewerUpdaters = useUpdaters( 'viewerModel' );
   const { isDarkMode } = useValues( 'themeModel' );
   const { updateDarkMode } = useUpdaters( 'themeModel' );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const toggleElement = useCallback( ( element: string ) => { updateDisplayElement( element ); }, [
-    displayElements.displayEng,
-    displayElements.displayTeeka,
-    displayElements.displayTranslit,
-
-  ] );
   return (
         <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }} >
-          <View>
-            <Card theme={theme} style={{ margin: 5 }}>
+          <Card theme={theme} style={{ margin: 5 }}>
+              <Card.Title title="Theme" />
+              <Card.Content>
+                <SettingWithSwitch text="Dark Theme" value={isDarkMode} updater={() => updateDarkMode()} objKey={null}/>
+              </Card.Content>
+            </Card>
+            {
+              ViewerSettings.map( ( {
+                title, values, type, updater, menuValues,
+              }, index ) => {
+                const modelVals = viewerValues[values];
+                const storeUpdater = viewerUpdaters[updater];
+                return (
+                <SettingsCard title={title} theme={theme}>
+                  {
+                    title !== 'Banis'
+                      ? Object.entries( modelVals ).map( ( [ key, value ] ) => mapToComponent( type, key, value, storeUpdater, theme, menuValues ) )
+                      : mapToComponent( 'BaniLength', 'Length', modelVals, storeUpdater, theme, menuValues )
+                  }
+                </SettingsCard>
+                );
+              } )
+            }
+        </ScrollView>
+  );
+};
+/*
+<Card theme={theme} style={{ margin: 5 }}>
               <Card.Title title="Font Size" />
               <Card.Content>
                   <View>
@@ -75,13 +116,9 @@ const SettingsScreen = ( ) => {
               </Card.Content>
             </Card>
             <Card theme={theme} style={{ margin: 5 }}>
-              <Card.Title title="Theme" />
+              <Card.Title title="Sources" />
               <Card.Content>
                 <SettingWithSwitch text="Dark Theme" value={isDarkMode} updater={() => updateDarkMode()} />
               </Card.Content>
-            </Card>
-          </View>
-        </ScrollView>
-  );
-};
+            </Card> */
 export default SettingsScreen;

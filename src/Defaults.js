@@ -1,5 +1,7 @@
-/* eslint-disable quotes */
-/* eslint-disable max-len */
+
+/* eslint-disable quotes, max-len */
+import { baniLengths, sourceTypes } from './database/DatabaseConts';
+
 const Pothis = [
   {
     name: 'Kirtaan',
@@ -45,5 +47,36 @@ const Pothis = [
     pothiID: 'Uakgb_J5m9g-0JDMbcJqLJ',
   },
 ];
-
 export default Pothis;
+
+// stuff relating to viewerModel (excludes stuff from themeModel)
+// fontSizes, displayElements, baniLength, sources => values related to each section
+const ViewerSettings = [
+  {
+    title: 'Font Size',
+    values: 'fontSizes',
+    updater: 'updateFontSize',
+    type: 'font-size',
+  },
+  {
+    title: 'Display',
+    values: 'displayElements',
+    updater: 'updateDisplayElement',
+    type: 'switch',
+  },
+  {
+    title: 'Sources',
+    values: 'sources',
+    type: 'menu',
+    updater: 'updateSource',
+    menuValues: sourceTypes,
+  },
+  {
+    title: 'Banis',
+    values: 'baniLength',
+    type: 'menu',
+    updater: 'updateLength',
+    menuValues: baniLengths,
+  },
+];
+export { ViewerSettings };

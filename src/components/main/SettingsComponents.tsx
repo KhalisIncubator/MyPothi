@@ -5,13 +5,22 @@ import {
   StyleSheet,
 } from 'react-native';
 import {
-  Switch, Subheading, Button, Paragraph, Menu,
+  Switch, Subheading, Button, Paragraph, Menu, Card,
 } from 'react-native-paper';
 
-const SettingWithSwitch = ( props ) => {
-  const {
-    text, value, updater,
-  } = props;
+const SettingsCard = ( { children, title, theme } ) => (
+      <Card theme={theme} style={styles.Card}>
+        <Card.Title title={title} />
+          <Card.Content>
+            { children }
+          </Card.Content>
+      </Card>
+);
+export default SettingsCard;
+const SettingWithSwitch = ( {
+  text, value, updater, objKey,
+} ) => {
+  const toggle = () => ( objKey ? updater( objKey ) : updater() );
   return (
     <View style={styles.MainViewLine}>
         <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
@@ -19,7 +28,7 @@ const SettingWithSwitch = ( props ) => {
         <View style={styles.Buttons}>
         <Switch
         value={value}
-          onValueChange={() => { updater(); }}
+          onValueChange={toggle}
           color="#FFA500" />
         </View>
         </View>
@@ -27,16 +36,17 @@ const SettingWithSwitch = ( props ) => {
   );
 };
 
-export default SettingWithSwitch;
+export { SettingWithSwitch };
 
-const SettingWithFonts = ( props ) => {
-  const {
-    text, value, positiveUpdater, negativeUpdater, theme,
-  } = props;
+const SettingWithFonts = ( {
+  text, value, updater, theme, objKey,
+} ) => {
+  const increment = () => updater( [ objKey, value + 1 ] );
+  const decrement = () => updater( [ objKey, value - 1 ] );
   return (
     <View style={styles.MainViewLine}>
     <View style={styles.DescVal}>
-  <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
+<Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
      <Paragraph>{value}</Paragraph>
    </View>
    <View style={{ alignSelf: 'flex-end' }}>
@@ -46,7 +56,7 @@ const SettingWithFonts = ( props ) => {
          icon="plus"
          color={theme.colors.backdrop}
          theme={{ roundness: 0 }}
-         onPress={() => { positiveUpdater(); }} compact>
+         onPress={increment} compact>
            {}
            </Button>
          <Button
@@ -54,7 +64,7 @@ const SettingWithFonts = ( props ) => {
          icon="minus"
          color={theme.colors.backdrop}
          theme={{ roundness: 0 }}
-         onPress={() => { negativeUpdater(); }}
+         onPress={decrement}
          compact>
            {}</Button>
          </View>
@@ -62,11 +72,9 @@ const SettingWithFonts = ( props ) => {
  </View>
   );
 };
-
-const SettingWithList = ( props ) => {
-  const {
-    values, current, theme, updater, text,
-  } = props;
+const SettingWithList = ( {
+  values, current, theme, updater, text, isBani = false,
+} ) => {
   const [ lengthListVis, updateLengthList ] = useState( false );
 
   return (
@@ -85,13 +93,13 @@ const SettingWithList = ( props ) => {
         </Button>
     }>
       {
-        Object.keys( values ).map( ( length ) => (
+        Object.entries( values ).map( ( [ key, value ] ) => (
           <Menu.Item
         onPress={() => {
           updateLengthList( false );
-          updater( length );
+          updater( key );
         }}
-        title={length}
+        title={isBani ? key : value}
     />
         ) )
       }
@@ -104,6 +112,9 @@ const SettingWithList = ( props ) => {
 const styles = StyleSheet.create( {
   Buttons: {
     display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+  },
+  Card: {
+    margin: 5,
   },
   DescVal: {
     alignItems: 'center',

@@ -92,8 +92,7 @@ const LineBlock = ( props: Props ) => {
                     />
              )}
             {displayTeeka
-            && !( !Translations.Punjabi.SS
-              || Translations.Punjabi.SS !== ' ' )
+            && !( !Translations.Punjabi.SS || Translations.Punjabi.SS === ' ' )
               && (
                 <TextBlock
                     type="Teeka"
