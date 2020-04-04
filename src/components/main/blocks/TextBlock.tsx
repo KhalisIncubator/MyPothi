@@ -14,8 +14,10 @@ const TextBlock = ( props ) => {
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
   const modStyle: any = { };
+
   let pangteeWithVishraams;
   if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, 'sttm' );
+
   mods.forEach( ( mod ) => {
     if ( type === mod?.element ) {
       if ( mod?.bold ) { ( isPangtee || isGurmukhi ) ? modStyle.fontFamily = 'AnmolLipiBoldTrue' : modStyle.fontWeight = 'bold'; }
@@ -44,8 +46,8 @@ const TextBlock = ( props ) => {
     ],
   );
   return (
-        <TouchableWithoutFeedback onPress={onClick}>
-          <View style={ViewStyle}>
+        <TouchableWithoutFeedback onPress={onClick} onLongPress={() => console.log( 'hi' )}>
+          <View style={ViewStyle} pointerEvents="box-none">
             {
               pangteeWithVishraams ? (
                 <Text
