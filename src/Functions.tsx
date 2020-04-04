@@ -1,6 +1,7 @@
 import { getModWithParent } from './database/LocalDatabase';
+import { Modification } from '../types/types';
 // bug with realm where on first load this stuff is not an array for some reason
-const mapToArray = ( obj ) => ( obj ? Array.from( { ...obj, length: Object.keys( obj ).length } ) : [] );
+const mapToArray = ( obj ): Modification[] => ( obj ? Array.from( { ...obj, length: Object.keys( obj ).length } ) : [] );
 export default mapToArray;
 
 const mapVishraams = ( line: string, apiValue: object, source: string ) => {
@@ -35,7 +36,7 @@ const mapVishraams = ( line: string, apiValue: object, source: string ) => {
 
     return [ ...previousSections, nextSection ];
   }, [] );
-  // return (and filter out any empty arrays we added as a result of currentSectionn being undefined)
+  // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   return indeces.length
     ? parsedLines.filter( ( section ) => section !== undefined && section.data )
     : [ { type: 'line', data: line } ];

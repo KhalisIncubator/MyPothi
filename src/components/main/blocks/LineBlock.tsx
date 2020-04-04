@@ -5,8 +5,14 @@ import { View, StyleSheet } from 'react-native';
 import TextBlock from './TextBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
+import { RemappedLine, Modification } from '../../../../types/types';
 
-const LineBlock = ( props ) => {
+interface Props {
+  line: RemappedLine,
+  entryID: string,
+  mods: Modification[],
+}
+const LineBlock = ( props: Props ) => {
   const { fontSizes, displayElements } = useValues( 'viewerModel' );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const updatedSelectedInfo = EditCtx.useStoreActions(
@@ -85,7 +91,10 @@ const LineBlock = ( props ) => {
                         style={{ fontSize: eng }}
                     />
              )}
-            {displayTeeka && Translations.Punjabi.SS !== null && (
+            {displayTeeka
+            && !( !Translations.Punjabi.SS
+              || Translations.Punjabi.SS !== ' ' )
+              && (
                 <TextBlock
                     type="Teeka"
                     mods={filteredMod}
@@ -95,7 +104,7 @@ const LineBlock = ( props ) => {
                     onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
                     style={{ fontSize: teeka }}
                 />
-            )}
+              )}
              {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
                 <TextBlock
                     type="Translit"

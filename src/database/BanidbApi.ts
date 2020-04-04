@@ -1,34 +1,32 @@
 import { buildApiUrl } from '@sttm/banidb';
-import { lengthType, entryObj } from '../../types/types';
+import { lengthType, entryObj, RemappedLine } from '../../types/types';
 import { baniLengths } from './DatabaseConts';
 
-const remapLine = ( raw ) => {
-  const line = {} as any;
-  line.id = raw.verseId;
-  line.sID = raw.shabadId;
-  line.Gurbani = {
+const remapLine = ( raw ): RemappedLine => ( {
+  id: raw.verseId,
+  sID: raw.shabadId,
+  Gurbani: {
     ascii: raw.verse.gurmukhi,
     unicode: raw.verse.unicode,
-  };
-  line.Translations = {
+  },
+  Translations: {
     English: raw.translation.en.bdb,
     Punjabi: {
       SS: raw.translation.pu.ss?.gurmukhi,
       FT: raw.translation.pu.ft?.gurmukhi,
     },
     Spanish: raw.translation.es?.sn,
-  };
-  line.Transliteration = {
+  },
+  Transliteration: {
     English: raw.transliteration.en,
     Hindi: raw.transliteration.hi,
-  };
-  line.Vishraams = {
+  },
+  Vishraams: {
     sttm: raw.visraam?.sttm,
     ig: raw.visraam?.igurbani,
     sttm2: raw.visraam?.sttm2,
-  };
-  return line;
-};
+  },
+} );
 
 const remapBani = ( verseObj ) => {
   const { verse } = verseObj;

@@ -82,16 +82,16 @@ const TextBlock = ( props ) => {
 
 const styles = StyleSheet.create( {
   English: {
-    marginVertical: 3,
+    paddingVertical: 3,
   },
   FullVishraam: {
     color: 'orange',
   },
   Gurmukhi: {
-    marginVertical: 3,
+    paddingVertical: 3,
   },
   Pangtee: {
-    marginVertical: 4,
+    paddingVertical: 4,
   },
   Selected: {
     borderColor: '#FFA500',
