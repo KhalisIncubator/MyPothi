@@ -36,7 +36,7 @@ const mapVishraams = ( line: string, apiValue: object, source: string ) => {
     return [ ...previousSections, nextSection ];
   }, [] );
   // return (and filter out any empty arrays we added as a result of currentSectionn being undefined)
-  return indeces.length ? parsedLines.filter( ( section ) => section.length !== 0 ) : ( { type: 'line', data: line } );
+  return indeces.length ? parsedLines.filter( ( section ) => section.length !== 0 ) : [ { type: 'line', data: line } ];
 };
 export { mapVishraams };
 // get current font size on selected element
