@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import {
-  useTheme, Card, Paragraph,
+  useTheme, Card,
 } from 'react-native-paper';
 
 import { useValues, useUpdaters } from '../store/StateHooks';
