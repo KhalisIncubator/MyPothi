@@ -5,7 +5,7 @@ const mapToArray = ( obj ): Modification[] => ( obj ? Array.from( { ...obj, leng
 export default mapToArray;
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
-  const isIndexed = indices.includes( index );
+  const isIndexed = indices?.includes( index );
   const previousSections = phrases.slice( 0, phrases.length - 1 ); // everything before
   const currentSection = phrases[phrases.length - 1]; // current section we are editing
   // If is in index, group the word separately, and begin new section
@@ -38,7 +38,7 @@ const mapVishraams = ( line: string, apiValue: object, source: string ) => {
   const indeces = sourceVishraams?.map( ( { p } ) => Number( p ) );
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   console.log( indeces, mapToSections( line, indeces, sourceVishraams ) );
-  return sourceVishraams
+  return ( sourceVishraams && indeces.length )
     ? mapToSections( line, indeces, sourceVishraams ).filter( ( section ) => section !== undefined && section.data )
     : [ { type: 'line', data: line } ];
 };
