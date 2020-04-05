@@ -92,7 +92,7 @@ const IncrementModifier = ( {
       icon="minus"
       color={theme.colors.backdrop}
       theme={{ roundness: 0 }}
-      onPress={() => { updater( [ objKey, value + 1 ] ); }}
+      onPress={() => { updater( [ objKey, value - 1 ] ); }}
       compact>
         {}
     </Button>
