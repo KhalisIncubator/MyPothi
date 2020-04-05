@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
 
 import {
   Text, StyleSheet, View, TouchableWithoutFeedback,
@@ -13,20 +14,25 @@ const TextBlock = ( props ) => {
   } = props;
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
-  const modStyle: any = { };
+  const modStyle: any = useMemo( () => {
+    const tempStyle = {} as any;
+    mods.forEach( ( mod ) => {
+      if ( type === mod?.element ) {
+        if ( mod?.bold ) { ( isPangtee || isGurmukhi ) ? tempStyle.fontFamily = 'AnmolLipiBoldTrue' : tempStyle.fontWeight = 'bold'; }
+        if ( mod?.italics ) tempStyle.fontStyle = 'italics';
+        if ( mod?.underline ) tempStyle.textDecorationLine = 'underline';
+        if ( mod?.backgroundColor ) tempStyle.backgroundColor = mod.backgroundColor;
+        if ( mod?.fontSize ) tempStyle.fontSize = mod.fontSize;
+      }
+    } );
+    return tempStyle;
+  }, [] );
 
-  let pangteeWithVishraams;
-  if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
-
-  mods.forEach( ( mod ) => {
-    if ( type === mod?.element ) {
-      if ( mod?.bold ) { ( isPangtee || isGurmukhi ) ? modStyle.fontFamily = 'AnmolLipiBoldTrue' : modStyle.fontWeight = 'bold'; }
-      if ( mod?.italics ) modStyle.fontStyle = 'italics';
-      if ( mod?.underline ) modStyle.textDecorationLine = 'underline';
-      if ( mod?.backgroundColor ) modStyle.backgroundColor = mod.backgroundColor;
-      if ( mod?.fontSize ) modStyle.fontSize = mod.fontSize;
-    }
-  } );
+  // let pangteeWithVishraams;
+  // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
+  const pangteeWithVishraams = useMemo( () => (
+    isPangtee ? mapVishraams( value, vishraams, source ) : null
+  ), [ value, source ] );
   const ViewStyle = StyleSheet.flatten(
     [
       isSelected ? styles.Selected : {},
@@ -38,7 +44,7 @@ const TextBlock = ( props ) => {
     [
       style,
       modStyle,
-      !modStyle.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
+      !modStyle?.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
       { color: theme.colors.text },
       isGurmukhi ? styles.Gurmukhi : styles.English,
       isPangtee ? styles.Pangtee : {},
@@ -54,13 +60,13 @@ const TextBlock = ( props ) => {
                 selectable={false}
                 style={textStyle}>
                   {
-                    pangteeWithVishraams.map( ( section ) => ( <Text
+                    pangteeWithVishraams.map( ( section, index ) => ( <Text
                     style={
                       section.type === 'line'
                         ? {}
-                        : ( section.type === 'v'
-                          ? styles.FullVishraam
-                          : styles.YamkiVishraam )
+                        : ( section.type === 'y'
+                          ? styles.YamkiVishraam
+                          : styles.FullVishraam )
                     }>
                        {`${section.data} `}
                       </Text> ) )

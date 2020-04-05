@@ -35,8 +35,9 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
 }, [] );
 const mapVishraams = ( line: string, apiValue: object, source: string ) => {
   const sourceVishraams = apiValue[source];
-  const indeces = sourceVishraams?.map( ( { p } ) => p );
+  const indeces = sourceVishraams?.map( ( { p } ) => Number( p ) );
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
+  console.log( indeces, mapToSections( line, indeces, sourceVishraams ) );
   return sourceVishraams
     ? mapToSections( line, indeces, sourceVishraams ).filter( ( section ) => section !== undefined && section.data )
     : [ { type: 'line', data: line } ];
