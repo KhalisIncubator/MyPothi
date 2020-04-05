@@ -55,7 +55,7 @@ const MenuModifier = ( {
             style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
             color={theme.colors.text}
             onPress={() => toggler( true )}>
-            {value}
+            {list[value]}
         </Button>
     }>
       {
@@ -124,5 +124,3 @@ const styles = StyleSheet.create( {
     marginTop: 8,
   },
 } );
-
-// export { SettingWithFonts, SettingWithList };

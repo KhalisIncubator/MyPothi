@@ -38,7 +38,7 @@ const BaniMenu = {
   short: 'Short',
   medium: 'Medium',
   long: 'Long',
-  extraLong: 'Extra Long',
+  extralong: 'Extra Long',
 };
 
 const MenuItems = {
