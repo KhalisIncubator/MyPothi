@@ -92,7 +92,7 @@ const currentModel: CurrentModel = {
   addEntry: thunk( async ( actions, [ id, mainLine, type ], { injections, getStoreState } ) => {
     // eslint-disable-next-line no-shadow
     const { loadShabad, loadBani } = injections;
-    const length = getStoreState().viewerModel.baniLength;
+    const length = getStoreState().viewerModel.searchPreferences.baniLength;
     const lines = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
 
     actions.addedEntry( [ id, mainLine, lines, type ] );
@@ -131,7 +131,9 @@ const viewerModel: ViewerModel = {
     displayTeeka: true,
     displayTranslit: true,
   },
-  baniLength: 'long',
+  searchPreferences: {
+    baniLength: 'long',
+  },
   sources: {
     vishraamSource: 'sttm',
     // teeakSource: 'SS',
@@ -148,8 +150,8 @@ const viewerModel: ViewerModel = {
   updateSource: action( ( state, [ type, value ] ) => {
     state.sources[type] = value;
   } ),
-  updateLength: action( ( state, payload ) => {
-    state.baniLength = payload;
+  updateSearch: action( ( state, [ type, value ] ) => {
+    state.searchPreferences[type] = value;
   } ),
 };
 

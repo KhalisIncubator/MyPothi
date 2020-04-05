@@ -12,6 +12,9 @@ interface Sources {
     // translationLang: 'English' | 'Spanish'
     // translitLang: 'English' | 'Hindi'
 }
+interface SearchPrefs {
+    baniLength: lengthType
+}
 interface FontSizes {
     gurmukhi: number;
     eng: number;
@@ -62,7 +65,7 @@ export interface PothiModel {
 export interface ViewerModel {
     fontSizes: FontSizes;
     displayElements: DisplayElements;
-    baniLength: lengthType;
+    searchPreferences: SearchPrefs;
     sources: Sources
 
     updateFontSize: Action<ViewerModel, [string, number]>;
@@ -71,7 +74,7 @@ export interface ViewerModel {
         'vishraamSource' | 'teekaSource' | 'translationLang' | 'translitLang',
         string
     ]>;
-    updateLength: Action<ViewerModel, lengthType>;
+    updateSearch: Action<ViewerModel, ['baniLength', lengthType]>
 }
 
 export interface SearchModel {
