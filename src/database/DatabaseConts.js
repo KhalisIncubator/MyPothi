@@ -54,7 +54,7 @@ const baniLengths = {
 };
 const sourceTypes = {
   sttm: 'BaniDB (default)',
-  sttm2: 'Legacy SikhiToTheMax',
+  sttm2: 'Legacy STTM',
   ig: 'iGurbani',
 };
 export {
