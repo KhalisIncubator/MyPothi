@@ -21,7 +21,6 @@ const LineBlock = ( props: Props ) => {
   );
 
   const [ selectedLineID, selectedElement ] = selectedInfo;
-  console.log( props.isMainLine );
   const {
     Gurbani, Translations, Transliteration, id, Vishraams,
   } = props.line;
