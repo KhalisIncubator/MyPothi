@@ -98,7 +98,7 @@ const styles = StyleSheet.create( {
     paddingVertical: 3,
   },
   FullVishraam: {
-    color: 'orange',
+    color: '#ec9900',
   },
   Gurmukhi: {
     paddingVertical: 3,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create( {
     width: '100%',
   },
   YamkiVishraam: {
-    color: 'green',
+    color: '#458B00',
   },
 } );
 export default TextBlock;
