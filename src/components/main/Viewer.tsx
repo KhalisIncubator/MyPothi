@@ -21,7 +21,8 @@ const Viewer = ( props ) => {
       // at the index has a entryID (need to check because is null when item is deleted and state is
       // uodated). Otherwise if currentItems has length of 0, then set id to null
         entryID={ currentItems[index]?.entryID ?? null}
-        mods={mapToArray( currentItems[index]?.mods )}/>} />;
+        mods={mapToArray( currentItems[index]?.mods )}/>}
+    initialNumToRender={item.length < 20 ? item.length : 20}/>;
 
   return (
     <FlatList
