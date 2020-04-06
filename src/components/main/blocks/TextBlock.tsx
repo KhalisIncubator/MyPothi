@@ -1,32 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from 'react';
+import React, { useMemo, memo, ReactNode } from 'react';
 
 import {
   Text, StyleSheet, View, TouchableWithoutFeedback,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { mapVishraams } from '../../../Functions';
+import { Modification } from '../../../../types/types';
 
-const TextBlock = ( props ) => {
+interface Props {
+  style: object,
+  value: string,
+  isSelected: boolean,
+  onClick: () => void,
+  mod: Modification[],
+  type: any,
+  vishraams?: object,
+  source?: string,
+  children?: ReactNode
+}
+const TextBlock: React.FC<Props> = ( {
+  style, value, isSelected, onClick, mod, type, vishraams, source,
+} ) => {
+  const [ singularMod ] = mod;
   const theme = useTheme();
-  const {
-    style, value, isSelected, onClick, mods, type, vishraams, source,
-  } = props;
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
   const modStyle: any = useMemo( () => {
     const tempStyle = {} as any;
-    mods.forEach( ( mod ) => {
-      if ( type === mod?.element ) {
-        if ( mod?.bold ) { ( isPangtee || isGurmukhi ) ? tempStyle.fontFamily = 'AnmolLipiBoldTrue' : tempStyle.fontWeight = 'bold'; }
-        if ( mod?.italics ) tempStyle.fontStyle = 'italics';
-        if ( mod?.underline ) tempStyle.textDecorationLine = 'underline';
-        if ( mod?.backgroundColor ) tempStyle.backgroundColor = mod.backgroundColor;
-        if ( mod?.fontSize ) tempStyle.fontSize = mod.fontSize;
-      }
-    } );
+    if ( singularMod?.bold ) { ( isPangtee || isGurmukhi ) ? tempStyle.fontFamily = 'AnmolLipiBoldTrue' : tempStyle.fontWeight = 'bold'; }
+    if ( singularMod?.backgroundColor ) tempStyle.backgroundColor = singularMod.backgroundColor;
+    if ( singularMod?.fontSize ) tempStyle.fontSize = singularMod.fontSize;
     return tempStyle;
-  }, [] );
+  }, [ singularMod ] );
 
   // let pangteeWithVishraams;
   // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
@@ -85,6 +91,7 @@ const TextBlock = ( props ) => {
         </TouchableWithoutFeedback>
   );
 };
+
 
 const styles = StyleSheet.create( {
   English: {

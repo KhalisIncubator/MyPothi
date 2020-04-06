@@ -72,11 +72,10 @@ const LineBlock = ( props: Props ) => {
                 vishraams={Vishraams}
                 source={sources.vishraamSource}
                 isSelected={gurmukhiSelection}
-                mods={filteredMod}
+                mod={filteredMod.filter( ( mod ) => mod?.element === 'Pangtee' )}
                 style={{ fontSize: gurmukhi }}
                 value={Gurbani.ascii === '‚' ? Gurbani.unicode : Gurbani.ascii}
                 onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
-                isPangtee
             />
              {displayEng
                 && !(
@@ -84,7 +83,7 @@ const LineBlock = ( props: Props ) => {
                 ) && (
                     <TextBlock
                         type="Eng"
-                        mods={filteredMod}
+                        mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
                         isSelected={translationSelection}
                         value={Translations.English}
                         onClick={() => textBlockClick( translationSelection, 'Eng' )
@@ -97,10 +96,9 @@ const LineBlock = ( props: Props ) => {
               && (
                 <TextBlock
                     type="Teeka"
-                    mods={filteredMod}
+                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
                     isSelected={teekaSelection}
                     value={Translations.Punjabi.SS}
-                    isGurmukhi
                     onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
                     style={{ fontSize: teeka }}
                 />
@@ -108,7 +106,7 @@ const LineBlock = ( props: Props ) => {
              {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
                 <TextBlock
                     type="Translit"
-                    mods={filteredMod}
+                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
                     value={Transliteration.English}
                     isSelected={translitSelection}
                     onClick={() => textBlockClick( translitSelection, 'Translit' )
