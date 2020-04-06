@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import Realm, { Configuration } from 'realm';
-import { loadBani, loadShabad } from './BanidbApi';
-import { entryObj } from '../../types/types';
+// import { loadBani, loadShabad } from './BanidbApi';
+// import { entryObj } from '../../types/types';
 
 const PothiSchema = {
   name: 'Pothi',
@@ -50,14 +50,14 @@ const LineSchema = {
 const localRealmConfig: Configuration = {
   schema: [ PothiSchema, EntrySchema, ModificationSchema, LineSchema ],
   schemaVersion: 2,
-  migration: async ( oldRealm, newRealm ) => {
-    if ( oldRealm.schemaVersion < 2 ) {
-      const newItems = newRealm.objects<entryObj>( 'Entry' );
-      for await ( const item of newItems ) {
-        if ( !item.lines ) item.lines = item.type === 'Bani' ? await loadBani( item.shabadId, 'long' ) : await loadShabad( item.shabadId );
-      }
-    }
-  },
+  // migration: async ( oldRealm, newRealm ) => {
+  //   if ( oldRealm.schemaVersion < 2 ) {
+  //     const newItems = newRealm.objects<entryObj>( 'Entry' );
+  //     for await ( const item of newItems ) {
+  //       if ( !item.lines ) item.lines = item.type === 'Bani' ? await loadBani( item.shabadId, 'long' ) : await loadShabad( item.shabadId );
+  //     }
+  //   }
+  // },
   // deleteRealmIfMigrationNeeded: true,
 };
 

@@ -13,7 +13,6 @@ const Toolbar = ( {
 } ) => {
   const theme = useTheme();
 
-
   const { createMod, deleteMod } = useUpdaters( 'currentModel' );
   const { fontSizes } = useValues( 'viewerModel' );
   const [ lineid, element, parentID ] = currentLine;
@@ -32,7 +31,7 @@ const Toolbar = ( {
                           updateMode();
                         }}
                     />
-                    <Text>Toolbar</Text>
+                    <Text>Customize</Text>
                 </View>
                 {showMain && (
                     <View style={[ styles.Main, { backgroundColor: theme.colors.surface } ]}>

@@ -92,7 +92,7 @@ const currentModel: CurrentModel = {
   addEntry: thunk( async ( actions, [ id, mainLine, type ], { injections, getStoreState } ) => {
     // eslint-disable-next-line no-shadow
     const { loadShabad, loadBani } = injections;
-    const length = getStoreState().viewerModel.baniLength;
+    const length = getStoreState().viewerModel.searchPreferences.baniLength;
     const lines = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
 
     actions.addedEntry( [ id, mainLine, lines, type ] );
@@ -101,13 +101,9 @@ const currentModel: CurrentModel = {
 
 const pothiModel: PothiModel = {
   pothiNames: fetchAllPothis(),
-  isDataReady: false,
 
   updatePothis: action( ( state ) => {
     state.pothiNames = fetchAllPothis();
-  } ),
-  updateIsReady: action( ( state, payload ) => {
-    state.isDataReady = payload;
   } ),
   createPothi: action( ( state, payload ) => {
     createNewPothi( payload );
@@ -131,7 +127,15 @@ const viewerModel: ViewerModel = {
     displayTeeka: true,
     displayTranslit: true,
   },
-  baniLength: 'long',
+  searchPreferences: {
+    baniLength: 'long',
+  },
+  sources: {
+    vishraamSource: 'sttm',
+    // teeakSource: 'SS',
+    // translationLang: 'English',
+    // translitLang: 'English',
+  },
   updateFontSize: action( ( state, payload ) => {
     const [ element, val ] = payload;
     state.fontSizes[element] = val;
@@ -139,17 +143,23 @@ const viewerModel: ViewerModel = {
   updateDisplayElement: action( ( state, payload ) => {
     state.displayElements[payload] = !state.displayElements[payload];
   } ),
-  updateLength: action( ( state, payload ) => {
-    state.baniLength = payload;
+  updateSource: action( ( state, [ type, value ] ) => {
+    state.sources[type] = value;
+  } ),
+  updateSearch: action( ( state, [ type, value ] ) => {
+    state.searchPreferences[type] = value;
   } ),
 };
 
 const storeModel: StoreModel = {
-  themeModel, currentModel, pothiModel, viewerModel,
+  themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
+  pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  viewerModel: persist( viewerModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ),
 };
 
 export { storeModel };
 export default createStore(
-  persist( storeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
+  storeModel,
   { injections: { loadShabad, loadBani } },
 );

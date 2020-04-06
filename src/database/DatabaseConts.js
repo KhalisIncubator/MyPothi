@@ -52,7 +52,11 @@ const baniLengths = {
   long: 'existsTaksal',
   extralong: 'existsBuddhaDal',
 };
-
+const vishraamSources = {
+  sttm: 'BaniDB (default)',
+  sttm2: 'Legacy STTM',
+  ig: 'iGurbani',
+};
 export {
   SEARCH_TYPES,
   GURMUKHI_SEARCH_TEXTS,
@@ -61,4 +65,5 @@ export {
   SOURCE_TEXTS,
   SOURCE_TYPES,
   baniLengths,
+  vishraamSources,
 };

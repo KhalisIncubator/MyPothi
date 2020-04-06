@@ -1,5 +1,5 @@
-/* eslint-disable quotes */
-/* eslint-disable max-len */
+
+/* eslint-disable quotes, max-len */
 const Pothis = [
   {
     name: 'Kirtaan',
@@ -45,5 +45,4 @@ const Pothis = [
     pothiID: 'Uakgb_J5m9g-0JDMbcJqLJ',
   },
 ];
-
 export default Pothis;

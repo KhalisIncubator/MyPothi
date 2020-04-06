@@ -5,111 +5,113 @@ import {
   StyleSheet,
 } from 'react-native';
 import {
-  Switch, Subheading, Button, Paragraph, Menu,
+  Switch, Subheading, Button, Menu, Card, Paragraph,
 } from 'react-native-paper';
 
-const SettingWithSwitch = ( props ) => {
-  const {
-    text, value, updater,
-  } = props;
-  return (
+const wrapHOC = ( SettingModifier ) => ( { theme, value, ...props } ) => <SettingModifier theme={theme} value={value} {...props} />;
+
+const SettingsCard = ( { children, title, theme } ) => (
+      <Card theme={theme} style={styles.Card}>
+        <Card.Title title={title} />
+          <Card.Content>
+            { children }
+          </Card.Content>
+      </Card>
+);
+export default SettingsCard;
+
+const SettingSection = ( { text, children, subheading } ) => (
+  <View style={{ display: 'flex', flexDirection: 'column' }}>
     <View style={styles.MainViewLine}>
-        <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
+      <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
       <View style={{ alignSelf: 'flex-end' }}>
-        <View style={styles.Buttons}>
-        <Switch
-        value={value}
-          onValueChange={() => { updater(); }}
-          color="lightgreen" />
-        </View>
-        </View>
+      <View style={styles.Buttons}>
+        { children }
+      </View>
+      </View>
     </View>
-  );
-};
-
-export default SettingWithSwitch;
-
-const SettingWithFonts = ( props ) => {
-  const {
-    text, value, positiveUpdater, negativeUpdater, theme,
-  } = props;
+    {subheading}
+  </View>
+);
+const SwitchModifier = ( {
+  value, updater, theme, objKey,
+} ) => (
+    <Switch
+      value={value}
+      onValueChange={() => { objKey ? updater( objKey ) : updater(); }}
+      color={theme.colors.backdrop}
+    />
+);
+const MenuModifier = ( {
+  value, updater, theme, list, objKey,
+} ) => {
+  const [ isVisible, toggler ] = useState( false );
   return (
-    <View style={styles.MainViewLine}>
-    <View style={styles.DescVal}>
-  <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
-     <Paragraph>{value}</Paragraph>
-   </View>
-   <View style={{ alignSelf: 'flex-end' }}>
-     <View style={styles.Buttons}>
-         <Button
-         mode="contained"
-         icon="plus"
-         color={theme.colors.backdrop}
-         theme={{ roundness: 0 }}
-         onPress={() => { positiveUpdater(); }} compact>
-           {}
-           </Button>
-         <Button
-         mode="contained"
-         icon="minus"
-         color={theme.colors.backdrop}
-         theme={{ roundness: 0 }}
-         onPress={() => { negativeUpdater(); }}
-         compact>
-           {}</Button>
-         </View>
-   </View>
- </View>
-  );
-};
-
-const SettingWithList = ( props ) => {
-  const {
-    values, current, theme, updater, text,
-  } = props;
-  const [ lengthListVis, updateLengthList ] = useState( false );
-
-  return (
-    <View style={styles.MainViewLine}>
-        <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
-      <View style={{ alignSelf: 'flex-end' }}>
     <Menu
-    visible={lengthListVis}
-    onDismiss={() => updateLengthList( false )}
+    visible={isVisible}
+    onDismiss={() => toggler( false )}
     anchor={
         <Button
             style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
             color={theme.colors.text}
-            onPress={() => updateLengthList( true )}>
-            {current}
+            onPress={() => toggler( true )}>
+            {list[value]}
         </Button>
     }>
       {
-        Object.keys( values ).map( ( length ) => (
+        list
+          ? Object.entries( list ).map( ( [ key, itemVal ] ) => (
           <Menu.Item
-        onPress={() => {
-          updateLengthList( false );
-          updater( length );
-        }}
-        title={length}
-    />
-        ) )
+            onPress={() => {
+              toggler( false );
+              updater( [ objKey, key ] );
+            }}
+            title={itemVal}
+        />
+          ) ) : []
       }
     </Menu>
-    </View>
-</View>
-
   );
 };
+
+const IncrementModifier = ( {
+  value, updater, theme, objKey,
+} ) => (
+  <View style={styles.Buttons}>
+    <Paragraph style={{ padding: 5 }}>{value}</Paragraph>
+    <Button
+      mode="contained"
+      icon="plus"
+      color={theme.colors.backdrop}
+      theme={{ roundness: 0 }}
+      onPress={() => { updater( [ objKey, value + 1 ] ); }} compact>
+        {}
+    </Button>
+    <Button
+      mode="contained"
+      icon="minus"
+      color={theme.colors.backdrop}
+      theme={{ roundness: 0 }}
+      onPress={() => { updater( [ objKey, value - 1 ] ); }}
+      compact>
+        {}
+    </Button>
+  </View>
+);
+
+const wrappedModifiers = {
+  switch: wrapHOC( SwitchModifier ),
+  menu: wrapHOC( MenuModifier ),
+  font: wrapHOC( IncrementModifier ),
+};
+
+export { SettingSection, wrappedModifiers, SwitchModifier };
 const styles = StyleSheet.create( {
   Buttons: {
     display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
   },
-  DescVal: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    display: 'flex',
-    flexDirection: 'row',
+  Card: {
+    margin: 5,
   },
   MainViewLine: {
     alignItems: 'center',
@@ -122,5 +124,3 @@ const styles = StyleSheet.create( {
     marginTop: 8,
   },
 } );
-
-export { SettingWithFonts, SettingWithList };

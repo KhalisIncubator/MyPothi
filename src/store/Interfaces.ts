@@ -6,6 +6,15 @@ import {
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
 
+interface Sources {
+    vishraamSource: 'sttm' | 'sttm2' | 'ig',
+    // teeakSource: 'FT' | 'SS',
+    // translationLang: 'English' | 'Spanish'
+    // translitLang: 'English' | 'Hindi'
+}
+interface SearchPrefs {
+    baniLength: lengthType
+}
 interface FontSizes {
     gurmukhi: number;
     eng: number;
@@ -45,10 +54,8 @@ export interface CurrentModel {
 
 export interface PothiModel {
     pothiNames: string[][];
-    isDataReady: boolean;
 
     updatePothis: Action<PothiModel>;
-    updateIsReady: Action<PothiModel, boolean>;
     createPothi: Action<PothiModel, string>;
     deletePothi: Action<PothiModel, [string, string]>;
 }
@@ -56,11 +63,16 @@ export interface PothiModel {
 export interface ViewerModel {
     fontSizes: FontSizes;
     displayElements: DisplayElements;
-    baniLength: lengthType;
+    searchPreferences: SearchPrefs;
+    sources: Sources
 
     updateFontSize: Action<ViewerModel, [string, number]>;
     updateDisplayElement: Action<ViewerModel, string>;
-    updateLength: Action<ViewerModel, lengthType>
+    updateSource: Action<ViewerModel, [
+        'vishraamSource' | 'teekaSource' | 'translationLang' | 'translitLang',
+        string
+    ]>;
+    updateSearch: Action<ViewerModel, ['baniLength', lengthType]>
 }
 
 export interface SearchModel {
@@ -80,6 +92,10 @@ export interface EditModel {
 
     updateEditMode: Action<EditModel>;
     updatedSelectedInfo: Action<EditModel, [number | null, Element, string | null]>;
+}
+export interface FullScreenModel {
+    isFullScreen: boolean,
+    toggleMode: Action<FullScreenModel>
 }
 export interface StoreModel {
     themeModel : ThemeModel;

@@ -45,7 +45,7 @@ const SearchResult = ( props ) => {
                   { borderRadius: styling.roundness, backgroundColor: isAdded ? styling.colors.backdrop : styling.colors.surface } ]}
                 titleStyle={style.CardTitle}
                 title={`${verse.gurmukhi}`}
-                subtitle={`Shaabd ID: ${shabadId}`}
+                subtitle={`Shabad ID: ${shabadId}`}
                 left={( properties ) => <Avatar.Icon {...properties} icon="book" />}
                 right={() => ( isAdded ? <Icon name="check" /> : null ) }
             />

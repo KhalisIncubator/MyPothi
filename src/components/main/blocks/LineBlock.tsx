@@ -5,18 +5,24 @@ import { View, StyleSheet } from 'react-native';
 import TextBlock from './TextBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
+import { RemappedLine, Modification } from '../../../../types/types';
 
-const LineBlock = ( props ) => {
-  const { fontSizes, displayElements } = useValues( 'viewerModel' );
+interface Props {
+  line: RemappedLine,
+  entryID: string,
+  mods: Modification[],
+  isMainLine?: any
+}
+const LineBlock = ( props: Props ) => {
+  const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
   const updatedSelectedInfo = EditCtx.useStoreActions(
     ( actions ) => actions.updatedSelectedInfo,
   );
 
   const [ selectedLineID, selectedElement ] = selectedInfo;
-
   const {
-    Gurbani, Translations, Transliteration, id,
+    Gurbani, Translations, Transliteration, id, Vishraams,
   } = props.line;
   const { entryID, mods } = props;
   const {
@@ -63,49 +69,52 @@ const LineBlock = ( props ) => {
         <View style={style.column}>
             <TextBlock
                 type="Pangtee"
+                isMainLine={props.isMainLine}
+                vishraams={Vishraams}
+                source={sources.vishraamSource}
                 isSelected={gurmukhiSelection}
-                mods={filteredMod}
+                mod={filteredMod.filter( ( mod ) => mod?.element === 'Pangtee' )}
                 style={{ fontSize: gurmukhi }}
-                value={Gurbani.ascii}
+                value={Gurbani.ascii === '‚' ? Gurbani.unicode : Gurbani.ascii}
                 onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
-                isPangtee
             />
-            {displayEng
+             {displayEng
                 && !(
                   Translations.English == null || Translations.English === ' '
                 ) && (
                     <TextBlock
                         type="Eng"
-                        mods={filteredMod}
+                        mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
                         isSelected={translationSelection}
                         value={Translations.English}
-                        onClick={() => textBlockClick( gurmukhiSelection, 'Eng' )
+                        onClick={() => textBlockClick( translationSelection, 'Eng' )
                         }
                         style={{ fontSize: eng }}
                     />
-            )}
-            {displayTeeka && Translations.Punjabi.SS !== null && (
+             )}
+            {displayTeeka
+            && !( !Translations.Punjabi.SS || Translations.Punjabi.SS === ' ' )
+              && (
                 <TextBlock
                     type="Teeka"
-                    mods={filteredMod}
+                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
                     isSelected={teekaSelection}
                     value={Translations.Punjabi.SS}
-                    isGurmukhi
-                    onClick={() => textBlockClick( gurmukhiSelection, 'Teeka' )}
+                    onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
                     style={{ fontSize: teeka }}
                 />
-            )}
-            {displayTranslit && Transliteration.English && (
+              )}
+             {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
                 <TextBlock
                     type="Translit"
-                    mods={filteredMod}
+                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
                     value={Transliteration.English}
                     isSelected={translitSelection}
-                    onClick={() => textBlockClick( gurmukhiSelection, 'Translit' )
+                    onClick={() => textBlockClick( translitSelection, 'Translit' )
                     }
                     style={{ fontSize: translit }}
                 />
-            )}
+             )}
         </View>
   );
 };

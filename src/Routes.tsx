@@ -10,9 +10,11 @@ import SettingsScreen from './screens/Settings';
 import Edit from './screens/Edit';
 import { Header } from './components/nav/Header';
 import Search from './screens/Search';
+import { FullScreenCtx } from './store/context_stores/Contexts';
 
 const Stack = createStackNavigator();
 const ScreenStack = () => (
+  <FullScreenCtx.Provider>
         <Stack.Navigator
             initialRouteName="Gutka"
             headerMode="screen"
@@ -26,6 +28,7 @@ const ScreenStack = () => (
             <Stack.Screen name="Search" component={Search} />
             <Stack.Screen name="Edit" component={Edit} />
         </Stack.Navigator>
+  </FullScreenCtx.Provider>
 );
 
 const AppDrawer = createDrawerNavigator();
