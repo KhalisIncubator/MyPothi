@@ -54,10 +54,8 @@ export interface CurrentModel {
 
 export interface PothiModel {
     pothiNames: string[][];
-    isDataReady: boolean;
 
     updatePothis: Action<PothiModel>;
-    updateIsReady: Action<PothiModel, boolean>;
     createPothi: Action<PothiModel, string>;
     deletePothi: Action<PothiModel, [string, string]>;
 }
@@ -94,6 +92,10 @@ export interface EditModel {
 
     updateEditMode: Action<EditModel>;
     updatedSelectedInfo: Action<EditModel, [number | null, Element, string | null]>;
+}
+export interface FullScreenModel {
+    isFullScreen: boolean,
+    toggleMode: Action<FullScreenModel>
 }
 export interface StoreModel {
     themeModel : ThemeModel;

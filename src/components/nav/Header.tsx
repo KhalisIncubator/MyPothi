@@ -6,15 +6,17 @@ import { useIsDrawerOpen } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useValues } from '../../store/StateHooks';
+import { FullScreenCtx } from '../../store/context_stores/Contexts';
 
 
 const Header = ( { previous, navigation } ) => {
   const theme = useTheme();
   const { currentName } = useValues( 'currentModel' );
+  const isFullScren = FullScreenCtx.useStoreState( ( store ) => store.isFullScreen );
   const route = useRoute();
   const isDrawerOpen = useIsDrawerOpen();
   const isMain = route.name === 'Gutka';
-  return (
+  return isFullScren ? null : (
         <Appbar.Header theme={{ colors: { primary: theme.colors.backdrop } }}>
             {previous ? (
                 <Appbar.BackAction

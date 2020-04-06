@@ -1,5 +1,7 @@
 import { action, createContextStore, persist } from 'easy-peasy';
-import { SearchModel, EditModel, AddedModel } from '../Interfaces';
+import {
+  SearchModel, EditModel, AddedModel, FullScreenModel,
+} from '../Interfaces';
 import AsyncStore from '../PersistStore';
 
 const searchModel: SearchModel = {
@@ -47,3 +49,13 @@ const addedModel: AddedModel = {
 
 const AddedCtx = createContextStore( addedModel );
 export { AddedCtx };
+
+const fullScreenModel: FullScreenModel = {
+  isFullScreen: false,
+  toggleMode: action( ( state ) => {
+    state.isFullScreen = !state.isFullScreen;
+  } ),
+};
+
+const FullScreenCtx = createContextStore( fullScreenModel );
+export { FullScreenCtx };

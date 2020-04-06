@@ -101,13 +101,9 @@ const currentModel: CurrentModel = {
 
 const pothiModel: PothiModel = {
   pothiNames: fetchAllPothis(),
-  isDataReady: false,
 
   updatePothis: action( ( state ) => {
     state.pothiNames = fetchAllPothis();
-  } ),
-  updateIsReady: action( ( state, payload ) => {
-    state.isDataReady = payload;
   } ),
   createPothi: action( ( state, payload ) => {
     createNewPothi( payload );

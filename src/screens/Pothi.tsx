@@ -1,34 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useState, useEffect,
+  useState, useEffect, useRef,
 } from 'react';
 import {
   View, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-
+import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import ShimmeringLine from '../components/main/blocks/ShimmeringBlock';
 import Toolbar from '../components/main/Toolbar';
 import HighlightSelector from '../components/main/HighlightSelector';
 
 
-import { EditCtx } from '../store/context_stores/Contexts';
+import { EditCtx, FullScreenCtx } from '../store/context_stores/Contexts';
 import { useValues } from '../store/StateHooks';
 import Viewer from '../components/main/Viewer';
 import { parseLines } from '../database/BanidbApi';
 
 const Gutka = () => {
   const theme = useTheme();
-
+  const doubleTapRef = useRef();
   const [ shabads, updateShabads ] = useState( [] );
   const [ isHighlighterVis, toggleHighligher ] = useState( false );
   const [ isLoadingData, updateLoading ] = useState( true );
 
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
+  const isFullScreen = FullScreenCtx.useStoreState( ( store ) => store.isFullScreen );
+  const updateFullScreen = FullScreenCtx.useStoreActions( ( actions ) => actions.toggleMode );
+
   const {
     currentName, currentItems,
   } = useValues( 'currentModel' );
 
+  const handleTap = ( e ) => {
+    if ( e.nativeEvent.state === State.ACTIVE ) {
+      updateFullScreen();
+    }
+  };
   const [ gutkaName ] = currentName;
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
   useEffect( () => {
@@ -45,40 +53,48 @@ const Gutka = () => {
 
 
   return (
-    <View style={styles.View}>
-        <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
-        {isLoadingData && (
-          <>
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
-                    <ShimmeringLine />
+    <TapGestureHandler
+    ref={doubleTapRef}
+    onHandlerStateChange={handleTap}
+    numberOfTaps={2}>
+    <View style={{ flex: 1 }}>
+      <View style={styles.View}>
+          <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
+          {isLoadingData && (
+            <>
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
+                      <ShimmeringLine />
 
 
-          </>
-        )}
-         {!isLoadingData
-                   && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
-                            {isHighlighterVis && (
-                <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
-                            )}
+            </>
+          )}
+          {!isLoadingData
+            && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
+              {isHighlighterVis && (
+                  <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
+              )}
+      </View>
+
+        {!isFullScreen
+         && <Toolbar
+              toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
+              style={styles.Footer}
+              showMain={isEditMode}
+              updateMode={updateEditMode}
+              currentLine={selectedInfo}
+            />}
     </View>
-
-        <Toolbar
-        toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
-            style={styles.Footer}
-            showMain={isEditMode}
-            updateMode={updateEditMode}
-            currentLine={selectedInfo}
-          />
-    </View>
+  </View>
+  </TapGestureHandler>
   );
 };
 const styles = StyleSheet.create( {

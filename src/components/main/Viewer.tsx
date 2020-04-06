@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  View,
-  FlatList,
-  Text,
+  FlatList, SafeAreaView,
 } from 'react-native';
 import LineBlock from './blocks/LineBlock';
 import mapToArray from '../../Functions';
@@ -25,13 +23,15 @@ const Viewer = ( props ) => {
     initialNumToRender={item.length < 20 ? item.length : 20}/>;
 
   return (
-    <FlatList
-    data={currentLines}
-    extraData={currentMods}
-    initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
-    keyExtractor={( item, index ) => index.toString()}
-    renderItem={renderItem}
-/>
+    <SafeAreaView>
+        <FlatList
+        data={currentLines}
+        extraData={currentMods}
+        initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
+        keyExtractor={( item, index ) => index.toString()}
+        renderItem={renderItem}
+    />
+</SafeAreaView>
   );
 };
 
