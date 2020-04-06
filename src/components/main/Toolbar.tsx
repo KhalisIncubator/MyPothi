@@ -31,7 +31,7 @@ const Toolbar = ( {
                           updateMode();
                         }}
                     />
-                    <Text>Toolbar</Text>
+                    <Text>Customize</Text>
                 </View>
                 {showMain && (
                     <View style={[ styles.Main, { backgroundColor: theme.colors.surface } ]}>

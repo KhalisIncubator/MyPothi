@@ -7,6 +7,7 @@ import {
 import { useTheme } from 'react-native-paper';
 import { mapVishraams } from '../../../Functions';
 import { Modification } from '../../../../types/types';
+import { useMainStoreState } from '../../../store/TsHooks';
 
 interface Props {
   style: object,
@@ -15,15 +16,17 @@ interface Props {
   onClick: () => void,
   mod: Modification[],
   type: any,
+  isMainLine?: boolean,
   vishraams?: object,
   source?: string,
   children?: ReactNode
 }
 const TextBlock: React.FC<Props> = ( {
-  style, value, isSelected, onClick, mod, type, vishraams, source,
+  style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine,
 } ) => {
   const [ singularMod ] = mod;
   const theme = useTheme();
+  const isDarkMode = useMainStoreState( ( store ) => store.themeModel.isDarkMode );
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
   const modStyle: any = useMemo( () => {
@@ -41,8 +44,9 @@ const TextBlock: React.FC<Props> = ( {
   ), [ value, source ] );
   const ViewStyle = StyleSheet.flatten(
     [
-      isSelected ? styles.Selected : {},
       styles.View,
+      isMainLine ? ( isDarkMode ? styles.DarkMainLine : styles.MainLine ) : {},
+      isSelected ? styles.Selected : {},
     ],
   );
 
@@ -94,6 +98,9 @@ const TextBlock: React.FC<Props> = ( {
 
 
 const styles = StyleSheet.create( {
+  DarkMainLine: {
+    backgroundColor: '#69707a',
+  },
   English: {
     paddingVertical: 3,
   },
@@ -102,6 +109,9 @@ const styles = StyleSheet.create( {
   },
   Gurmukhi: {
     paddingVertical: 3,
+  },
+  MainLine: {
+    backgroundColor: '#c6cfd4',
   },
   Pangtee: {
     paddingVertical: 4,

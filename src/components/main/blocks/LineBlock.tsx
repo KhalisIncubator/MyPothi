@@ -11,6 +11,7 @@ interface Props {
   line: RemappedLine,
   entryID: string,
   mods: Modification[],
+  isMainLine?: any
 }
 const LineBlock = ( props: Props ) => {
   const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
@@ -20,7 +21,7 @@ const LineBlock = ( props: Props ) => {
   );
 
   const [ selectedLineID, selectedElement ] = selectedInfo;
-
+  console.log( props.isMainLine );
   const {
     Gurbani, Translations, Transliteration, id, Vishraams,
   } = props.line;
@@ -69,6 +70,7 @@ const LineBlock = ( props: Props ) => {
         <View style={style.column}>
             <TextBlock
                 type="Pangtee"
+                isMainLine={props.isMainLine}
                 vishraams={Vishraams}
                 source={sources.vishraamSource}
                 isSelected={gurmukhiSelection}
