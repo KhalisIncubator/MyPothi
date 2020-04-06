@@ -13,7 +13,6 @@ const Toolbar = ( {
 } ) => {
   const theme = useTheme();
 
-
   const { createMod, deleteMod } = useUpdaters( 'currentModel' );
   const { fontSizes } = useValues( 'viewerModel' );
   const [ lineid, element, parentID ] = currentLine;

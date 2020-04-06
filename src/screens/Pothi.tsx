@@ -33,7 +33,7 @@ const Gutka = () => {
   } = useValues( 'currentModel' );
 
   const handleTap = ( e ) => {
-    if ( e.nativeEvent.state === State.ACTIVE ) {
+    if ( e.nativeEvent.state === State.ACTIVE && !isEditMode ) {
       updateFullScreen();
     }
   };
@@ -79,11 +79,12 @@ const Gutka = () => {
           )}
           {!isLoadingData
             && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
-              {isHighlighterVis && (
-                  <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
-              )}
+
       </View>
 
+      {isHighlighterVis && (
+                  <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
+      )}
         {!isFullScreen
          && <Toolbar
               toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, memo, ReactNode } from 'react';
+import React, { useMemo, ReactNode } from 'react';
 
 import {
   Text, StyleSheet, View, TouchableWithoutFeedback,
@@ -108,7 +108,8 @@ const styles = StyleSheet.create( {
   },
   Selected: {
     borderColor: '#FFA500',
-    borderWidth: 5,
+    borderStyle: 'dashed',
+    borderWidth: 3,
   },
   Text: {
     paddingHorizontal: 10,
