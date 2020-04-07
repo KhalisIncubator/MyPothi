@@ -49,7 +49,11 @@ const App = () => {
   const { isDarkMode } = useValues( 'themeModel' );
   // const netInfo = useNetInfo();
 
-  useEffect( () => { if ( rehydrated ) { SplashScreen.hide(); } }, [ rehydrated ] );
+  useEffect( () => {
+    if ( rehydrated ) {
+      SplashScreen.hide();
+    }
+  }, [ rehydrated ] );
 
   return (
     <PaperProvider
@@ -57,8 +61,9 @@ const App = () => {
     settings={{
       icon: ( props ) => <Icon {...props} />,
     }}>
-      {!rehydrated && <View style={{ flex: 1, backgroundColor: '#FFA500' }}/>}
+       <View style={{ flex: 1, backgroundColor: '#FFA500' }}>
         {rehydrated && <Routes />}
+        </View>
     </PaperProvider>
   );
 };
