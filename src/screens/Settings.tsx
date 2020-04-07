@@ -2,14 +2,16 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import {
-  useTheme, Card,
+  useTheme, Card, Divider,
 } from 'react-native-paper';
 
 import { useValues, useUpdaters } from '../store/StateHooks';
 
 import SettingsCard, { SettingSection, SwitchModifier } from '../components/main/SettingsComponents';
 
-import mapToComponent, { ViewerSettings, TextConsts, MenuItems } from '../SettingsConsts';
+import mapToComponent, {
+  ViewerSettings, TextConsts, MenuItems, Dividers, Subheading,
+} from '../SettingsConsts';
 
 const SettingsScreen = ( ) => {
   const theme = useTheme();
@@ -42,6 +44,7 @@ const SettingsScreen = ( ) => {
                     Object.entries( sections ).map( ( [ name, value ] ) => {
                       const label = TextConsts[values][name];
                       const menuList = MenuItems[name];
+                      const subhead = Subheading[name];
                       const props = {
                         title: label,
                         updater: modifier,
@@ -54,9 +57,12 @@ const SettingsScreen = ( ) => {
                         props,
                       );
                       return (
-                      <SettingSection text={label} subheading={null} >
+                        <>
+                        { Dividers.indexOf( name ) !== -1 && <Divider style={{ height: 3 }}/>}
+                      <SettingSection text={label} subheading={subhead} >
                         {component}
                     </SettingSection>
+                    </>
                       );
                     } )}
                 </SettingsCard>

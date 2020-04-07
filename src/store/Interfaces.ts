@@ -26,6 +26,7 @@ interface DisplayElements {
     displayEng: boolean;
     displayTeeka: boolean;
     displayTranslit: boolean;
+    displayVishraams: boolean;
 }
 
 export type Models = 'currentModel' | 'pothiModel' | 'viewerModel';

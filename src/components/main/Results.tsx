@@ -1,18 +1,17 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity,
+  StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import {
-  Avatar, Card,
+  Avatar, Card, Paragraph,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
 
 const BaniResult = ( props ) => {
   const styling = props.theme;
-  const { gurmukhi, ID } = props.result;
+  const { gurmukhi, ID, addCount } = props.result;
   const { isAdded, onPress } = props;
-
   return (
         <TouchableOpacity
             onPress={onPress}
@@ -24,7 +23,12 @@ const BaniResult = ( props ) => {
                 title={`${gurmukhi}`}
                 subtitle={`Bani ID: ${ID}`}
                 left={( properties ) => <Avatar.Icon {...properties} icon="book" />}
-                right={() => ( isAdded ? <Icon name="check" /> : null ) }
+                right={() => ( isAdded ? (
+                  <View style={{ padding: 5, display: 'flex', flexDirection: 'row' }}>
+                    {addCount && <Paragraph style={{ color: 'black' }}>{addCount}</Paragraph>}
+                    <Icon name="check" style={{ padding: 5 }}/>
+                  </View>
+                ) : null ) }
 
             />
         </TouchableOpacity>
@@ -34,9 +38,8 @@ export { BaniResult };
 
 const SearchResult = ( props ) => {
   const styling = props.theme;
-  const { isAdded, onPress } = props;
+  const { isAdded, onPress, addCount } = props;
   const { verse, shabadId } = props.result;
-
   return (
         <TouchableOpacity
             onPress={onPress }>
@@ -47,7 +50,12 @@ const SearchResult = ( props ) => {
                 title={`${verse.gurmukhi}`}
                 subtitle={`Shabad ID: ${shabadId}`}
                 left={( properties ) => <Avatar.Icon {...properties} icon="book" />}
-                right={() => ( isAdded ? <Icon name="check" /> : null ) }
+                right={() => ( isAdded ? (
+                  <View style={{ padding: 5, display: 'flex', flexDirection: 'row' }}>
+                    {addCount && <Paragraph style={{ color: 'black' }}>{addCount}</Paragraph>}
+                    <Icon name="check" style={{ padding: 5 }}/>
+                  </View>
+                ) : null ) }
             />
         </TouchableOpacity>
   );

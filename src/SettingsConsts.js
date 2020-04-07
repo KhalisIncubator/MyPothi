@@ -46,6 +46,12 @@ const MenuItems = {
   baniLength: BaniMenu,
 };
 
+const Dividers = [
+  'displayVishraams',
+];
+const Subheading = {
+  baniLength: '*Note: This will not affect the length of banis already added',
+};
 const TextConsts = {
   fontSizes: {
     gurmukhi: 'Gurmukhi',
@@ -57,6 +63,7 @@ const TextConsts = {
     displayEng: 'English',
     displayTeeka: 'Teeka',
     displayTranslit: 'Transliteration',
+    displayVishraams: 'Vishraams',
   },
   sources: {
     vishraamSource: 'Vishraams Source',
@@ -65,4 +72,6 @@ const TextConsts = {
     baniLength: 'Bani Length',
   },
 };
-export { ViewerSettings, MenuItems, TextConsts };
+export {
+  ViewerSettings, MenuItems, TextConsts, Dividers, Subheading,
+};

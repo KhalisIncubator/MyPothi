@@ -63,6 +63,8 @@ const Search = () => {
               <Searchbar
                   placeholder="Search"
                   inputStyle={ styles.input }
+                  autoCompleteType="off"
+                  autoCorrect={false}
                   onChangeText={( newQuery ) => updateQuery( newQuery )}
                   value={searchQuery}
                   autoCapitalize="none"
@@ -134,13 +136,20 @@ const Search = () => {
                     && results.map( ( result ) => {
                       const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
-                      return <SearchResult theme={theme} result={result} isAdded={isAdded}
+
+                      const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
+
+                      return <SearchResult theme={theme} result={result} isAdded={isAdded} addCount={addedCount}
                       onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}/>;
                     } )}
                     {queryType === 'Bani' && banis.map( ( bani ) => {
                       const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
-                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
+
+                      const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
+                      console.log( addedItems );
+                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} addCount={addedCount}
+                      onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
                     } )}
             </ScrollView>
         </View>

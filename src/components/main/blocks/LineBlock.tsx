@@ -28,7 +28,9 @@ const LineBlock = ( props: Props ) => {
   const {
     gurmukhi, eng, teeka, translit,
   } = fontSizes;
-  const { displayEng, displayTeeka, displayTranslit } = displayElements;
+  const {
+    displayEng, displayTeeka, displayTranslit, displayVishraams,
+  } = displayElements;
 
   const filteredMod = mods ? mods.filter( ( mod ) => mod.lineID === id ) : [];
 
@@ -70,8 +72,8 @@ const LineBlock = ( props: Props ) => {
             <TextBlock
                 type="Pangtee"
                 isMainLine={props.isMainLine}
-                vishraams={Vishraams}
-                source={sources.vishraamSource}
+                vishraams={displayVishraams ? Vishraams : null}
+                source={displayVishraams ? sources.vishraamSource : null}
                 isSelected={gurmukhiSelection}
                 mod={filteredMod.filter( ( mod ) => mod?.element === 'Pangtee' )}
                 style={{ fontSize: gurmukhi }}
@@ -107,6 +109,8 @@ const LineBlock = ( props: Props ) => {
              {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
                 <TextBlock
                     type="Translit"
+                    source={displayVishraams ? sources.vishraamSource : null}
+                    vishraams={ Vishraams }
                     mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
                     value={Transliteration.English}
                     isSelected={translitSelection}
