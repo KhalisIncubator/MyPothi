@@ -40,7 +40,7 @@ const TextBlock: React.FC<Props> = ( {
   // let pangteeWithVishraams;
   // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
   const pangteeWithVishraams = useMemo( () => (
-    isPangtee ? mapVishraams( value, vishraams, source ) : null
+    source && vishraams ? mapVishraams( value, vishraams, source ) : null
   ), [ value, source ] );
   const ViewStyle = StyleSheet.flatten(
     [
@@ -77,7 +77,8 @@ const TextBlock: React.FC<Props> = ( {
                         : ( section.type === 'y'
                           ? styles.YamkiVishraam
                           : styles.FullVishraam )
-                    }>
+                    }
+                    key={section.data}>
                        {`${section.data} `}
                       </Text> ) )
                   }

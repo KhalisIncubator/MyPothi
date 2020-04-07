@@ -33,10 +33,13 @@ const ScreenStack = () => (
 
 const AppDrawer = createDrawerNavigator();
 
-const DrawerNav = () => {
+const DrawerNav = ( ) => {
   const dimensions = useWindowDimensions();
   return (
-       <AppDrawer.Navigator drawerContent={( props ) => <Drawer {...props} />} drawerType={dimensions.width > 900 ? 'permanent' : 'slide'}>
+       <AppDrawer.Navigator
+       drawerContent={( props ) => <Drawer {...props} />}
+       drawerType={dimensions.width > 900 ? 'permanent' : 'slide'}
+       edgeWidth={dimensions.width * 0.85}>
             <AppDrawer.Screen name="Stack" component={ScreenStack} />
         </AppDrawer.Navigator>
   );

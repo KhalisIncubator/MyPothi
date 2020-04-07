@@ -50,4 +50,5 @@ const getCurrentFontSize = ( [ lineid, element, parentID ], globalFontSize ) => 
   }
   return null;
 };
+
 export { getCurrentFontSize };

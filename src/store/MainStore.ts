@@ -126,6 +126,7 @@ const viewerModel: ViewerModel = {
     displayEng: true,
     displayTeeka: true,
     displayTranslit: true,
+    displayVishraams: true,
   },
   searchPreferences: {
     baniLength: 'long',

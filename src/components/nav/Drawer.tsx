@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import React, { useState, useEffect } from 'react';
+import {
+  View, StyleSheet, TextInput, KeyboardAvoidingView,
+} from 'react-native';
+import { DrawerContentScrollView, DrawerItem, useIsDrawerOpen } from '@react-navigation/drawer';
 
 import {
   Title, Drawer, Text, Button, useTheme,
@@ -22,9 +24,16 @@ const CustomDrawerComponent = ( props ) => {
   const [ isCreating, toggleCreateMode ] = useState( false );
   const [ newGutkaName, changeText ] = useState( '' );
   const { navigation } = props;
+  const isOpen = useIsDrawerOpen();
+
+  useEffect( () => {
+    if ( !isOpen ) {
+      toggleCreateMode( false );
+    }
+  }, [ isOpen ] );
   return (
         <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
-            <View style={styles.drawerContent}>
+            <KeyboardAvoidingView style={styles.drawerContent}>
                 <View style={styles.titleSection}>
                     <View style={styles.row}>
                         <Title style={styles.title}>Pothis</Title>
@@ -133,7 +142,7 @@ const CustomDrawerComponent = ( props ) => {
                         Edit Pothis
                     </Button>
                 </Drawer.Section>
-            </View>
+            </KeyboardAvoidingView>
         </DrawerContentScrollView>
   );
 };

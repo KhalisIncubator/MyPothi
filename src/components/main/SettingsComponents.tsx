@@ -21,7 +21,10 @@ const SettingsCard = ( { children, title, theme } ) => (
 export default SettingsCard;
 
 const SettingSection = ( { text, children, subheading } ) => (
-  <View style={{ display: 'flex', flexDirection: 'column' }}>
+  <>
+  <View style={{
+    display: 'flex', flexDirection: 'column', width: '100%',
+  }}>
     <View style={styles.MainViewLine}>
       <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
       <View style={{ alignSelf: 'flex-end' }}>
@@ -30,8 +33,11 @@ const SettingSection = ( { text, children, subheading } ) => (
       </View>
       </View>
     </View>
-    {subheading}
   </View>
+  <View style={{ justifyContent: 'center' }}>
+    {subheading && <Paragraph style={{ fontSize: 14 }}>{subheading}</Paragraph>}
+    </View>
+  </>
 );
 const SwitchModifier = ( {
   value, updater, theme, objKey,
