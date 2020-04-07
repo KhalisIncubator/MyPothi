@@ -147,7 +147,6 @@ const Search = () => {
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
 
                       const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
-                      console.log( addedItems );
                       return <BaniResult theme={theme} result={bani} isAdded={isAdded} addCount={addedCount}
                       onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
                     } )}
