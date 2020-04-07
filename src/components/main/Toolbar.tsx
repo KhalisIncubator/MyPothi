@@ -59,8 +59,10 @@ const Toolbar = ( {
                             icon="minus-square"
                             size={20}
                             onPress={() => {
-                              const newSize = getCurrentFontSize( currentLine,
-                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) - 1;
+                              const getSize = getCurrentFontSize( currentLine,
+                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
+                              const newSize = getSize <= 0 ? null : getSize - 1;
+                              console.log( newSize );
                               createMod( {
                                 lineid, element, type: 'fontSize', value: newSize, parentID,
                               } );
