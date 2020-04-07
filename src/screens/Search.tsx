@@ -138,8 +138,9 @@ const Search = () => {
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
 
                       const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
+                      console.log( addedCount );
 
-                      return <SearchResult theme={theme} result={result} isAdded={isAdded} addCount={addedCount}
+                      return <SearchResult theme={theme} result={result} isAdded={isAdded} addCount={addedCount || null}
                       onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}/>;
                     } )}
                     {queryType === 'Bani' && banis.map( ( bani ) => {
@@ -147,7 +148,7 @@ const Search = () => {
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
 
                       const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
-                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} addCount={addedCount}
+                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} addCount={addedCount || null}
                       onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
                     } )}
             </ScrollView>
