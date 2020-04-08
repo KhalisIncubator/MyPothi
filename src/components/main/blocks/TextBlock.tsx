@@ -2,7 +2,7 @@
 import React, { useMemo, ReactNode } from 'react';
 
 import {
-  Text, StyleSheet, View, TouchableWithoutFeedback,
+  Text, StyleSheet, View, TouchableWithoutFeedback, useColorScheme,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { mapVishraams } from '../../../Functions';
@@ -26,8 +26,10 @@ const TextBlock: React.FC<Props> = ( {
 } ) => {
   const [ singularMod ] = mod;
   const theme = useTheme();
+  const colors = useColorScheme();
   const isDarkMode = useMainStoreState( ( store ) => store.themeModel.theme.isDarkMode );
   const isTrueDark = useMainStoreState( ( store ) => store.themeModel.theme.trueDarkMode );
+  const useSystem = useMainStoreState( ( store ) => store.themeModel.theme.choseSystem );
 
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
@@ -39,6 +41,10 @@ const TextBlock: React.FC<Props> = ( {
     return tempStyle;
   }, [ singularMod ] );
 
+  const mainLineHighlight = useMemo( () => {
+    if ( useSystem ) return colors === 'dark' ? ( isTrueDark ? styles.trueDarkLine : styles.DarkMainLine ) : styles.MainLine;
+    return isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine );
+  }, [ isDarkMode, isTrueDark, useSystem ] );
   // let pangteeWithVishraams;
   // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
   const pangteeWithVishraams = useMemo( () => (
@@ -47,7 +53,7 @@ const TextBlock: React.FC<Props> = ( {
   const ViewStyle = StyleSheet.flatten(
     [
       styles.View,
-      isMainLine ? ( isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine ) ) : {},
+      isMainLine ? mainLineHighlight : {},
       isSelected ? styles.Selected : {},
     ],
   );

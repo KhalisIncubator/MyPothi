@@ -68,6 +68,7 @@ const App = () => {
     if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme;
     return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
   }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
+
   useEffect( () => {
     if ( rehydrated ) {
       SplashScreen.hide();

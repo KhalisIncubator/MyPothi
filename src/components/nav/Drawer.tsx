@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, StyleSheet, TextInput, KeyboardAvoidingView,
+  View, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { DrawerContentScrollView, DrawerItem, useIsDrawerOpen } from '@react-navigation/drawer';
 
@@ -32,8 +32,8 @@ const CustomDrawerComponent = ( props ) => {
     }
   }, [ isOpen ] );
   return (
+    <KeyboardAvoidingView style={styles.drawerContent} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
-            <KeyboardAvoidingView style={styles.drawerContent}>
                 <View style={styles.titleSection}>
                     <View style={styles.row}>
                         <Title style={styles.title}>Pothis</Title>
@@ -94,6 +94,7 @@ const CustomDrawerComponent = ( props ) => {
                                 style={ { color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent } }
                                 autoCorrect={false}
                                 autoCompleteType="off"
+                                placeholderTextColor="gray"
                                 placeholder="Enter Pothi Name"
                                 underlineColorAndroid="transparent"
                                 onChangeText={( text ) => {
@@ -142,8 +143,9 @@ const CustomDrawerComponent = ( props ) => {
                         Edit Pothis
                     </Button>
                 </Drawer.Section>
-            </KeyboardAvoidingView>
         </DrawerContentScrollView>
+      </KeyboardAvoidingView>
+
   );
 };
 

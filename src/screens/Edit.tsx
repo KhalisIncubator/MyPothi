@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TextInput,
+  View, Text, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import {
   Avatar, Card, IconButton, Snackbar, useTheme, Title,
@@ -38,7 +38,7 @@ const Edit = ( { route } ) => {
   };
   useEffect( () => { console.log( editing ); }, [ editing ] );
   return (
-    <View style={style.View}>
+    <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
         <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
             {type === 'Shabad'
                 && currentItems.map( ( item ) => (
@@ -175,7 +175,7 @@ const Edit = ( { route } ) => {
                 style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
                 <Text style={{ color: theme.colors.text }}>You cannot have less than one pothi!</Text>
             </Snackbar>
-        </View>
+        </KeyboardAvoidingView>
   );
 };
 
