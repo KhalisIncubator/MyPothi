@@ -73,10 +73,7 @@ const Edit = ( { route } ) => {
                   <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
                         <Card.Title
                             key={data[1]} //
-                            title={
-                              editing.name === data[0] && editing.id === data[1]
-                                ? `${editedText}` : `${data[0]}`
-                            }
+                            title={ `${data[0]}`}
                             left={( props ) => (
                                 <Avatar.Icon {...props} icon="book" />
                             )}
@@ -136,27 +133,30 @@ const Edit = ( { route } ) => {
                                 </View>
                             )}
                         />
+                        {
+
+                            editing.id === data[1]
+                            && <Card.Content style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
+                              <Title style={{ padding: 3 }}>New Name</Title>
+                              <TextInput
+                                          style={ {
+                                            color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
+                                          } }
+                                          autoCorrect={false}
+                                          placeholderTextColor="gray"
+                                          autoCompleteType="off"
+                                          placeholder="Enter Pothi Name"
+                                          underlineColorAndroid="transparent"
+                                          onChangeText={( text ) => {
+                                            updateText( text );
+                                          }}
+                                          />
+                            </Card.Content>
+
+                        }
                         </Card>
                 ) )}
-                {
-                  editing.id !== null
-                  && <View style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
-                    <Title style={{ padding: 3 }}>New Name</Title>
-                    <TextInput
-                                style={ {
-                                  color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
-                                } }
-                                autoCorrect={false}
-                                placeholderTextColor="gray"
-                                autoCompleteType="off"
-                                placeholder="Enter Pothi Name"
-                                underlineColorAndroid="transparent"
-                                onChangeText={( text ) => {
-                                  updateText( text );
-                                }}
-                                />
-                  </View>
-                }
+
                 </>
                 }
         </ScrollView>
