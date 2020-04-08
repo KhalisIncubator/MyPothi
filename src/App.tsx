@@ -65,7 +65,7 @@ const App = () => {
   const systemTheme = useColorScheme();
   // const netInfo = useNetInfo();
   const decideTheme = useMemo( () => {
-    if ( choseSystem && !trueDarkMode ) return systemTheme === 'dark' ? darkTheme : theme;
+    if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme;
     return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
   }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
   useEffect( () => {

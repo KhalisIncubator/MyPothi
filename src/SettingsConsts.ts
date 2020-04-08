@@ -1,5 +1,5 @@
 import { wrappedModifiers } from './components/main/SettingsComponents';
-
+import { SettingsConsts } from '../types/types';
 
 const mapToComponent = ( type ) => wrappedModifiers[type];
 
@@ -43,8 +43,10 @@ const ViewerSettings = [
   },
 ];
 
-const Settings = [ { setting: ThemeSettings, values: 'themeValues', updaters: 'themeUpdaters' },
-  { setting: ViewerSettings, values: 'viewerValues', updaters: 'viewerUpdaters' } ];
+const Settings = [
+  { setting: ThemeSettings, values: 'themeValues', updaters: 'themeUpdaters' },
+  { setting: ViewerSettings, values: 'viewerValues', updaters: 'viewerUpdaters' },
+];
 const baniList = {
   short: 'Short',
   medium: 'Medium',
@@ -57,11 +59,14 @@ const vishraamList = {
   ig: 'iGurbani',
 };
 
-const GlobalConsts = {
+const GlobalConsts: SettingsConsts = {
   theme: {
-    isDarkMode: { title: 'Dark Mode', parent: 'choseSystem', parentValue: false },
-    trueDarkMode: { title: 'True Dark Mode' },
     choseSystem: { title: 'Use System Appearance' },
+    isDarkMode: { title: 'Dark Mode', parent: 'choseSystem', parentValue: false },
+    trueDarkMode: {
+      title: 'True Dark Mode',
+      subheading: '* If System Appearance has been chosen, this will only apply if dark mode is applied system-wide',
+    },
   },
   fontSizes: {
     gurmukhi: { title: 'Gurmukhi' },

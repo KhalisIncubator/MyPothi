@@ -27,12 +27,19 @@ import { loadBani, loadShabad } from '../database/BanidbApi';
 
 const themeModel: ThemeModel = {
   theme: {
+    choseSystem: false,
     isDarkMode: false,
     trueDarkMode: false,
-    choseSystem: false,
   },
   updateTheme: action( ( state, payload ) => {
-    if ( payload === 'isDarkMode' ) state.theme.trueDarkMode = false;
+    if ( payload === 'isDarkMode' && !state.theme.isDarkMode ) state.theme.trueDarkMode = false;
+    if ( payload === 'trueDarkMode' && !state.theme.trueDarkMode ) state.theme.isDarkMode = false;
+    if ( payload === 'choseSystem' && state.theme.choseSystem ) {
+      state.theme.isDarkMode = false;
+      state.theme.trueDarkMode = false;
+    }
+
+
     state.theme[payload] = !state.theme[payload];
   } ),
 };
