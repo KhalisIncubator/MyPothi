@@ -1,5 +1,7 @@
 /* eslint-disable import/extensions */
-import { Action, Thunk, Computed } from 'easy-peasy';
+import {
+  Action, Thunk, Computed, ActionOn,
+} from 'easy-peasy';
 import {
   QueryType, entryObj, pothiEntry, ModType, lengthType,
 } from '../../types/types';
@@ -56,11 +58,14 @@ export interface CurrentModel {
 
     addEntry: Thunk<CurrentModel, [number, string, pothiEntry], Injections,
     StoreModel>
+
+    onNameChange: ActionOn<CurrentModel, StoreModel>;
 }
 
 export interface PothiModel {
     pothiNames: string[][];
 
+    renamePothi: Action<PothiModel, [string, string, string]>;
     updatePothis: Action<PothiModel>;
     createPothi: Action<PothiModel, string>;
     deletePothi: Action<PothiModel, [string, string]>;

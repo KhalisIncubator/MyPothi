@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView,
+  View, Text, StyleSheet, ScrollView, TextInput,
 } from 'react-native';
 import {
-  Avatar, Card, IconButton, Snackbar, useTheme,
+  Avatar, Card, IconButton, Snackbar, useTheme, Title,
 } from 'react-native-paper';
 import { useUpdaters, useValues } from '../store/StateHooks';
 
@@ -12,11 +12,13 @@ const Edit = ( { route } ) => {
 
   const [ showSnack, updateShow ] = useState( false );
   const [ showError, updateErr ] = useState( false );
+  const [ editing, updateEditing ] = useState( { name: null, id: null } );
+  const [ editedText, updateText ] = useState( '' );
 
   const { currentItems } = useValues( 'currentModel' );
   const { removeEntry, updateCurrentName } = useUpdaters( 'currentModel' );
   const { pothiNames } = useValues( 'pothiModel' );
-  const { deletePothi } = useUpdaters( 'pothiModel' );
+  const { deletePothi, renamePothi } = useUpdaters( 'pothiModel' );
 
   const { type } = route.params;
 
@@ -34,6 +36,7 @@ const Edit = ( { route } ) => {
     deletePothi( [ name, gutkaID ] );
     updateShow( true );
   };
+  useEffect( () => { console.log( editing ); }, [ editing ] );
   return (
     <View style={style.View}>
         <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
@@ -49,6 +52,7 @@ const Edit = ( { route } ) => {
                             <Avatar.Icon {...props} icon="book" />
                         )}
                         right={( props ) => (
+                            <>
                             <IconButton
                                 {...props}
                                 color="red"
@@ -59,19 +63,60 @@ const Edit = ( { route } ) => {
                                   );
                                 }}
                             />
+                            </>
                         )}
                             />
                             </Card> ) )}
             {type === 'Pothi'
-                && pothiNames.map( ( data, index ) => (
+                && <>
+                {pothiNames.map( ( data, index ) => (
                   <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
                         <Card.Title
-                            key={data[0]}
-                            title={`${data[0]}`}
+                            key={data[1]} //
+                            title={
+                              editing.name === data[0] && editing.id === data[1]
+                                ? `${editedText}` : `${data[0]}`
+                            }
                             left={( props ) => (
                                 <Avatar.Icon {...props} icon="book" />
                             )}
                             right={( props ) => (
+                              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                {
+                                  editing.name === data[0] && editing.id === data[1]
+                                    ? (
+                                    <>
+                                      <IconButton
+                                      {...props}
+                                      color="green"
+                                      icon="check"
+                                      onPress={() => {
+                                        renamePothi( [ editing.name, editing.id, editedText ] );
+                                        updateText( '' );
+                                        updateEditing( { name: null, id: null } );
+                                      }}
+                                      />
+                                      <IconButton
+                                      {...props}
+                                      color="red"
+                                      icon="x"
+                                      onPress={() => {
+                                        updateText( '' );
+                                        updateEditing( { name: null, id: null } );
+                                      }}
+                                      />
+                                    </>
+                                    )
+                                    : (
+                                  <IconButton
+                                    {...props}
+                                    color={theme.colors.primary}
+                                    icon="edit"
+                                    onPress={() => {
+                                      updateEditing( ( prev ) => ( { ...prev, name: data[0], id: data[1] } ) );
+                                    }}
+                                    /> )
+                                }
                                 <IconButton
                                     {...props}
                                     color="red"
@@ -88,10 +133,32 @@ const Edit = ( { route } ) => {
                                       }
                                     }}
                                 />
+                                </View>
                             )}
                         />
                         </Card>
                 ) )}
+                {
+                  editing.id !== null
+                  && <View style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
+                    <Title style={{ padding: 3 }}>New Name</Title>
+                    <TextInput
+                                style={ {
+                                  color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
+                                } }
+                                autoCorrect={false}
+                                placeholderTextColor="gray"
+                                autoCompleteType="off"
+                                placeholder="Enter Pothi Name"
+                                underlineColorAndroid="transparent"
+                                onChangeText={( text ) => {
+                                  updateText( text );
+                                }}
+                                />
+                  </View>
+                }
+                </>
+                }
         </ScrollView>
 
             <Snackbar

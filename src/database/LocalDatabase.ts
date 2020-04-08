@@ -79,6 +79,14 @@ const findPothi = ( currentPothi, pothiID ) => {
   const [ pothi ] = localRealm.objects<storedPothi>( 'Pothi' ).filtered( filter );
   return pothi;
 };
+const updatePothi = ( currentName: string, pothiID: string ) => {
+  const pothi = findPothi( currentName, pothiID );
+  return ( key: string, value: any ) => {
+    localRealm.write( () => {
+      pothi[key] = value;
+    } );
+  };
+};
 const createNewPothi = ( name ) => {
   const newID = generateID();
   localRealm.write( () => {
@@ -112,7 +120,7 @@ const deleteGukta = ( name, pothiID ) => {
 };
 
 export {
-  fetchAllPothis, findPothi, createNewPothi, deleteGukta,
+  fetchAllPothis, findPothi, updatePothi, createNewPothi, deleteGukta,
 };
 
 // entry/item related functions
@@ -230,7 +238,13 @@ const createModification = ( currentName: string, parentID: string ) => {
     } );
   };
 };
-const editModification = ( lineid: number, element: Element, parentID: string, newMod: ModType, value:any ) => {
+const editModification = (
+  lineid: number,
+  element: Element,
+  parentID: string,
+  newMod: string,
+  value: string | boolean,
+) => {
   let mod = getModWithParent( lineid, element, parentID );
   localRealm.write( () => {
     mod[newMod] = value;
