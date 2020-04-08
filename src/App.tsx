@@ -2,12 +2,12 @@
 /* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
-import { View } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import store from './store/MainStore';
 
 
@@ -44,11 +44,30 @@ const darkTheme = {
   },
 };
 
+const trueDark = {
+  ...DefaultTheme,
+  dark: true,
+  roundness: 10,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#99AAB5',
+    surface: '#99AAB5',
+    background: '#000000',
+    backdrop: '#FFA500',
+    text: '#FFFFFF',
+  },
+};
+
 const App = () => {
   const rehydrated = useStoreRehydrated();
-  const { isDarkMode } = useValues( 'themeModel' );
+  const { isDarkMode, trueDarkMode, choseSystem } = useValues( 'themeModel' ).theme;
+  const systemTheme = useColorScheme();
   // const netInfo = useNetInfo();
-
+  const decideTheme = useMemo( () => {
+    if ( choseSystem && !trueDarkMode ) return systemTheme === 'dark' ? darkTheme : theme;
+    return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
+  }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
   useEffect( () => {
     if ( rehydrated ) {
       SplashScreen.hide();
@@ -57,7 +76,7 @@ const App = () => {
 
   return (
     <PaperProvider
-    theme={isDarkMode ? darkTheme : theme}
+    theme={decideTheme}
     settings={{
       icon: ( props ) => <Icon {...props} />,
     }}>

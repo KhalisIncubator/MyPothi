@@ -26,8 +26,15 @@ import AsyncStore from './PersistStore';
 import { loadBani, loadShabad } from '../database/BanidbApi';
 
 const themeModel: ThemeModel = {
-  isDarkMode: false,
-  updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
+  theme: {
+    isDarkMode: false,
+    trueDarkMode: false,
+    choseSystem: false,
+  },
+  updateTheme: action( ( state, payload ) => {
+    if ( payload === 'isDarkMode' ) state.theme.trueDarkMode = false;
+    state.theme[payload] = !state.theme[payload];
+  } ),
 };
 const currentModel: CurrentModel = {
   currentName: fetchAllPothis()[0],

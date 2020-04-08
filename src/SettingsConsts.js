@@ -1,11 +1,19 @@
 import { wrappedModifiers } from './components/main/SettingsComponents';
-import { vishraamSources } from './database/DatabaseConts';
 
 
 const mapToComponent = ( type ) => wrappedModifiers[type];
 
 export default mapToComponent;
 
+
+const ThemeSettings = [
+  {
+    title: 'Theme',
+    values: 'theme',
+    updater: 'updateTheme',
+    type: 'switch',
+  },
+];
 // stuff relating to viewerModel (excludes stuff from themeModel)
 // fontSizes, displayElements, baniLength, sources => values related to each section
 const ViewerSettings = [
@@ -34,44 +42,47 @@ const ViewerSettings = [
     updater: 'updateSearch',
   },
 ];
-const BaniMenu = {
+
+const Settings = [ { setting: ThemeSettings, values: 'themeValues', updaters: 'themeUpdaters' },
+  { setting: ViewerSettings, values: 'viewerValues', updaters: 'viewerUpdaters' } ];
+const baniList = {
   short: 'Short',
   medium: 'Medium',
   long: 'Long',
   extralong: 'Extra Long',
 };
-
-const MenuItems = {
-  vishraamSource: vishraamSources,
-  baniLength: BaniMenu,
+const vishraamList = {
+  sttm: 'BaniDB (default)',
+  sttm2: 'Legacy STTM',
+  ig: 'iGurbani',
 };
 
-const Dividers = [
-  'displayVishraams',
-];
-const Subheading = {
-  baniLength: '*Note: This will not affect the length of banis already added',
-};
-const TextConsts = {
+const GlobalConsts = {
+  theme: {
+    isDarkMode: { title: 'Dark Mode', parent: 'choseSystem', parentValue: false },
+    trueDarkMode: { title: 'True Dark Mode' },
+    choseSystem: { title: 'Use System Appearance' },
+  },
   fontSizes: {
-    gurmukhi: 'Gurmukhi',
-    eng: 'English',
-    teeka: 'Teeka',
-    translit: 'Transliteration',
+    gurmukhi: { title: 'Gurmukhi' },
+    eng: { title: 'English' },
+    teeka: { title: 'Teeka' },
+    translit: { title: 'Transliteration' },
   },
   displayElements: {
-    displayEng: 'English',
-    displayTeeka: 'Teeka',
-    displayTranslit: 'Transliteration',
-    displayVishraams: 'Vishraams',
+    displayEng: { title: 'English' },
+    displayTeeka: { title: 'Teeka' },
+    displayTranslit: { title: 'Transliteration' },
+    displayVishraams: { title: 'Vishraams', separator: true },
   },
   sources: {
-    vishraamSource: 'Vishraams Source',
+    vishraamSource: { title: 'Vishraams Source', menu: vishraamList },
   },
   searchPreferences: {
-    baniLength: 'Bani Length',
+    baniLength: { title: 'Bani Length', menu: baniList, subheading: '*Note: This will not affect the length of banis already added' },
   },
 };
+
 export {
-  ViewerSettings, MenuItems, TextConsts, Dividers, Subheading,
+  ViewerSettings, Settings, GlobalConsts,
 };

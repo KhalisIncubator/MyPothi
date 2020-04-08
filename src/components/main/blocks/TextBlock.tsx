@@ -26,7 +26,9 @@ const TextBlock: React.FC<Props> = ( {
 } ) => {
   const [ singularMod ] = mod;
   const theme = useTheme();
-  const isDarkMode = useMainStoreState( ( store ) => store.themeModel.isDarkMode );
+  const isDarkMode = useMainStoreState( ( store ) => store.themeModel.theme.isDarkMode );
+  const isTrueDark = useMainStoreState( ( store ) => store.themeModel.theme.trueDarkMode );
+
   const isGurmukhi = type === 'Teeka';
   const isPangtee = type === 'Pangtee';
   const modStyle: any = useMemo( () => {
@@ -45,7 +47,7 @@ const TextBlock: React.FC<Props> = ( {
   const ViewStyle = StyleSheet.flatten(
     [
       styles.View,
-      isMainLine ? ( isDarkMode ? styles.DarkMainLine : styles.MainLine ) : {},
+      isMainLine ? ( isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine ) ) : {},
       isSelected ? styles.Selected : {},
     ],
   );
@@ -130,6 +132,9 @@ const styles = StyleSheet.create( {
   },
   YamkiVishraam: {
     color: '#458B00',
+  },
+  trueDarkLine: {
+    backgroundColor: '#2C2F33',
   },
 } );
 export default TextBlock;

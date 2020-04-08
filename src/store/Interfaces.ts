@@ -12,6 +12,11 @@ interface Sources {
     // translationLang: 'English' | 'Spanish'
     // translitLang: 'English' | 'Hindi'
 }
+interface Theme {
+    isDarkMode: boolean,
+    trueDarkMode: boolean,
+    choseSystem: boolean,
+}
 interface SearchPrefs {
     baniLength: lengthType
 }
@@ -34,8 +39,8 @@ export type Models = 'currentModel' | 'pothiModel' | 'viewerModel';
 type Element = 'Pangtee' | 'Eng' | 'Teeka' | 'Translit' | null;
 
 export interface ThemeModel {
-    isDarkMode: boolean,
-    updateDarkMode: Action<ThemeModel>
+    theme: Theme,
+    updateTheme: Action<ThemeModel, string>
 }
 export interface CurrentModel {
     currentName: string[];
