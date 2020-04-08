@@ -105,6 +105,7 @@ const Edit = ( { route } ) => {
                                     </>
                                     )
                                     : (
+                                <>
                                   <IconButton
                                     {...props}
                                     color={theme.colors.primary}
@@ -112,9 +113,8 @@ const Edit = ( { route } ) => {
                                     onPress={() => {
                                       updateEditing( ( prev ) => ( { ...prev, name: data[0], id: data[1] } ) );
                                     }}
-                                    /> )
-                                }
-                                <IconButton
+                                    />
+                                     <IconButton
                                     {...props}
                                     color="red"
                                     icon="minus-circle"
@@ -130,6 +130,8 @@ const Edit = ( { route } ) => {
                                       }
                                     }}
                                 />
+                              </> )
+                                }
                                 </View>
                             )}
                         />
