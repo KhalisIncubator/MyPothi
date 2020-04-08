@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  createStore, action, persist, thunk, computed,
+  createStore, action, persist, thunk, computed, actionOn,
 } from 'easy-peasy';
 import {
   StoreModel,
@@ -21,13 +21,28 @@ import {
   createModification,
   existsModification,
   deleteModification,
+  updatePothi,
 } from '../database/LocalDatabase';
 import AsyncStore from './PersistStore';
 import { loadBani, loadShabad } from '../database/BanidbApi';
 
 const themeModel: ThemeModel = {
-  isDarkMode: false,
-  updateDarkMode: action( ( state ) => { state.isDarkMode = !state.isDarkMode; } ),
+  theme: {
+    choseSystem: false,
+    isDarkMode: false,
+    trueDarkMode: false,
+  },
+  updateTheme: action( ( state, payload ) => {
+    if ( payload === 'isDarkMode' && !state.theme.isDarkMode ) state.theme.trueDarkMode = false;
+    if ( payload === 'trueDarkMode' && !state.theme.trueDarkMode ) state.theme.isDarkMode = false;
+    if ( payload === 'choseSystem' && state.theme.choseSystem ) {
+      state.theme.isDarkMode = false;
+      state.theme.trueDarkMode = false;
+    }
+
+
+    state.theme[payload] = !state.theme[payload];
+  } ),
 };
 const currentModel: CurrentModel = {
   currentName: fetchAllPothis()[0],
@@ -97,11 +112,24 @@ const currentModel: CurrentModel = {
 
     actions.addedEntry( [ id, mainLine, lines, type ] );
   } ),
+
+  onNameChange: actionOn(
+    ( actions, storeActions ) => storeActions.pothiModel.renamePothi,
+    // handler:
+    ( state ) => {
+      const [ newName ] = fetchAllPothis().filter( ( name ) => name[1] === state.currentName[1] );
+      state.currentName = newName;
+    },
+  ),
 };
 
 const pothiModel: PothiModel = {
   pothiNames: fetchAllPothis(),
 
+  renamePothi: action( ( state, [ name, id, newName ] ) => {
+    updatePothi( name, id )( 'name', newName );
+    state.pothiNames = fetchAllPothis();
+  } ),
   updatePothis: action( ( state ) => {
     state.pothiNames = fetchAllPothis();
   } ),

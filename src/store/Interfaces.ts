@@ -1,5 +1,7 @@
 /* eslint-disable import/extensions */
-import { Action, Thunk, Computed } from 'easy-peasy';
+import {
+  Action, Thunk, Computed, ActionOn,
+} from 'easy-peasy';
 import {
   QueryType, entryObj, pothiEntry, ModType, lengthType,
 } from '../../types/types';
@@ -11,6 +13,11 @@ interface Sources {
     // teeakSource: 'FT' | 'SS',
     // translationLang: 'English' | 'Spanish'
     // translitLang: 'English' | 'Hindi'
+}
+interface Theme {
+    isDarkMode: boolean,
+    trueDarkMode: boolean,
+    choseSystem: boolean,
 }
 interface SearchPrefs {
     baniLength: lengthType
@@ -34,8 +41,8 @@ export type Models = 'currentModel' | 'pothiModel' | 'viewerModel';
 type Element = 'Pangtee' | 'Eng' | 'Teeka' | 'Translit' | null;
 
 export interface ThemeModel {
-    isDarkMode: boolean,
-    updateDarkMode: Action<ThemeModel>
+    theme: Theme,
+    updateTheme: Action<ThemeModel, string>
 }
 export interface CurrentModel {
     currentName: string[];
@@ -51,11 +58,14 @@ export interface CurrentModel {
 
     addEntry: Thunk<CurrentModel, [number, string, pothiEntry], Injections,
     StoreModel>
+
+    onNameChange: ActionOn<CurrentModel, StoreModel>;
 }
 
 export interface PothiModel {
     pothiNames: string[][];
 
+    renamePothi: Action<PothiModel, [string, string, string]>;
     updatePothis: Action<PothiModel>;
     createPothi: Action<PothiModel, string>;
     deletePothi: Action<PothiModel, [string, string]>;
