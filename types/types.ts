@@ -64,6 +64,8 @@ export type VishraamType = 'sttm' | 'sttm2' | 'ig';
 
 // dynamic settings
 
+export type SettingType = 'font' | 'switch' | 'menu';
+
 type MenuItem = {
   [key: string]: string
 }
@@ -74,9 +76,22 @@ type Setting = {
   separator?: boolean,
   parent?: string,
   parentValue?: boolean,
+  overrideType?: string
  }
 export interface SettingsConsts {
   [key: string]: {
     [key: string]: Setting
   };
+}
+
+export interface SettingArray {
+  title: string,
+  values: string,
+  updater: string,
+  type: SettingType
+}
+export interface SettingSection {
+  setting: SettingArray[],
+  values: string,
+  updaters: string,
 }

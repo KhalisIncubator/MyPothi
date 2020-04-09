@@ -1,12 +1,14 @@
 import { wrappedModifiers } from './components/main/SettingsComponents';
-import { SettingsConsts } from '../types/types';
+import {
+  SettingsConsts, SettingType, SettingArray, SettingSection,
+} from '../types/types';
 
-const mapToComponent = ( type ) => wrappedModifiers[type];
+const mapToComponent = ( type: SettingType ) => wrappedModifiers[type];
 
 export default mapToComponent;
 
 
-const ThemeSettings = [
+const ThemeSettings: SettingArray[] = [
   {
     title: 'Theme',
     values: 'theme',
@@ -16,7 +18,7 @@ const ThemeSettings = [
 ];
 // stuff relating to viewerModel (excludes stuff from themeModel)
 // fontSizes, displayElements, baniLength, sources => values related to each section
-const ViewerSettings = [
+const ViewerSettings: SettingArray[] = [
   {
     title: 'Font Size',
     values: 'fontSizes',
@@ -43,7 +45,7 @@ const ViewerSettings = [
   },
 ];
 
-const Settings = [
+const Settings: SettingSection[] = [
   { setting: ThemeSettings, values: 'themeValues', updaters: 'themeUpdaters' },
   { setting: ViewerSettings, values: 'viewerValues', updaters: 'viewerUpdaters' },
 ];
