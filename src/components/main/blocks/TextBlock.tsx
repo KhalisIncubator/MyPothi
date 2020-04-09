@@ -105,7 +105,6 @@ const TextBlock: React.FC<Props> = ( {
   );
 };
 
-
 const styles = StyleSheet.create( {
   DarkMainLine: {
     backgroundColor: '#69707a',
@@ -114,8 +113,9 @@ const styles = StyleSheet.create( {
     paddingVertical: 3,
   },
   FullVishraam: {
-    color: '#ec9900',
+    color: '#237fad',
   },
+  // #136983
   Gurmukhi: {
     paddingVertical: 3,
   },
@@ -137,8 +137,12 @@ const styles = StyleSheet.create( {
     width: '100%',
   },
   YamkiVishraam: {
-    color: '#458B00',
+    // color: '#739968',
+    color: '#688d5d',
+
   },
+  //
+  // #cc7100
   trueDarkLine: {
     backgroundColor: '#2C2F33',
   },
