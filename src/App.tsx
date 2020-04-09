@@ -74,7 +74,6 @@ const App = () => {
       SplashScreen.hide();
     }
   }, [ rehydrated ] );
-
   return (
     <PaperProvider
     theme={decideTheme}

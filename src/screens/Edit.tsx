@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
@@ -36,7 +36,6 @@ const Edit = ( { route } ) => {
     deletePothi( [ name, gutkaID ] );
     updateShow( true );
   };
-  useEffect( () => { console.log( editing ); }, [ editing ] );
   return (
     <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
         <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>

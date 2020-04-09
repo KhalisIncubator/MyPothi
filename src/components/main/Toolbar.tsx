@@ -75,11 +75,11 @@ const Toolbar = ( {
                             }}
                         />
                         <IconButton
-                        icon ="x"
-                        size={20}
-                        onPress={() => {
-                          deleteMod( { lineid, element, parentID } );
-                        }}
+                          icon ="x"
+                          size={20}
+                          onPress={() => {
+                            deleteMod( { lineid, element, parentID } );
+                          }}
                         />
                     </View>
                 )}

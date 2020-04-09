@@ -84,6 +84,7 @@ const updatePothi = ( currentName: string, pothiID: string ) => {
   return ( key: string, value: any ) => {
     localRealm.write( () => {
       pothi[key] = value;
+      pothi.items.forEach( ( item ) => { item.parentPothi = value; } );
     } );
   };
 };

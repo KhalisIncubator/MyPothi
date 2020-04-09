@@ -28,14 +28,6 @@ const SettingsScreen = ( ) => {
   };
   return (
         <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }} >
-          {/* <Card theme={theme} style={{ margin: 5 }}>
-              <Card.Title title="Theme" />
-              <Card.Content>
-                 <SettingSection text="Dark Theme" subheading={null}>
-                   <SwitchModifier value={isDarkMode} updater={() => { updateTheme( 'isDarkMode' ); }} theme={theme} objKey={null}/>
-                 </SettingSection>
-              </Card.Content>
-            </Card> */}
           {Settings.map( ( { setting, values: valueObj, updaters } ) => setting.map( ( settingSection, index ) => {
             const {
               title, values, updater, type,
