@@ -107,13 +107,15 @@ const TextBlock: React.FC<Props> = ( {
 
 const styles = StyleSheet.create( {
   DarkMainLine: {
-    backgroundColor: '#69707a',
+    backgroundColor: '#52555a',
   },
   English: {
     paddingVertical: 3,
   },
   FullVishraam: {
-    color: '#237fad',
+    // color: '#e14500', alt orange
+    // color: '#ea4600', base for main vishraams
+    color: '#d2470b',
   },
   // #136983
   Gurmukhi: {
@@ -137,10 +139,16 @@ const styles = StyleSheet.create( {
     width: '100%',
   },
   YamkiVishraam: {
-    // color: '#739968',
-    color: '#688d5d',
 
+    // color: '#237fad', dark blue, base for jamki
+    color: '#417d9a',
   },
+  // TODO: add when gursewak db is added
+  // ThamkiVishraam: {
+  // color: '#739968', light green color: now used as base for thamki
+  // color: '#688d5d',
+  //   color: '#537e47',
+  // },
   //
   // #cc7100
   trueDarkLine: {
