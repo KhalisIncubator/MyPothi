@@ -37,7 +37,7 @@ const Edit = ( { route } ) => {
     updateShow( true );
   };
   return (
-    <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
+    <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
         <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
             {type === 'Shabad'
                 && currentItems.map( ( item ) => (

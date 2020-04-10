@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState, useEffect, useCallback,
+} from 'react';
 import {
-  Searchbar, Menu, Button, Text, useTheme,
+  Searchbar, Menu, Text, useTheme, Button, Title,
 } from 'react-native-paper';
-import { View, StyleSheet, ScrollView } from 'react-native';
-
+import {
+  View, StyleSheet, ScrollView, SafeAreaView,
+} from 'react-native';
+import Modal from 'react-native-modal';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { SearchCtx, AddedCtx } from '../store/context_stores/Contexts';
@@ -23,6 +27,7 @@ const Search = () => {
 
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
+  const { showModal, text } = useValues( 'modalModel' );
   const { currentItems } = useValues( 'currentModel' );
   const { addEntry } = useUpdaters( 'currentModel' );
 
@@ -56,9 +61,24 @@ const Search = () => {
       cancelSearch = true;
     };
   }, [ searchQuery, net.isConnected, searchType ] );
+  useEffect( () => {
+    console.log( showModal );
+  } );
 
   return (
-        <View style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
+    <SafeAreaView style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
+      <Modal
+        testID="modal"
+        isVisible={showModal}
+        customBackdrop={
+          <SafeAreaView style={{ backgroundColor: 'gray' }}>
+            <Title style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }} >
+              {text}
+            </Title>
+          </SafeAreaView>
+        } >
+          <View />
+        </Modal>
         <View style={{ padding: 5 }}>
               <Searchbar
                   placeholder="Search"
@@ -109,8 +129,8 @@ const Search = () => {
                             {SEARCH_TEXTS[searchType]}
                         </Button>
                     }>
-                    {Object.entries( SEARCH_TEXTS ).map( ( text ) => {
-                      const [ id, desc ] = text;
+                    {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {
+                      const [ id, desc ] = searchText;
                       const newID = parseInt( id, 10 );
                       return (
                             <Menu.Item
@@ -151,7 +171,9 @@ const Search = () => {
                       onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
                     } )}
             </ScrollView>
-        </View>
+      </SafeAreaView>
+
+
   );
 };
 

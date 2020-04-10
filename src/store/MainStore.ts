@@ -45,10 +45,8 @@ const modalModel: ModalModel = {
     async ( actions, target ) => {
       const [ , , type ] = target.payload;
       if ( target.type === '@thunk.currentModel.addEntry(start)' ) {
-        console.log( 'start' );
         actions.toggleModal( [ true, type ] );
       } else if ( target.type === '@thunk.currentModel.addEntry(success)' ) {
-        console.log( 'end' );
         actions.toggleModal( [ false, '' ] );
       }
     },
