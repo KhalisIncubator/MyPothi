@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.WahegurooNetwork.MyPothi."
+        applicationId "com.WahegurooNetwork.MyPothi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
