@@ -25,7 +25,7 @@ const theme = {
     accent: '#99AAB5',
     backdrop: '#FFA500',
     background: '#FFF',
-    surface: '#cdd7dd',
+    surface: '#c6cfd4',
     text: '#000',
     notification: '#FFFFFF',
 
