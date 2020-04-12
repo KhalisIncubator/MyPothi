@@ -42,11 +42,13 @@ const TextBlock: React.FC<Props> = ( {
   }, [ singularMod ] );
 
   const mainLineHighlight = useMemo( () => {
-    if ( useSystem ) return colors === 'dark' ? ( isTrueDark ? styles.trueDarkLine : styles.DarkMainLine ) : styles.MainLine;
-    return isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine );
-  }, [ isDarkMode, isTrueDark, useSystem ] );
-  // let pangteeWithVishraams;
-  // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
+    if ( isMainLine ) {
+      if ( useSystem ) return colors === 'dark' ? ( isTrueDark ? styles.trueDarkLine : styles.DarkMainLine ) : styles.MainLine;
+      return isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine );
+    }
+    return null;
+  }, [ isDarkMode, isTrueDark, useSystem, colors ] );
+
   const pangteeWithVishraams = useMemo( () => (
     source && vishraams ? mapVishraams( value, vishraams, source ) : null
   ), [ value, source ] );

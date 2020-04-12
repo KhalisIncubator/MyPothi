@@ -2,7 +2,7 @@ import React, {
   useState, useEffect, useCallback,
 } from 'react';
 import {
-  Searchbar, Menu, Text, useTheme, Button, Title,
+  Searchbar, Menu, Text, useTheme, Button, Paragraph,
 } from 'react-native-paper';
 import {
   View, StyleSheet, ScrollView, SafeAreaView,
@@ -61,9 +61,6 @@ const Search = () => {
       cancelSearch = true;
     };
   }, [ searchQuery, net.isConnected, searchType ] );
-  useEffect( () => {
-    console.log( showModal );
-  } );
 
   return (
     <SafeAreaView style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
@@ -72,9 +69,9 @@ const Search = () => {
         isVisible={showModal}
         customBackdrop={
           <SafeAreaView style={{ backgroundColor: 'gray' }}>
-            <Title style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }} >
+            <Paragraph style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }} >
               {text}
-            </Title>
+            </Paragraph>
           </SafeAreaView>
         } >
           <View />
