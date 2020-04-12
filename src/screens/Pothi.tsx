@@ -54,48 +54,51 @@ const Gutka = () => {
 
   return (
     <TapGestureHandler
-    ref={doubleTapRef}
-    onHandlerStateChange={handleTap}
-    numberOfTaps={2}>
-    <View style={{ flex: 1 }}>
-      <View style={styles.View}>
+      ref={doubleTapRef}
+      onHandlerStateChange={handleTap}
+      numberOfTaps={2}
+    >
+      <View style={{ flex: 1 }}>
+        <View style={styles.View}>
           <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
-          {isLoadingData && (
+            {isLoadingData && (
             <>
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
-                      <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
+              <ShimmeringLine />
 
 
             </>
+            )}
+            {!isLoadingData
+            && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]} />}
+
+          </View>
+
+          {isHighlighterVis && (
+          <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo} />
           )}
-          {!isLoadingData
-            && <Viewer currentItems={currentItems} currentLines={shabads} currentMods={[]}/>}
-
+          {!isFullScreen
+         && (
+         <Toolbar
+           toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
+           style={styles.Footer}
+           showMain={isEditMode}
+           updateMode={updateEditMode}
+           currentLine={selectedInfo}
+         />
+         )}
+        </View>
       </View>
-
-      {isHighlighterVis && (
-                  <HighlightSelector style={styles.Highlighter} currentLine={selectedInfo}/>
-      )}
-        {!isFullScreen
-         && <Toolbar
-              toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
-              style={styles.Footer}
-              showMain={isEditMode}
-              updateMode={updateEditMode}
-              currentLine={selectedInfo}
-            />}
-    </View>
-  </View>
-  </TapGestureHandler>
+    </TapGestureHandler>
   );
 };
 const styles = StyleSheet.create( {
@@ -119,8 +122,8 @@ const styles = StyleSheet.create( {
 } );
 
 const withEditCtx = () => (
-    <EditCtx.Provider>
-        <Gutka />
-    </EditCtx.Provider>
+  <EditCtx.Provider>
+    <Gutka />
+  </EditCtx.Provider>
 );
 export default withEditCtx;

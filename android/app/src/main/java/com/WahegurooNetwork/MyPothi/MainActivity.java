@@ -1,4 +1,4 @@
-package com.mypothi;
+package com.WahegurooNetwork.MyPothi;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // Import this.

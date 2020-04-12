@@ -1,6 +1,7 @@
+/* eslint-disable default-case */
 /* eslint-disable import/extensions */
 import {
-  createStore, action, persist, thunk, computed, actionOn,
+  createStore, action, persist, thunk, computed, actionOn, thunkOn,
 } from 'easy-peasy';
 import {
   StoreModel,
@@ -8,6 +9,7 @@ import {
   PothiModel,
   ViewerModel,
   ThemeModel,
+  ModalModel,
 } from './Interfaces';
 
 import {
@@ -26,6 +28,30 @@ import {
 import AsyncStore from './PersistStore';
 import { loadBani, loadShabad } from '../database/BanidbApi';
 
+
+const modalModel: ModalModel = {
+  showModal: false,
+  text: '',
+
+  toggleModal: action( ( state, [ bool, type ] ) => {
+    state.showModal = bool;
+    state.text = `Downloading ${type}...`;
+  } ),
+  onEntryAdded: thunkOn(
+    ( actions, storeActions ) => [
+      storeActions.currentModel.addEntry.startType,
+      storeActions.currentModel.addEntry.successType,
+    ],
+    async ( actions, target ) => {
+      const [ , , type ] = target.payload;
+      if ( target.type === '@thunk.currentModel.addEntry(start)' ) {
+        actions.toggleModal( [ true, type ] );
+      } else if ( target.type === '@thunk.currentModel.addEntry(success)' ) {
+        actions.toggleModal( [ false, '' ] );
+      }
+    },
+  ),
+};
 const themeModel: ThemeModel = {
   theme: {
     choseSystem: false,
@@ -115,7 +141,6 @@ const currentModel: CurrentModel = {
 
   onNameChange: actionOn(
     ( actions, storeActions ) => storeActions.pothiModel.renamePothi,
-    // handler:
     ( state ) => {
       const [ newName ] = fetchAllPothis().filter( ( name ) => name[1] === state.currentName[1] );
       state.currentName = newName;
@@ -181,6 +206,7 @@ const viewerModel: ViewerModel = {
 };
 
 const storeModel: StoreModel = {
+  modalModel,
   themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
   currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
   pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),

@@ -7,11 +7,11 @@ module.exports = {
       'airbnb',
       'plugin:react-native/all',
       'plugin:@typescript-eslint/recommended',
-      'prettier/react',
+      "plugin:react/recommended",
       'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-native', 'react-hooks'],
+  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint'],
   settings: {
       'import/resolver': {
           typescript: {},

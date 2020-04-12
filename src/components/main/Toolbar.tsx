@@ -18,73 +18,75 @@ const Toolbar = ( {
   const [ lineid, element, parentID ] = currentLine;
   return (
 
-            <SafeAreaView
-                style={[ styles.View, { backgroundColor: theme.colors.backdrop }, style ]}>
-                <View
-                    style={[
-                      styles.Header,
-                      { backgroundColor: theme.colors.backdrop },
-                    ]}>
-                    <IconButton
-                        icon={showMain ? 'chevron-down' : 'chevron-up'}
-                        onPress={() => {
-                          updateMode();
-                        }}
-                    />
-                    <Text>Customize</Text>
-                </View>
-                {showMain && (
-                    <View style={[ styles.Main, { backgroundColor: theme.colors.surface } ]}>
-                        <IconButton
-                            icon="bold"
-                            size={20}
-                            onPress={() => {
-                              createMod( {
-                                lineid, element, type: 'bold', value: true, parentID,
-                              } );
-                            }}
-                        />
-                        <IconButton
-                            icon="plus-square"
-                            size={20}
-                            onPress={() => {
-                              const newSize = getCurrentFontSize( currentLine,
-                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
-                              createMod( {
-                                lineid, element, type: 'fontSize', value: newSize, parentID,
-                              } );
-                            }}
-                        />
-                        <IconButton
-                            icon="minus-square"
-                            size={20}
-                            onPress={() => {
-                              const getSize = getCurrentFontSize( currentLine,
-                                fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
-                              const newSize = getSize <= 0 ? null : getSize - 1;
-                              createMod( {
-                                lineid, element, type: 'fontSize', value: newSize, parentID,
-                              } );
-                            }}
-                        />
-                        <IconButton
-                            icon="edit-2"
-                            size={20}
-                            onPress={() => {
-                              toggleHighligher();
-                            }}
-                        />
-                        <IconButton
-                        icon ="x"
-                        size={20}
-                        onPress={() => {
-                          deleteMod( { lineid, element, parentID } );
-                        }}
-                        />
-                    </View>
-                )}
-                {!showMain && <View />}
-            </SafeAreaView>
+    <SafeAreaView
+      style={[ styles.View, { backgroundColor: theme.colors.backdrop }, style ]}
+    >
+      <View
+        style={[
+          styles.Header,
+          { backgroundColor: theme.colors.backdrop },
+        ]}
+      >
+        <IconButton
+          icon={showMain ? 'chevron-down' : 'chevron-up'}
+          onPress={() => {
+            updateMode();
+          }}
+        />
+        <Text>Customize</Text>
+      </View>
+      {showMain && (
+      <View style={[ styles.Main, { backgroundColor: theme.colors.surface } ]}>
+        <IconButton
+          icon="bold"
+          size={20}
+          onPress={() => {
+            createMod( {
+              lineid, element, type: 'bold', value: true, parentID,
+            } );
+          }}
+        />
+        <IconButton
+          icon="plus-square"
+          size={20}
+          onPress={() => {
+            const newSize = getCurrentFontSize( currentLine,
+              fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
+            createMod( {
+              lineid, element, type: 'fontSize', value: newSize, parentID,
+            } );
+          }}
+        />
+        <IconButton
+          icon="minus-square"
+          size={20}
+          onPress={() => {
+            const getSize = getCurrentFontSize( currentLine,
+              fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
+            const newSize = getSize <= 0 ? null : getSize - 1;
+            createMod( {
+              lineid, element, type: 'fontSize', value: newSize, parentID,
+            } );
+          }}
+        />
+        <IconButton
+          icon="edit-2"
+          size={20}
+          onPress={() => {
+            toggleHighligher();
+          }}
+        />
+        <IconButton
+          icon="x"
+          size={20}
+          onPress={() => {
+            deleteMod( { lineid, element, parentID } );
+          }}
+        />
+      </View>
+      )}
+      {!showMain && <View />}
+    </SafeAreaView>
   );
 };
 

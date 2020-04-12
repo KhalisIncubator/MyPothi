@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  Action, Thunk, Computed, ActionOn,
+  Action, Thunk, Computed, ActionOn, ThunkOn,
 } from 'easy-peasy';
 import {
   QueryType, entryObj, pothiEntry, ModType, lengthType,
@@ -108,7 +108,15 @@ export interface FullScreenModel {
     isFullScreen: boolean,
     toggleMode: Action<FullScreenModel>
 }
+export interface ModalModel {
+    showModal: boolean,
+    text: string,
+
+    toggleModal: Action<ModalModel, [boolean, string?]>
+    onEntryAdded: ThunkOn<ModalModel, Injections, StoreModel>;
+}
 export interface StoreModel {
+    modalModel: ModalModel;
     themeModel : ThemeModel;
     currentModel: CurrentModel;
     pothiModel: PothiModel;

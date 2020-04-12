@@ -11,42 +11,43 @@ import {
 const wrapHOC = ( SettingModifier ) => ( { theme, value, ...props } ) => <SettingModifier theme={theme} value={value} {...props} />;
 
 const SettingsCard = ( { children, title, theme } ) => (
-      <Card theme={theme} style={styles.Card}>
-        <Card.Title title={title} />
-          <Card.Content>
-            { children }
-          </Card.Content>
-      </Card>
+  <Card theme={theme} style={styles.Card}>
+    <Card.Title title={title} />
+    <Card.Content>
+      { children }
+    </Card.Content>
+  </Card>
 );
 export default SettingsCard;
 
 const SettingSection = ( { text, children, subheading } ) => (
   <>
-  <View style={{
-    display: 'flex', flexDirection: 'column', width: '100%',
-  }}>
-    <View style={styles.MainViewLine}>
-      <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
-      <View style={{ alignSelf: 'flex-end' }}>
-      <View style={styles.Buttons}>
-        { children }
-      </View>
+    <View style={{
+      display: 'flex', flexDirection: 'column', width: '100%',
+    }}
+    >
+      <View style={styles.MainViewLine}>
+        <Subheading style={{ paddingRight: 10 }}>{text}</Subheading>
+        <View style={{ alignSelf: 'flex-end' }}>
+          <View style={styles.Buttons}>
+            { children }
+          </View>
+        </View>
       </View>
     </View>
-  </View>
-  <View style={{ justifyContent: 'center' }}>
-    {subheading && <Paragraph style={{ fontSize: 14 }}>{subheading}</Paragraph>}
+    <View style={{ justifyContent: 'center' }}>
+      {subheading && <Paragraph style={{ fontSize: 14 }}>{subheading}</Paragraph>}
     </View>
   </>
 );
 const SwitchModifier = ( {
   value, updater, theme, objKey,
 } ) => (
-    <Switch
-      value={value}
-      onValueChange={() => { objKey ? updater( objKey ) : updater(); }}
-      color={theme.colors.backdrop}
-    />
+  <Switch
+    value={value}
+    onValueChange={() => { objKey ? updater( objKey ) : updater(); }}
+    color={theme.colors.backdrop}
+  />
 );
 const MenuModifier = ( {
   value, updater, theme, list, objKey,
@@ -54,26 +55,29 @@ const MenuModifier = ( {
   const [ isVisible, toggler ] = useState( false );
   return (
     <Menu
-    visible={isVisible}
-    onDismiss={() => toggler( false )}
-    anchor={
+      visible={isVisible}
+      onDismiss={() => toggler( false )}
+      anchor={(
         <Button
-            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
-            color={theme.colors.text}
-            onPress={() => toggler( true )}>
-            {list[value]}
+          style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+          color={theme.colors.text}
+          onPress={() => toggler( true )}
+        >
+          {list[value]}
         </Button>
-    }>
+      )}
+    >
       {
         list
           ? Object.entries( list ).map( ( [ key, itemVal ] ) => (
-          <Menu.Item
-            onPress={() => {
-              toggler( false );
-              updater( [ objKey, key ] );
-            }}
-            title={itemVal}
-        />
+            <Menu.Item
+              onPress={() => {
+                toggler( false );
+                updater( [ objKey, key ] );
+              }}
+              title={itemVal}
+              key={key}
+            />
           ) ) : []
       }
     </Menu>
@@ -90,8 +94,10 @@ const IncrementModifier = ( {
       icon="plus"
       color={theme.colors.backdrop}
       theme={{ roundness: 0 }}
-      onPress={() => { updater( [ objKey, value + 1 ] ); }} compact>
-        {}
+      onPress={() => { updater( [ objKey, value + 1 ] ); }}
+      compact
+    >
+      {}
     </Button>
     <Button
       mode="contained"
@@ -99,8 +105,9 @@ const IncrementModifier = ( {
       color={theme.colors.backdrop}
       theme={{ roundness: 0 }}
       onPress={() => { updater( [ objKey, value - 1 ] ); }}
-      compact>
-        {}
+      compact
+    >
+      {}
     </Button>
   </View>
 );

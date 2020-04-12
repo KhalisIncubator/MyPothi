@@ -1,4 +1,4 @@
-package com.mypothi; // Change this to your package name.
+package com.WahegurooNetwork.MyPothi; // Change this to your package name.
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -42,11 +42,13 @@ const TextBlock: React.FC<Props> = ( {
   }, [ singularMod ] );
 
   const mainLineHighlight = useMemo( () => {
-    if ( useSystem ) return colors === 'dark' ? ( isTrueDark ? styles.trueDarkLine : styles.DarkMainLine ) : styles.MainLine;
-    return isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine );
-  }, [ isDarkMode, isTrueDark, useSystem ] );
-  // let pangteeWithVishraams;
-  // if ( isPangtee ) pangteeWithVishraams = mapVishraams( value, vishraams, source );
+    if ( isMainLine ) {
+      if ( useSystem ) return colors === 'dark' ? ( isTrueDark ? styles.trueDarkLine : styles.DarkMainLine ) : styles.MainLine;
+      return isTrueDark ? styles.trueDarkLine : ( isDarkMode ? styles.DarkMainLine : styles.MainLine );
+    }
+    return null;
+  }, [ isDarkMode, isTrueDark, useSystem, colors ] );
+
   const pangteeWithVishraams = useMemo( () => (
     source && vishraams ? mapVishraams( value, vishraams, source ) : null
   ), [ value, source ] );
@@ -70,52 +72,59 @@ const TextBlock: React.FC<Props> = ( {
     ],
   );
   return (
-        <TouchableWithoutFeedback onPress={onClick} >
-          <View style={ViewStyle} pointerEvents="box-none">
-            {
+    <TouchableWithoutFeedback onPress={onClick}>
+      <View style={ViewStyle} pointerEvents="box-none">
+        {
               pangteeWithVishraams ? (
                 <Text
-                selectable={false}
-                style={textStyle}>
+                  selectable={false}
+                  style={textStyle}
+                >
                   {
-                    pangteeWithVishraams.map( ( section, index ) => ( <Text
-                    style={
+                    pangteeWithVishraams.map( ( section, index ) => (
+                      <Text
+                        style={
                       section.type === 'line'
                         ? {}
                         : ( section.type === 'y'
                           ? styles.YamkiVishraam
                           : styles.FullVishraam )
                     }
-                    key={section.data}>
-                       {`${section.data} `}
-                      </Text> ) )
+                        key={section.data}
+                      >
+                        {`${section.data} `}
+                      </Text>
+                    ) )
                   }
                 </Text>
               )
                 : (
-                <Text
-                  selectable={false}
-                  style={textStyle}>
-                  {value}
-                </Text>
+                  <Text
+                    selectable={false}
+                    style={textStyle}
+                  >
+                    {value}
+                  </Text>
                 )
             }
-            </View>
-        </TouchableWithoutFeedback>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
-
 const styles = StyleSheet.create( {
   DarkMainLine: {
-    backgroundColor: '#69707a',
+    backgroundColor: '#52555a',
   },
   English: {
     paddingVertical: 3,
   },
   FullVishraam: {
-    color: '#ec9900',
+    // color: '#e14500', alt orange
+    // color: '#ea4600', base for main vishraams
+    color: '#d2470b',
   },
+  // #136983
   Gurmukhi: {
     paddingVertical: 3,
   },
@@ -137,8 +146,18 @@ const styles = StyleSheet.create( {
     width: '100%',
   },
   YamkiVishraam: {
-    color: '#458B00',
+
+    // color: '#237fad', dark blue, base for jamki
+    color: '#417d9a',
   },
+  // TODO: add when gursewak db is added
+  // ThamkiVishraam: {
+  // color: '#739968', light green color: now used as base for thamki
+  // color: '#688d5d',
+  //   color: '#537e47',
+  // },
+  //
+  // #cc7100
   trueDarkLine: {
     backgroundColor: '#2C2F33',
   },

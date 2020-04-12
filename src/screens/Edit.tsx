@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
@@ -36,146 +36,152 @@ const Edit = ( { route } ) => {
     deletePothi( [ name, gutkaID ] );
     updateShow( true );
   };
-  useEffect( () => { console.log( editing ); }, [ editing ] );
   return (
-    <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
-        <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
-            {type === 'Shabad'
+    <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
+      <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
+        {type === 'Shabad'
                 && currentItems.map( ( item ) => (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={item.shabadId}>
                     <Card.Title
-                        key={`${item.shabadId}/${item.entryID}`}
-                        titleStyle={style.CardTitleG}
-                        title={`${item.mainLine}`}
-                        subtitle={`Shaabd ID: ${item.shabadId}`}
+                      key={`${item.shabadId}/${item.entryID}`}
+                      titleStyle={style.CardTitleG}
+                      title={`${item.mainLine}`}
+                      subtitle={`Shaabd ID: ${item.shabadId}`}
+                      left={( props ) => (
+                        <Avatar.Icon {...props} icon="book" />
+                      )}
+                      right={( props ) => (
+                        <>
+                          <IconButton
+                            {...props}
+                            color="red"
+                            icon="minus-circle"
+                            onPress={() => {
+                              handleRemoveShabad(
+                                item.entryID,
+                              );
+                            }}
+                          />
+                        </>
+                      )}
+                    />
+                  </Card>
+                ) )}
+        {type === 'Pothi'
+                && (
+                <>
+                  {pothiNames.map( ( data, index ) => (
+                    <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={data[1]}>
+                      <Card.Title
+                        key={data[1]} //
+                        title={`${data[0]}`}
                         left={( props ) => (
-                            <Avatar.Icon {...props} icon="book" />
+                          <Avatar.Icon {...props} icon="book" />
                         )}
                         right={( props ) => (
-                            <>
-                            <IconButton
-                                {...props}
-                                color="red"
-                                icon="minus-circle"
-                                onPress={() => {
-                                  handleRemoveShabad(
-                                    item.entryID,
-                                  );
-                                }}
-                            />
-                            </>
-                        )}
-                            />
-                            </Card> ) )}
-            {type === 'Pothi'
-                && <>
-                {pothiNames.map( ( data, index ) => (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]}>
-                        <Card.Title
-                            key={data[1]} //
-                            title={ `${data[0]}`}
-                            left={( props ) => (
-                                <Avatar.Icon {...props} icon="book" />
-                            )}
-                            right={( props ) => (
-                              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                {
+                          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            {
                                   editing.name === data[0] && editing.id === data[1]
                                     ? (
-                                    <>
-                                      <IconButton
-                                      {...props}
-                                      color="green"
-                                      icon="check"
-                                      onPress={() => {
-                                        renamePothi( [ editing.name, editing.id, editedText ] );
-                                        updateText( '' );
-                                        updateEditing( { name: null, id: null } );
-                                      }}
-                                      />
-                                      <IconButton
-                                      {...props}
-                                      color="red"
-                                      icon="x"
-                                      onPress={() => {
-                                        updateText( '' );
-                                        updateEditing( { name: null, id: null } );
-                                      }}
-                                      />
-                                    </>
+                                      <>
+                                        <IconButton
+                                          {...props}
+                                          color="green"
+                                          icon="check"
+                                          onPress={() => {
+                                            renamePothi( [ editing.name, editing.id, editedText ] );
+                                            updateText( '' );
+                                            updateEditing( { name: null, id: null } );
+                                          }}
+                                        />
+                                        <IconButton
+                                          {...props}
+                                          color="red"
+                                          icon="x"
+                                          onPress={() => {
+                                            updateText( '' );
+                                            updateEditing( { name: null, id: null } );
+                                          }}
+                                        />
+                                      </>
                                     )
                                     : (
-                                <>
-                                  <IconButton
-                                    {...props}
-                                    color={theme.colors.primary}
-                                    icon="edit"
-                                    onPress={() => {
-                                      updateEditing( ( prev ) => ( { ...prev, name: data[0], id: data[1] } ) );
-                                    }}
-                                    />
-                                     <IconButton
-                                    {...props}
-                                    color="red"
-                                    icon="minus-circle"
-                                    onPress={() => {
-                                      if ( pothiNames.length === 1 ) {
-                                        updateErr( true );
-                                      } else {
-                                        handleRemoveGutka(
-                                          data[0],
-                                          data[1],
-                                          index,
-                                        );
-                                      }
-                                    }}
-                                />
-                              </> )
+                                      <>
+                                        <IconButton
+                                          {...props}
+                                          color={theme.colors.primary}
+                                          icon="edit"
+                                          onPress={() => {
+                                            updateEditing( ( prev ) => ( { ...prev, name: data[0], id: data[1] } ) );
+                                          }}
+                                        />
+                                        <IconButton
+                                          {...props}
+                                          color="red"
+                                          icon="minus-circle"
+                                          onPress={() => {
+                                            if ( pothiNames.length === 1 ) {
+                                              updateErr( true );
+                                            } else {
+                                              handleRemoveGutka(
+                                                data[0],
+                                                data[1],
+                                                index,
+                                              );
+                                            }
+                                          }}
+                                        />
+                                      </>
+                                    )
                                 }
-                                </View>
-                            )}
-                        />
-                        {
+                          </View>
+                        )}
+                      />
+                      {
 
                             editing.id === data[1]
-                            && <Card.Content style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
+                            && (
+                            <Card.Content style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
                               <Title style={{ padding: 3 }}>New Name</Title>
                               <TextInput
-                                          style={ {
-                                            color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
-                                          } }
-                                          autoCorrect={false}
-                                          placeholderTextColor="gray"
-                                          autoCompleteType="off"
-                                          placeholder="Enter Pothi Name"
-                                          underlineColorAndroid="transparent"
-                                          onChangeText={( text ) => {
-                                            updateText( text );
-                                          }}
-                                          />
+                                style={{
+                                  color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
+                                }}
+                                autoCorrect={false}
+                                placeholderTextColor="gray"
+                                autoCompleteType="off"
+                                placeholder="Enter Pothi Name"
+                                underlineColorAndroid="transparent"
+                                onChangeText={( text ) => {
+                                  updateText( text );
+                                }}
+                              />
                             </Card.Content>
+                            )
 
                         }
-                        </Card>
-                ) )}
+                    </Card>
+                  ) )}
 
                 </>
-                }
-        </ScrollView>
+                )}
+      </ScrollView>
 
-            <Snackbar
-                visible={showSnack}
-                onDismiss={() => updateShow( false )}
-                style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
-                <Text style={{ color: theme.colors.text }}>{snack}</Text>
-            </Snackbar>
-            <Snackbar
-                visible={showError}
-                onDismiss={() => updateErr( false )}
-                style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}>
-                <Text style={{ color: theme.colors.text }}>You cannot have less than one pothi!</Text>
-            </Snackbar>
-        </KeyboardAvoidingView>
+      <Snackbar
+        visible={showSnack}
+        onDismiss={() => updateShow( false )}
+        style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}
+      >
+        <Text style={{ color: theme.colors.text }}>{snack}</Text>
+      </Snackbar>
+      <Snackbar
+        visible={showError}
+        onDismiss={() => updateErr( false )}
+        style={[ style.Snack, { backgroundColor: theme.colors.surface } ]}
+      >
+        <Text style={{ color: theme.colors.text }}>You cannot have less than one pothi!</Text>
+      </Snackbar>
+    </KeyboardAvoidingView>
   );
 };
 
