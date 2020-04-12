@@ -66,10 +66,6 @@ const Search = () => {
       cancelSearch = true;
     };
   }, [ searchQuery, net.isConnected, searchType ] );
-
-  useEffect( () => {
-    console.log( showModal );
-  }, [ showModal ] );
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       <Modal

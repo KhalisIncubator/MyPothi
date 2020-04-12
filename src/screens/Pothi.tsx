@@ -90,6 +90,7 @@ const Gutka = () => {
          && (
          <Toolbar
            toggleHighligher={() => { toggleHighligher( ( prev ) => !prev ); }}
+           isHighlighterOn={isHighlighterVis}
            style={styles.Footer}
            showMain={isEditMode}
            updateMode={updateEditMode}

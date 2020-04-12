@@ -96,7 +96,7 @@ const currentModel: CurrentModel = {
     );
   } ),
   removeEntry: action( ( state, payload ) => {
-    removeFromPothi( state.currentName[0], payload );
+    removeFromPothi( state.currentName[0], payload, state.currentName[1] );
 
     state.currentItems = getCurrentItems(
       state.currentName[0],

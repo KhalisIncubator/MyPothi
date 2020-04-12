@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import Realm, { Configuration } from 'realm';
+import { storedPothi, entryObj } from '../../types/types';
 // import { loadBani, loadShabad } from './BanidbApi';
 // import { entryObj } from '../../types/types';
 
@@ -8,6 +9,7 @@ const PothiSchema = {
   primaryKey: 'pothiID',
   properties: {
     name: 'string',
+    index: 'int',
     items: 'Entry[]',
     pothiID: 'string',
   },
@@ -17,6 +19,7 @@ const EntrySchema = {
   primaryKey: 'entryID',
   properties: {
     shabadId: 'int',
+    index: 'int',
     mainLine: 'string',
     type: 'string',
     parentPothi: 'string',
@@ -49,15 +52,19 @@ const LineSchema = {
 };
 const localRealmConfig: Configuration = {
   schema: [ PothiSchema, EntrySchema, ModificationSchema, LineSchema ],
-  schemaVersion: 2,
-  // migration: async ( oldRealm, newRealm ) => {
-  //   if ( oldRealm.schemaVersion < 2 ) {
-  //     const newItems = newRealm.objects<entryObj>( 'Entry' );
-  //     for await ( const item of newItems ) {
-  //       if ( !item.lines ) item.lines = item.type === 'Bani' ? await loadBani( item.shabadId, 'long' ) : await loadShabad( item.shabadId );
-  //     }
-  //   }
-  // },
+  schemaVersion: 3,
+  migration: ( oldRealm, newRealm ) => {
+    if ( oldRealm.schemaVersion < 3 ) {
+      const newGutkas = newRealm.objects<storedPothi>( 'Pothi' );
+      newGutkas.forEach( ( pothi, index ) => {
+        pothi.index = index;
+      } );
+      const newItems = newRealm.objects<entryObj>( 'Entry' );
+      newItems.forEach( ( entry, index ) => {
+        entry.index = index;
+      } );
+    }
+  },
   // deleteRealmIfMigrationNeeded: true,
 };
 

@@ -64,7 +64,7 @@ const CustomDrawerComponent = ( props ) => {
                 )}
                 key={data[0]}
                 style={{ borderRadius: theme.roundness }}
-                focused={data[0] === currentName[0]}
+                focused={data[0] === currentName[0] && data[1] === currentName[1]}
                 activeTintColor="#ff9a00"
                 label={( { focused, color } ) => (
                   <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>

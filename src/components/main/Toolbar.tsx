@@ -9,7 +9,7 @@ import { useValues, useUpdaters } from '../../store/StateHooks';
 import { getCurrentFontSize } from '../../Functions';
 
 const Toolbar = ( {
-  showMain, updateMode, currentLine, style, toggleHighligher,
+  showMain, updateMode, currentLine, style, toggleHighligher, isHighlighterOn,
 } ) => {
   const theme = useTheme();
 
@@ -31,6 +31,9 @@ const Toolbar = ( {
           icon={showMain ? 'chevron-down' : 'chevron-up'}
           onPress={() => {
             updateMode();
+            if ( isHighlighterOn ) {
+              toggleHighligher();
+            }
           }}
         />
         <Text>Customize</Text>
