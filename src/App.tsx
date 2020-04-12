@@ -24,7 +24,7 @@ const theme = {
     primary: '#2C2F33',
     accent: '#99AAB5',
     backdrop: '#FFA500',
-    background: '#e7e7e7',
+    background: '#FFF',
     surface: '#c6cfd4',
     text: '#000',
     notification: '#FFFFFF',

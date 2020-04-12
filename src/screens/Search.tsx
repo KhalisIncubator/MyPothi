@@ -5,7 +5,7 @@ import {
   Searchbar, Menu, Text, useTheme, Button, Title,
 } from 'react-native-paper';
 import {
-  View, StyleSheet, ScrollView, SafeAreaView, ActivityIndicator,
+  View, StyleSheet, ScrollView, SafeAreaView, ActivityIndicator, Alert,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -19,11 +19,16 @@ import { useValues, useUpdaters } from '../store/StateHooks';
 
 const Search = () => {
   const theme = useTheme();
-  const [ banis, updateBanis ] = useState( [] );
+
   const [ searchQuery, updateQuery ] = useState( '' );
+
+  const [ banis, updateBanis ] = useState( [] );
   const [ results, updateResults ] = useState( [] );
+
+
   const [ typeMenu, updateTypeM ] = useState( false );
   const [ searchMenu, updateSearchM ] = useState( false );
+
 
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
@@ -62,10 +67,13 @@ const Search = () => {
     };
   }, [ searchQuery, net.isConnected, searchType ] );
 
+  useEffect( () => {
+    console.log( showModal );
+  }, [ showModal ] );
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       <Modal
-        testID="modal"
+        testID="downloadingModal"
         isVisible={showModal}
         useNativeDriver
       >
@@ -170,7 +178,21 @@ const Search = () => {
               result={result}
               isAdded={isAdded}
               addCount={addedCount || null}
-              onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}
+              onPress={() => {
+                Alert.alert(
+                  'Confirm Addition',
+                  'Are you sure you want to add this to your pothi?',
+                  [
+                    {
+                      text: 'Ok',
+                      onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ); },
+                      style: 'cancel',
+                    },
+                    { text: 'Cancel' },
+                  ],
+                  { cancelable: false },
+                );
+              }}
             />
           );
         } )}
@@ -186,7 +208,21 @@ const Search = () => {
               result={bani}
               isAdded={isAdded}
               addCount={addedCount || null}
-              onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}
+              onPress={() => {
+                Alert.alert(
+                  'Confirm Addition',
+                  'Are you sure you want to add this to your pothi?',
+                  [
+                    {
+                      text: 'Ok',
+                      onPress: () => { onPress( bani.ID, bani.gurmukhi ); },
+                      style: 'cancel',
+                    },
+                    { text: 'Cancel' },
+                  ],
+                  { cancelable: false },
+                );
+              }}
             />
           );
         } )}
@@ -199,7 +235,7 @@ const Search = () => {
 
 const styles = StyleSheet.create( {
   button: {
-    marginTop: 8,
+    margin: 8,
   },
   content: {
     alignItems: 'center',
