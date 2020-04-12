@@ -63,112 +63,134 @@ const Search = () => {
   }, [ searchQuery, net.isConnected, searchType ] );
 
   return (
-    <SafeAreaView style ={{ backgroundColor: theme.colors.background, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       <Modal
         testID="modal"
         isVisible={showModal}
-        customBackdrop={
+        customBackdrop={(
           <SafeAreaView style={{ backgroundColor: 'gray' }}>
-            <Paragraph style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }} >
+            <Paragraph style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }}>
               {text}
             </Paragraph>
           </SafeAreaView>
-        } >
-          <View />
-        </Modal>
-        <View style={{ padding: 5 }}>
-              <Searchbar
-                  placeholder="Search"
-                  inputStyle={ styles.input }
-                  autoCompleteType="off"
-                  autoCorrect={false}
-                  onChangeText={( newQuery ) => updateQuery( newQuery )}
-                  value={searchQuery}
-                  autoCapitalize="none"
-                  theme={{ colors: { primary: 'white' } }}
+        )}
+      >
+        <View />
+      </Modal>
+      <View style={{ padding: 5 }}>
+        <Searchbar
+          placeholder="Search"
+          inputStyle={styles.input}
+          autoCompleteType="off"
+          autoCorrect={false}
+          onChangeText={( newQuery ) => updateQuery( newQuery )}
+          value={searchQuery}
+          autoCapitalize="none"
+          theme={{ colors: { primary: 'white' } }}
+        />
+      </View>
+      <View style={styles.row}>
+        <Menu
+          visible={typeMenu}
+          onDismiss={() => updateTypeM( false )}
+          anchor={(
+            <Button
+              style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+              color={theme.colors.text}
+              onPress={() => updateTypeM( true )}
+            >
+              {queryType}
+            </Button>
+                      )}
+        >
+          <Menu.Item
+            onPress={() => {
+              updateTypeM( false );
+              updateQueryType( 'Shabad' );
+            }}
+            title="Shabad"
+          />
+          <Menu.Item
+            onPress={() => {
+              updateTypeM( false );
+              updateQueryType( 'Bani' );
+            }}
+            title="Bani"
+          />
+        </Menu>
+        <Menu
+          visible={searchMenu}
+          onDismiss={() => updateSearchM( false )}
+          anchor={(
+            <Button
+              style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+              color={theme.colors.text}
+              onPress={() => updateSearchM( true )}
+            >
+              {SEARCH_TEXTS[searchType]}
+            </Button>
+                      )}
+        >
+          {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {
+            const [ id, desc ] = searchText;
+            const newID = parseInt( id, 10 );
+            return (
+              <Menu.Item
+                onPress={() => {
+                  updateSeachType( newID );
+                  updateSearchM( false );
+                }}
+                key={searchText}
+                title={`${desc}`}
               />
-            </View>
-            <View style={styles.row}>
-                <Menu
-                    visible={typeMenu}
-                    onDismiss={() => updateTypeM( false )}
-                    anchor={
-                        <Button
-                            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
-                            color={theme.colors.text}
-                            onPress={() => updateTypeM( true )}>
-                            {queryType}
-                        </Button>
-                    }>
-                    <Menu.Item
-                        onPress={() => {
-                          updateTypeM( false );
-                          updateQueryType( 'Shabad' );
-                        }}
-                        title="Shabad"
-                    />
-                    <Menu.Item
-                        onPress={() => {
-                          updateTypeM( false );
-                          updateQueryType( 'Bani' );
-                        }}
-                        title="Bani"
-                    />
-                </Menu>
-                <Menu
-                    visible={searchMenu}
-                    onDismiss={() => updateSearchM( false )}
-                    anchor={
-                        <Button
-                            style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
-                            color={theme.colors.text}
-                            onPress={() => updateSearchM( true )}>
-                            {SEARCH_TEXTS[searchType]}
-                        </Button>
-                    }>
-                    {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {
-                      const [ id, desc ] = searchText;
-                      const newID = parseInt( id, 10 );
-                      return (
-                            <Menu.Item
-                                onPress={() => {
-                                  updateSeachType( newID );
-                                  updateSearchM( false );
-                                }}
-                                title={`${desc}`}
-                            />
-                      );
-                    } )}
-                    {!net.isConnected && (
-                        <View>
-                            <Text>
-                                Sorry you are not connected to the internet!
-                            </Text>
-                        </View>
-                    )}
-                </Menu>
-            </View>
-            <ScrollView>
-                {queryType === 'Shabad' && results.length > 0
+            );
+          } )}
+          {!net.isConnected && (
+          <View>
+            <Text>
+              Sorry you are not connected to the internet!
+            </Text>
+          </View>
+          )}
+        </Menu>
+      </View>
+      <ScrollView>
+        {queryType === 'Shabad' && results.length > 0
                     && results.map( ( result ) => {
                       const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
 
                       const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
 
-                      return <SearchResult theme={theme} result={result} isAdded={isAdded} addCount={addedCount || null}
-                      onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}/>;
+                      return (
+                        <SearchResult
+                          key={result.gurmukhi}
+                          theme={theme}
+                          result={result}
+                          isAdded={isAdded}
+                          addCount={addedCount || null}
+                          onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}
+                        />
+                      );
                     } )}
-                    {queryType === 'Bani' && banis.map( ( bani ) => {
-                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
+        {queryType === 'Bani' && banis.map( ( bani ) => {
+          const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
 
-                      const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
-                      return <BaniResult theme={theme} result={bani} isAdded={isAdded} addCount={addedCount || null}
-                      onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}/>;
-                    } )}
-            </ScrollView>
-      </SafeAreaView>
+          const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
+          return (
+            <BaniResult
+              key={bani.gurmukhi}
+              theme={theme}
+              result={bani}
+              isAdded={isAdded}
+              addCount={addedCount || null}
+              onPress={() => { onPress( bani.ID, bani.gurmukhi ); }}
+            />
+          );
+        } )}
+      </ScrollView>
+    </SafeAreaView>
 
 
   );
@@ -191,9 +213,9 @@ const styles = StyleSheet.create( {
 const withCtxs = () => (
   <AddedCtx.Provider>
     <SearchCtx.Provider>
-          <Search />
+      <Search />
     </SearchCtx.Provider>
-    </AddedCtx.Provider>
+  </AddedCtx.Provider>
 
 );
 export default withCtxs;

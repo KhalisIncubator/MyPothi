@@ -11,21 +11,29 @@ const Viewer = ( props ) => {
   } = props;
 
 
-  const renderItem = ( { item, index } ) => <FlatList
-    data={item}
-    keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
-    renderItem={( { index: lineIndex, item: line } ) => (
-    <LineBlock key={`${line.id} ${lineIndex}` } line={line} isMainLine={currentItems[index]?.mainLine === line.Gurbani.ascii}
+  const renderItem = ( { item, index } ) => (
+    <FlatList
+      data={item}
+      keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
+      renderItem={( { index: lineIndex, item: line } ) => (
+        <LineBlock
+          key={`${line.id} ${lineIndex}`}
+          line={line}
+          isMainLine={currentItems[index]?.mainLine === line.Gurbani.ascii}
       // if currentItems is not length of 0, and if the item
       // at the index has a entryID (need to check because is null when item is deleted and state is
       // uodated). Otherwise if currentItems has length of 0, then set id to null
-        entryID={ currentItems[index]?.entryID ?? null}
-        mods={mapToArray( currentItems[index]?.mods )}/> )}
-    initialNumToRender={item.length < 20 ? item.length : 20}/>;
+          entryID={currentItems[index]?.entryID ?? null}
+          mods={mapToArray( currentItems[index]?.mods )}
+        />
+      )}
+      initialNumToRender={item.length < 20 ? item.length : 20}
+    />
+  );
 
   return (
     <SafeAreaView>
-        <FlatList
+      <FlatList
         data={currentLines}
         extraData={currentMods}
         initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
@@ -34,8 +42,8 @@ const Viewer = ( props ) => {
         ItemSeparatorComponent={() => (
           <View style={{ width: '100%', backgroundColor: '#3498db', height: 3 }} />
         )}
-    />
-</SafeAreaView>
+      />
+    </SafeAreaView>
   );
 };
 

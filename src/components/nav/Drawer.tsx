@@ -33,118 +33,120 @@ const CustomDrawerComponent = ( props ) => {
   }, [ isOpen ] );
   return (
     <KeyboardAvoidingView style={styles.drawerContent} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
-                <View style={styles.titleSection}>
-                    <View style={styles.row}>
-                        <Title style={styles.title}>Pothis</Title>
-                        <Icon
-                            name="plus-circle"
-                            color={theme.colors.text}
-                            size={20}
-                            onPress={() => {
-                              toggleCreateMode( true );
-                            }}
-                        />
-                    </View>
-                </View>
-                <Drawer.Section style={styles.drawerSection}>
-                    {pothiNames.map( ( data ) => (
-                      <>
-                            <DrawerItem
-                                icon={( { focused, color, size } ) => (
-                                    <Icon
-                                        name={
-                                            focused
-                                              ? 'book-open-variant'
-                                              : 'book'
-                                        }
-                                        color={focused ? color : theme.colors.text}
-                                        size={size}
-                                    />
-                                )}
-                                key={data[0]}
-                                style={{ borderRadius: theme.roundness }}
-                                focused={data[0] === currentName[0]}
-                                activeTintColor="#ff9a00"
-                                label={( { focused, color } ) => (
-                                    <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>
-                                        {data[0]}
-                                    </Text>
-                                )}
-                                onPress={() => {
-                                  updateCurrentName( [ data[0], data[1] ] );
-                                  props.navigation.closeDrawer();
-                                }}
-                            />
-                      </>
-                    ) )}
-                    {isCreating && (
-                        <DrawerItem
-                            icon={( { color, size } ) => (
-                                <Icon
-                                    name="pencil-outline"
-                                    color={theme.colors.text}
-                                    size={size}
-                                />
-                            )}
-                            onPress={() => null}
-                            // activeTintColor="#ff9a00"
-                            label={( ) => (
-                                <TextInput
-                                style={ { color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent } }
-                                autoCorrect={false}
-                                autoCompleteType="off"
-                                placeholderTextColor="gray"
-                                placeholder="Enter Pothi Name"
-                                underlineColorAndroid="transparent"
-                                onChangeText={( text ) => {
-                                  changeText( text );
-                                }}
-                                />
-                            )}
-                        />
-                    )}
-                </Drawer.Section>
-                {isCreating && (
-                    <View>
-                        <Drawer.Section>
-                            <Button
-                                icon="plus"
-                                style={styles.button}
-                                color="green"
-                                onPress={() => {
-                                  createPothi( newGutkaName );
-                                  toggleCreateMode( false );
-                                }}>
-                                Create Pothi!
-                            </Button>
-                            <Button
-                                color="red"
-                                icon="x"
-                                style={styles.button}
-                                onPress={() => {
-                                  toggleCreateMode( false );
-                                }}>
-                                Cancel
-                            </Button>
-                        </Drawer.Section>
-                    </View>
+      <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
+        <View style={styles.titleSection}>
+          <View style={styles.row}>
+            <Title style={styles.title}>Pothis</Title>
+            <Icon
+              name="plus-circle"
+              color={theme.colors.text}
+              size={20}
+              onPress={() => {
+                toggleCreateMode( true );
+              }}
+            />
+          </View>
+        </View>
+        <Drawer.Section style={styles.drawerSection}>
+          {pothiNames.map( ( data ) => (
+            <>
+              <DrawerItem
+                icon={( { focused, color, size } ) => (
+                  <Icon
+                    name={
+                      focused
+                        ? 'book-open-variant'
+                        : 'book'
+                    }
+                    color={focused ? color : theme.colors.text}
+                    size={size}
+                  />
                 )}
-                <Drawer.Section>
-                    <Button
-                        icon="list"
-                        color={theme.colors.text}
-                        style={styles.button}
-                        onPress={() => navigation.navigate( 'Stack', {
-                          screen: 'Edit',
-                          params: { type: 'Pothi' },
-                        } )
-                        }>
-                        Edit Pothis
-                    </Button>
-                </Drawer.Section>
-        </DrawerContentScrollView>
-      </KeyboardAvoidingView>
+                key={data[0]}
+                style={{ borderRadius: theme.roundness }}
+                focused={data[0] === currentName[0]}
+                activeTintColor="#ff9a00"
+                label={( { focused, color } ) => (
+                  <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>
+                    {data[0]}
+                  </Text>
+                )}
+                onPress={() => {
+                  updateCurrentName( [ data[0], data[1] ] );
+                  props.navigation.closeDrawer();
+                }}
+              />
+            </>
+          ) )}
+          {isCreating && (
+            <DrawerItem
+              icon={( { color, size } ) => (
+                <Icon
+                  name="pencil-outline"
+                  color={theme.colors.text}
+                  size={size}
+                />
+              )}
+              onPress={() => null}
+                            // activeTintColor="#ff9a00"
+              label={( ) => (
+                <TextInput
+                  style={{ color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent }}
+                  autoCorrect={false}
+                  autoCompleteType="off"
+                  placeholderTextColor="gray"
+                  placeholder="Enter Pothi Name"
+                  underlineColorAndroid="transparent"
+                  onChangeText={( text ) => {
+                    changeText( text );
+                  }}
+                />
+              )}
+            />
+          )}
+        </Drawer.Section>
+        {isCreating && (
+          <View>
+            <Drawer.Section>
+              <Button
+                icon="plus"
+                style={styles.button}
+                color="green"
+                onPress={() => {
+                  createPothi( newGutkaName );
+                  toggleCreateMode( false );
+                }}
+              >
+                Create Pothi!
+              </Button>
+              <Button
+                color="red"
+                icon="x"
+                style={styles.button}
+                onPress={() => {
+                  toggleCreateMode( false );
+                }}
+              >
+                Cancel
+              </Button>
+            </Drawer.Section>
+          </View>
+        )}
+        <Drawer.Section>
+          <Button
+            icon="list"
+            color={theme.colors.text}
+            style={styles.button}
+            onPress={() => navigation.navigate( 'Stack', {
+              screen: 'Edit',
+              params: { type: 'Pothi' },
+            } )}
+          >
+            Edit Pothis
+          </Button>
+        </Drawer.Section>
+      </DrawerContentScrollView>
+    </KeyboardAvoidingView>
 
   );
 };

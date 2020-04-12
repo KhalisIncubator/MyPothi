@@ -68,58 +68,56 @@ const LineBlock = ( props: Props ) => {
     [ isEditMode, selectedElement, selectedLineID ],
   );
   return (
-        <View style={style.column}>
-            <TextBlock
-                type="Pangtee"
-                isMainLine={props.isMainLine}
-                vishraams={displayVishraams ? Vishraams : null}
-                source={displayVishraams ? sources.vishraamSource : null}
-                isSelected={gurmukhiSelection}
-                mod={filteredMod.filter( ( mod ) => mod?.element === 'Pangtee' )}
-                style={{ fontSize: gurmukhi }}
-                value={Gurbani.ascii === '‚' ? Gurbani.unicode : Gurbani.ascii}
-                onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
-            />
-             {displayEng
+    <View style={style.column}>
+      <TextBlock
+        type="Pangtee"
+        isMainLine={props.isMainLine}
+        vishraams={displayVishraams ? Vishraams : null}
+        source={displayVishraams ? sources.vishraamSource : null}
+        isSelected={gurmukhiSelection}
+        mod={filteredMod.filter( ( mod ) => mod?.element === 'Pangtee' )}
+        style={{ fontSize: gurmukhi }}
+        value={Gurbani.ascii === '‚' ? Gurbani.unicode : Gurbani.ascii}
+        onClick={() => textBlockClick( gurmukhiSelection, 'Pangtee' )}
+      />
+      {displayEng
                 && !(
                   Translations.English == null || Translations.English === ' '
                 ) && (
-                    <TextBlock
-                        type="Eng"
-                        mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
-                        isSelected={translationSelection}
-                        value={Translations.English}
-                        onClick={() => textBlockClick( translationSelection, 'Eng' )
-                        }
-                        style={{ fontSize: eng }}
-                    />
-             )}
-            {displayTeeka
+                <TextBlock
+                  type="Eng"
+                  mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
+                  isSelected={translationSelection}
+                  value={Translations.English}
+                  onClick={() => textBlockClick( translationSelection, 'Eng' )}
+                  style={{ fontSize: eng }}
+                />
+      )}
+      {displayTeeka
             && !( !Translations.Punjabi.SS || Translations.Punjabi.SS === ' ' )
               && (
                 <TextBlock
-                    type="Teeka"
-                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
-                    isSelected={teekaSelection}
-                    value={Translations.Punjabi.SS}
-                    onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
-                    style={{ fontSize: teeka }}
+                  type="Teeka"
+                  mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
+                  isSelected={teekaSelection}
+                  value={Translations.Punjabi.SS}
+                  onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
+                  style={{ fontSize: teeka }}
                 />
               )}
-             {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
-                <TextBlock
-                    type="Translit"
-                    source={displayVishraams ? sources.vishraamSource : null}
-                    vishraams={ Vishraams }
-                    mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
-                    value={Transliteration.English}
-                    isSelected={translitSelection}
-                    onClick={() => textBlockClick( translitSelection, 'Translit' )
-                    }
-                    style={{ fontSize: translit }}
-                />
-             )}
-        </View>
+      {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
+      <TextBlock
+        type="Translit"
+        source={displayVishraams ? sources.vishraamSource : null}
+        vishraams={Vishraams}
+        mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
+        value={Transliteration.English}
+        isSelected={translitSelection}
+        onClick={() => textBlockClick( translitSelection, 'Translit' )}
+        style={{ fontSize: translit }}
+      />
+      )}
+    </View>
   );
 };
 

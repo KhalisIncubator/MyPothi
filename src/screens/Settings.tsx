@@ -27,16 +27,16 @@ const SettingsScreen = ( ) => {
     themeUpdaters,
   };
   return (
-        <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }} >
-          {Settings.map( ( { setting, values: valueObj, updaters } ) => setting.map( ( settingSection, index ) => {
-            const {
-              title, values, updater, type,
-            } = settingSection;
-            const sections = vals[valueObj][values];
-            const modifier = modifiers[updaters][updater];
-            return (
-                <SettingsCard theme={theme} title={title}>
-                  {
+    <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      {Settings.map( ( { setting, values: valueObj, updaters } ) => setting.map( ( settingSection, index ) => {
+        const {
+          title, values, updater, type,
+        } = settingSection;
+        const sections = vals[valueObj][values];
+        const modifier = modifiers[updaters][updater];
+        return (
+          <SettingsCard theme={theme} title={title} key={title}>
+            {
                     Object.entries( sections ).map( ( [ settingName, settingValue ] ) => {
                       const configureObject = GlobalConsts[values][settingName];
                       const {
@@ -54,17 +54,18 @@ const SettingsScreen = ( ) => {
                       const component = mapToComponent( type )( props );
                       return isVisibile ? (
                         <>
-                        { separator && <Divider style={{ height: 3 }}/>}
-                      <SettingSection text={settingTitle} subheading={subheading} >
-                        {component}
-                    </SettingSection>
-                    </>
+                          { separator && <Divider style={{ height: 3 }} />}
+                          <SettingSection text={settingTitle} subheading={subheading}>
+                            {component}
+                          </SettingSection>
+                        </>
                       ) : null;
-                    } )}
-                </SettingsCard>
-            );
-          } ) )}
-        </ScrollView>
+                    } )
+}
+          </SettingsCard>
+        );
+      } ) )}
+    </ScrollView>
   );
 };
 export default SettingsScreen;

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable quotes */
 /* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
@@ -76,20 +77,21 @@ const App = () => {
   }, [ rehydrated ] );
   return (
     <PaperProvider
-    theme={decideTheme}
-    settings={{
-      icon: ( props ) => <Icon {...props} />,
-    }}>
-       <View style={{ flex: 1, backgroundColor: '#FFA500' }}>
+      theme={decideTheme}
+      settings={{
+        icon: ( props ) => <Icon {...props} />,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: '#FFA500' }}>
         {rehydrated && <Routes />}
-        </View>
+      </View>
     </PaperProvider>
   );
 };
 const withStore = () => (
-    <StoreProvider store={store}>
-        <App />
-    </StoreProvider>
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>
 );
 
 export default withStore;

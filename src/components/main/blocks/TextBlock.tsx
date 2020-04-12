@@ -72,38 +72,43 @@ const TextBlock: React.FC<Props> = ( {
     ],
   );
   return (
-        <TouchableWithoutFeedback onPress={onClick} >
-          <View style={ViewStyle} pointerEvents="box-none">
-            {
+    <TouchableWithoutFeedback onPress={onClick}>
+      <View style={ViewStyle} pointerEvents="box-none">
+        {
               pangteeWithVishraams ? (
                 <Text
-                selectable={false}
-                style={textStyle}>
+                  selectable={false}
+                  style={textStyle}
+                >
                   {
-                    pangteeWithVishraams.map( ( section, index ) => ( <Text
-                    style={
+                    pangteeWithVishraams.map( ( section, index ) => (
+                      <Text
+                        style={
                       section.type === 'line'
                         ? {}
                         : ( section.type === 'y'
                           ? styles.YamkiVishraam
                           : styles.FullVishraam )
                     }
-                    key={section.data}>
-                       {`${section.data} `}
-                      </Text> ) )
+                        key={section.data}
+                      >
+                        {`${section.data} `}
+                      </Text>
+                    ) )
                   }
                 </Text>
               )
                 : (
-                <Text
-                  selectable={false}
-                  style={textStyle}>
-                  {value}
-                </Text>
+                  <Text
+                    selectable={false}
+                    style={textStyle}
+                  >
+                    {value}
+                  </Text>
                 )
             }
-            </View>
-        </TouchableWithoutFeedback>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
