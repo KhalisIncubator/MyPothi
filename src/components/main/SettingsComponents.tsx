@@ -76,6 +76,7 @@ const MenuModifier = ( {
                 updater( [ objKey, key ] );
               }}
               title={itemVal}
+              key={key}
             />
           ) ) : []
       }

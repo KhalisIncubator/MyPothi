@@ -27,6 +27,8 @@ const theme = {
     background: '#e7e7e7',
     surface: '#c6cfd4',
     text: '#000',
+    notification: '#FFFFFF',
+
   },
 };
 
@@ -42,6 +44,7 @@ const darkTheme = {
     background: '#2C2F33',
     backdrop: '#FFA500',
     text: '#FFFFFF',
+    notification: '#2C2F33',
   },
 };
 
@@ -57,6 +60,7 @@ const trueDark = {
     background: '#000000',
     backdrop: '#FFA500',
     text: '#FFFFFF',
+    notification: '#2C2F33',
   },
 };
 

@@ -35,7 +35,7 @@ const modalModel: ModalModel = {
 
   toggleModal: action( ( state, [ bool, type ] ) => {
     state.showModal = bool;
-    state.text = `Loading ${type}...`;
+    state.text = `Downloading ${type}...`;
   } ),
   onEntryAdded: thunkOn(
     ( actions, storeActions ) => [

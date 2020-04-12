@@ -8,11 +8,10 @@ module.exports = {
       'plugin:react-native/all',
       'plugin:@typescript-eslint/recommended',
       "plugin:react/recommended",
-    //   'prettier/react',
       'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-native', 'react-hooks'],
+  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint'],
   settings: {
       'import/resolver': {
           typescript: {},

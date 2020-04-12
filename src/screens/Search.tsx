@@ -2,10 +2,10 @@ import React, {
   useState, useEffect, useCallback,
 } from 'react';
 import {
-  Searchbar, Menu, Text, useTheme, Button, Paragraph,
+  Searchbar, Menu, Text, useTheme, Button, Title,
 } from 'react-native-paper';
 import {
-  View, StyleSheet, ScrollView, SafeAreaView,
+  View, StyleSheet, ScrollView, SafeAreaView, ActivityIndicator,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -67,15 +67,17 @@ const Search = () => {
       <Modal
         testID="modal"
         isVisible={showModal}
-        customBackdrop={(
-          <SafeAreaView style={{ backgroundColor: 'gray' }}>
-            <Paragraph style={{ color: 'black', justifyContent: 'center', alignContent: 'center' }}>
-              {text}
-            </Paragraph>
-          </SafeAreaView>
-        )}
+        useNativeDriver
       >
-        <View />
+        <SafeAreaView style={[ styles.content, { backgroundColor: theme.colors.notification, borderRadius: theme.roundness } ]}>
+          <View style={{ padding: 5 }}>
+            <Title style={{ color: theme.colors.text }}>
+              {text}
+            </Title>
+            <ActivityIndicator />
+          </View>
+
+        </SafeAreaView>
       </Modal>
       <View style={{ padding: 5 }}>
         <Searchbar
@@ -140,7 +142,7 @@ const Search = () => {
                   updateSeachType( newID );
                   updateSearchM( false );
                 }}
-                key={searchText}
+                key={id}
                 title={`${desc}`}
               />
             );
@@ -155,24 +157,23 @@ const Search = () => {
         </Menu>
       </View>
       <ScrollView>
-        {queryType === 'Shabad' && results.length > 0
-                    && results.map( ( result ) => {
-                      const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
+        {queryType === 'Shabad' && results.length > 0 && results.map( ( result ) => {
+          const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
 
-                      const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
+          const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
 
-                      return (
-                        <SearchResult
-                          key={result.gurmukhi}
-                          theme={theme}
-                          result={result}
-                          isAdded={isAdded}
-                          addCount={addedCount || null}
-                          onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}
-                        />
-                      );
-                    } )}
+          return (
+            <SearchResult
+              key={result.gurmukhi}
+              theme={theme}
+              result={result}
+              isAdded={isAdded}
+              addCount={addedCount || null}
+              onPress={() => { onPress( result.shabadId, result.verse.gurmukhi ); }}
+            />
+          );
+        } )}
         {queryType === 'Bani' && banis.map( ( bani ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
@@ -200,10 +201,15 @@ const styles = StyleSheet.create( {
   button: {
     marginTop: 8,
   },
+  content: {
+    alignItems: 'center',
+    backgroundColor: '#FFA500',
+    justifyContent: 'center',
+  },
+
   input: {
     fontFamily: 'AnmolLipiTrue',
   },
-
   row: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
