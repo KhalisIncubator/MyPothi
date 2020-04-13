@@ -26,6 +26,9 @@ const EntrySchema = {
     mods: 'Modification[]',
     lines: 'Line[]',
     entryID: 'string',
+    source: 'string?',
+    writer: 'string?',
+    raag: 'string?',
   },
 };
 const ModificationSchema = {
@@ -52,20 +55,21 @@ const LineSchema = {
 };
 const localRealmConfig: Configuration = {
   schema: [ PothiSchema, EntrySchema, ModificationSchema, LineSchema ],
-  schemaVersion: 3,
+  schemaVersion: 4,
   migration: ( oldRealm, newRealm ) => {
-    if ( oldRealm.schemaVersion < 3 ) {
+    if ( oldRealm.schemaVersion < 4 ) {
       const newGutkas = newRealm.objects<storedPothi>( 'Pothi' );
       newGutkas.forEach( ( pothi, index ) => {
         pothi.index = index;
-      } );
-      const newItems = newRealm.objects<entryObj>( 'Entry' );
-      newItems.forEach( ( entry, index ) => {
-        entry.index = index;
+        pothi.items.forEach((entry, index) => {
+          entry.index = index;
+          entry.source = null;
+          entry.writer = null;
+          entry.raag = null;
+        })
       } );
     }
   },
-  // deleteRealmIfMigrationNeeded: true,
 };
 
 export default new Realm( localRealmConfig );

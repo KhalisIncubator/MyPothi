@@ -2,33 +2,45 @@ import { buildApiUrl } from '@sttm/banidb';
 import { lengthType, entryObj, RemappedLine } from '../../types/types';
 import { baniLengths } from './DatabaseConts';
 
-const remapLine = ( raw ): RemappedLine => ( {
+
+const shabadInfo = ({ shabadInfo, baniInfo }) => {
+  const { source, raag, writer} = shabadInfo ?? baniInfo;
+  const sourceG = source.gurmukhi;
+  const raagG = raag.gurmukhi;
+  const writerG = writer.gurmukhi
+  return {
+    source: sourceG, raag: raagG, writer: writerG
+  }
+}
+const remapLine = ( raw ): RemappedLine => {  
+  const { verse, translation, transliteration, visraam} = raw;
+  return {
   id: raw.verseId,
   sID: raw.shabadId,
   Gurbani: {
-    ascii: raw.verse.gurmukhi,
-    unicode: raw.verse.unicode,
+    ascii: verse.gurmukhi,
+    unicode: verse.unicode,
   },
   Translations: {
-    English: raw.translation.en.bdb,
+    English: translation.en.bdb,
     Punjabi: {
-      SS: raw.translation.pu.ss?.gurmukhi,
-      FT: raw.translation.pu.ft?.gurmukhi,
+      SS: translation.pu.ss?.gurmukhi,
+      FT: translation.pu.ft?.gurmukhi,
     },
-    Spanish: raw.translation.es?.sn,
+    Spanish: translation.es?.sn,
   },
   Transliteration: {
-    English: raw.transliteration.en,
-    Hindi: raw.transliteration.hi,
-    IPA: raw.transliteration.ipa,
-    UR: raw.transliteration.ur,
+    English: transliteration.en,
+    Hindi: transliteration.hi,
+    IPA:  transliteration.ipa,
+    UR: transliteration.ur,
   },
   Vishraams: {
-    sttm: raw.visraam?.sttm,
-    ig: raw.visraam?.igurbani,
-    sttm2: raw.visraam?.sttm2,
+    sttm: visraam?.sttm,
+    ig: visraam?.igurbani,
+    sttm2: visraam?.sttm2,
   },
-} );
+} }
 
 const remapBani = ( verseObj ) => {
   const { verse } = verseObj;
@@ -55,8 +67,8 @@ const loadShabad = async ( id: number ) => {
   const url = encodeURI( buildApiUrl( { id, API_URL } ) );
   return fetch( url )
     .then( ( res ) => res.json() )
-    .then( ( data ) => ( data.verses.map( ( verse ) => remapLine( verse ) ) ) )
-    .then( ( remapped ) => remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) ) )
+    .then( ( data ) =>  [shabadInfo(data), data.verses.map( ( verse ) => remapLine( verse ) )  ])
+    .then( ( [info, remapped] ) => [info, remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) )] )
     .catch( ( err ) => err );
 };
 const fetchBanis = async () => (
@@ -69,10 +81,10 @@ const fetchBanis = async () => (
 const loadBani = async ( id: number, length: lengthType ) => (
   fetch( `https://api.banidb.com/v2/banis/${id}` )
     .then( ( res ) => res.json() )
-    .then( ( json ) => json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) )
-    .then( ( filtered ) => filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) )
-    .then( ( data ) => data.map( ( verse ) => remapBani( verse ) ) )
-    .then( ( remapped ) => remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) ) )
+    .then( ( json ) => [shabadInfo(json),  json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' )])
+    .then( ( [info, filtered] ) => [info, filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) ])
+    .then( ( [info, data] ) => [info, data.map( ( verse ) => remapBani( verse ) ) ])
+    .then( ( [info, remapped] ) => [info, remapped.map( ( line ) => ( { data: JSON.stringify( line ), lineId: line.id } ) )] )
     .catch( ( err ) => err ) );
 
 const parseLines = async ( item: entryObj ) => {

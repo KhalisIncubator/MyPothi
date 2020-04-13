@@ -82,8 +82,7 @@ const currentModel: CurrentModel = {
     const [ name, id ] = payload;
     state.currentName = [ name, id ];
   } ),
-  addedEntry: action( ( state, payload ) => {
-    const [ id, mainLine, lines, type ] = payload;
+  addedEntry: action( ( state, [ id, mainLine, lines, type, info ] ) => {
     addToPothi(
       state.currentName[0],
       state.currentName[1],
@@ -91,6 +90,7 @@ const currentModel: CurrentModel = {
       mainLine,
       lines,
       type,
+      info
     );
   } ),
   undoCreation: action(() => {
@@ -122,9 +122,9 @@ const currentModel: CurrentModel = {
     // eslint-disable-next-line no-shadow
     const { loadShabad, loadBani } = injections;
     const length = getStoreState().viewerModel.searchPreferences.baniLength;
-    const lines = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
-
-    actions.addedEntry( [ id, mainLine, lines, type ] );
+    const [info, lines] = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
+    console.log(info, id)
+    actions.addedEntry( [ id, mainLine, lines, type, info ] );
   } ),
 
   onNameChange: actionOn(

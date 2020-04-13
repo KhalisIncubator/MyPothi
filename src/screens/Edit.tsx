@@ -40,13 +40,38 @@ const Edit = ( { route } ) => {
     <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
       <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
         {type === 'Shabad'
-                && currentItems.map( ( item ) => (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={item.shabadId}>
+                && currentItems.map( ( item ) => {
+                  const { source, writer, raag, entryID, mainLine, shabadId} = item;
+                  let info = ''
+                  const subtitle = [
+                    {title: 'Raag', value: raag},
+                    {title: 'Writer', value: writer},
+                    {title: 'Source', value: source},
+                  ]
+
+                return (
+                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={`${shabadId}-${entryID}`}>
                     <Card.Title
-                      key={`${item.shabadId}/${item.entryID}`}
+                      key={`${shabadId}/${entryID}`}
                       titleStyle={style.CardTitleG}
-                      title={`${item.mainLine}`}
-                      subtitle={`Shaabd ID: ${item.shabadId}`}
+                      title={`${mainLine}`}
+                      subtitle={(source || raag || writer) 
+                        ? 
+                        (<Text style={{fontSize: 15}}>
+                        {
+                          subtitle.map(({title, value}) => value ? (
+                          <Text>
+                            {title}: 
+                            <Text style={{ fontFamily: 'AnmolLipiTrue'}}>
+                             { ` ${value} `}
+                            </Text>
+                            </Text>
+                          ): null)
+                        }
+                        </Text>)
+                        : 
+                        `ShabadID: ${shabadId}`
+                      }
                       left={( props ) => (
                         <Avatar.Icon {...props} icon="book" />
                       )}
@@ -58,7 +83,7 @@ const Edit = ( { route } ) => {
                             icon="minus-circle"
                             onPress={() => {
                               handleRemoveShabad(
-                                item.entryID,
+                                entryID,
                               );
                             }}
                           />
@@ -66,7 +91,8 @@ const Edit = ( { route } ) => {
                       )}
                     />
                   </Card>
-                ) )}
+                );
+              })}
         {type === 'Pothi'
                 && (
                 <>

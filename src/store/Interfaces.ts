@@ -7,6 +7,12 @@ import {
 } from '../../types/types';
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
+
+interface info {
+    source: string,
+    writer: string,
+    raag: string,
+}
 interface Sources {
     vishraamSource: 'sttm' | 'sttm2' | 'ig',
     teekaSource: 'FT' | 'SS',
@@ -49,7 +55,7 @@ export interface CurrentModel {
 
     updateCurrentName: Action<CurrentModel, [string, string]>;
 
-    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry]>;
+    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry, info ]>;
     undoCreation: Action<CurrentModel>;
     removeEntry: Action<CurrentModel, string>;
 
