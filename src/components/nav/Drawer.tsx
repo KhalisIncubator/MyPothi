@@ -73,6 +73,7 @@ const CustomDrawerComponent = ( props ) => {
                 )}
                 onPress={() => {
                   updateCurrentName( [ data[0], data[1] ] );
+                  props.navigation.navigate( 'Stack', { screen: 'Gutka' } );
                   props.navigation.closeDrawer();
                 }}
               />

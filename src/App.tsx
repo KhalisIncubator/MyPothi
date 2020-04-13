@@ -27,7 +27,7 @@ const theme = {
     background: '#e7e7e7',
     surface: '#c6cfd4',
     text: '#000',
-    notification: '#FFFFFF',
+    notification: '#e7e7e7',
 
   },
 };

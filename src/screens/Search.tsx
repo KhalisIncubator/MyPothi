@@ -73,12 +73,12 @@ const Search = () => {
         isVisible={showModal}
         useNativeDriver
       >
-        <SafeAreaView style={[ styles.content, { backgroundColor: theme.colors.notification, borderRadius: theme.roundness } ]}>
-          <View style={{ padding: 5 }}>
+        <SafeAreaView style={[ styles.content, { backgroundColor: theme.colors.surface, borderRadius: theme.roundness } ]}>
+          <View style={{ padding: 10 }}>
             <Title style={{ color: theme.colors.text }}>
               {text}
             </Title>
-            <ActivityIndicator />
+            <ActivityIndicator color="white" />
           </View>
 
         </SafeAreaView>
