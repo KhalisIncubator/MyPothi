@@ -93,7 +93,7 @@ const currentModel: CurrentModel = {
       type,
     );
   } ),
-  undoCreation: action((state) => {
+  undoCreation: action(() => {
     undoCreation();
   }),
   removeEntry: action( ( state, payload ) => {
@@ -209,6 +209,12 @@ const addedModel: AddedModel = {
   updateAddedItems: action( ( state, payload ) => {
     state.addedItems.push( payload );
   } ),
+  onUndo: actionOn(
+    (actions, storeActions) => storeActions.currentModel.undoCreation,
+    (store) => {
+      store.addedItems.pop()
+    }
+  )
 };
 
 const storeModel: StoreModel = {

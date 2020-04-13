@@ -98,6 +98,7 @@ export interface SearchModel {
 export interface AddedModel {
  addedItems: number[],
  updateAddedItems: Action<AddedModel, number>
+ onUndo: ActionOn<AddedModel, StoreModel>;
 }
 export interface EditModel {
     isEditMode: boolean;
