@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable import/extensions */
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
@@ -15,19 +16,20 @@ import { FullScreenCtx } from './store/context_stores/Contexts';
 const Stack = createStackNavigator();
 const ScreenStack = () => (
   <FullScreenCtx.Provider>
-        <Stack.Navigator
-            initialRouteName="Gutka"
-            headerMode="screen"
-            screenOptions={{
-              header: ( { previous, navigation } ) => (
-                    <Header previous={previous} navigation={navigation} />
-              ),
-            }}>
-            <Stack.Screen name="Gutka" component={Gutka} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="Edit" component={Edit} />
-        </Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName="Gutka"
+      headerMode="screen"
+      screenOptions={{
+        header: ( { previous, navigation } ) => (
+          <Header previous={previous} navigation={navigation} />
+        ),
+      }}
+    >
+      <Stack.Screen name="Gutka" component={Gutka} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Edit" component={Edit} />
+    </Stack.Navigator>
   </FullScreenCtx.Provider>
 );
 
@@ -36,18 +38,19 @@ const AppDrawer = createDrawerNavigator();
 const DrawerNav = ( ) => {
   const dimensions = useWindowDimensions();
   return (
-       <AppDrawer.Navigator
-       drawerContent={( props ) => <Drawer {...props} />}
-       drawerType={dimensions.width > 900 ? 'permanent' : 'slide'}
-       edgeWidth={dimensions.width * 0.85}>
-            <AppDrawer.Screen name="Stack" component={ScreenStack} />
-        </AppDrawer.Navigator>
+    <AppDrawer.Navigator
+      drawerContent={( props ) => <Drawer {...props} />}
+      drawerType={dimensions.width > 900 ? 'permanent' : 'slide'}
+      edgeWidth={dimensions.width * 0.85}
+    >
+      <AppDrawer.Screen name="Stack" component={ScreenStack} />
+    </AppDrawer.Navigator>
   );
 };
 
 const Routes = () => (
-        <NavigationContainer>
-            <DrawerNav />
-        </NavigationContainer>
+  <NavigationContainer>
+    <DrawerNav />
+  </NavigationContainer>
 );
 export default Routes;

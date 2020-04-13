@@ -6,6 +6,7 @@ const Pothis = [
     items: [
       {
         shabadId: 2333,
+        index: 0,
         mainLine: 'myrw bYdu gurU goivMdw',
         type: 'Shabad',
         parentPothi: 'Kirtaan',
@@ -43,6 +44,7 @@ const Pothis = [
       },
     ],
     pothiID: 'Uakgb_J5m9g-0JDMbcJqLJ',
+    index: 0,
   },
 ];
 export default Pothis;

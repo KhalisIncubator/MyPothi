@@ -1,6 +1,7 @@
 // database types
 export type entryObj = {
   shabadId: number;
+  index: number;
   mainLine: string;
   type: pothiEntry;
   parentPothi: string;
@@ -10,6 +11,7 @@ export type entryObj = {
 };
 export type storedPothi = {
   items: entryObj[];
+  index: number;
   name: string;
   pothiID: string;
 };

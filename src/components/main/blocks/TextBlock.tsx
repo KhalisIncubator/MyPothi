@@ -16,13 +16,14 @@ interface Props {
   onClick: () => void,
   mod: Modification[],
   type: any,
+  lineID: number,
   isMainLine?: boolean,
   vishraams?: object,
   source?: string,
   children?: ReactNode
 }
 const TextBlock: React.FC<Props> = ( {
-  style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine,
+  style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine, lineID
 } ) => {
   const [ singularMod ] = mod;
   const theme = useTheme();
@@ -90,7 +91,7 @@ const TextBlock: React.FC<Props> = ( {
                           ? styles.YamkiVishraam
                           : styles.FullVishraam )
                     }
-                        key={section.data}
+                        key={`${section.data}-lineID${lineID}-${type}`}
                       >
                         {`${section.data} `}
                       </Text>

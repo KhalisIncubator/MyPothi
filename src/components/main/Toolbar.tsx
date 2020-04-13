@@ -9,7 +9,7 @@ import { useValues, useUpdaters } from '../../store/StateHooks';
 import { getCurrentFontSize } from '../../Functions';
 
 const Toolbar = ( {
-  showMain, updateMode, currentLine, style, toggleHighligher,
+  showMain, updateMode, currentLine, style, toggleHighligher, isHighlighterOn,
 } ) => {
   const theme = useTheme();
 
@@ -31,6 +31,9 @@ const Toolbar = ( {
           icon={showMain ? 'chevron-down' : 'chevron-up'}
           onPress={() => {
             updateMode();
+            if ( isHighlighterOn ) {
+              toggleHighligher();
+            }
           }}
         />
         <Text>Customize</Text>
@@ -42,7 +45,11 @@ const Toolbar = ( {
           size={20}
           onPress={() => {
             createMod( {
-              lineid, element, type: 'bold', value: true, parentID,
+              lineid,
+              element,
+              type: 'bold',
+              value: true,
+              parentID,
             } );
           }}
         />
@@ -53,7 +60,11 @@ const Toolbar = ( {
             const newSize = getCurrentFontSize( currentLine,
               fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
             createMod( {
-              lineid, element, type: 'fontSize', value: newSize, parentID,
+              lineid,
+              element,
+              type: 'fontSize',
+              value: newSize,
+              parentID,
             } );
           }}
         />
@@ -65,7 +76,11 @@ const Toolbar = ( {
               fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
             const newSize = getSize <= 0 ? null : getSize - 1;
             createMod( {
-              lineid, element, type: 'fontSize', value: newSize, parentID,
+              lineid,
+              element,
+              type: 'fontSize',
+              value: newSize,
+              parentID,
             } );
           }}
         />
@@ -80,7 +95,11 @@ const Toolbar = ( {
           icon="x"
           size={20}
           onPress={() => {
-            deleteMod( { lineid, element, parentID } );
+            deleteMod( {
+              lineid,
+              element,
+              parentID,
+            } );
           }}
         />
       </View>

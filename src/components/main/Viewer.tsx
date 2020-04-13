@@ -11,13 +11,13 @@ const Viewer = ( props ) => {
   } = props;
 
 
-  const renderItem = ( { item, index } ) => (
+  const renderItem = ( { item, index } ) =>  (
     <FlatList
       data={item}
       keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
       renderItem={( { index: lineIndex, item: line } ) => (
         <LineBlock
-          key={`${line.id} ${lineIndex}`}
+          key={`${line.id}-${lineIndex}`}
           line={line}
           isMainLine={currentItems[index]?.mainLine === line.Gurbani.ascii}
       // if currentItems is not length of 0, and if the item
@@ -27,7 +27,7 @@ const Viewer = ( props ) => {
           mods={mapToArray( currentItems[index]?.mods )}
         />
       )}
-      initialNumToRender={item.length < 20 ? item.length : 20}
+      initialNumToRender={index === 0 ? (item.length < 20 ? item.length : 20) : 0}
     />
   );
 
