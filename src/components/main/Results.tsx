@@ -23,7 +23,6 @@ const BaniResult = ( props ) => {
           <Title style={{fontFamily: 'AnmolLipiTrue', textAlign: 'center',}}>{gurmukhi}</Title>        
         </View>
        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {addCount && <Paragraph style={{ color: 'black' }}>{addCount}</Paragraph>}
           {isAdded && <Icon name="check" style={{ paddingLeft: 5 }} />}
         </View>
       </Card.Content>
