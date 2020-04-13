@@ -63,6 +63,18 @@ const Header = ( { previous, navigation } ) => {
           }}
         />,
       ]}
+      {
+            route.name === 'Search'
+            && (
+            <Appbar.Action
+              key="undo"
+              icon="rotate-ccw"
+              onPress={() => {
+                console.log( 'uino' );
+              }}
+            />
+            )
+          }
     </Appbar.Header>
   );
 };

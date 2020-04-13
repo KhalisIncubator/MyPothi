@@ -214,8 +214,19 @@ const removeFromPothi = ( currentPothi, itemId, currentPothiID ) => {
   } );
 };
 
-
-export { getCurrentItems, addToPothi, removeFromPothi };
+const getLastItem = () => {
+  const all = localRealm.objects<entryObj>( 'Entry' ).sorted( 'index' );
+  return all[all.length - 1];
+};
+const undoCreation = () => {
+  const lastPothi = getLastItem();
+  localRealm.write(() => {
+    localRealm.delete(lastPothi)
+  })
+}
+export {
+  getCurrentItems, addToPothi, removeFromPothi, undoCreation,
+};
 
 // modification related functions
 
@@ -247,7 +258,9 @@ const createModification = ( currentName: string, parentID: string ) => {
       [type]: value,
     };
     localRealm.write( () => {
-      const mod = localRealm.create( 'Modification', { ...newMod } );
+      const mod = localRealm.create( 'Modification', {
+        ...newMod,
+      } );
       item.mods.push( mod );
     } );
   };

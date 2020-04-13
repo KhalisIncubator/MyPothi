@@ -71,6 +71,8 @@ const LineBlock = ( props: Props ) => {
     <View style={style.column}>
       <TextBlock
         type="Pangtee"
+        lineID={id}
+
         isMainLine={props.isMainLine}
         vishraams={displayVishraams ? Vishraams : null}
         source={displayVishraams ? sources.vishraamSource : null}
@@ -86,6 +88,8 @@ const LineBlock = ( props: Props ) => {
                 ) && (
                 <TextBlock
                   type="Eng"
+        lineID={id}
+
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
                   isSelected={translationSelection}
                   value={Translations.English}
@@ -98,6 +102,7 @@ const LineBlock = ( props: Props ) => {
               && (
                 <TextBlock
                   type="Teeka"
+        lineID={id}
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
                   isSelected={teekaSelection}
                   value={Translations.Punjabi.SS}
@@ -108,6 +113,7 @@ const LineBlock = ( props: Props ) => {
       {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
       <TextBlock
         type="Translit"
+        lineID={id}
         source={displayVishraams ? sources.vishraamSource : null}
         vishraams={Vishraams}
         mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}

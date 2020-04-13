@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useCallback,
-} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Searchbar, Menu, Text, useTheme, Button, Title,
 } from 'react-native-paper';
@@ -10,7 +8,7 @@ import {
 import Modal from 'react-native-modal';
 import { useNetInfo } from '@react-native-community/netinfo';
 
-import { SearchCtx, AddedCtx } from '../store/context_stores/Contexts';
+import { SearchCtx } from '../store/context_stores/Contexts';
 import { SEARCH_TEXTS } from '../database/DatabaseConts';
 import query, { fetchBanis } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
@@ -30,21 +28,25 @@ const Search = () => {
   const [ searchMenu, updateSearchM ] = useState( false );
 
 
-  const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( { ...store } ) );
-  const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
+  const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( {
+    ...store,
+  } ) );
+  const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
+    ...actions,
+  } ) );
   const { showModal, text } = useValues( 'modalModel' );
   const { currentItems } = useValues( 'currentModel' );
   const { addEntry } = useUpdaters( 'currentModel' );
 
 
-  const addedItems = AddedCtx.useStoreState( ( state ) => state.addedItems );
-  const updateItems = AddedCtx.useStoreActions( ( actions ) => actions.updateAddedItems );
+  const { addedItems } = useValues( 'addedModel' );
+  const { updateAddedItems } = useUpdaters( 'addedModel' );
   const net = useNetInfo();
 
   const onPress = useCallback( ( sID, gurmukhi ) => {
     addEntry( [ sID, gurmukhi, queryType ] );
-    updateItems( sID );
-  }, [ addEntry, queryType, updateItems ] );
+    updateAddedItems( sID );
+  }, [ addEntry, queryType, updateAddedItems ] );
   useEffect( () => {
     const baniFetcher = async () => {
       const fetched = await fetchBanis();
@@ -67,15 +69,30 @@ const Search = () => {
     };
   }, [ searchQuery, net.isConnected, searchType ] );
   return (
-    <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+    <SafeAreaView style={{
+      backgroundColor: theme.colors.background, 
+      flex: 1,
+    }}
+    >
       <Modal
         testID="downloadingModal"
         isVisible={showModal}
         useNativeDriver
       >
-        <SafeAreaView style={[ styles.content, { backgroundColor: theme.colors.surface, borderRadius: theme.roundness } ]}>
-          <View style={{ padding: 10 }}>
-            <Title style={{ color: theme.colors.text }}>
+        <SafeAreaView style={[ styles.content,
+        {
+          backgroundColor: theme.colors.surface,
+           borderRadius: theme.roundness,
+        } ]}
+        >
+          <View style={{
+            padding: 10,
+          }}
+          >
+            <Title style={{
+              color: theme.colors.text,
+            }}
+            >
               {text}
             </Title>
             <ActivityIndicator color="white" />
@@ -83,7 +100,10 @@ const Search = () => {
 
         </SafeAreaView>
       </Modal>
-      <View style={{ padding: 5 }}>
+      <View style={{
+        padding: 5,
+      }}
+      >
         <Searchbar
           placeholder="Search"
           inputStyle={styles.input}
@@ -92,7 +112,11 @@ const Search = () => {
           onChangeText={( newQuery ) => updateQuery( newQuery )}
           value={searchQuery}
           autoCapitalize="none"
-          theme={{ colors: { primary: 'white' } }}
+          theme={{
+            colors: {
+              primary: 'white',
+            },
+          }}
         />
       </View>
       <View style={styles.row}>
@@ -101,7 +125,9 @@ const Search = () => {
           onDismiss={() => updateTypeM( false )}
           anchor={(
             <Button
-              style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+              style={[ styles.button, {
+                backgroundColor: theme.colors.surface,
+              } ]}
               color={theme.colors.text}
               onPress={() => updateTypeM( true )}
             >
@@ -129,7 +155,9 @@ const Search = () => {
           onDismiss={() => updateSearchM( false )}
           anchor={(
             <Button
-              style={[ styles.button, { backgroundColor: theme.colors.surface } ]}
+              style={[ styles.button, {
+                backgroundColor: theme.colors.surface,
+              } ]}
               color={theme.colors.text}
               onPress={() => updateSearchM( true )}
             >
@@ -184,9 +212,13 @@ const Search = () => {
                       onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ); },
                       style: 'cancel',
                     },
-                    { text: 'Cancel' },
+                    {
+                      text: 'Cancel',
+                    },
                   ],
-                  { cancelable: false },
+                  {
+                    cancelable: false,
+                  },
                 );
               }}
             />
@@ -214,9 +246,13 @@ const Search = () => {
                       onPress: () => { onPress( bani.ID, bani.gurmukhi ); },
                       style: 'cancel',
                     },
-                    { text: 'Cancel' },
+                    {
+                      text: 'Cancel',
+                    },
                   ],
-                  { cancelable: false },
+                  {
+                    cancelable: false,
+                  },
                 );
               }}
             />
@@ -249,11 +285,8 @@ const styles = StyleSheet.create( {
 } );
 
 const withCtxs = () => (
-  <AddedCtx.Provider>
-    <SearchCtx.Provider>
-      <Search />
-    </SearchCtx.Provider>
-  </AddedCtx.Provider>
-
+  <SearchCtx.Provider>
+    <Search />
+  </SearchCtx.Provider>
 );
 export default withCtxs;

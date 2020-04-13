@@ -1,6 +1,6 @@
 import { action, createContextStore, persist } from 'easy-peasy';
 import {
-  SearchModel, EditModel, AddedModel, FullScreenModel,
+  SearchModel, EditModel, FullScreenModel,
 } from '../Interfaces';
 import AsyncStore from '../PersistStore';
 
@@ -40,15 +40,6 @@ const EditCtx = createContextStore( editModel );
 
 export { EditCtx };
 
-const addedModel: AddedModel = {
-  addedItems: [],
-  updateAddedItems: action( ( state, payload ) => {
-    state.addedItems.push( payload );
-  } ),
-};
-
-const AddedCtx = createContextStore( addedModel );
-export { AddedCtx };
 
 const fullScreenModel: FullScreenModel = {
   isFullScreen: false,

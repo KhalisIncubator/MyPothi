@@ -86,7 +86,11 @@ const App = () => {
         icon: ( props ) => <Icon {...props} />,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: '#FFA500' }}>
+      <View style={{
+        flex: 1,
+        backgroundColor: '#FFA500',
+      }}
+      >
         {rehydrated && <Routes />}
       </View>
     </PaperProvider>

@@ -10,6 +10,7 @@ import {
   ViewerModel,
   ThemeModel,
   ModalModel,
+  AddedModel,
 } from './Interfaces';
 
 import {
@@ -24,6 +25,7 @@ import {
   existsModification,
   deleteModification,
   updatePothi,
+  undoCreation,
 } from '../database/LocalDatabase';
 import AsyncStore from './PersistStore';
 import { loadBani, loadShabad } from '../database/BanidbApi';
@@ -90,18 +92,12 @@ const currentModel: CurrentModel = {
       lines,
       type,
     );
-    state.currentItems = getCurrentItems(
-      state.currentName[0],
-      state.currentName[1],
-    );
   } ),
+  undoCreation: action((state) => {
+    undoCreation();
+  }),
   removeEntry: action( ( state, payload ) => {
     removeFromPothi( state.currentName[0], payload, state.currentName[1] );
-
-    state.currentItems = getCurrentItems(
-      state.currentName[0],
-      state.currentName[1],
-    );
   } ),
   createMod: action( ( state, {
     lineid, element, type, value, parentID,
@@ -112,20 +108,12 @@ const currentModel: CurrentModel = {
       } else {
         createModification( state.currentName[0], parentID )( lineid, element, type, value );
       }
-      state.currentItems = getCurrentItems(
-        state.currentName[0],
-        state.currentName[1],
-      );
     }
   } ),
   deleteMod: action( ( state, { lineid, element, parentID } ) => {
     if ( lineid && element && parentID ) {
       if ( existsModification( lineid, element, parentID ) ) {
-        deleteModification( lineid, element, parentID );
-        state.currentItems = getCurrentItems(
-          state.currentName[0],
-          state.currentName[1],
-        );
+        deleteModification( lineid, element, parentID )
       }
     }
   } ),
@@ -146,6 +134,17 @@ const currentModel: CurrentModel = {
       state.currentName = newName;
     },
   ),
+  onAction: actionOn(
+    (actions) => [
+      actions.addEntry,
+      actions.undoCreation,
+      actions.createMod,
+      actions.deleteMod,
+      actions.removeEntry,
+    ],
+    (state) => { state.currentItems = getCurrentItems(state.currentName[0],
+      state.currentName[1],)}
+  )
 };
 
 const pothiModel: PothiModel = {
@@ -205,8 +204,16 @@ const viewerModel: ViewerModel = {
   } ),
 };
 
+const addedModel: AddedModel = {
+  addedItems: [],
+  updateAddedItems: action( ( state, payload ) => {
+    state.addedItems.push( payload );
+  } ),
+};
+
 const storeModel: StoreModel = {
   modalModel,
+  addedModel,
   themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
   currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
   pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),

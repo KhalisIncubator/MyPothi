@@ -51,6 +51,7 @@ export interface CurrentModel {
     updateCurrentName: Action<CurrentModel, [string, string]>;
 
     addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry]>;
+    undoCreation: Action<CurrentModel>;
     removeEntry: Action<CurrentModel, string>;
 
     createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
@@ -60,6 +61,7 @@ export interface CurrentModel {
     StoreModel>
 
     onNameChange: ActionOn<CurrentModel, StoreModel>;
+    onAction: ActionOn<CurrentModel, StoreModel>;
 }
 
 export interface PothiModel {
@@ -117,6 +119,7 @@ export interface ModalModel {
 }
 export interface StoreModel {
     modalModel: ModalModel;
+    addedModel: AddedModel;
     themeModel : ThemeModel;
     currentModel: CurrentModel;
     pothiModel: PothiModel;

@@ -33,7 +33,12 @@ const CustomDrawerComponent = ( props ) => {
   }, [ isOpen ] );
   return (
     <KeyboardAvoidingView style={styles.drawerContent} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <DrawerContentScrollView {...props} style={{ backgroundColor: theme.colors.background }}>
+      <DrawerContentScrollView
+        {...props}
+        style={{
+          backgroundColor: theme.colors.background,
+        }}
+      >
         <View style={styles.titleSection}>
           <View style={styles.row}>
             <Title style={styles.title}>Pothis</Title>
@@ -63,17 +68,24 @@ const CustomDrawerComponent = ( props ) => {
                   />
                 )}
                 key={data[0]}
-                style={{ borderRadius: theme.roundness }}
+                style={{
+                  borderRadius: theme.roundness,
+                }}
                 focused={data[0] === currentName[0] && data[1] === currentName[1]}
                 activeTintColor="#ff9a00"
                 label={( { focused, color } ) => (
-                  <Text style={[ { color: focused ? color : theme.colors.text }, styles.text ]}>
+                  <Text style={[ {
+                    color: focused ? color : theme.colors.text,
+                  }, styles.text ]}
+                  >
                     {data[0]}
                   </Text>
                 )}
                 onPress={() => {
                   updateCurrentName( [ data[0], data[1] ] );
-                  props.navigation.navigate( 'Stack', { screen: 'Gutka' } );
+                  props.navigation.navigate( 'Stack', {
+                    screen: 'Gutka',
+                  } );
                   props.navigation.closeDrawer();
                 }}
               />
@@ -92,7 +104,11 @@ const CustomDrawerComponent = ( props ) => {
                             // activeTintColor="#ff9a00"
               label={( ) => (
                 <TextInput
-                  style={{ color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent }}
+                  style={{
+                    color: theme.colors.text,
+                    borderBottomWidth: 1,
+                    borderBottomColor: theme.colors.accent,
+                  }}
                   autoCorrect={false}
                   autoCompleteType="off"
                   placeholderTextColor="gray"
@@ -140,7 +156,9 @@ const CustomDrawerComponent = ( props ) => {
             style={styles.button}
             onPress={() => navigation.navigate( 'Stack', {
               screen: 'Edit',
-              params: { type: 'Pothi' },
+              params: {
+                type: 'Pothi',
+              },
             } )}
           >
             Edit Pothis

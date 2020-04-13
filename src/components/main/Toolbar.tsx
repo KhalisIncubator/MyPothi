@@ -45,7 +45,11 @@ const Toolbar = ( {
           size={20}
           onPress={() => {
             createMod( {
-              lineid, element, type: 'bold', value: true, parentID,
+              lineid,
+              element,
+              type: 'bold',
+              value: true,
+              parentID,
             } );
           }}
         />
@@ -56,7 +60,11 @@ const Toolbar = ( {
             const newSize = getCurrentFontSize( currentLine,
               fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
             createMod( {
-              lineid, element, type: 'fontSize', value: newSize, parentID,
+              lineid,
+              element,
+              type: 'fontSize',
+              value: newSize,
+              parentID,
             } );
           }}
         />
@@ -68,7 +76,11 @@ const Toolbar = ( {
               fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
             const newSize = getSize <= 0 ? null : getSize - 1;
             createMod( {
-              lineid, element, type: 'fontSize', value: newSize, parentID,
+              lineid,
+              element,
+              type: 'fontSize',
+              value: newSize,
+              parentID,
             } );
           }}
         />
@@ -83,7 +95,11 @@ const Toolbar = ( {
           icon="x"
           size={20}
           onPress={() => {
-            deleteMod( { lineid, element, parentID } );
+            deleteMod( {
+              lineid,
+              element,
+              parentID,
+            } );
           }}
         />
       </View>
