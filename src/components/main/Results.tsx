@@ -9,10 +9,33 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const BaniResult = ( props ) => {
   const styling = props.theme;
-  const { gurmukhi, ID, addCount } = props.result;
+  const { gurmukhi, addCount } = props.result;
   const { isAdded, onPress } = props;
-  return (
-    <TouchableOpacity
+  return (<TouchableOpacity
+    onPress={onPress}
+  >
+    <Card style={style.Card}>
+      <Card.Content style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: isAdded ? props.theme.colors.backdrop : null, borderRadius: props.theme.roundness}}>
+        <View>
+        <Avatar.Icon icon="book" size={40}/>
+        </View>
+        <View style={{ padding: 5, flex: 1, }}>
+          <Title style={{fontFamily: 'AnmolLipiTrue', textAlign: 'center',}}>{gurmukhi}</Title>        
+        </View>
+       <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {addCount && <Paragraph style={{ color: 'black' }}>{addCount}</Paragraph>}
+          {isAdded && <Icon name="check" style={{ paddingLeft: 5 }} />}
+        </View>
+      </Card.Content>
+
+    </Card>
+   
+  </TouchableOpacity>
+  );
+};
+
+/**
+ * <TouchableOpacity
       onPress={onPress}
     >
       <Card.Title
@@ -29,8 +52,7 @@ const BaniResult = ( props ) => {
         ) : null )}
       />
     </TouchableOpacity>
-  );
-};
+ */
 export { BaniResult };
 
 const SearchResult = ( props ) => {
