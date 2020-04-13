@@ -20,6 +20,8 @@ const remapLine = ( raw ): RemappedLine => ( {
   Transliteration: {
     English: raw.transliteration.en,
     Hindi: raw.transliteration.hi,
+    IPA: raw.transliteration.ipa,
+    UR: raw.transliteration.ur,
   },
   Vishraams: {
     sttm: raw.visraam?.sttm,

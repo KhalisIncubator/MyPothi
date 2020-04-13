@@ -7,12 +7,11 @@ import {
 } from '../../types/types';
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
-
 interface Sources {
     vishraamSource: 'sttm' | 'sttm2' | 'ig',
-    // teeakSource: 'FT' | 'SS',
-    // translationLang: 'English' | 'Spanish'
-    // translitLang: 'English' | 'Hindi'
+    teekaSource: 'FT' | 'SS',
+    translationLang: 'English' | 'Spanish'
+    translitLang: 'English' | 'Hindi' | 'IPA' 
 }
 interface Theme {
     isDarkMode: boolean,
@@ -81,10 +80,7 @@ export interface ViewerModel {
 
     updateFontSize: Action<ViewerModel, [string, number]>;
     updateDisplayElement: Action<ViewerModel, string>;
-    updateSource: Action<ViewerModel, [
-        'vishraamSource' | 'teekaSource' | 'translationLang' | 'translitLang',
-        string
-    ]>;
+    updateSource: Action<ViewerModel, [string, string]>;
     updateSearch: Action<ViewerModel, ['baniLength', lengthType]>
 }
 

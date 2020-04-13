@@ -84,7 +84,7 @@ const LineBlock = ( props: Props ) => {
       />
       {displayEng
                 && !(
-                  Translations.English == null || Translations.English === ' '
+                  Translations[sources.translationLang] == null || Translations[sources.translationLang] === ' '
                 ) && (
                 <TextBlock
                   type="Eng"
@@ -92,32 +92,34 @@ const LineBlock = ( props: Props ) => {
 
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
                   isSelected={translationSelection}
-                  value={Translations.English}
+                  value={Translations[sources.translationLang]}
                   onClick={() => textBlockClick( translationSelection, 'Eng' )}
                   style={{ fontSize: eng }}
                 />
       )}
       {displayTeeka
-            && !( !Translations.Punjabi.SS || Translations.Punjabi.SS === ' ' )
+            && !( !Translations.Punjabi[sources.teekaSource] || Translations.Punjabi[sources.teekaSource] === ' ' )
               && (
                 <TextBlock
                   type="Teeka"
         lineID={id}
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
                   isSelected={teekaSelection}
-                  value={Translations.Punjabi.SS}
+                  value={Translations.Punjabi[sources.teekaSource]}
                   onClick={() => textBlockClick( teekaSelection, 'Teeka' )}
                   style={{ fontSize: teeka }}
                 />
               )}
-      {displayTranslit && !( Transliteration.English === '' || !Transliteration.English ) && (
+      {displayTranslit && 
+      !( Transliteration[sources.translitLang] === '' || !Transliteration[sources.translitLang] )
+      && (
       <TextBlock
         type="Translit"
         lineID={id}
         source={displayVishraams ? sources.vishraamSource : null}
         vishraams={Vishraams}
         mod={filteredMod.filter( ( mod ) => mod?.element === 'Translit' )}
-        value={Transliteration.English}
+        value={Transliteration[sources.translitLang]}
         isSelected={translitSelection}
         onClick={() => textBlockClick( translitSelection, 'Translit' )}
         style={{ fontSize: translit }}

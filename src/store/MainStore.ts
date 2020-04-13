@@ -185,9 +185,9 @@ const viewerModel: ViewerModel = {
   },
   sources: {
     vishraamSource: 'sttm',
-    // teeakSource: 'SS',
-    // translationLang: 'English',
-    // translitLang: 'English',
+    teekaSource: 'SS',
+    translationLang: 'English',
+    translitLang: 'English',
   },
   updateFontSize: action( ( state, payload ) => {
     const [ element, val ] = payload;

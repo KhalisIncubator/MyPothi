@@ -60,7 +60,19 @@ const vishraamList = {
   sttm2: 'Legacy STTM',
   ig: 'iGurbani',
 };
-
+const translList = {
+  English: 'English',
+  Spanish: 'Spanish',
+}
+const translitList = {
+  English: 'English',
+  Hindi: 'Hindi',
+  IPA: 'IPA'
+}
+const teekaList = {
+  SS: 'Prof. Sahib Singh',
+  FT: 'Fareedkot Teeka'
+}
 const GlobalConsts: SettingsConsts = {
   theme: {
     choseSystem: { title: 'Use System Appearance' },
@@ -84,6 +96,9 @@ const GlobalConsts: SettingsConsts = {
   },
   sources: {
     vishraamSource: { title: 'Vishraams Source', menu: vishraamList },
+    translationLang: { title: 'Translation', menu: translList },
+    teekaSource: { title: 'Teeka Source', menu: teekaList },
+    translitLang: { title: 'Transliteration', menu: translitList },
   },
   searchPreferences: {
     baniLength: { title: 'Bani Length', menu: baniList, subheading: '*Note: This will not affect the length of banis already added' },

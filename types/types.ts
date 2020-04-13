@@ -47,6 +47,8 @@ export interface RemappedLine {
   Transliteration: {
     English: string;
     Hindi?: string;
+    IPA?: string,
+    UR?: string,
   };
   Vishraams: {
     sttm?: object;
