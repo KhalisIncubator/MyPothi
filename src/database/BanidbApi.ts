@@ -54,9 +54,14 @@ const query = async ( search: string, type: number ) => {
     const url = encodeURI( buildApiUrl( {
       q, type, results, API_URL,
     } ) );
+
     return fetch( url )
       .then( ( response ) => response.json() )
-      .then( ( data ) => data.verses )
+      .then( ( data ) =>  data.verses )
+      .then((verses) => verses.map(v => [
+        {source: v.source.gurmukhi, writer: v.writer.gurmukhi, raag: v.raag.gurmukhi},
+        v
+      ] ))
       .catch( ( err ) => err );
   }
   return [ {} ];
@@ -74,7 +79,7 @@ const loadShabad = async ( id: number ) => {
 const fetchBanis = async () => (
   fetch( 'https://api.banidb.com/v2/banis' )
     .then( ( res ) => res.json() )
-    .then( ( data ) => data.map( ( bani ) => bani ) )
+    .then( ( data ) =>  data.map( ( bani ) => bani) )
     .catch( ( err ) => err )
 );
 
@@ -95,5 +100,5 @@ const parseLines = async ( item: entryObj ) => {
 export default query;
 
 export {
-  remapLine, loadShabad, fetchBanis, loadBani, parseLines,
+  remapLine, loadShabad, fetchBanis, loadBani, parseLines, shabadInfo
 };

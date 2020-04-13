@@ -123,7 +123,6 @@ const currentModel: CurrentModel = {
     const { loadShabad, loadBani } = injections;
     const length = getStoreState().viewerModel.searchPreferences.baniLength;
     const [info, lines] = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
-    console.log(info, id)
     actions.addedEntry( [ id, mainLine, lines, type, info ] );
   } ),
 

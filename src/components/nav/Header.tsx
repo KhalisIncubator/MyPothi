@@ -25,7 +25,6 @@ const Header = ( { previous, navigation } ) => {
           onPress={() => {
             navigation.navigate( 'Gutka' );
           }}
-          color={theme.colors.primary}
         />
       ) : (
         !isDrawerOpen && (

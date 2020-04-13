@@ -42,7 +42,6 @@ const Edit = ( { route } ) => {
         {type === 'Shabad'
                 && currentItems.map( ( item ) => {
                   const { source, writer, raag, entryID, mainLine, shabadId} = item;
-                  let info = ''
                   const subtitle = [
                     {title: 'Raag', value: raag},
                     {title: 'Writer', value: writer},
@@ -55,14 +54,16 @@ const Edit = ( { route } ) => {
                       key={`${shabadId}/${entryID}`}
                       titleStyle={style.CardTitleG}
                       title={`${mainLine}`}
+                      subtitleStyle={{  paddingBottom: 5,}}
                       subtitle={(source || raag || writer) 
                         ? 
-                        (<Text style={{fontSize: 15}}>
+                        (
+                          <Text style={{fontSize: 15}}>
                         {
                           subtitle.map(({title, value}) => value ? (
                           <Text>
                             {title}: 
-                            <Text style={{ fontFamily: 'AnmolLipiTrue'}}>
+                            <Text style={{ fontFamily: 'AnmolLipiTrue', color: 'white'}}>
                              { ` ${value} `}
                             </Text>
                             </Text>
@@ -72,6 +73,7 @@ const Edit = ( { route } ) => {
                         : 
                         `ShabadID: ${shabadId}`
                       }
+                      subtitleNumberOfLines={3}
                       left={( props ) => (
                         <Avatar.Icon {...props} icon="book" />
                       )}
@@ -218,6 +220,7 @@ const style = StyleSheet.create( {
   },
   CardTitleG: {
     fontFamily: 'AnmolLipiTrue',
+    padding: 5,
   },
   Snack: {
     alignSelf: 'flex-end',

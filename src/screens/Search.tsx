@@ -10,7 +10,7 @@ import { useNetInfo } from '@react-native-community/netinfo';
 
 import { SearchCtx } from '../store/context_stores/Contexts';
 import { SEARCH_TEXTS } from '../database/DatabaseConts';
-import query, { fetchBanis } from '../database/BanidbApi';
+import query, { fetchBanis, shabadInfo } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
 import { useValues, useUpdaters } from '../store/StateHooks';
 
@@ -58,7 +58,6 @@ const Search = () => {
     let cancelSearch = !net.isConnected;
     const fetchResults = async () => {
       const dbResults = await query( searchQuery, searchType );
-      updateResults( [] );
       updateResults( [ ...dbResults ] );
     };
     if ( searchQuery.length > 1 && !cancelSearch ) {
@@ -189,7 +188,7 @@ const Search = () => {
         </Menu>
       </View>
       <ScrollView>
-        {queryType === 'Shabad' && results.length > 0 && results.map( ( result ) => {
+        {queryType === 'Shabad' && results.length > 0 && results.map( ( [info,result] ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
 
@@ -198,6 +197,7 @@ const Search = () => {
           return (
             <SearchResult
               key={result.gurmukhi}
+              info={info}
               theme={theme}
               result={result}
               isAdded={isAdded}
