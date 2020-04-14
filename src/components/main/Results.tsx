@@ -9,10 +9,10 @@ import Icon from 'react-native-vector-icons/Feather';
 
 
 const ShabadCard = ( {
-  subheading, itemsRight, title, roundness, backgroundCondition, icon,
+  subheading, itemsRight, title, roundness, backgroundCondition, icon, surfaceColor,
 } ) => {
   const containerStyle = StyleSheet.flatten( [ {
-    backgroundColor: backgroundCondition,
+    backgroundColor: backgroundCondition || surfaceColor,
     borderRadius: roundness,
   }, style.CardContent ] );
   return (
@@ -42,6 +42,7 @@ interface TouchableShabadCard {
   onPress: () => void,
   ResultCard: React.ReactNode
 }
+
 const TouchableShabadCard: React.FC<TouchableShabadCard> = ( { ResultCard, onPress } ) => (
   <TouchableOpacity onPress={onPress}>
     {ResultCard}
@@ -61,6 +62,7 @@ const ResultBase: React.FC<BaseProps> = ( {
 } ) => {
   const card = (
     <ShabadCard
+      surfaceColor={theme.colors.surface}
       roundness={theme.roundness}
       title={title}
       backgroundCondition={isAdded ? theme.colors.backdrop : null}

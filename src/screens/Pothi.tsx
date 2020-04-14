@@ -60,7 +60,12 @@ const Gutka = () => {
     >
       <View style={{ flex: 1 }}>
         <View style={styles.View}>
-          <View style={{ flexGrow: 1, flexShrink: 1, backgroundColor: theme.colors.background }}>
+          <View style={{
+            flexGrow: 1,
+            flexShrink: 1,
+            backgroundColor: theme.colors.background,
+          }}
+          >
             {isLoadingData && (
             <>
               <ShimmeringLine />

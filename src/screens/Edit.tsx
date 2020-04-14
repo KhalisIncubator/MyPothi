@@ -6,6 +6,7 @@ import {
   Avatar, Card, IconButton, Snackbar, useTheme, Title,
 } from 'react-native-paper';
 import { useUpdaters, useValues } from '../store/StateHooks';
+import ShabadCard from '../components/main/Results';
 
 const Edit = ( { route } ) => {
   const theme = useTheme();
@@ -49,67 +50,71 @@ const Edit = ( { route } ) => {
                   } = item;
                   const subtitle = [
                     {
-                      title: 'Raag',
                       value: raag,
+                      color: theme.colors.backdrop,
                     },
                     {
-                      title: 'Writer',
                       value: writer,
+                      color: 'black',
                     },
                     {
-                      title: 'Source',
                       value: source,
+                      color: 'black',
                     },
                   ];
 
                   return (
-                    <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={`${shabadId}-${entryID}`}>
-                      <Card.Title
-                        key={`${shabadId}/${entryID}`}
-                        titleStyle={style.CardTitleG}
-                        title={`${mainLine}`}
-                        subtitleStyle={{ paddingBottom: 5 }}
-                        subtitle={( source || raag || writer )
-                          ? (
-                            <Text style={{ fontSize: 15 }}>
-                              {
-                          subtitle.map( ( { title, value } ) => ( value ? (
-                            <Text>
-                              {title}
-                              :
-                              <Text style={{
-                                fontFamily: 'AnmolLipiTrue',
-                                color: 'white',
+                    <ShabadCard
+                      key={`${shabadId}/${entryID}`}
+                      title={`${mainLine}`}
+                      roundness={theme.roundness}
+                      icon="book"
+                      subheading={
+                        (
+                          ( source || raag || writer )
+                            ? (
+                              <View style={{
+                                flexDirection: 'row',
+                                alignSelf: 'center',
                               }}
                               >
-                                { ` ${value} `}
-                              </Text>
-                            </Text>
-                          ) : null ) )
-                        }
-                            </Text>
-                          )
-                          : `ShabadID: ${shabadId}`}
-                        subtitleNumberOfLines={3}
-                        left={( props ) => (
-                          <Avatar.Icon {...props} icon="book" />
-                        )}
-                        right={( props ) => (
-                          <>
-                            <IconButton
-                              {...props}
-                              color="red"
-                              icon="minus-circle"
-                              onPress={() => {
-                                handleRemoveShabad(
-                                  entryID,
-                                );
-                              }}
-                            />
-                          </>
-                        )}
-                      />
-                    </Card>
+                                { // edge case of bhai gurdaas ji vaaran
+                            subtitle.map( ( { value, color } ) => ( !( !value || value === ' -' ) ? (
+                              <View style={{ paddingHorizontal: 5 }}>
+                                <Text style={{
+                                  color,
+                                  fontFamily: 'AnmolLipiTrue',
+                                  borderRadius: 6,
+                                  backgroundColor: 'white',
+                                  overflow: 'hidden',
+                                  paddingVertical: 2,
+                                }}
+                                >
+                                  { ` ${value} `}
+                                </Text>
+                              </View>
+                            ) : null ) )
+                          }
+                              </View>
+                            ) : null
+                        )
+                      }
+                      backgroundCondition={null}
+                      surfaceColor={theme.colors.surface}
+                      itemsRight={(
+                        <>
+                          <IconButton
+                            color="red"
+                            icon="minus-circle"
+                            onPress={() => {
+                              handleRemoveShabad(
+                                entryID,
+                              );
+                            }}
+                          />
+                        </>
+                      )}
+                    />
                   );
                 } )}
         {type === 'Pothi'
@@ -255,10 +260,6 @@ const style = StyleSheet.create( {
   Card: {
     backgroundColor: 'white',
     margin: 5,
-  },
-  CardTitleG: {
-    fontFamily: 'AnmolLipiTrue',
-    padding: 5,
   },
   Snack: {
     alignSelf: 'flex-end',

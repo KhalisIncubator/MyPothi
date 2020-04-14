@@ -88,7 +88,7 @@ const LineBlock = ( props: Props ) => {
                 ) && (
                 <TextBlock
                   type="Eng"
-        lineID={id}
+                  lineID={id}
 
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Eng' )}
                   isSelected={translationSelection}
@@ -102,7 +102,7 @@ const LineBlock = ( props: Props ) => {
               && (
                 <TextBlock
                   type="Teeka"
-        lineID={id}
+                  lineID={id}
                   mod={filteredMod.filter( ( mod ) => mod?.element === 'Teeka' )}
                   isSelected={teekaSelection}
                   value={Translations.Punjabi[sources.teekaSource]}
@@ -110,8 +110,8 @@ const LineBlock = ( props: Props ) => {
                   style={{ fontSize: teeka }}
                 />
               )}
-      {displayTranslit && 
-      !( Transliteration[sources.translitLang] === '' || !Transliteration[sources.translitLang] )
+      {displayTranslit
+      && !( Transliteration[sources.translitLang] === '' || !Transliteration[sources.translitLang] )
       && (
       <TextBlock
         type="Translit"
