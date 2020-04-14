@@ -193,7 +193,7 @@ const Search = () => {
       <ScrollView>
         {queryType === 'Shabad' && results.length > 0 && results.map( ( [ info, result ] ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
-                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Bani' ) !== -1;
+                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Shabad' ) !== -1;
 
           const addedCount = addedItems.filter( ( item ) => item.sID === result.shabadId ).length;
 
