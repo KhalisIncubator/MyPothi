@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Searchbar, Menu, Text, useTheme, Button, Title,
+  Searchbar, Menu, Text, useTheme, Title, Chip,
 } from 'react-native-paper';
 import {
   View, StyleSheet, ScrollView, SafeAreaView, ActivityIndicator, Alert,
@@ -126,15 +126,15 @@ const Search = () => {
           visible={typeMenu}
           onDismiss={() => updateTypeM( false )}
           anchor={(
-            <Button
+            <Chip
               style={[ styles.button, {
                 backgroundColor: theme.colors.surface,
               } ]}
-              color={theme.colors.text}
+              // color={theme.colors.text}
               onPress={() => updateTypeM( true )}
             >
               {queryType}
-            </Button>
+            </Chip>
                       )}
         >
           <Menu.Item
@@ -156,15 +156,14 @@ const Search = () => {
           visible={searchMenu}
           onDismiss={() => updateSearchM( false )}
           anchor={(
-            <Button
+            <Chip
               style={[ styles.button, {
                 backgroundColor: theme.colors.surface,
               } ]}
-              color={theme.colors.text}
               onPress={() => updateSearchM( true )}
             >
               {SEARCH_TEXTS[searchType]}
-            </Button>
+            </Chip>
                       )}
         >
           {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {

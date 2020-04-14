@@ -56,14 +56,16 @@ const query = async ( search: string, type: number ) => {
   const API_URL = 'https://api.banidb.com/v2/';
   const results = 50;
   if ( search !== '' ) {
-    const q = search;
+    const q = type !== 4 ? search : null;
     const url = encodeURI( buildApiUrl( {
       q,
       type,
       results,
       API_URL,
+      ang: type === 4 ? Number( search ) : null,
     } ) );
 
+    console.log( url );
     return fetch( url )
       .then( ( response ) => response.json() )
       .then( ( data ) => data.verses )

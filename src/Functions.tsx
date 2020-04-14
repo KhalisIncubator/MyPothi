@@ -1,7 +1,10 @@
 import { getModWithParent } from './database/LocalDatabase';
 import { Modification } from '../types/types';
 // bug with realm where on first load this stuff is not an array for some reason
-const mapToArray = ( obj ): Modification[] => ( obj ? Array.from( { ...obj, length: Object.keys( obj ).length } ) : [] );
+const mapToArray = ( obj ): Modification[] => ( obj ? Array.from( {
+  ...obj,
+  length: Object.keys( obj ).length,
+} ) : [] );
 export default mapToArray;
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
@@ -13,8 +16,14 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
     return [
       ...( previousSections || [] ),
       currentSection,
-      { type: sourceVishraams[indices.indexOf( index )].t, data: word },
-      { type: null, data: null } ];
+      {
+        type: sourceVishraams[indices.indexOf( index )].t,
+        data: word,
+      },
+      {
+        type: null,
+        data: null,
+      } ];
   }
   // else Add on to the end of the current phrase
   const nextSection = currentSection ? (
@@ -40,7 +49,10 @@ const mapVishraams = ( line: string, apiValue: object, source: string ) => {
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   return ( sourceVishraams && indices.length )
     ? mapToSections( line, indices, sourceVishraams ).filter( ( section ) => section !== undefined && section.data )
-    : [ { type: 'line', data: line } ];
+    : [ {
+      type: 'line',
+      data: line,
+    } ];
 };
 export { mapVishraams };
 // get current font size on selected element
