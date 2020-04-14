@@ -11,7 +11,7 @@ const Viewer = ( props ) => {
   } = props;
 
 
-  const renderItem = ( { item, index } ) =>  (
+  const renderItem = ( { item, index } ) => (
     <FlatList
       data={item}
       keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
@@ -27,7 +27,7 @@ const Viewer = ( props ) => {
           mods={mapToArray( currentItems[index]?.mods )}
         />
       )}
-      initialNumToRender={index === 0 ? (item.length < 20 ? item.length : 20) : 0}
+      initialNumToRender={index === 0 ? ( item.length < 20 ? item.length : 20 ) : 0}
     />
   );
 
@@ -40,7 +40,12 @@ const Viewer = ( props ) => {
         keyExtractor={( item, index ) => index.toString()}
         renderItem={renderItem}
         ItemSeparatorComponent={() => (
-          <View style={{ width: '100%', backgroundColor: '#3498db', height: 3 }} />
+          <View style={{
+            width: '100%',
+            backgroundColor: '#3498db',
+            height: 3,
+          }}
+          />
         )}
       />
     </SafeAreaView>

@@ -6,7 +6,7 @@ import {
   Avatar, Card, IconButton, Snackbar, useTheme, Title,
 } from 'react-native-paper';
 import { useUpdaters, useValues } from '../store/StateHooks';
-import ShabadCard from '../components/main/Results';
+import ShabadCard, { SourceColors } from '../components/main/Results';
 
 const Edit = ( { route } ) => {
   const theme = useTheme();
@@ -55,11 +55,11 @@ const Edit = ( { route } ) => {
                     },
                     {
                       value: writer,
-                      color: 'black',
+                      color: theme.colors.primary,
                     },
                     {
                       value: source,
-                      color: 'black',
+                      color: SourceColors[source],
                     },
                   ];
 

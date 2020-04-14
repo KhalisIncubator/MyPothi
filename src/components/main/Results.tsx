@@ -8,6 +8,14 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 
 
+const SourceColors = {
+  'sRI gurU gRMQ swihb jI': '#417d9a',
+  'dsm bwxI': '#7c00ff',
+  'BweI gurdws jI vwrW': '#017174',
+  'BweI gurdws isMG jI vwrW': '#746f01',
+  'BweI nMd lwl jI vwrW': '#74001d',
+  'rihqnwmy Aqy pMQk il^qW': '#000',
+};
 const ShabadCard = ( {
   subheading, itemsRight, title, roundness, backgroundCondition, icon, surfaceColor,
 } ) => {
@@ -99,7 +107,7 @@ const SearchResult = ( {
     },
     {
       value: source,
-      color: 'black',
+      color: SourceColors[source],
     },
   ];
   return (
@@ -156,7 +164,7 @@ const BaniResult = ( {
   );
 };
 
-export { BaniResult, SearchResult };
+export { BaniResult, SearchResult, SourceColors };
 
 const style = StyleSheet.create( {
   Card: {
