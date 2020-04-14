@@ -10,7 +10,7 @@ import { useNetInfo } from '@react-native-community/netinfo';
 
 import { SearchCtx } from '../store/context_stores/Contexts';
 import { SEARCH_TEXTS } from '../database/DatabaseConts';
-import query, { fetchBanis, shabadInfo } from '../database/BanidbApi';
+import query, { fetchBanis } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
 import { useValues, useUpdaters } from '../store/StateHooks';
 
@@ -69,7 +69,7 @@ const Search = () => {
   }, [ searchQuery, net.isConnected, searchType ] );
   return (
     <SafeAreaView style={{
-      backgroundColor: theme.colors.background, 
+      backgroundColor: theme.colors.background,
       flex: 1,
     }}
     >
@@ -79,10 +79,10 @@ const Search = () => {
         useNativeDriver
       >
         <SafeAreaView style={[ styles.content,
-        {
-          backgroundColor: theme.colors.surface,
-           borderRadius: theme.roundness,
-        } ]}
+          {
+            backgroundColor: theme.colors.surface,
+            borderRadius: theme.roundness,
+          } ]}
         >
           <View style={{
             padding: 10,
@@ -188,7 +188,7 @@ const Search = () => {
         </Menu>
       </View>
       <ScrollView>
-        {queryType === 'Shabad' && results.length > 0 && results.map( ( [info,result] ) => {
+        {queryType === 'Shabad' && results.length > 0 && results.map( ( [ info, result ] ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
                                     || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
 
@@ -201,19 +201,19 @@ const Search = () => {
               theme={theme}
               result={result}
               isAdded={isAdded}
-              addCount={addedCount || null}
+              addedCount={addedCount || null}
               onPress={() => {
                 Alert.alert(
                   'Confirm Addition',
                   'Are you sure you want to add this to your pothi?',
                   [
                     {
+                      text: 'Cancel',
+                    },
+                    {
                       text: 'Ok',
                       onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ); },
                       style: 'cancel',
-                    },
-                    {
-                      text: 'Cancel',
                     },
                   ],
                   {
@@ -227,15 +227,12 @@ const Search = () => {
         {queryType === 'Bani' && banis.map( ( bani ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
                       || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
-
-          const addedCount = addedItems.filter( ( id ) => id === bani.ID ).length;
           return (
             <BaniResult
               key={bani.gurmukhi}
               theme={theme}
               result={bani}
               isAdded={isAdded}
-              addCount={addedCount || null}
               onPress={() => {
                 Alert.alert(
                   'Confirm Addition',

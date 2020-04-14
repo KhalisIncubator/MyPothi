@@ -12,7 +12,10 @@ const Edit = ( { route } ) => {
 
   const [ showSnack, updateShow ] = useState( false );
   const [ showError, updateErr ] = useState( false );
-  const [ editing, updateEditing ] = useState( { name: null, id: null } );
+  const [ editing, updateEditing ] = useState( {
+    name: null,
+    id: null,
+  } );
   const [ editedText, updateText ] = useState( '' );
 
   const { currentItems } = useValues( 'currentModel' );
@@ -41,60 +44,74 @@ const Edit = ( { route } ) => {
       <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
         {type === 'Shabad'
                 && currentItems.map( ( item ) => {
-                  const { source, writer, raag, entryID, mainLine, shabadId} = item;
+                  const {
+                    source, writer, raag, entryID, mainLine, shabadId,
+                  } = item;
                   const subtitle = [
-                    {title: 'Raag', value: raag},
-                    {title: 'Writer', value: writer},
-                    {title: 'Source', value: source},
-                  ]
+                    {
+                      title: 'Raag',
+                      value: raag,
+                    },
+                    {
+                      title: 'Writer',
+                      value: writer,
+                    },
+                    {
+                      title: 'Source',
+                      value: source,
+                    },
+                  ];
 
-                return (
-                  <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={`${shabadId}-${entryID}`}>
-                    <Card.Title
-                      key={`${shabadId}/${entryID}`}
-                      titleStyle={style.CardTitleG}
-                      title={`${mainLine}`}
-                      subtitleStyle={{  paddingBottom: 5,}}
-                      subtitle={(source || raag || writer) 
-                        ? 
-                        (
-                          <Text style={{fontSize: 15}}>
-                        {
-                          subtitle.map(({title, value}) => value ? (
-                          <Text>
-                            {title}: 
-                            <Text style={{ fontFamily: 'AnmolLipiTrue', color: 'white'}}>
-                             { ` ${value} `}
+                  return (
+                    <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={`${shabadId}-${entryID}`}>
+                      <Card.Title
+                        key={`${shabadId}/${entryID}`}
+                        titleStyle={style.CardTitleG}
+                        title={`${mainLine}`}
+                        subtitleStyle={{ paddingBottom: 5 }}
+                        subtitle={( source || raag || writer )
+                          ? (
+                            <Text style={{ fontSize: 15 }}>
+                              {
+                          subtitle.map( ( { title, value } ) => ( value ? (
+                            <Text>
+                              {title}
+                              :
+                              <Text style={{
+                                fontFamily: 'AnmolLipiTrue',
+                                color: 'white',
+                              }}
+                              >
+                                { ` ${value} `}
+                              </Text>
                             </Text>
-                            </Text>
-                          ): null)
+                          ) : null ) )
                         }
-                        </Text>)
-                        : 
-                        `ShabadID: ${shabadId}`
-                      }
-                      subtitleNumberOfLines={3}
-                      left={( props ) => (
-                        <Avatar.Icon {...props} icon="book" />
-                      )}
-                      right={( props ) => (
-                        <>
-                          <IconButton
-                            {...props}
-                            color="red"
-                            icon="minus-circle"
-                            onPress={() => {
-                              handleRemoveShabad(
-                                entryID,
-                              );
-                            }}
-                          />
-                        </>
-                      )}
-                    />
-                  </Card>
-                );
-              })}
+                            </Text>
+                          )
+                          : `ShabadID: ${shabadId}`}
+                        subtitleNumberOfLines={3}
+                        left={( props ) => (
+                          <Avatar.Icon {...props} icon="book" />
+                        )}
+                        right={( props ) => (
+                          <>
+                            <IconButton
+                              {...props}
+                              color="red"
+                              icon="minus-circle"
+                              onPress={() => {
+                                handleRemoveShabad(
+                                  entryID,
+                                );
+                              }}
+                            />
+                          </>
+                        )}
+                      />
+                    </Card>
+                  );
+                } )}
         {type === 'Pothi'
                 && (
                 <>
@@ -107,7 +124,11 @@ const Edit = ( { route } ) => {
                           <Avatar.Icon {...props} icon="book" />
                         )}
                         right={( props ) => (
-                          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                          <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                          }}
+                          >
                             {
                                   editing.name === data[0] && editing.id === data[1]
                                     ? (
@@ -119,7 +140,10 @@ const Edit = ( { route } ) => {
                                           onPress={() => {
                                             renamePothi( [ editing.name, editing.id, editedText ] );
                                             updateText( '' );
-                                            updateEditing( { name: null, id: null } );
+                                            updateEditing( {
+                                              name: null,
+                                              id: null,
+                                            } );
                                           }}
                                         />
                                         <IconButton
@@ -128,7 +152,10 @@ const Edit = ( { route } ) => {
                                           icon="x"
                                           onPress={() => {
                                             updateText( '' );
-                                            updateEditing( { name: null, id: null } );
+                                            updateEditing( {
+                                              name: null,
+                                              id: null,
+                                            } );
                                           }}
                                         />
                                       </>
@@ -140,7 +167,11 @@ const Edit = ( { route } ) => {
                                           color={theme.colors.primary}
                                           icon="edit"
                                           onPress={() => {
-                                            updateEditing( ( prev ) => ( { ...prev, name: data[0], id: data[1] } ) );
+                                            updateEditing( ( prev ) => ( {
+                                              ...prev,
+                                              name: data[0],
+                                              id: data[1],
+                                            } ) );
                                           }}
                                         />
                                         <IconButton
@@ -169,11 +200,18 @@ const Edit = ( { route } ) => {
 
                             editing.id === data[1]
                             && (
-                            <Card.Content style={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
+                            <Card.Content style={{
+                              alignItems: 'center',
+                              justifyContent: 'space-evenly',
+                            }}
+                            >
                               <Title style={{ padding: 3 }}>New Name</Title>
                               <TextInput
                                 style={{
-                                  color: theme.colors.text, borderBottomWidth: 1, borderBottomColor: theme.colors.accent, fontSize: 20,
+                                  color: theme.colors.text,
+                                  borderBottomWidth: 1,
+                                  borderBottomColor: theme.colors.accent,
+                                  fontSize: 20,
                                 }}
                                 autoCorrect={false}
                                 placeholderTextColor="gray"

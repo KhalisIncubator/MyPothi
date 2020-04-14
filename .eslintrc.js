@@ -11,7 +11,7 @@ module.exports = {
       'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint',  "modules-newline"],
+  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint',],
   settings: {
       'import/resolver': {
           typescript: {},
@@ -25,7 +25,6 @@ module.exports = {
       },
   },
   rules: {
-      "modules-newline/export-declaration-newline": "error",
       "object-property-newline": ['error', { "allowAllPropertiesOnSameLine": false }],
       'max-len': ['error', {code: 150}],
       'space-in-parens': ['error', 'always'],

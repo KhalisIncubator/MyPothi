@@ -90,12 +90,12 @@ const currentModel: CurrentModel = {
       mainLine,
       lines,
       type,
-      info
+      info,
     );
   } ),
-  undoCreation: action(() => {
+  undoCreation: action( () => {
     undoCreation();
-  }),
+  } ),
   removeEntry: action( ( state, payload ) => {
     removeFromPothi( state.currentName[0], payload, state.currentName[1] );
   } ),
@@ -113,7 +113,7 @@ const currentModel: CurrentModel = {
   deleteMod: action( ( state, { lineid, element, parentID } ) => {
     if ( lineid && element && parentID ) {
       if ( existsModification( lineid, element, parentID ) ) {
-        deleteModification( lineid, element, parentID )
+        deleteModification( lineid, element, parentID );
       }
     }
   } ),
@@ -122,7 +122,7 @@ const currentModel: CurrentModel = {
     // eslint-disable-next-line no-shadow
     const { loadShabad, loadBani } = injections;
     const length = getStoreState().viewerModel.searchPreferences.baniLength;
-    const [info, lines] = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
+    const [ info, lines ] = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
     actions.addedEntry( [ id, mainLine, lines, type, info ] );
   } ),
 
@@ -134,16 +134,18 @@ const currentModel: CurrentModel = {
     },
   ),
   onAction: actionOn(
-    (actions) => [
+    ( actions ) => [
       actions.addEntry,
       actions.undoCreation,
       actions.createMod,
       actions.deleteMod,
       actions.removeEntry,
     ],
-    (state) => { state.currentItems = getCurrentItems(state.currentName[0],
-      state.currentName[1],)}
-  )
+    ( state ) => {
+      state.currentItems = getCurrentItems( state.currentName[0],
+        state.currentName[1] );
+    },
+  ),
 };
 
 const pothiModel: PothiModel = {
@@ -209,24 +211,47 @@ const addedModel: AddedModel = {
     state.addedItems.push( payload );
   } ),
   onUndo: actionOn(
-    (actions, storeActions) => storeActions.currentModel.undoCreation,
-    (store) => {
-      store.addedItems.pop()
-    }
-  )
+    ( actions, storeActions ) => storeActions.currentModel.undoCreation,
+    ( store ) => {
+      store.addedItems.pop();
+    },
+  ),
+  onChangeGutka: actionOn(
+    ( actions, storeActions ) => storeActions.currentModel.updateCurrentName,
+    ( store ) => {
+      store.addedItems = [];
+    },
+  ),
 };
 
 const storeModel: StoreModel = {
   modalModel,
   addedModel,
-  themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
-  currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
-  pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
-  viewerModel: persist( viewerModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ),
+  themeModel: persist( themeModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'overwrite',
+  } ),
+  currentModel: persist( currentModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'merge',
+  } ),
+  pothiModel: persist( pothiModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'overwrite',
+  } ),
+  viewerModel: persist( viewerModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'mergeDeep',
+  } ),
 };
 
 export { storeModel };
 export default createStore(
   storeModel,
-  { injections: { loadShabad, loadBani } },
+  {
+    injections: {
+      loadShabad,
+      loadBani,
+    },
+  },
 );

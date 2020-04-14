@@ -8,7 +8,7 @@ import {
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
 
-interface info {
+interface Info {
     source: string,
     writer: string,
     raag: string,
@@ -17,7 +17,7 @@ interface Sources {
     vishraamSource: 'sttm' | 'sttm2' | 'ig',
     teekaSource: 'FT' | 'SS',
     translationLang: 'English' | 'Spanish'
-    translitLang: 'English' | 'Hindi' | 'IPA' 
+    translitLang: 'English' | 'Hindi' | 'IPA'
 }
 interface Theme {
     isDarkMode: boolean,
@@ -55,7 +55,7 @@ export interface CurrentModel {
 
     updateCurrentName: Action<CurrentModel, [string, string]>;
 
-    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry, info ]>;
+    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry, Info ]>;
     undoCreation: Action<CurrentModel>;
     removeEntry: Action<CurrentModel, string>;
 
@@ -101,6 +101,7 @@ export interface AddedModel {
  addedItems: number[],
  updateAddedItems: Action<AddedModel, number>
  onUndo: ActionOn<AddedModel, StoreModel>;
+ onChangeGutka: ActionOn<AddedModel, StoreModel>;
 }
 export interface EditModel {
     isEditMode: boolean;

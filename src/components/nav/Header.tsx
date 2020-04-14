@@ -12,8 +12,8 @@ import { FullScreenCtx } from '../../store/context_stores/Contexts';
 const Header = ( { previous, navigation } ) => {
   const theme = useTheme();
   const { currentName } = useValues( 'currentModel' );
-  const {undoCreation} = useUpdaters('currentModel')
-  const { addedItems } = useValues('addedModel');
+  const { undoCreation } = useUpdaters( 'currentModel' );
+  const { addedItems } = useValues( 'addedModel' );
   const isFullScren = FullScreenCtx.useStoreState( ( store ) => store.isFullScreen );
   const route = useRoute();
   const isDrawerOpen = useIsDrawerOpen();
@@ -71,7 +71,7 @@ const Header = ( { previous, navigation } ) => {
               key="undo"
               icon="rotate-ccw"
               onPress={() => {
-                if(addedItems.length) undoCreation();
+                if ( addedItems.length ) undoCreation();
               }}
             />
             )
