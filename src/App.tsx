@@ -3,17 +3,18 @@
 /* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
 
-import React, { useEffect, useMemo } from 'react';
+import React, {
+  useEffect, useMemo, Suspense, lazy,
+} from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 import { View, useColorScheme } from 'react-native';
 import store from './store/MainStore';
-
-
-import Routes from './Routes';
 import { useValues } from './store/StateHooks';
+
+const Routes = lazy( () => import( './Routes' ) );
 
 const theme = {
   ...DefaultTheme,
@@ -74,8 +75,10 @@ const App = () => {
     return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
   }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
 
+
   useEffect( () => {
     if ( rehydrated ) {
+      console.log( 'rehydrated' );
       SplashScreen.hide();
     }
   }, [ rehydrated ] );
@@ -86,13 +89,17 @@ const App = () => {
         icon: ( props ) => <Icon {...props} />,
       }}
     >
-      <View style={{
-        flex: 1,
-        backgroundColor: '#FFA500',
-      }}
+
+      <Suspense fallback={(
+        <View style={{
+          flex: 1,
+          backgroundColor: '#FFA500',
+        }}
+        />
+)}
       >
-        {rehydrated && <Routes />}
-      </View>
+        <Routes />
+      </Suspense>
     </PaperProvider>
   );
 };
