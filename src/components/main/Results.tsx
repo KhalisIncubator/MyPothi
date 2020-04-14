@@ -6,18 +6,19 @@ import {
   Avatar, Card, Paragraph, Title,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
+import { Color } from 'react-native-svg';
 
 
 const SourceColors = {
   'sRI gurU gRMQ swihb jI': '#417d9a',
-  'dsm bwxI': '#7c00ff',
+  'dsm bwxI': '#70007D',
   'BweI gurdws jI vwrW': '#017174',
   'BweI gurdws isMG jI vwrW': '#746f01',
   'BweI nMd lwl jI vwrW': '#74001d',
   'rihqnwmy Aqy pMQk il^qW': '#000',
 };
 const ShabadCard = ( {
-  subheading, itemsRight, title, roundness, backgroundCondition, icon, surfaceColor,
+  subheading, itemsRight, title, roundness, backgroundCondition, icon, iconColor, surfaceColor,
 } ) => {
   const containerStyle = StyleSheet.flatten( [ {
     backgroundColor: backgroundCondition || surfaceColor,
@@ -27,7 +28,7 @@ const ShabadCard = ( {
     <Card style={style.Card}>
       <Card.Content style={containerStyle}>
         <View>
-          <Avatar.Icon icon={icon} size={40} />
+          <Avatar.Icon icon={icon} size={40} style={{ backgroundColor: iconColor }} />
         </View>
         <View style={style.CardTitleContainer}>
           <Title style={style.CardTitle}>{title}</Title>
@@ -64,13 +65,15 @@ interface BaseProps {
   title: string,
   addedCount?: number,
   subheading?: ReactChild,
+  iconColor: Color,
 }
 const ResultBase: React.FC<BaseProps> = ( {
-  theme, onPress, isAdded, title, addedCount, subheading,
+  theme, onPress, isAdded, title, addedCount, subheading, iconColor,
 } ) => {
   const card = (
     <ShabadCard
       surfaceColor={theme.colors.surface}
+      iconColor={iconColor}
       roundness={theme.roundness}
       title={title}
       backgroundCondition={isAdded ? theme.colors.backdrop : null}
@@ -78,7 +81,7 @@ const ResultBase: React.FC<BaseProps> = ( {
         <>
           {addedCount && <Paragraph style={{ color: 'black' }}>{addedCount}</Paragraph>}
           {isAdded && <Icon name="check" style={{ paddingLeft: 5 }} />}
-          {!isAdded && <Icon name="plus" style={{ paddingLeft: 5 }} />}
+          {!isAdded && <Icon name="download" style={{ paddingLeft: 5 }} />}
         </>
     )}
       subheading={subheading}
@@ -91,15 +94,11 @@ const ResultBase: React.FC<BaseProps> = ( {
   );
 };
 
-const SearchResult = ( {
-  theme, onPress, info, addedCount, isAdded, result,
-} ) => {
-  const { raag, writer, source } = info;
-  const { verse } = result;
+const generateTags = ( source, raag, writer, theme ) => {
   const subtitle = [
     {
       value: raag,
-      color: theme.colors.backdrop,
+      color: '#D97D0B',
     },
     {
       value: writer,
@@ -111,19 +110,17 @@ const SearchResult = ( {
     },
   ];
   return (
-    <ResultBase
-      subheading={
-      (
-        ( source || raag || writer )
-          ? (
-            <View style={{
-              flexDirection: 'row',
-              alignSelf: 'center',
-            }}
-            >
-              { // edge case of bhai gurdaas ji vaaran
+    <>
+      { ( source || raag || writer )
+        ? (
+          <View style={{
+            flexDirection: 'row',
+            alignSelf: 'center',
+          }}
+          >
+            { // edge case of bhai gurdaas ji vaaran
           subtitle.map( ( { value, color } ) => ( !( !value || value === ' -' ) ? (
-            <View style={{ paddingHorizontal: 5 }}>
+            <View style={{ paddingHorizontal: 8 }}>
               <Text style={{
                 color,
                 fontFamily: 'AnmolLipiTrue',
@@ -138,10 +135,22 @@ const SearchResult = ( {
             </View>
           ) : null ) )
         }
-            </View>
-          ) : null
-      )
-    }
+          </View>
+        ) : null}
+    </>
+  );
+};
+
+const SearchResult = ( {
+  theme, onPress, info, addedCount, isAdded, result,
+} ) => {
+  const { raag, writer, source } = info;
+  const { verse } = result;
+
+  return (
+    <ResultBase
+      subheading={generateTags( source, raag, writer, theme )}
+      iconColor={SourceColors[source]}
       isAdded={isAdded}
       addedCount={addedCount}
       theme={theme}
@@ -156,6 +165,7 @@ const BaniResult = ( {
   const { gurmukhi } = result;
   return (
     <ResultBase
+      iconColor={theme.colors.primary}
       isAdded={isAdded}
       title={gurmukhi}
       theme={theme}
@@ -164,7 +174,9 @@ const BaniResult = ( {
   );
 };
 
-export { BaniResult, SearchResult, SourceColors };
+export {
+  BaniResult, SearchResult, SourceColors, generateTags,
+};
 
 const style = StyleSheet.create( {
   Card: {

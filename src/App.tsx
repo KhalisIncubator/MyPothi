@@ -22,7 +22,7 @@ const theme = {
   roundness: 10,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3498db',
+    primary: '#0089BF',
     accent: '#99AAB5',
     backdrop: '#FFA500',
     background: '#e7e7e7',
@@ -39,7 +39,7 @@ const darkTheme = {
   roundness: 10,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3498db',
+    primary: '#0089BF',
     accent: '#99AAB5',
     surface: '#99AAB5',
     background: '#2C2F33',
@@ -55,7 +55,7 @@ const trueDark = {
   roundness: 10,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3498db',
+    primary: '#0089BF',
     accent: '#99AAB5',
     surface: '#99AAB5',
     background: '#000000',

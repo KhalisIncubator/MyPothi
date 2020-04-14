@@ -1,6 +1,7 @@
 import { buildApiUrl } from '@sttm/banidb';
 import { lengthType, entryObj, RemappedLine } from '../../types/types';
 import { baniLengths } from './DatabaseConts';
+import { banisOrder } from '../Defaults';
 
 
 const shabadInfo = ( { shabadInfo: info, baniInfo } ) => {
@@ -78,6 +79,7 @@ const query = async ( search: string, type: number ) => {
   }
   return [ {} ];
 };
+const sortBani = ( firstBani, secondBani ) => banisOrder.indexOf( firstBani.ID ) - banisOrder.indexOf( secondBani.ID );
 
 const loadShabad = async ( id: number ) => {
   const API_URL = 'https://api.banidb.com/v2/';
@@ -97,7 +99,8 @@ const loadShabad = async ( id: number ) => {
 const fetchBanis = async () => (
   fetch( 'https://api.banidb.com/v2/banis' )
     .then( ( res ) => res.json() )
-    .then( ( data ) => data.map( ( bani ) => bani ) )
+    .then( ( data ): any[] => data.map( ( bani ) => bani ) )
+    .then( ( banisArr ) => banisArr.sort( sortBani ) )
     .catch( ( err ) => err )
 );
 
