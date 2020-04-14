@@ -23,7 +23,7 @@ interface Props {
   children?: ReactNode
 }
 const TextBlock: React.FC<Props> = ( {
-  style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine, lineID
+  style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine, lineID,
 } ) => {
   const [ singularMod ] = mod;
   const theme = useTheme();

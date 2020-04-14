@@ -65,7 +65,8 @@ const fetchAllPothis = (): string[][] => {
   }
   const pothis = localRealm.objects<storedPothi>( 'Pothi' ).sorted( 'index' );
   pothis.forEach( ( pothi ) => {
-    names.push( [ pothi.name, pothi.pothiID ] );
+    const { name, pothiID } = pothi;
+    names.push( [ name, pothiID ] );
   } );
   return names;
 };
@@ -173,8 +174,9 @@ const getCurrentItems = ( currentPothi, pothiID ) => {
  * @param {string} mainLine the main line identifier of the shabad
  * @param {pothiEntry} type shabad or bani
  */
-const addToPothi = ( currentPothi, pothiID, id, mainLine, lines, type ) => {
+const addToPothi = ( currentPothi, pothiID, id, mainLine, lines, type, info? ) => {
   const pothi: storedPothi = findPothi( currentPothi, pothiID );
+  const { source, raag, writer } = info;
   const newID = generateID();
   localRealm.write( () => {
     const entry = localRealm.create( 'Entry', {
@@ -186,6 +188,9 @@ const addToPothi = ( currentPothi, pothiID, id, mainLine, lines, type ) => {
       mods: [],
       index: pothi.items.length,
       entryID: newID,
+      source,
+      raag,
+      writer,
     } );
     pothi.items.push( entry );
   } );
@@ -220,10 +225,16 @@ const getLastItem = () => {
 };
 const undoCreation = () => {
   const lastPothi = getLastItem();
-  localRealm.write(() => {
-    localRealm.delete(lastPothi)
-  })
-}
+  localRealm.write( () => {
+    for ( const mod of lastPothi.mods ) {
+      localRealm.delete( mod );
+    }
+    for ( const line of lastPothi.lines ) {
+      localRealm.delete( line );
+    }
+    localRealm.delete( lastPothi );
+  } );
+};
 export {
   getCurrentItems, addToPothi, removeFromPothi, undoCreation,
 };

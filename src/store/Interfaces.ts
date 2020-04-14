@@ -7,11 +7,17 @@ import {
 } from '../../types/types';
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
+
+interface Info {
+    source: string,
+    writer: string,
+    raag: string,
+}
 interface Sources {
     vishraamSource: 'sttm' | 'sttm2' | 'ig',
     teekaSource: 'FT' | 'SS',
     translationLang: 'English' | 'Spanish'
-    translitLang: 'English' | 'Hindi' | 'IPA' 
+    translitLang: 'English' | 'Hindi' | 'IPA'
 }
 interface Theme {
     isDarkMode: boolean,
@@ -49,9 +55,9 @@ export interface CurrentModel {
 
     updateCurrentName: Action<CurrentModel, [string, string]>;
 
-    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry]>;
+    addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry, Info ]>;
     undoCreation: Action<CurrentModel>;
-    removeEntry: Action<CurrentModel, string>;
+    removeEntry: Action<CurrentModel, [string, number]>;
 
     createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
     deleteMod: Action<CurrentModel, { lineid: number, element: Element, parentID: string}>;
@@ -92,9 +98,11 @@ export interface SearchModel {
     updateQueryType: Action<SearchModel, QueryType>;
 }
 export interface AddedModel {
- addedItems: number[],
- updateAddedItems: Action<AddedModel, number>
+ addedItems: any[],
+ updateAddedItems: Action<AddedModel, {sID: number, queryType: string}>
  onUndo: ActionOn<AddedModel, StoreModel>;
+ onChangeGutka: ActionOn<AddedModel, StoreModel>;
+ onDelete: ActionOn<AddedModel, StoreModel>;
 }
 export interface EditModel {
     isEditMode: boolean;

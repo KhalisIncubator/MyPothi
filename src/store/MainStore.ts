@@ -82,8 +82,7 @@ const currentModel: CurrentModel = {
     const [ name, id ] = payload;
     state.currentName = [ name, id ];
   } ),
-  addedEntry: action( ( state, payload ) => {
-    const [ id, mainLine, lines, type ] = payload;
+  addedEntry: action( ( state, [ id, mainLine, lines, type, info ] ) => {
     addToPothi(
       state.currentName[0],
       state.currentName[1],
@@ -91,13 +90,14 @@ const currentModel: CurrentModel = {
       mainLine,
       lines,
       type,
+      info,
     );
   } ),
-  undoCreation: action(() => {
+  undoCreation: action( () => {
     undoCreation();
-  }),
-  removeEntry: action( ( state, payload ) => {
-    removeFromPothi( state.currentName[0], payload, state.currentName[1] );
+  } ),
+  removeEntry: action( ( state, [ entryID, shabadID ] ) => {
+    removeFromPothi( state.currentName[0], entryID, state.currentName[1] );
   } ),
   createMod: action( ( state, {
     lineid, element, type, value, parentID,
@@ -113,7 +113,7 @@ const currentModel: CurrentModel = {
   deleteMod: action( ( state, { lineid, element, parentID } ) => {
     if ( lineid && element && parentID ) {
       if ( existsModification( lineid, element, parentID ) ) {
-        deleteModification( lineid, element, parentID )
+        deleteModification( lineid, element, parentID );
       }
     }
   } ),
@@ -122,9 +122,8 @@ const currentModel: CurrentModel = {
     // eslint-disable-next-line no-shadow
     const { loadShabad, loadBani } = injections;
     const length = getStoreState().viewerModel.searchPreferences.baniLength;
-    const lines = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
-
-    actions.addedEntry( [ id, mainLine, lines, type ] );
+    const [ info, lines ] = type === 'Bani' ? await loadBani( id, length ) : await loadShabad( id );
+    actions.addedEntry( [ id, mainLine, lines, type, info ] );
   } ),
 
   onNameChange: actionOn(
@@ -135,16 +134,18 @@ const currentModel: CurrentModel = {
     },
   ),
   onAction: actionOn(
-    (actions) => [
+    ( actions ) => [
       actions.addEntry,
       actions.undoCreation,
       actions.createMod,
       actions.deleteMod,
       actions.removeEntry,
     ],
-    (state) => { state.currentItems = getCurrentItems(state.currentName[0],
-      state.currentName[1],)}
-  )
+    ( state ) => {
+      state.currentItems = getCurrentItems( state.currentName[0],
+        state.currentName[1] );
+    },
+  ),
 };
 
 const pothiModel: PothiModel = {
@@ -207,27 +208,58 @@ const viewerModel: ViewerModel = {
 const addedModel: AddedModel = {
   addedItems: [],
   updateAddedItems: action( ( state, payload ) => {
+    console.log( payload );
     state.addedItems.push( payload );
   } ),
   onUndo: actionOn(
-    (actions, storeActions) => storeActions.currentModel.undoCreation,
-    (store) => {
-      store.addedItems.pop()
-    }
-  )
+    ( actions, storeActions ) => storeActions.currentModel.undoCreation,
+    ( store ) => {
+      store.addedItems.pop();
+    },
+  ),
+  onChangeGutka: actionOn(
+    ( actions, storeActions ) => storeActions.currentModel.updateCurrentName,
+    ( store ) => {
+      store.addedItems = [];
+    },
+  ),
+  onDelete: actionOn(
+    ( actions, storeActions ) => storeActions.currentModel.removeEntry,
+    ( state, target ) => {
+      const latestIndex = state.addedItems.lastIndexOf( { ...target.payload } );
+      state.addedItems.slice( latestIndex, 1 );
+    },
+  ),
 };
 
 const storeModel: StoreModel = {
   modalModel,
   addedModel,
-  themeModel: persist( themeModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
-  currentModel: persist( currentModel, { storage: AsyncStore, mergeStrategy: 'merge' } ),
-  pothiModel: persist( pothiModel, { storage: AsyncStore, mergeStrategy: 'overwrite' } ),
-  viewerModel: persist( viewerModel, { storage: AsyncStore, mergeStrategy: 'mergeDeep' } ),
+  themeModel: persist( themeModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'overwrite',
+  } ),
+  currentModel: persist( currentModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'merge',
+  } ),
+  pothiModel: persist( pothiModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'overwrite',
+  } ),
+  viewerModel: persist( viewerModel, {
+    storage: AsyncStore,
+    mergeStrategy: 'mergeDeep',
+  } ),
 };
 
 export { storeModel };
 export default createStore(
   storeModel,
-  { injections: { loadShabad, loadBani } },
+  {
+    injections: {
+      loadShabad,
+      loadBani,
+    },
+  },
 );

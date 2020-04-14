@@ -8,6 +8,9 @@ export type entryObj = {
   lines: Line[];
   mods: Modification[];
   entryID: string;
+  source?: string,
+  writer?: string,
+  raag?: string,
 };
 export type storedPothi = {
   items: entryObj[];
