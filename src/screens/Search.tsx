@@ -45,7 +45,10 @@ const Search = () => {
 
   const onPress = useCallback( ( sID, gurmukhi ) => {
     addEntry( [ sID, gurmukhi, queryType ] );
-    updateAddedItems( sID );
+    updateAddedItems( {
+      sID,
+      queryType,
+    } );
   }, [ addEntry, queryType, updateAddedItems ] );
   useEffect( () => {
     const baniFetcher = async () => {
@@ -190,9 +193,9 @@ const Search = () => {
       <ScrollView>
         {queryType === 'Shabad' && results.length > 0 && results.map( ( [ info, result ] ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
-                                    || addedItems.findIndex( ( id ) => id === result.shabadId ) !== -1;
+                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Bani' ) !== -1;
 
-          const addedCount = addedItems.filter( ( id ) => id === result.shabadId ).length;
+          const addedCount = addedItems.filter( ( item ) => item.sID === result.shabadId ).length;
 
           return (
             <SearchResult
@@ -226,7 +229,7 @@ const Search = () => {
         } )}
         {queryType === 'Bani' && banis.map( ( bani ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
-                      || addedItems.findIndex( ( id ) => id === bani.ID ) !== -1;
+                      || addedItems.findIndex( ( item ) => item.sID === bani.ID && item.queryType === 'Bani' ) !== -1;
           return (
             <BaniResult
               key={bani.gurmukhi}

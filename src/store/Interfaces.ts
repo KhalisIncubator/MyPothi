@@ -57,7 +57,7 @@ export interface CurrentModel {
 
     addedEntry: Action<CurrentModel, [number, string, string[], pothiEntry, Info ]>;
     undoCreation: Action<CurrentModel>;
-    removeEntry: Action<CurrentModel, string>;
+    removeEntry: Action<CurrentModel, [string, number]>;
 
     createMod: Action<CurrentModel, { lineid: number, element: Element, type: ModType, value: any, parentID: string}>;
     deleteMod: Action<CurrentModel, { lineid: number, element: Element, parentID: string}>;
@@ -98,10 +98,11 @@ export interface SearchModel {
     updateQueryType: Action<SearchModel, QueryType>;
 }
 export interface AddedModel {
- addedItems: number[],
- updateAddedItems: Action<AddedModel, number>
+ addedItems: any[],
+ updateAddedItems: Action<AddedModel, {sID: number, queryType: string}>
  onUndo: ActionOn<AddedModel, StoreModel>;
  onChangeGutka: ActionOn<AddedModel, StoreModel>;
+ onDelete: ActionOn<AddedModel, StoreModel>;
 }
 export interface EditModel {
     isEditMode: boolean;

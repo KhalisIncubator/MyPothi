@@ -96,8 +96,8 @@ const currentModel: CurrentModel = {
   undoCreation: action( () => {
     undoCreation();
   } ),
-  removeEntry: action( ( state, payload ) => {
-    removeFromPothi( state.currentName[0], payload, state.currentName[1] );
+  removeEntry: action( ( state, [ entryID, shabadID ] ) => {
+    removeFromPothi( state.currentName[0], entryID, state.currentName[1] );
   } ),
   createMod: action( ( state, {
     lineid, element, type, value, parentID,
@@ -208,6 +208,7 @@ const viewerModel: ViewerModel = {
 const addedModel: AddedModel = {
   addedItems: [],
   updateAddedItems: action( ( state, payload ) => {
+    console.log( payload );
     state.addedItems.push( payload );
   } ),
   onUndo: actionOn(
@@ -220,6 +221,13 @@ const addedModel: AddedModel = {
     ( actions, storeActions ) => storeActions.currentModel.updateCurrentName,
     ( store ) => {
       store.addedItems = [];
+    },
+  ),
+  onDelete: actionOn(
+    ( actions, storeActions ) => storeActions.currentModel.removeEntry,
+    ( state, target ) => {
+      const latestIndex = state.addedItems.lastIndexOf( { ...target.payload } );
+      state.addedItems.slice( latestIndex, 1 );
     },
   ),
 };

@@ -27,8 +27,8 @@ const Edit = ( { route } ) => {
   const { type } = route.params;
 
   const snack = `${type} Removed!`;
-  const handleRemoveShabad = ( entryID ) => {
-    removeEntry( entryID );
+  const handleRemoveShabad = ( [ entryID, shabadId ] ) => {
+    removeEntry( [ entryID, shabadId ] );
     updateShow( true );
   };
   const handleRemoveGutka = ( name, gutkaID, index ) => {
@@ -48,21 +48,6 @@ const Edit = ( { route } ) => {
                   const {
                     source, writer, raag, entryID, mainLine, shabadId,
                   } = item;
-                  const subtitle = [
-                    {
-                      value: raag,
-                      color: '#D97D0B',
-                    },
-                    {
-                      value: writer,
-                      color: theme.colors.primary,
-                    },
-                    {
-                      value: source,
-                      color: SourceColors[source],
-                    },
-                  ];
-
                   return (
                     <ShabadCard
                       iconColor={SourceColors[source] || theme.colors.primary}
@@ -74,17 +59,15 @@ const Edit = ( { route } ) => {
                       backgroundCondition={null}
                       surfaceColor={theme.colors.surface}
                       itemsRight={(
-                        <>
-                          <IconButton
-                            color="red"
-                            icon="minus-circle"
-                            onPress={() => {
-                              handleRemoveShabad(
-                                entryID,
-                              );
-                            }}
-                          />
-                        </>
+                        <IconButton
+                          color="red"
+                          icon="minus-circle"
+                          onPress={() => {
+                            handleRemoveShabad(
+                              [ entryID, shabadId ],
+                            );
+                          }}
+                        />
                       )}
                     />
                   );

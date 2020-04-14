@@ -28,7 +28,14 @@ const ShabadCard = ( {
     <Card style={style.Card}>
       <Card.Content style={containerStyle}>
         <View>
-          <Avatar.Icon icon={icon} size={40} style={{ backgroundColor: iconColor }} />
+          <Avatar.Icon
+            icon={icon}
+            size={40}
+            style={{
+              backgroundColor: iconColor,
+              alignSelf: 'auto',
+            }}
+          />
         </View>
         <View style={style.CardTitleContainer}>
           <Title style={style.CardTitle}>{title}</Title>
@@ -37,6 +44,7 @@ const ShabadCard = ( {
         <View style={{
           flexDirection: 'row',
           alignItems: 'center',
+          alignSelf: 'auto',
         }}
         >
           {itemsRight}
