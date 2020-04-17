@@ -4,11 +4,10 @@
 import 'react-native-gesture-handler';
 
 import React, {
-  useEffect, useMemo, Suspense, lazy,
+  useMemo, Suspense, lazy,
 } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import SplashScreen from 'react-native-splash-screen';
-import { StoreProvider, useStoreRehydrated } from 'easy-peasy';
+import { StoreProvider } from 'easy-peasy';
 import Icon from 'react-native-vector-icons/Feather';
 import { View, useColorScheme } from 'react-native';
 import store from './store/MainStore';
@@ -66,22 +65,12 @@ const trueDark = {
 };
 
 const App = () => {
-  const rehydrated = useStoreRehydrated();
   const { isDarkMode, trueDarkMode, choseSystem } = useValues( 'themeModel' ).theme;
   const systemTheme = useColorScheme();
-  // const netInfo = useNetInfo();
   const decideTheme = useMemo( () => {
     if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme;
     return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
   }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
-
-
-  useEffect( () => {
-    if ( rehydrated ) {
-      console.log( 'rehydrated' );
-      SplashScreen.hide();
-    }
-  }, [ rehydrated ] );
   return (
     <PaperProvider
       theme={decideTheme}

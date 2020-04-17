@@ -6,6 +6,8 @@ import {
   View, StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
+
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import ShimmeringLine from '../components/main/blocks/ShimmeringBlock';
 import Toolbar from '../components/main/Toolbar';
@@ -39,6 +41,10 @@ const Gutka = () => {
   };
   const [ gutkaName ] = currentName;
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
+
+  useEffect( () => {
+    SplashScreen.hide();
+  }, [] );
   useEffect( () => {
     updateLoading( true );
   }, [ gutkaName ] );
