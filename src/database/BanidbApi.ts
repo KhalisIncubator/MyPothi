@@ -1,19 +1,27 @@
 import { buildApiUrl } from '@sttm/banidb';
+import {
+  of, from, throwError, combineLatest,
+} from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
+import {
+  switchMap, catchError, map, last, scan,
+} from 'rxjs/operators';
 import { lengthType, entryObj, RemappedLine } from '../../types/types';
 import { baniLengths } from './DatabaseConts';
 import { banisOrder } from '../Defaults';
 
 
-const shabadInfo = ( { shabadInfo: info, baniInfo } ) => {
+const shabadInfo = ( raw ) => {
+  const { shabadInfo: info, baniInfo } = raw;
   const { source, raag, writer } = info ?? baniInfo;
   const sourceG = source.gurmukhi;
   const raagG = raag.gurmukhi;
   const writerG = writer.gurmukhi;
-  return {
+  return [ {
     source: sourceG,
     raag: raagG,
     writer: writerG,
-  };
+  } ];
 };
 const remapLine = ( raw ): RemappedLine => {
   const {
@@ -130,3 +138,75 @@ export default query;
 export {
   remapLine, loadShabad, fetchBanis, loadBani, parseLines, shabadInfo,
 };
+
+const generateURL = ( type: 'shabads' | 'banis' ) => `https://api.banidb.com/v2/${type}`;
+
+const fetchFromApi$ = ( type, id ) => (
+  fromFetch( `${generateURL( type )}/${id}` )
+    .pipe(
+      switchMap( ( res ) => ( res.ok ? res.json() : throwError( {
+        error: true,
+        message: 'Something went wrong!',
+      } ) ) ),
+    )
+);
+
+const generateInfo$ = ( fetched$ ) => (
+  fetched$.pipe(
+    switchMap( ( json ) => shabadInfo( json ) ),
+  )
+);
+
+const parsedLines = ( fetched$ ) => {
+  fetched$.pipe(
+    switchMap( ( x: any ) => from( x.verses ) ),
+    map( ( x ) => remapLine( x ) ),
+    scan( ( acc, current ) => [ ...acc, current ], [] ),
+    catchError( ( err ) => {
+      // Network or other error, handle appropriately
+      console.error( err );
+      return of( {
+        error: true,
+        message: err.message,
+      } );
+    } ),
+    last(),
+  );
+};
+const rxFetchShabad = ( id: number ) => {
+  const data$ = fromFetch( `https://api.banidb.com/v2/shabads/${id}` )
+    .pipe(
+      switchMap( ( res ) => ( res.ok ? res.json() : throwError( {
+        error: true,
+        message: 'Something went wrong!',
+      } ) ) ),
+    );
+  const info$ = data$.pipe( switchMap( ( json ) => {
+    console.log( json );
+    return shabadInfo( json );
+  } ) );
+
+  const lines$ = data$.pipe(
+    switchMap( ( x ) => from( x.verses ) ),
+    map( ( x ) => remapLine( x ) ),
+    scan( ( acc, current ) => [ ...acc, current ], [] ),
+    catchError( ( err ) => {
+      // Network or other error, handle appropriately
+      console.error( err );
+      return of( {
+        error: true,
+        message: err.message,
+      } );
+    } ),
+    last(),
+  );
+
+  const Main = combineLatest( info$, lines$ );
+  return Main;
+
+  // const data$ = fetchFromApi$( 'shabads', id );
+
+  // const lines$ = parsedLines(data$);
+  // const info = generateInfo$()
+};
+export { rxFetchShabad };

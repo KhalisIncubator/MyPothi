@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { View, useColorScheme } from 'react-native';
 import store from './store/MainStore';
 import { useValues } from './store/StateHooks';
+import { rxFetchShabad } from './database/BanidbApi';
 
 const Routes = lazy( () => import( './Routes' ) );
 
