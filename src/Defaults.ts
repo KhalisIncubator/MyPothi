@@ -50,7 +50,7 @@ const Pothis = [
 export default Pothis;
 
 
-const banisOrder = [
+const banisOrder: Readonly<number[]> = [
   1,
   2,
   4,
