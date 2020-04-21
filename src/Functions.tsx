@@ -45,7 +45,7 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
 const mapVishraams = ( line: string, apiValue: object, source: string ) => {
   const sourceVishraams = apiValue[source];
   // concatenate to string b/c of the bug with API
-  const indices = sourceVishraams?.map( ( { p } ) => Number( p ) );
+  const indices = sourceVishraams?.filter( ( { t } ) => t !== 'v' || t === 'p' ).map( ( { p } ) => Number( p ) );
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   return ( sourceVishraams && indices.length )
     ? mapToSections( line, indices, sourceVishraams ).filter( ( section ) => section !== undefined && section.data )

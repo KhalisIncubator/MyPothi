@@ -208,7 +208,6 @@ const viewerModel: ViewerModel = {
 const addedModel: AddedModel = {
   addedItems: [],
   updateAddedItems: action( ( state, payload ) => {
-    console.log( payload );
     state.addedItems.push( payload );
   } ),
   onUndo: actionOn(
