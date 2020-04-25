@@ -12,12 +12,14 @@ import { TapGestureHandler, State } from 'react-native-gesture-handler';
 import ShimmeringLine from '../components/main/blocks/ShimmeringBlock';
 import Toolbar from '../components/main/Toolbar';
 import HighlightSelector from '../components/main/HighlightSelector';
+import { rxFetchShabad, parseLines } from '../database/BanidbApi';
 
 
 import { EditCtx, FullScreenCtx } from '../store/context_stores/Contexts';
 import { useValues } from '../store/StateHooks';
 import Viewer from '../components/main/Viewer';
-import { parseLines } from '../database/BanidbApi';
+import { useObservableFunc } from '../Hooks';
+
 
 const Gutka = () => {
   const theme = useTheme();
@@ -40,8 +42,13 @@ const Gutka = () => {
     }
   };
   const [ gutkaName ] = currentName;
+  const test = useObservableFunc( rxFetchShabad, [], [ 1 ], gutkaName );
+
   const { updateEditMode } = EditCtx.useStoreActions( ( actions ) => ( { ...actions } ) );
 
+  useEffect( () => {
+    console.log( test );
+  }, [ test ] );
   useEffect( () => {
     SplashScreen.hide();
   }, [] );

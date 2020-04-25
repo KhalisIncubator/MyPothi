@@ -181,10 +181,7 @@ const rxFetchShabad = ( id: number ) => {
         message: 'Something went wrong!',
       } ) ) ),
     );
-  const info$ = data$.pipe( switchMap( ( json ) => {
-    console.log( json );
-    return shabadInfo( json );
-  } ) );
+  const info$ = data$.pipe( switchMap( ( json ) => shabadInfo( json ) ) );
 
   const lines$ = data$.pipe(
     switchMap( ( x ) => from( x.verses ) ),

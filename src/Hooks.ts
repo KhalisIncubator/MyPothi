@@ -17,5 +17,23 @@ const useObservable = (
   return state;
 };
 
+const useObservableFunc = (
+  observable: ( ...args: any[] ) => Observable<any>,
+  initial: any,
+  funcParams: any[] = [],
+  dependencies: any[] = [],
+) => {
+  const [ state, setState ] = useState( initial );
 
-export { useObservable };
+  useEffect( () => {
+    const sub = observable( ...funcParams ).subscribe( setState );
+    return () => {
+      sub.unsubscribe();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependencies );
+  return state;
+};
+
+
+export { useObservable, useObservableFunc };
