@@ -14,6 +14,7 @@ import query, { fetchBanis } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
 import { useValues, useUpdaters } from '../store/StateHooks';
 import Keyboard from '../components/main/custom/Keyboard';
+import TextInput from '../components/main/custom/TextInput';
 
 
 const Search = () => {
@@ -122,6 +123,7 @@ const Search = () => {
           }}
         />
       </View> */}
+      <TextInput value="hi" isActive />
       <View style={styles.row}>
         <Menu
           visible={typeMenu}
