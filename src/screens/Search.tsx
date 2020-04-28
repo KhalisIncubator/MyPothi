@@ -13,6 +13,7 @@ import { SEARCH_TEXTS } from '../database/DatabaseConts';
 import query, { fetchBanis } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
 import { useValues, useUpdaters } from '../store/StateHooks';
+import Keyboard from '../components/main/custom/Keyboard';
 
 
 const Search = () => {
@@ -71,7 +72,7 @@ const Search = () => {
     };
   }, [ searchQuery, net.isConnected, searchType ] );
   return (
-    <SafeAreaView style={{
+    <View style={{
       backgroundColor: theme.colors.background,
       flex: 1,
     }}
@@ -102,7 +103,7 @@ const Search = () => {
 
         </SafeAreaView>
       </Modal>
-      <View style={{
+      {/* <View style={{
         padding: 5,
       }}
       >
@@ -120,7 +121,7 @@ const Search = () => {
             },
           }}
         />
-      </View>
+      </View> */}
       <View style={styles.row}>
         <Menu
           visible={typeMenu}
@@ -258,7 +259,8 @@ const Search = () => {
           );
         } )}
       </ScrollView>
-    </SafeAreaView>
+      <Keyboard />
+    </View>
 
 
   );
