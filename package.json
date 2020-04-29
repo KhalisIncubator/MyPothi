@@ -5,6 +5,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios:home": "react-native run-ios --simulator='iPhone SE(2nd generation)'",
+    "ios:pad": "react-native run-ios --simulator='iPad (7th generation)'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
@@ -29,7 +31,7 @@
     "react-native-get-random-values": "^1.3.1",
     "react-native-modal": "^11.5.6",
     "react-native-paper": "^3.8.0",
-    "react-native-reanimated": "^1.7.1",
+    "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.4.0",
     "react-native-splash-screen": "^3.2.0",
