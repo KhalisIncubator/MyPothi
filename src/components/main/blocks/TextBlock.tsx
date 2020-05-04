@@ -15,7 +15,7 @@ interface Props {
   isSelected: boolean,
   onClick: () => void,
   mod: Modification[],
-  type: any,
+  type: 'Pangtee' | 'Eng' | 'Teeka' | 'Translit',
   lineID: number,
   isMainLine?: boolean,
   vishraams?: object,
@@ -50,9 +50,6 @@ const TextBlock: React.FC<Props> = ( {
     return null;
   }, [ isDarkMode, isTrueDark, useSystem, colors ] );
 
-  const pangteeWithVishraams = useMemo( () => (
-    source && vishraams ? mapVishraams( value, vishraams, source ) : null
-  ), [ value, source ] );
   const ViewStyle = StyleSheet.flatten(
     [
       styles.View,
@@ -76,37 +73,39 @@ const TextBlock: React.FC<Props> = ( {
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={ViewStyle} pointerEvents="box-none">
         {
-              pangteeWithVishraams ? (
-                <Text
-                  selectable={false}
-                  style={textStyle}
-                >
-                  {
-                    pangteeWithVishraams.map( ( section, index ) => (
-                      <Text
-                        style={
-                      section.type === 'line'
-                        ? {}
-                        : ( section.type === 'y'
-                          ? styles.YamkiVishraam
-                          : styles.FullVishraam )
-                    }
-                        key={`${section.data}-lineID${lineID}-${type}`}
-                      >
-                        {`${section.data} `}
-                      </Text>
-                    ) )
-                  }
-                </Text>
-              )
-                : (
-                  <Text
-                    selectable={false}
-                    style={textStyle}
-                  >
-                    {value}
-                  </Text>
-                )
+             ( isPangtee || type === 'Translit' ) && source && vishraams
+               ? (
+                 <Text
+
+                   selectable={false}
+                   style={textStyle}
+                 >
+                   {
+                   mapVishraams( value, vishraams, source ).map( ( section, index ) => (
+                     <Text
+                       style={
+                     section.type === 'line'
+                       ? {}
+                       : ( section.type === 'y'
+                         ? styles.YamkiVishraam
+                         : styles.FullVishraam )
+                   }
+                       key={`${section.data}-lineID${lineID}-${type}`}
+                     >
+                       {`${section.data} `}
+                     </Text>
+                   ) )
+                 }
+                 </Text>
+               )
+               : (
+                 <Text
+                   selectable={false}
+                   style={textStyle}
+                 >
+                   {value}
+                 </Text>
+               )
             }
       </View>
     </TouchableWithoutFeedback>
