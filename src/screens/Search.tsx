@@ -15,6 +15,7 @@ import { BaniResult, SearchResult } from '../components/main/Results';
 import { useValues, useUpdaters } from '../store/StateHooks';
 import Keyboard from '../components/main/custom/Keyboard';
 import TextInput from '../components/main/custom/TextInput';
+import { withKBProvider } from '../components/main/custom/Controller';
 
 
 const Search = () => {
@@ -278,9 +279,9 @@ const styles = StyleSheet.create( {
     justifyContent: 'center',
   },
 
-  input: {
-    fontFamily: 'AnmolLipiTrue',
-  },
+  // input: {
+  //   fontFamily: 'AnmolLipiTrue',
+  // },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -292,4 +293,4 @@ const withCtxs = () => (
     <Search />
   </SearchCtx.Provider>
 );
-export default withCtxs;
+export default withKBProvider( withCtxs );

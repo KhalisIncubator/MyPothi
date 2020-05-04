@@ -5,7 +5,7 @@ const KeyboardContext = createContext( null );
 
 const KeyboardProvider = ( { children } ) => {
   const [ isKbVisible, toggleKb ] = useState( false );
-  const [ text, updateText ] = useState( false );
+  const [ text, updateText ] = useState( 'Kidda' );
 
   return (
     <KeyboardContext.Provider value={{
