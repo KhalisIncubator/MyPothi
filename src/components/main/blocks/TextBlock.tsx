@@ -9,6 +9,40 @@ import { mapVishraams } from '../../../Functions';
 import { Modification } from '../../../../types/types';
 import { useMainStoreState } from '../../../store/TsHooks';
 
+// import {  } from 'realm';
+
+
+// if ( singularMod?.bold ) { ( isPangtee || isGurmukhi ) ? tempStyle.fontFamily = 'AnmolLipiBoldTrue' : tempStyle.fontWeight = 'bold'; }
+// if ( singularMod?.backgroundColor ) tempStyle.backgroundColor = singularMod.backgroundColor;
+// if ( singularMod?.fontSize ) tempStyle.fontSize = singularMod.fontSize;
+// return tempStyle;
+
+const modMap = {
+  backgroundColor: ( value ) => ( { backgroundColor: value } ),
+  bold: ( value ) => ( value ? {
+    gurmukhi: { fontFamily: 'AnmolLipiBoldTrue' },
+    latin: { fontWeight: 'bold' },
+  } : null ),
+  fontSize: ( value ) => ( { fontSize: value } ),
+
+};
+const generateStyle = ( mods, style ) => {
+  // there will only be one mod per element, but .filter gives us an array
+  const [ mod ] = mods;
+  // if ( mod ) console.log( Object.keys( mod ) );
+
+  // const modStyle = mods.forEach( ( mod ) => { console.log( Object.is( mod ) ); } );
+};
+
+interface BaseProps {
+  isSelected: boolean,
+  value: string,
+  lineID: number,
+  onClick: () => void,
+  mod: Modification[]
+}
+
+const BlockBase: React.FC<BaseProps> = () => null;
 interface Props {
   style: object,
   value: string,
@@ -25,6 +59,7 @@ interface Props {
 const TextBlock: React.FC<Props> = ( {
   style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine, lineID,
 } ) => {
+  generateStyle( mod, style );
   const [ singularMod ] = mod;
   const theme = useTheme();
   const colors = useColorScheme();

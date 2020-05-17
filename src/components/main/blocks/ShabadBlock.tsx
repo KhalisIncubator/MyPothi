@@ -1,16 +1,24 @@
-import React from 'react';
 import {
-  FlatList, SafeAreaView, View,
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
 } from 'react-native';
-import LineBlock from './blocks/LineBlock';
+import React, { useState } from 'react';
+import LineBlock from './LineBlock';
+import { EditCtx } from '../../../store/context_stores/Contexts';
+import { useValues } from '../../../store/StateHooks';
+import { RemappedLine, Modification } from '../../../../types/types';
 
-const Viewer = ( props ) => {
-  const {
-    currentItems, currentMods, currentLines,
-  } = props;
+const ShabadBlock = ( { item, currentItems, index } ) => {
+  const [ state ] = useState( null );
+  const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
+  const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
+  const updatedSelectedInfo = EditCtx.useStoreActions(
+    ( actions ) => actions.updatedSelectedInfo,
+  );
 
-
-  const renderItem = ( { item, index } ) => (
+  return (
     <FlatList
       data={item}
       keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
@@ -29,27 +37,5 @@ const Viewer = ( props ) => {
       initialNumToRender={index === 0 ? ( item.length < 20 ? item.length : 20 ) : 0}
     />
   );
-
-  return (
-    <SafeAreaView>
-      <FlatList
-        data={currentLines}
-        extraData={currentMods}
-        initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
-        keyExtractor={( item, index ) => index.toString()}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => (
-          <View style={{
-            width: '100%',
-            backgroundColor: '#3498db',
-            height: 3,
-          }}
-          />
-        )}
-      />
-    </SafeAreaView>
-  );
 };
-
-
-export default Viewer;
+export default ShabadBlock;
