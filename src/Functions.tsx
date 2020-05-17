@@ -2,27 +2,26 @@
 import { Object } from 'realm';
 import { getModWithParent } from './database/LocalDatabase';
 import { Modification } from '../types/types';
-// // bug with realm where on first load this stuff is not an array for some reason
-// // Modification & Object
-// const mapToArray = ( obj ): any[] => {
-//   console.log( obj.filtered( 'lineID == "30929"' ) );
-//   // console.log( obj[0].entries() );
-//   return ( obj ? Array.from( {
-//     ...obj,
-//     length: obj.length,
-//   } ) : [] );
+// bug with realm where on first load this stuff is not an array for some reason
+// Modification & Object
+const mapToArray = ( obj ): any[] =>
+  // console.log( obj[0].entries() );
+  ( obj ? Array.from( {
+    ...obj,
+    length: obj.length,
+  } ) : [] )
 
-//   // console.log( obj[0].keys() );
+// console.log( obj[0].keys() );
 
-//   // const arr = obj ? Array.from( {
-//   //   ...obj,
-//   //   length: obj.keys().length,
-//   // } ) : [];
+// const arr = obj ? Array.from( {
+//   ...obj,
+//   length: obj.keys().length,
+// } ) : [];
 
-//   // console.log( arr );
-//   // return [];
-// };
-// export default mapToArray;
+// console.log( arr );
+// return [];
+;
+export default mapToArray;
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
   const isIndexed = indices?.includes( index );

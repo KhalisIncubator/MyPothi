@@ -8,15 +8,11 @@ import React, { useState } from 'react';
 import LineBlock from './LineBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
-import { RemappedLine, Modification } from '../../../../types/types';
 
 const ShabadBlock = ( { item, currentItems, index } ) => {
-  const [ state ] = useState( null );
   const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
   const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
-  const updatedSelectedInfo = EditCtx.useStoreActions(
-    ( actions ) => actions.updatedSelectedInfo,
-  );
+  const updatedSelectedInfo = EditCtx.useStoreActions( ( actions ) => actions.updatedSelectedInfo );
 
   return (
     <FlatList

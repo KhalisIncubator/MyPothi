@@ -3,12 +3,12 @@ import {
   FlatList, SafeAreaView, View,
 } from 'react-native';
 import LineBlock from './blocks/LineBlock';
+import mapToArray from '../../Functions';
 
 const Viewer = ( props ) => {
   const {
     currentItems, currentMods, currentLines,
   } = props;
-
 
   const renderItem = ( { item, index } ) => (
     <FlatList
@@ -23,7 +23,7 @@ const Viewer = ( props ) => {
       // at the index has a entryID (need to check because is null when item is deleted and state is
       // uodated). Otherwise if currentItems has length of 0, then set id to null
           entryID={currentItems[index]?.entryID ?? null}
-          mods={[]}
+          mods={mapToArray( currentItems[index]?.mods )}
         />
       )}
       initialNumToRender={index === 0 ? ( item.length < 20 ? item.length : 20 ) : 0}

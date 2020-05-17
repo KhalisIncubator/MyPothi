@@ -19,27 +19,40 @@ import { useMainStoreState } from '../../../store/TsHooks';
 
 const modMap = {
   backgroundColor: ( value ) => ( { backgroundColor: value } ),
-  bold: ( value ) => ( value ? {
-    gurmukhi: { fontFamily: 'AnmolLipiBoldTrue' },
-    latin: { fontWeight: 'bold' },
-  } : null ),
+  bold: ( value, isGurmukhi ) => ( value ? ( isGurmukhi ? { fontFamily: 'AnmolLipiBoldTrue' } : { fontWeight: 'bold' } ) : null ),
   fontSize: ( value ) => ( { fontSize: value } ),
 
 };
-const generateStyle = ( mods, style ) => {
-  // there will only be one mod per element, but .filter gives us an array
-  const [ mod ] = mods;
-  // if ( mod ) console.log( Object.keys( mod ) );
+const generateStyle = ( mod, style, isGurmukhi ) => {
+  const modStyle = mod.entries().reduce( ( acc, [ key, value ] ) => ( {
+    ...acc,
+    ...modMap[key]( value, isGurmukhi ),
+  } ), {} );
 
-  // const modStyle = mods.forEach( ( mod ) => { console.log( Object.is( mod ) ); } );
+
+  return StyleSheet.flatten( [ style, modStyle ] );
 };
 
+
+const GurmukhiText = ( props ) => {
+
+};
+
+
+const VishraamsText = ( props ) => {
+  const { type } = props;
+};
+
+
+const RomanText = ( props ) => {
+
+};
 interface BaseProps {
   isSelected: boolean,
   value: string,
   lineID: number,
   onClick: () => void,
-  mod: Modification[]
+  mod: Modification
 }
 
 const BlockBase: React.FC<BaseProps> = () => null;
@@ -59,7 +72,6 @@ interface Props {
 const TextBlock: React.FC<Props> = ( {
   style, value, isSelected, onClick, mod, type, vishraams, source, isMainLine, lineID,
 } ) => {
-  generateStyle( mod, style );
   const [ singularMod ] = mod;
   const theme = useTheme();
   const colors = useColorScheme();
@@ -71,7 +83,13 @@ const TextBlock: React.FC<Props> = ( {
   const isPangtee = type === 'Pangtee';
   const modStyle: any = useMemo( () => {
     const tempStyle = {} as any;
-    if ( singularMod?.bold ) { ( isPangtee || isGurmukhi ) ? tempStyle.fontFamily = 'AnmolLipiBoldTrue' : tempStyle.fontWeight = 'bold'; }
+    if ( singularMod?.bold ) {
+      if ( isPangtee || isGurmukhi ) {
+        tempStyle.fontFamily = 'AnmolLipiBoldTrue';
+      } else {
+        tempStyle.fontWeight = 'bold';
+      }
+    }
     if ( singularMod?.backgroundColor ) tempStyle.backgroundColor = singularMod.backgroundColor;
     if ( singularMod?.fontSize ) tempStyle.fontSize = singularMod.fontSize;
     return tempStyle;

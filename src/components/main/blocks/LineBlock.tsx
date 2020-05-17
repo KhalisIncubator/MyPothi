@@ -7,6 +7,21 @@ import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
 import { RemappedLine, Modification } from '../../../../types/types';
 
+interface NewProps {
+  line: RemappedLine,
+  lineMods: Modification,
+  entryID: string,
+  selectedElement: string,
+}
+const NewLineBlock: React.FC<NewProps> = ( props ) => {
+  const { line } = props;
+
+
+  return <View />;
+};
+
+
+export { NewLineBlock };
 interface Props {
   line: RemappedLine,
   entryID: string,
