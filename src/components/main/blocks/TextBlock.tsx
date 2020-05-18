@@ -83,13 +83,7 @@ const TextBlock: React.FC<Props> = ( {
   const isPangtee = type === 'Pangtee';
   const modStyle: any = useMemo( () => {
     const tempStyle = {} as any;
-    if ( singularMod?.bold ) {
-      if ( isPangtee || isGurmukhi ) {
-        tempStyle.fontFamily = 'AnmolLipiBoldTrue';
-      } else {
-        tempStyle.fontWeight = 'bold';
-      }
-    }
+    if ( singularMod?.bold ) { tempStyle.fontWeight = 'bold'; }
     if ( singularMod?.backgroundColor ) tempStyle.backgroundColor = singularMod.backgroundColor;
     if ( singularMod?.fontSize ) tempStyle.fontSize = singularMod.fontSize;
     return tempStyle;
@@ -115,7 +109,7 @@ const TextBlock: React.FC<Props> = ( {
     [
       style,
       modStyle,
-      !modStyle?.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'AnmolLipiTrue' } : {},
+      !modStyle?.fontFamily && ( isPangtee || isGurmukhi ) ? { fontFamily: 'OpenGurbaniAkhar' } : {},
       { color: theme.colors.text },
       isGurmukhi ? styles.Gurmukhi : styles.English,
       isPangtee ? styles.Pangtee : {},
