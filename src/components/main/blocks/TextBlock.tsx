@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useMemo, ReactNode, ReactChild,
+  useMemo, ReactNode, ReactChild, useState,
 } from 'react';
 
 import {
-  Text, StyleSheet, View, TouchableWithoutFeedback, useColorScheme, TextStyle, StyleProp,
+  Text, StyleSheet, View, TouchableWithoutFeedback, useColorScheme, TextStyle, StyleProp, TouchableHighlight,
 } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Menu } from 'react-native-paper';
 import { mapVishraams } from '../../../Functions';
 import {
   Modification, ApiVishraams, VishraamType, LineMenuItem,
@@ -97,6 +97,39 @@ const VishraamText: React.FC<VishraamsProps & TextProps> = ( {
 );
 
 export { RomanTextContainer, GurmukhiTextContainer, VishraamText };
+
+const withContextMenu = ( children ) => ( line, menu ) => {
+  const theme = useMPTheme();
+  const [ isVisible, updateVisible ] = useState( false );
+
+  const toggleVis = () => {
+    updateVisible( ( prev ) => !prev );
+  };
+  return (
+    <Menu
+      visible={isVisible}
+      onDismiss={toggleVis}
+      anchor={(
+        <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes.lineHighlight}>
+          {children}
+        </TouchableHighlight>
+      )}
+    >
+      {menu.map( ( { title, action } ) => (
+        <Menu.Item
+          title={title}
+          onPress={() => {
+            action( line );
+            toggleVis();
+          }}
+          key={title}
+        />
+      ) )}
+    </Menu>
+  );
+};
+
+export { withContextMenu };
 interface BaseProps {
   isSelected: boolean,
   isMainLine: boolean,

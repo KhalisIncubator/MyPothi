@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useCallback } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useMemo, useCallback, useState } from 'react';
+import {
+  View, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback,
+} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
+import { Menu } from 'react-native-paper';
 import TextBlock, {
-  TextBlockBase, GurmukhiTextContainer, VishraamText, RomanTextContainer,
+  TextBlockBase, GurmukhiTextContainer, VishraamText, RomanTextContainer, withContextMenu,
 } from './TextBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
@@ -18,31 +21,31 @@ interface NewProps {
   isMainLine?: any
 }
 
-// TODO: Add popup menus
 
-// const GurmukhiMenu: LineMenuItem[] = [
-//   {
-//     title: 'Copy (Default)',
-//     action: ( ascii ) => { Clipboard.setString( unicode( ascii ) ); },
-//   },
-//   {
-//     title: 'Copy Ascii',
-//     action: ( ascii ) => { Clipboard.setString( ascii ); },
-//   },
-// ];
+const GurmukhiMenu: LineMenuItem[] = [
+  {
+    title: 'Copy Unicode',
+    action: ( ascii ) => { Clipboard.setString( unicode( ascii ) ); },
+  },
+  {
+    title: 'Copy Ascii',
+    action: ( ascii ) => { Clipboard.setString( ascii ); },
+  },
+];
 
-// const RomanMenu: LineMenuItem[] = [
-//   {
-//     title: 'Copy (Default)',
-//     action: ( ascii ) => { Clipboard.setString( ascii ); },
-//   },
-// ];
+const RomanMenu: LineMenuItem[] = [
+  {
+    title: 'Copy (Default)',
+    action: ( ascii ) => { Clipboard.setString( ascii ); },
+  },
+];
 
 const NewLineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   const {
     Gurbani, Translations, Transliteration, id, Vishraams,
   } = line;
-  const Pangtee = (
+
+  const Pangtee = withContextMenu(
     <TextBlockBase
       isSelected={false}
       isMainLine={isMainLine}
@@ -51,8 +54,9 @@ const NewLineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       <GurmukhiTextContainer>
         <VishraamText line={Gurbani.ascii} vishraams={Vishraams} source="sttm" lineID={id} />
       </GurmukhiTextContainer>
-    </TextBlockBase>
-  );
+    </TextBlockBase>,
+  )( Gurbani.ascii, GurmukhiMenu );
+
 
   const Transl = (
     <TextBlockBase
