@@ -1,3 +1,4 @@
+import { Theme } from 'react-native-paper';
 // database types
 export type entryObj = {
   shabadId: number;
@@ -32,12 +33,30 @@ export type Line ={
 data: string;
 lineId: string;
 }
+
+
+export type MyPothiTheme= Theme & {
+  customTypes?: {
+    lineHighlight?: string
+  }
+}
+
+export type vishraam = {
+  t: VishraamType,
+  p: number | string
+}
+
+export interface ApiVishraams {
+  sttm?: vishraam;
+  ig?: vishraam;
+  sttm2?: vishraam;
+}
 export interface RemappedLine {
   id?: number;
   sID: number;
   Gurbani: {
     ascii: string;
-    unicode: string;
+    unicode?: string;
   };
   Translations: {
     English?: string;
@@ -53,13 +72,13 @@ export interface RemappedLine {
     IPA?: string,
     UR?: string,
   };
-  Vishraams: {
-    sttm?: object;
-    ig?: object;
-    sttm2?: object;
-  };
+  Vishraams: ApiVishraams
 }
 
+export interface LineMenuItem {
+  title: string,
+  action: ( ...args: any[] ) => void,
+}
 // state types
 export type pothiEntry = 'Shabad' | 'Bani';
 export type SearchType = 0 | 1 | 2 | 3 | 4;
@@ -73,12 +92,12 @@ export type VishraamType = 'sttm' | 'sttm2' | 'ig';
 
 export type SettingType = 'font' | 'switch' | 'menu';
 
-type MenuItem = {
+type SettingMenuItem = {
   [key: string]: string
 }
 type Setting = {
   title: string,
-  menu?: MenuItem,
+  menu?: SettingMenuItem,
   subheading?: string,
   separator?: boolean,
   parent?: string,

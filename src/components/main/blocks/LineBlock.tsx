@@ -1,23 +1,74 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
-
-import TextBlock from './TextBlock';
+import { View, StyleSheet, Text } from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
+import { unicode } from 'anvaad-js';
+import TextBlock, {
+  TextBlockBase, GurmukhiTextContainer, VishraamText, RomanTextContainer,
+} from './TextBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
 import { useValues } from '../../../store/StateHooks';
-import { RemappedLine, Modification } from '../../../../types/types';
+import { RemappedLine, Modification, LineMenuItem } from '../../../../types/types';
 
 interface NewProps {
   line: RemappedLine,
-  lineMods: Modification,
-  entryID: string,
-  selectedElement: string,
+  lineMod: Modification,
+  entryID: string
+  selectedElement?: string,
+  isMainLine?: any
 }
-const NewLineBlock: React.FC<NewProps> = ( props ) => {
-  const { line } = props;
 
+// TODO: Add popup menus
 
-  return <View />;
+// const GurmukhiMenu: LineMenuItem[] = [
+//   {
+//     title: 'Copy (Default)',
+//     action: ( ascii ) => { Clipboard.setString( unicode( ascii ) ); },
+//   },
+//   {
+//     title: 'Copy Ascii',
+//     action: ( ascii ) => { Clipboard.setString( ascii ); },
+//   },
+// ];
+
+// const RomanMenu: LineMenuItem[] = [
+//   {
+//     title: 'Copy (Default)',
+//     action: ( ascii ) => { Clipboard.setString( ascii ); },
+//   },
+// ];
+
+const NewLineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
+  const {
+    Gurbani, Translations, Transliteration, id, Vishraams,
+  } = line;
+  const Pangtee = (
+    <TextBlockBase
+      isSelected={false}
+      isMainLine={isMainLine}
+      lineID={id}
+    >
+      <GurmukhiTextContainer>
+        <VishraamText line={Gurbani.ascii} vishraams={Vishraams} source="sttm" lineID={id} />
+      </GurmukhiTextContainer>
+    </TextBlockBase>
+  );
+
+  const Transl = (
+    <TextBlockBase
+      isSelected={false}
+      isMainLine={isMainLine}
+      lineID={id}
+    >
+      <RomanTextContainer>{Translations.English}</RomanTextContainer>
+    </TextBlockBase>
+  );
+
+  return (
+    <>
+      {[ Pangtee, Transl ]}
+    </>
+  );
 };
 
 
@@ -82,9 +133,11 @@ const LineBlock = ( props: Props ) => {
     },
     [ isEditMode, selectedElement, selectedLineID ],
   );
+
   return (
     <View style={style.column}>
-      <TextBlock
+      <NewLineBlock line={props.line} lineMod={null} entryID={null} />
+      {/* <TextBlock
         type="Pangtee"
         lineID={id}
 
@@ -139,7 +192,7 @@ const LineBlock = ( props: Props ) => {
         onClick={() => textBlockClick( translitSelection, 'Translit' )}
         style={{ fontSize: translit }}
       />
-      )}
+      )} */}
     </View>
   );
 };

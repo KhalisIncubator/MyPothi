@@ -24,7 +24,6 @@ const remapLine = ( raw ): RemappedLine => {
     sID: raw.shabadId,
     Gurbani: {
       ascii: verse.gurmukhi,
-      unicode: verse.unicode,
     },
     Translations: {
       English: translation.en.bdb,
