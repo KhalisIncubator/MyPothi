@@ -1,16 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext } from 'react';
-import {
-  View, StyleSheet, Text,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
-import {
-  TextBlockBase, GurmukhiTextContainer, RomanTextContainer,
-} from './text/TextBlock';
+import { TextBlockBase } from './text/TextBlock';
+import { GurmukhiTextContainer, RomanTextContainer } from './text/TextContainer';
 import { VishraamText, BaseText } from './text/Text';
-import { withContextMenu } from './text/TextMenu';
+import { ContextMenu } from './text/TextMenu';
 import { EditCtx } from '../../store/context_stores/Contexts';
 import { useValues } from '../../store/StateHooks';
 import { RemappedLine, Modification, LineMenuItem } from '../../../types/types';
@@ -49,6 +46,7 @@ const RomanMenu: LineMenuItem[] = [
 
 const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
+  const isEditMode = EditCtx.useStoreState( ( state ) => state.isEditMode );
 
   const {
     gurmukhi, eng, teeka, translit,
@@ -84,7 +82,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       isSelected={false}
       lineID={id}
     >
-      <RomanTextContainer><BaseText /></RomanTextContainer>
+      <RomanTextContainer style={{ fontSize: eng }}><BaseText /></RomanTextContainer>
     </TextBlockBase>
   );
 
@@ -93,7 +91,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       isSelected={false}
       lineID={id}
     >
-      <GurmukhiTextContainer><BaseText /></GurmukhiTextContainer>
+      <GurmukhiTextContainer style={{ fontSize: teeka }}><BaseText /></GurmukhiTextContainer>
     </TextBlockBase>
   );
   const Translit = (
@@ -101,7 +99,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       isSelected={false}
       lineID={id}
     >
-      <RomanTextContainer>
+      <RomanTextContainer style={{ fontSize: translit }}>
         <VishraamText
           vishraams={displayVishraams ? Vishraams : {}}
           source={sources.vishraamSource}
@@ -120,14 +118,18 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   return (
     <View style={style.column} key={`LineBlock-${id}-${ascii}`}>
       {TextNodes.map( ( [ TextNode, [ display, string, menu ] ], index ) => {
-        const DisplayedNode = display && !!string && TextNode;
+        const DisplayedNode = display && !!string && (
+          !isEditMode ? (
+            <ContextMenu menu={menu}>
+              {TextNode}
+            </ContextMenu>
+          )
+            : TextNode
+        );
         return (
           // eslint-disable-next-line react/no-array-index-key
           <LineContext.Provider value={{ line: string }} key={`${line}-${index}`}>
-            <>
-              {withContextMenu( DisplayedNode )( menu )}
-            </>
-            {/* {DisplayedNode} */}
+            {DisplayedNode}
           </LineContext.Provider>
         );
       } )}

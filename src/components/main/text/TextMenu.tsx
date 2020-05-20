@@ -1,16 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
-import { TouchableHighlight, Text } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 import { Menu } from 'react-native-paper';
 import { useMPTheme, useLine } from '../../../Hooks';
-import { LineContext } from '../LineBlock';
 
 const withContextMenu = ( children ) => ( menu ) => {
   const theme = useMPTheme();
   // const line = useLine();
-  const LineCtx = useContext( LineContext );
   const [ isVisible, updateVisible ] = useState( false );
-  console.log( children, LineCtx );
 
   const toggleVis = () => {
     updateVisible( ( prev ) => !prev );
@@ -21,7 +18,7 @@ const withContextMenu = ( children ) => ( menu ) => {
       onDismiss={toggleVis}
       anchor={(
         <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes?.lineHighlight}>
-          <Text>Hi</Text>
+          {children}
         </TouchableHighlight>
       )}
     >
@@ -39,4 +36,36 @@ const withContextMenu = ( children ) => ( menu ) => {
   );
 };
 
-export { withContextMenu };
+
+const ContextMenu = ( { menu, children } ) => {
+  const theme = useMPTheme();
+  const line = useLine();
+  const [ isVisible, updateVisible ] = useState( false );
+
+  const toggleVis = () => {
+    updateVisible( ( prev ) => !prev );
+  };
+  return (
+    <Menu
+      visible={isVisible}
+      onDismiss={toggleVis}
+      anchor={(
+        <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes?.lineHighlight}>
+          {children}
+        </TouchableHighlight>
+      )}
+    >
+      {menu.map( ( { title, action } ) => (
+        <Menu.Item
+          title={title}
+          onPress={() => {
+            action( line );
+            toggleVis();
+          }}
+          key={title}
+        />
+      ) )}
+    </Menu>
+  );
+};
+export { withContextMenu, ContextMenu };

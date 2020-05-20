@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { mapVishraams } from '../../../Functions';
 import { ApiVishraams, VishraamType } from '../../../../types/types';
 import { useLine } from '../../../Hooks';
-import { LineContext } from '../LineBlock';
 
 const generateVishraamStyle = ( type ) => {
   switch ( type ) {
@@ -31,7 +30,6 @@ interface VishraamsProps {
   lineID?: number // not really necessary, just helpful for the key prop
 }
 const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } ) => {
-  // const { line } = useContext( LineContext );
   const line = useLine();
   return (
     <>
@@ -39,7 +37,11 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
         { data, type },
       ) => (
         <Text key={`${data}-lineID${lineID}-${type}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
-      ) ) }
+      ) ) || (
+      <Text>
+        {line}
+      </Text>
+      ) }
     </>
   );
 };

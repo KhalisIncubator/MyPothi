@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useTheme } from 'react-native-paper';
 import { MyPothiTheme } from '../types/types';
 import { LineContext } from './components/main/LineBlock';
@@ -7,7 +7,7 @@ import { LineContext } from './components/main/LineBlock';
 const useLine = () => {
   const LineCtx = useContext( LineContext );
 
-  return LineCtx.line;
+  return LineCtx?.line;
 };
 const useMPTheme = (): MyPothiTheme => {
   const theme = useTheme();
