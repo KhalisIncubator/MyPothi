@@ -11,9 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		296275A4CBF14165B9DE4188 /* AnmolLipiBoldTrue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBAAA8F58B89494B9E651928 /* AnmolLipiBoldTrue.ttf */; };
 		32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B3C5B5243269F80062B22F /* LaunchScreen.xib */; };
-		5B5F5ABF9BCD483F8E667810 /* AnmolLipiTrue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D18AF13C272499E80BEA2C0 /* AnmolLipiTrue.ttf */; };
 		88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */; };
 		9A2EE262D217978C93D1495C /* libPods-MyPothi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385D953E54E3427CDFF3680 /* libPods-MyPothi.a */; };
 		A4327B9489F97EBD9278B837 /* libPods-MyPothi-MyPothiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */; };
@@ -52,11 +50,9 @@
 		6E88A3C0E973F77F65B9B1CF /* Pods-MyPothi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOS/Pods-MyPothi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Regular.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Regular.otf"; sourceTree = "<group>"; };
 		712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPothi-MyPothiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D18AF13C272499E80BEA2C0 /* AnmolLipiTrue.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AnmolLipiTrue.ttf; path = ../assets/fonts/AnmolLipiTrue.ttf; sourceTree = "<group>"; };
 		81930148B328056E160721D9 /* Pods-MyPothi-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOSTests/Pods-MyPothi-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		852B77A9D15143958A127094 /* OpenGurbaniAkhar-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Bold.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Bold.otf"; sourceTree = "<group>"; };
 		86EC67D16890A8E783AB339F /* Pods-MyPothi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOSTests/Pods-MyPothi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BBAAA8F58B89494B9E651928 /* AnmolLipiBoldTrue.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AnmolLipiBoldTrue.ttf; path = ../assets/fonts/AnmolLipiBoldTrue.ttf; sourceTree = "<group>"; };
 		C968D9DCCC302461F6C6448D /* Pods-MyPothi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi.release.xcconfig"; path = "Target Support Files/Pods-MyPothi/Pods-MyPothi.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -176,8 +172,6 @@
 		A9D8D488D02E4351BEDFDCA9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BBAAA8F58B89494B9E651928 /* AnmolLipiBoldTrue.ttf */,
-				7D18AF13C272499E80BEA2C0 /* AnmolLipiTrue.ttf */,
 				852B77A9D15143958A127094 /* OpenGurbaniAkhar-Bold.otf */,
 				6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */,
 			);
@@ -281,8 +275,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */,
-				296275A4CBF14165B9DE4188 /* AnmolLipiBoldTrue.ttf in Resources */,
-				5B5F5ABF9BCD483F8E667810 /* AnmolLipiTrue.ttf in Resources */,
 				BDF5006612C349F38314B075 /* OpenGurbaniAkhar-Bold.otf in Resources */,
 				88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */,
 			);

@@ -275,7 +275,7 @@ const styles = StyleSheet.create( {
   },
 
   input: {
-    fontFamily: 'AnmolLipiTrue',
+    fontFamily: 'OpenGurbaniAkhar',
   },
   row: {
     flexDirection: 'row',
