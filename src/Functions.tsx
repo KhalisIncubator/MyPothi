@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Object } from 'realm';
 import { getModWithParent } from './database/LocalDatabase';
-import { Modification } from '../types/types';
+import { Modification, ApiVishraams } from '../types/types';
 // bug with realm where on first load this stuff is not an array for some reason
 // Modification & Object
-const mapToArray = ( obj ): any[] =>
-  // console.log( obj[0].entries() );
-  ( obj ? Array.from( {
-    ...obj,
-    length: obj.length,
-  } ) : [] )
+const mapToArray = ( obj ): any[] => ( obj ? Array.from( {
+  ...obj,
+  length: obj.length,
+} ) : [] );
 
 // console.log( obj[0].keys() );
 
@@ -20,7 +18,7 @@ const mapToArray = ( obj ): any[] =>
 
 // console.log( arr );
 // return [];
-;
+
 export default mapToArray;
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
@@ -58,13 +56,12 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
 
   return [ ...previousSections, nextSection ];
 }, [] );
-const mapVishraams = ( line: string, apiValue: object, source: string ) => {
+const mapVishraams = ( line: string, apiValue: ApiVishraams, source: string ) => {
   const sourceVishraams = apiValue[source];
   // concatenate to string b/c of the bug with API
   const indices = sourceVishraams
-                  ?.filter( ( { t } ) => t !== 'v' || t === 'p' )
+                  ?.filter( ( { t } ) => t !== 'v' || t !== 'y' )
                   .map( ( { p } ) => Number( p ) );
-
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   return ( sourceVishraams && indices.length )
     ? mapToSections( line, indices, sourceVishraams )

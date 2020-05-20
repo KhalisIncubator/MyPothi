@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useMemo, ReactNode, ReactChild, useState,
+  useMemo, ReactNode, ReactChild, useState, useContext,
 } from 'react';
 
 import {
@@ -11,8 +11,7 @@ import { mapVishraams } from '../../../Functions';
 import {
   Modification, ApiVishraams, VishraamType, LineMenuItem,
 } from '../../../../types/types';
-import { useMainStoreState } from '../../../store/TsHooks';
-import { useMPTheme } from '../../../Hooks';
+import { useMPTheme, useLine } from '../../../Hooks';
 
 
 const modMap = {
@@ -73,25 +72,35 @@ const GurmukhiTextContainer: React.FC<TextContainerProps> = ( { style, children 
 
 
 // TEXT NODES
+
+const BaseText = () => {
+  const [ line ] = useLine();
+
+  return <Text>{line}</Text>;
+};
 interface VishraamsProps {
-  line: string,
   vishraams?: ApiVishraams,
   source: VishraamType,
   lineID?: number // not really necessary, just helpful for the key prop
 }
-const VishraamText: React.FC<VishraamsProps> = ( {
-  line, vishraams, source, lineID,
-} ) => (
-  <>
-    {mapVishraams( line, vishraams, source ).map( (
-      { data, type },
-    ) => (
-      <Text key={`${data}-lineID${lineID}-${type}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
-    ) ) }
-  </>
-);
+const VishraamText: React.FC<VishraamsProps > = ( { vishraams, source, lineID } ) => {
+  const [ line ] = useLine();
+  const mapped = mapVishraams( line, vishraams, source );
+  console.log( mapped, vishraams[source] );
+  return (
+    <>
+      {mapped.map( (
+        { data, type },
+      ) => (
+        <Text key={`${data}-lineID${lineID}-${type}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
+      ) ) }
+    </>
+  );
+};
 
-export { RomanTextContainer, GurmukhiTextContainer, VishraamText };
+export {
+  RomanTextContainer, GurmukhiTextContainer, BaseText, VishraamText,
+};
 
 const withContextMenu = ( children ) => ( line, menu ) => {
   const theme = useMPTheme();
@@ -106,7 +115,7 @@ const withContextMenu = ( children ) => ( line, menu ) => {
       onDismiss={toggleVis}
       anchor={(
         <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes.lineHighlight}>
-          {children}
+          <Text>Hi</Text>
         </TouchableHighlight>
       )}
     >

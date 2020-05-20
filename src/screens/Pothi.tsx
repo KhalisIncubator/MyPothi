@@ -9,7 +9,7 @@ import { useTheme } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
-import ShimmeringLine from '../components/main/blocks/ShimmeringBlock';
+import ShimmeringLine from '../components/main/ShimmeringBlock';
 import Toolbar from '../components/main/Toolbar';
 import HighlightSelector from '../components/main/HighlightSelector';
 

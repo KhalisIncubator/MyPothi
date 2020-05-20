@@ -1,16 +1,24 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { createContext } from 'react';
 import {
-  View, StyleSheet,
+  View, StyleSheet, Text,
 } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
 import {
-  TextBlockBase, GurmukhiTextContainer, VishraamText, RomanTextContainer, withContextMenu,
-} from './TextBlock';
-import { EditCtx } from '../../../store/context_stores/Contexts';
-import { useValues } from '../../../store/StateHooks';
-import { RemappedLine, Modification, LineMenuItem } from '../../../../types/types';
+  TextBlockBase, GurmukhiTextContainer, RomanTextContainer,
+} from './text/TextBlock';
+import { VishraamText, BaseText } from './text/Text';
+import { withContextMenu } from './text/TextMenu';
+import { EditCtx } from '../../store/context_stores/Contexts';
+import { useValues } from '../../store/StateHooks';
+import { RemappedLine, Modification, LineMenuItem } from '../../../types/types';
+
+
+const LineContext = createContext( null );
+
+export { LineContext };
 
 interface NewProps {
   line: RemappedLine,
@@ -54,7 +62,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   } = line;
 
   const { ascii } = Gurbani;
-  const Pangtee = withContextMenu(
+  const Pangtee = (
     <TextBlockBase
       isSelected={false}
       isMainLine={isMainLine}
@@ -62,41 +70,39 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
     >
       <GurmukhiTextContainer style={{ fontSize: gurmukhi }}>
         <VishraamText
-          line={ascii}
           vishraams={displayVishraams ? Vishraams : {}}
           source={sources.vishraamSource}
           lineID={id}
         />
       </GurmukhiTextContainer>
-    </TextBlockBase>,
-  )( ascii, GurmukhiMenu );
+    </TextBlockBase>
+  );
 
 
-  const Transl = displayEng && !!Translations[sources.translationLang] && (
+  const Transl = (
     <TextBlockBase
       isSelected={false}
       lineID={id}
     >
-      <RomanTextContainer>{Translations[sources.translationLang]}</RomanTextContainer>
+      <RomanTextContainer><BaseText /></RomanTextContainer>
     </TextBlockBase>
   );
 
-  const Teeka = displayTeeka && !!Translations.Punjabi[sources.teekaSource] && (
+  const Teeka = (
     <TextBlockBase
       isSelected={false}
       lineID={id}
     >
-      <GurmukhiTextContainer>{Translations.Punjabi[sources.teekaSource]}</GurmukhiTextContainer>
+      <GurmukhiTextContainer><BaseText /></GurmukhiTextContainer>
     </TextBlockBase>
   );
-  const Translit = displayTranslit && !!Transliteration[sources.translitLang] && (
+  const Translit = (
     <TextBlockBase
       isSelected={false}
       lineID={id}
     >
       <RomanTextContainer>
         <VishraamText
-          line={Transliteration[sources.translitLang]}
           vishraams={displayVishraams ? Vishraams : {}}
           source={sources.vishraamSource}
           lineID={id}
@@ -105,9 +111,26 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
     </TextBlockBase>
   );
 
+  const TextNodes: any[][] = [
+    [ Pangtee, [ true, ascii, GurmukhiMenu ] ],
+    [ Transl, [ displayEng, Translations[sources.translationLang], RomanMenu ] ],
+    [ Teeka, [ displayTeeka, Translations.Punjabi[sources.teekaSource], GurmukhiMenu ] ],
+    [ Translit, [ displayTranslit, Transliteration[sources.translitLang], RomanMenu ] ],
+  ];
   return (
-    <View style={style.column}>
-      {[ Pangtee, Transl, Teeka, Translit ]}
+    <View style={style.column} key={`LineBlock-${id}-${ascii}`}>
+      {TextNodes.map( ( [ TextNode, [ display, string, menu ] ], index ) => {
+        const DisplayedNode = display && !!string && TextNode;
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          <LineContext.Provider value={{ line: string }} key={`${line}-${index}`}>
+            <>
+              {withContextMenu( DisplayedNode )( menu )}
+            </>
+            {/* {DisplayedNode} */}
+          </LineContext.Provider>
+        );
+      } )}
     </View>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FlatList, SafeAreaView, View,
 } from 'react-native';
-import LineBlock from './blocks/LineBlock';
+import LineBlock from './LineBlock';
 import mapToArray from '../../Functions';
 
 const Viewer = ( props ) => {

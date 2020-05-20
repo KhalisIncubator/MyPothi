@@ -48,7 +48,10 @@ const darkTheme = {
     backdrop: '#FFA500',
     text: '#FFFFFF',
     notification: '#2C2F33',
-    lineHighlight: '#52555a',
+    customType: {
+      lineHighlight: '#52555a',
+    },
+
 
   },
 };
@@ -66,7 +69,9 @@ const trueDark = {
     backdrop: '#FFA500',
     text: '#FFFFFF',
     notification: '#2C2F33',
-    lineHightlight: '#2C2F33',
+    customType: {
+      lineHightlight: '#2C2F33',
+    },
   },
 };
 

@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import LineBlock from './LineBlock';
-import { EditCtx } from '../../../store/context_stores/Contexts';
-import { useValues } from '../../../store/StateHooks';
+import { EditCtx } from '../../store/context_stores/Contexts';
+import { useValues } from '../../store/StateHooks';
 
 const ShabadBlock = ( { item, currentItems, index } ) => {
   const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
