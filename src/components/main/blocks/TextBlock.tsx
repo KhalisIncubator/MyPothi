@@ -59,7 +59,6 @@ const RomanTextContainer: React.FC<TextContainerProps> = ( { style, children, mo
   return (
     <Text style={StyleSheet.flatten( [ style, {
       color: theme.colors.text,
-      fontSize: 32,
     } ] )}
     >
       {children}
@@ -132,10 +131,10 @@ const withContextMenu = ( children ) => ( line, menu ) => {
 export { withContextMenu };
 interface BaseProps {
   isSelected: boolean,
-  isMainLine: boolean,
   lineID: number,
   onClick?: () => void,
   children: ReactChild,
+  isMainLine?: boolean,
 }
 
 const TextBlockBase: React.FC<BaseProps> = ( {
