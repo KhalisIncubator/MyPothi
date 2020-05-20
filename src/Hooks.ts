@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { MyPothiTheme } from '../types/types';
 
@@ -7,6 +7,4 @@ const useMPTheme = (): MyPothiTheme => {
   return theme;
 };
 
-const useLineMenu = () => useState( false );
-
-export { useMPTheme, useLineMenu };
+export { useMPTheme };

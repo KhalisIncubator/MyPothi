@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useCallback, useState } from 'react';
+import React from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback,
+  View, StyleSheet,
 } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
-import { Menu } from 'react-native-paper';
-import TextBlock, {
+import {
   TextBlockBase, GurmukhiTextContainer, VishraamText, RomanTextContainer, withContextMenu,
 } from './TextBlock';
 import { EditCtx } from '../../../store/context_stores/Contexts';
@@ -55,9 +54,6 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   } = line;
 
   const { ascii } = Gurbani;
-
-  console.log( sources );
-
   const Pangtee = withContextMenu(
     <TextBlockBase
       isSelected={false}
@@ -65,13 +61,18 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       lineID={id}
     >
       <GurmukhiTextContainer style={{ fontSize: gurmukhi }}>
-        <VishraamText line={ascii} vishraams={Vishraams} source="sttm" lineID={id} />
+        <VishraamText
+          line={ascii}
+          vishraams={displayVishraams ? Vishraams : {}}
+          source={sources.vishraamSource}
+          lineID={id}
+        />
       </GurmukhiTextContainer>
     </TextBlockBase>,
   )( ascii, GurmukhiMenu );
 
 
-  const Transl = displayEng && (
+  const Transl = displayEng && !!Translations[sources.translationLang] && (
     <TextBlockBase
       isSelected={false}
       lineID={id}
@@ -80,7 +81,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
     </TextBlockBase>
   );
 
-  const Teeka = displayTeeka && (
+  const Teeka = displayTeeka && !!Translations.Punjabi[sources.teekaSource] && (
     <TextBlockBase
       isSelected={false}
       lineID={id}
@@ -88,13 +89,18 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
       <GurmukhiTextContainer>{Translations.Punjabi[sources.teekaSource]}</GurmukhiTextContainer>
     </TextBlockBase>
   );
-  const Translit = displayTranslit && (
+  const Translit = displayTranslit && !!Transliteration[sources.translitLang] && (
     <TextBlockBase
       isSelected={false}
       lineID={id}
     >
       <RomanTextContainer>
-        <VishraamText line={Transliteration[sources.translitLang]} vishraams={Vishraams} source="sttm" lineID={id} />
+        <VishraamText
+          line={Transliteration[sources.translitLang]}
+          vishraams={displayVishraams ? Vishraams : {}}
+          source={sources.vishraamSource}
+          lineID={id}
+        />
       </RomanTextContainer>
     </TextBlockBase>
   );
@@ -109,6 +115,7 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
 
 export default LineBlock;
 const style = StyleSheet.create( {
+
   column: {
     flexDirection: 'column',
   },
