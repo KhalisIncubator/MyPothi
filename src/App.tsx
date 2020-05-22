@@ -12,10 +12,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import { View, useColorScheme } from 'react-native';
 import store from './store/MainStore';
 import { useValues } from './store/StateHooks';
+import { MyPothiTheme } from '../types/types';
 
 const Routes = lazy( () => import( './Routes' ) );
 
-const theme = {
+const theme: MyPothiTheme = {
   ...DefaultTheme,
   dark: false,
   roundness: 10,
@@ -28,7 +29,9 @@ const theme = {
     surface: '#c6cfd4',
     text: '#000',
     notification: '#e7e7e7',
-
+  },
+  customTypes: {
+    lineHighlight: '#c6cfd4',
   },
 };
 
@@ -45,6 +48,11 @@ const darkTheme = {
     backdrop: '#FFA500',
     text: '#FFFFFF',
     notification: '#2C2F33',
+    customType: {
+      lineHighlight: '#52555a',
+    },
+
+
   },
 };
 
@@ -61,6 +69,9 @@ const trueDark = {
     backdrop: '#FFA500',
     text: '#FFFFFF',
     notification: '#2C2F33',
+    customType: {
+      lineHightlight: '#2C2F33',
+    },
   },
 };
 

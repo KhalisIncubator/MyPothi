@@ -23,7 +23,9 @@ export default SettingsCard;
 const SettingSection = ( { text, children, subheading } ) => (
   <>
     <View style={{
-      display: 'flex', flexDirection: 'column', width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
     }}
     >
       <View style={styles.MainViewLine}>
@@ -121,7 +123,9 @@ const wrappedModifiers = {
 export { SettingSection, wrappedModifiers, SwitchModifier };
 const styles = StyleSheet.create( {
   Buttons: {
-    display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   Card: {
     margin: 5,

@@ -131,7 +131,7 @@ const generateTags = ( source, raag, writer, theme ) => {
             <View style={{ paddingHorizontal: 8 }}>
               <Text style={{
                 color,
-                fontFamily: 'AnmolLipiTrue',
+                fontFamily: 'OpenGurbaniAkhar',
                 borderRadius: 6,
                 backgroundColor: 'white',
                 overflow: 'hidden',
@@ -196,7 +196,7 @@ const style = StyleSheet.create( {
     justifyContent: 'space-between',
   },
   CardTitle: {
-    fontFamily: 'AnmolLipiTrue',
+    fontFamily: 'OpenGurbaniAkhar',
     padding: 5,
     textAlign: 'center',
   },

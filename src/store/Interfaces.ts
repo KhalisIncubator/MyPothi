@@ -8,7 +8,7 @@ import {
 
 import { loadShabad, loadBani } from '../database/BanidbApi';
 
-interface Info {
+export interface Info {
     source: string,
     writer: string,
     raag: string,
