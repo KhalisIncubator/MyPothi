@@ -18,7 +18,7 @@ const generateVishraamStyle = ( type ) => {
 
 // TEXT NODES
 
-const BaseText = () => {
+const DefaultText = () => {
   const line = useLine();
 
   return <Text>{line}</Text>;
@@ -46,7 +46,7 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
     </>
   );
 };
-export { BaseText, VishraamText };
+export { DefaultText, VishraamText };
 const styles = StyleSheet.create( {
   FullVishraam: {
     // color: '#e14500', alt orange

@@ -8,7 +8,7 @@ import { unicode } from 'anvaad-js';
 
 import { TextView } from './text/TextView';
 import { GurmukhiTextContainer, RomanTextContainer } from './text/TextContainer';
-import { VishraamText, BaseText } from './text/Text';
+import { VishraamText, DefaultText } from './text/Text';
 import { ContextMenu } from './text/TextMenu';
 import { useValues, useEditMode } from '../../store/StateHooks';
 import {
@@ -98,8 +98,7 @@ const LineBlock: React.FC<Props> = ( {
         style={{ fontSize: eng }}
         mod={filterMods( lineMods, 'Eng' )}
       >
-        <BaseText />
-
+        <DefaultText />
       </RomanTextContainer>
     </TextView>
   );
@@ -114,8 +113,7 @@ const LineBlock: React.FC<Props> = ( {
         style={{ fontSize: teeka }}
         mod={filterMods( lineMods, 'Teeka' )}
       >
-        <BaseText />
-
+        <DefaultText />
       </GurmukhiTextContainer>
     </TextView>
   );
