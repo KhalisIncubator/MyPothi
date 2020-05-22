@@ -2,7 +2,7 @@
 import React, { ReactNode } from 'react';
 import { Results } from 'realm';
 import {
-  Text, StyleSheet, TextStyle, StyleProp, Platform,
+  Text, StyleSheet, Platform,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { Modification } from '../../../../types/types';
