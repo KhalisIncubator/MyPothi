@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Collection } from 'realm';
 import Clipboard from '@react-native-community/clipboard';
@@ -14,11 +14,8 @@ import { useValues, useEditMode } from '../../store/StateHooks';
 import {
   RemappedLine, Modification, LineMenuItem, Element,
 } from '../../../types/types';
+import { LineContext } from '../../Hooks';
 
-
-const LineContext = createContext( { line: '' } );
-
-export { LineContext };
 
 const GurmukhiMenu: LineMenuItem[] = [
   {

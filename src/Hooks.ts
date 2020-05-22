@@ -1,8 +1,11 @@
-import { useContext } from 'react';
+import { useContext, createContext } from 'react';
 import { useTheme } from 'react-native-paper';
-import { ActionCreator } from 'easy-peasy';
-import { MyPothiTheme, Element } from '../types/types';
-import { LineContext } from './components/main/LineBlock';
+import { MyPothiTheme } from '../types/types';
+
+
+const LineContext = createContext( { line: '' } );
+
+export { LineContext };
 
 
 const useLine = () => {

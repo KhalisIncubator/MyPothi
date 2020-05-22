@@ -34,9 +34,10 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
   return (
     <>
       {mapVishraams( line, vishraams, source ).map( (
-        { data, type },
+        { data, type }, index,
       ) => (
-        <Text key={`${data}-lineID${lineID}-${type}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
+        // eslint-disable-next-line react/no-array-index-key
+        <Text key={`${data}-lineID${lineID}-${type}-${index}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
       ) ) || (
       <Text>
         {line}

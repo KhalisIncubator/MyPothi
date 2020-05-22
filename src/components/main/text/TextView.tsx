@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactChild, useEffect } from 'react';
+import React, { ReactChild } from 'react';
 
 import {
   StyleSheet, View, TouchableOpacity,

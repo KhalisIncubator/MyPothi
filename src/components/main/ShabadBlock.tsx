@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import LineBlock from './LineBlock';
 import { useValues, useSelectionInfo } from '../../store/StateHooks';

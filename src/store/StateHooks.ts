@@ -45,4 +45,6 @@ const useEntry = ():
   return [ addEntry, undoCreate, removeEntry ];
 };
 
-export { useEditMode, useSelectionInfo, useCurrent };
+export {
+  useEditMode, useSelectionInfo, useCurrent, useEntry,
+};
