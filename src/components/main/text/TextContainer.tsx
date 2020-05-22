@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { ReactNode } from 'react';
-
+import { Results } from 'realm';
 import {
   Text, StyleSheet, TextStyle, StyleProp,
 } from 'react-native';
@@ -9,16 +10,20 @@ import { Modification } from '../../../../types/types';
 
 const modMap = {
   backgroundColor: ( value ) => ( { backgroundColor: value } ),
-  bold: ( value ) => ( value ? ( { fontWeight: 'bold ' } ) : null ),
-  fontSize: ( value ) => ( { fontSize: value } ),
+  bold: ( value ) => ( value ? ( { fontWeight: 'bold' } ) : null ),
+  fontSize: ( value ) => ( value ? ( { fontSize: value } ) : null ),
 
 };
 
-const generateStyle = ( mod, style ) => {
-  const modStyle = mod.entries().reduce( ( acc, [ key, value ] ) => ( {
-    ...acc,
-    ...modMap[key]( value ),
-  } ), {} );
+const generateStyle = ( modResults, style ) => {
+  const { 0: mod } = modResults;
+  const modStyle = mod?.entries().reduce( ( acc, [ key, value ] ) => {
+    const createrFunc = modMap?.[key];
+    return ( {
+      ...acc,
+      ...( createrFunc ? createrFunc( value ) : {} ),
+    } );
+  }, {} ) ?? {};
 
 
   return StyleSheet.flatten( [ style, modStyle ] );
@@ -27,24 +32,21 @@ const generateStyle = ( mod, style ) => {
 
 interface TextContainerProps {
   style?: StyleProp<TextStyle>
-  mod?: Modification,
+  mod?: Results<Modification>,
   children?: ReactNode
 }
 
 const RomanTextContainer: React.FC<TextContainerProps> = ( { style, children, mod } ) => {
   const theme = useTheme();
-  // const textStyle = generateStyle( mod, StyleSheet.flatten( [ style, { color: theme.colors.text }, styles.Text ] ) );
+  const textStyle = generateStyle( mod, StyleSheet.flatten( [ style, { color: theme.colors.text }, styles.Text ] ) );
   return (
-    <Text style={StyleSheet.flatten( [ {
-      color: theme.colors.text,
-    }, styles.Text, style ] )}
-    >
+    <Text style={textStyle}>
       {children}
     </Text>
   );
 };
-const GurmukhiTextContainer: React.FC<TextContainerProps> = ( { style, children } ) => (
-  <RomanTextContainer style={StyleSheet.flatten( [ { fontFamily: 'OpenGurbaniAkhar' }, style ] )}>
+const GurmukhiTextContainer: React.FC<TextContainerProps> = ( { style, children, mod } ) => (
+  <RomanTextContainer style={StyleSheet.flatten( [ { fontFamily: 'OpenGurbaniAkhar' }, style ] )} mod={mod}>
     {children}
   </RomanTextContainer>
 );

@@ -1,44 +1,10 @@
 import React, { useState } from 'react';
 
-import { TouchableHighlight } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Menu } from 'react-native-paper';
-import { useMPTheme, useLine } from '../../../Hooks';
-
-const withContextMenu = ( children ) => ( menu ) => {
-  const theme = useMPTheme();
-  // const line = useLine();
-  const [ isVisible, updateVisible ] = useState( false );
-
-  const toggleVis = () => {
-    updateVisible( ( prev ) => !prev );
-  };
-  return (
-    <Menu
-      visible={isVisible}
-      onDismiss={toggleVis}
-      anchor={(
-        <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes?.lineHighlight}>
-          {children}
-        </TouchableHighlight>
-      )}
-    >
-      {menu.map( ( { title, action } ) => (
-        <Menu.Item
-          title={title}
-          onPress={() => {
-            action( 'line' );
-            toggleVis();
-          }}
-          key={title}
-        />
-      ) )}
-    </Menu>
-  );
-};
-
+import { useLine } from '../../../Hooks';
 
 const ContextMenu = ( { menu, children } ) => {
-  const theme = useMPTheme();
   const line = useLine();
   const [ isVisible, updateVisible ] = useState( false );
 
@@ -50,9 +16,9 @@ const ContextMenu = ( { menu, children } ) => {
       visible={isVisible}
       onDismiss={toggleVis}
       anchor={(
-        <TouchableHighlight onLongPress={toggleVis} underlayColor={theme.customTypes?.lineHighlight}>
+        <TouchableOpacity onLongPress={toggleVis} activeOpacity={0.7}>
           {children}
-        </TouchableHighlight>
+        </TouchableOpacity>
       )}
     >
       {menu.map( ( { title, action } ) => (
@@ -68,4 +34,4 @@ const ContextMenu = ( { menu, children } ) => {
     </Menu>
   );
 };
-export { withContextMenu, ContextMenu };
+export { ContextMenu };

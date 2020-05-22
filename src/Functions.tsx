@@ -20,7 +20,7 @@ const mapToArray = ( obj ): any[] => ( obj ? Array.from( {
 
 export default mapToArray;
 
-const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line?.split( ' ' ).reduce( ( phrases, word, index ) => {
+const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
   const isIndexed = indices?.includes( index );
   const previousSections = phrases.slice( 0, phrases.length - 1 ); // everything before
   const currentSection = phrases[phrases.length - 1]; // current section we are editing
@@ -63,7 +63,7 @@ const mapVishraams = ( line: string, apiValue: ApiVishraams, source: string ) =>
                   .map( ( { p } ) => Number( p ) );
   // return (and filter out undefined or null data stuff (null caused by a vishram followed by another vishraam))
   return ( sourceVishraams && indices.length )
-    ? mapToSections( line, indices, sourceVishraams )?.filter( ( section ) => section !== undefined && section.data )
+    ? mapToSections( line, indices, sourceVishraams ).filter( ( section ) => section !== undefined && section.data )
     : [ {
       type: 'line',
       data: line,

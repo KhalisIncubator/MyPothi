@@ -1,36 +1,46 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { FlatList } from 'react-native';
 import LineBlock from './LineBlock';
-import { EditCtx } from '../../store/context_stores/Contexts';
-import { useValues } from '../../store/StateHooks';
+import { useValues, useSelectionInfo } from '../../store/StateHooks';
 
-const ShabadBlock = ( { item, currentItems, index } ) => {
-  const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
-  const { isEditMode, selectedInfo } = EditCtx.useStoreState( ( store ) => ( { ...store } ) );
-  const updatedSelectedInfo = EditCtx.useStoreActions( ( actions ) => actions.updatedSelectedInfo );
+import { Element } from '../../../types/types';
+
+const ShabadBlock = ( {
+  item, index,
+} ) => {
+  const [ selectionInfo, updateSelectedInfo ] = useSelectionInfo();
+  const [ selectedLineID, selectedElement ] = selectionInfo;
+
+  const { currentItems } = useValues( 'currentModel' );
 
   return (
     <FlatList
       data={item}
-      keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
-      renderItem={( { index: lineIndex, item: line } ) => (
-        <LineBlock
-          key={`${line.id}-${lineIndex}`}
-          line={line}
-          isMainLine={currentItems[index]?.mainLine === line.Gurbani.ascii}
-      // if currentItems is not length of 0, and if the item
-      // at the index has a entryID (need to check because is null when item is deleted and state is
-      // uodated). Otherwise if currentItems has length of 0, then set id to null
-          entryID={currentItems[index]?.entryID ?? null}
-          mods={[]}
-        />
-      )}
       initialNumToRender={index === 0 ? ( item.length < 20 ? item.length : 20 ) : 0}
+      keyExtractor={( useless, itemIndex ) => itemIndex.toString()}
+      extraData={selectionInfo}
+      renderItem={( { index: lineIndex, item: line } ) => {
+        const isSelected = selectedLineID === line.id;
+        const onClick = ( element: Element ) => {
+          if ( isSelected && selectedElement === element ) updateSelectedInfo( [ null, null, null ] );
+          else updateSelectedInfo( [ line.id, element, currentItems[index]?.entryID ] );
+        };
+
+        return (
+          <LineBlock
+            key={`${line.id}-${lineIndex}=${isSelected}`}
+            line={line}
+            selectedElement={isSelected ? selectedElement : null}
+            isMainLine={currentItems[index]?.mainLine === line.Gurbani.ascii}
+            onClick={onClick}
+        // if currentItems is not length of 0, and if the item
+        // at the index has a entryID (need to check because is null when item is deleted and state is
+        // uodated). Otherwise if currentItems has length of 0, then set id to null
+            entryID={currentItems[index]?.entryID ?? null}
+            lineMods={currentItems[index]?.mods?.filtered( `lineID == ${line.id}` )}
+          />
+        );
+      }}
     />
   );
 };

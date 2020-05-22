@@ -1,30 +1,24 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext } from 'react';
+import React, { createContext, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { Collection } from 'realm';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
-import { TextBlockBase } from './text/TextBlock';
+
+import { TextView } from './text/TextView';
 import { GurmukhiTextContainer, RomanTextContainer } from './text/TextContainer';
 import { VishraamText, BaseText } from './text/Text';
 import { ContextMenu } from './text/TextMenu';
-import { EditCtx } from '../../store/context_stores/Contexts';
-import { useValues } from '../../store/StateHooks';
-import { RemappedLine, Modification, LineMenuItem } from '../../../types/types';
+import { useValues, useEditMode } from '../../store/StateHooks';
+import {
+  RemappedLine, Modification, LineMenuItem, Element,
+} from '../../../types/types';
 
 
-const LineContext = createContext( null );
+const LineContext = createContext( { line: '' } );
 
 export { LineContext };
-
-interface NewProps {
-  line: RemappedLine,
-  lineMod: Modification,
-  entryID: string
-  selectedElement?: string,
-  isMainLine?: any
-}
-
 
 const GurmukhiMenu: LineMenuItem[] = [
   {
@@ -44,9 +38,23 @@ const RomanMenu: LineMenuItem[] = [
   },
 ];
 
-const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
+
+const filterMods = ( mods, element ) => mods?.filtered( `element == "${element}"` ) ?? { 0: null };
+
+interface Props {
+  line: RemappedLine,
+  lineMods: Collection<Modification>,
+  onClick: ( element: Element ) => void,
+  entryID: string
+  selectedElement?: string,
+  isMainLine?: any
+}
+
+const LineBlock: React.FC<Props> = ( {
+  line, isMainLine, selectedElement, lineMods, onClick,
+} ) => {
   const { fontSizes, displayElements, sources } = useValues( 'viewerModel' );
-  const isEditMode = EditCtx.useStoreState( ( state ) => state.isEditMode );
+  const [ isEditMode ] = useEditMode();
 
   const {
     gurmukhi, eng, teeka, translit,
@@ -60,53 +68,77 @@ const LineBlock: React.FC<NewProps> = ( { line, isMainLine } ) => {
   } = line;
 
   const { ascii } = Gurbani;
+
+  console.log( lineMods );
   const Pangtee = (
-    <TextBlockBase
-      isSelected={false}
+    <TextView
+      isSelected={selectedElement === 'Pangtee'}
       isMainLine={isMainLine}
       lineID={id}
+      onClick={() => onClick( 'Pangtee' )}
     >
-      <GurmukhiTextContainer style={{ fontSize: gurmukhi }}>
+      <GurmukhiTextContainer
+        style={{ fontSize: gurmukhi }}
+        mod={filterMods( lineMods, 'Pangtee' )}
+      >
         <VishraamText
           vishraams={displayVishraams ? Vishraams : {}}
           source={sources.vishraamSource}
           lineID={id}
         />
       </GurmukhiTextContainer>
-    </TextBlockBase>
+    </TextView>
   );
 
 
   const Transl = (
-    <TextBlockBase
-      isSelected={false}
+    <TextView
+      isSelected={selectedElement === 'Eng'}
       lineID={id}
+      onClick={() => onClick( 'Eng' )}
     >
-      <RomanTextContainer style={{ fontSize: eng }}><BaseText /></RomanTextContainer>
-    </TextBlockBase>
+      <RomanTextContainer
+        style={{ fontSize: eng }}
+        mod={filterMods( lineMods, 'Eng' )}
+      >
+        <BaseText />
+
+      </RomanTextContainer>
+    </TextView>
   );
 
   const Teeka = (
-    <TextBlockBase
-      isSelected={false}
+    <TextView
+      isSelected={selectedElement === 'Teeka'}
       lineID={id}
+      onClick={() => onClick( 'Teeka' )}
     >
-      <GurmukhiTextContainer style={{ fontSize: teeka }}><BaseText /></GurmukhiTextContainer>
-    </TextBlockBase>
+      <GurmukhiTextContainer
+        style={{ fontSize: teeka }}
+        mod={filterMods( lineMods, 'Teeka' )}
+      >
+        <BaseText />
+
+      </GurmukhiTextContainer>
+    </TextView>
   );
   const Translit = (
-    <TextBlockBase
-      isSelected={false}
+    <TextView
+      isSelected={selectedElement === 'Translit'}
       lineID={id}
+      onClick={() => onClick( 'Translit' )}
     >
-      <RomanTextContainer style={{ fontSize: translit }}>
+      <RomanTextContainer
+        style={{ fontSize: translit }}
+        mod={filterMods( lineMods, 'Translit' )}
+      >
         <VishraamText
           vishraams={displayVishraams ? Vishraams : {}}
           source={sources.vishraamSource}
           lineID={id}
         />
       </RomanTextContainer>
-    </TextBlockBase>
+    </TextView>
   );
 
   const TextNodes: any[][] = [

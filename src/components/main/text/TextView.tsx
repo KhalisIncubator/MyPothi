@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactChild } from 'react';
+import React, { ReactChild, useEffect } from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet, View, TouchableOpacity,
+} from 'react-native';
 
 import { useMPTheme } from '../../../Hooks';
+import { useEditMode } from '../../../store/StateHooks';
 
 interface BaseProps {
   isSelected: boolean,
@@ -13,20 +16,27 @@ interface BaseProps {
   isMainLine?: boolean,
 }
 
-const TextBlockBase: React.FC<BaseProps> = ( {
-  isSelected, isMainLine, children,
+const TextView: React.FC<BaseProps> = ( {
+  isSelected, isMainLine, children, onClick,
 } ) => {
   const theme = useMPTheme();
+  const [ isEditMode ] = useEditMode();
   const ViewStyle = StyleSheet.flatten( [ styles.View, isMainLine ? theme.customTypes?.lineHighlight : {},
     isSelected ? styles.Selected : {} ] );
-  return (
-    <View style={ViewStyle}>
+
+  return isEditMode ? (
+    <TouchableOpacity style={ViewStyle} onPress={onClick}>
       {children}
-    </View>
-  );
+    </TouchableOpacity>
+  )
+    : (
+      <View style={ViewStyle}>
+        {children}
+      </View>
+    );
 };
 
-export { TextBlockBase };
+export { TextView };
 const styles = StyleSheet.create( {
 
   // #136983
