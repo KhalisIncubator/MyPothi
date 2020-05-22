@@ -1,24 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { getModWithParent } from './database/LocalDatabase';
 import { ApiVishraams } from '../types/types';
-// bug with realm where on first load this stuff is not an array for some reason
-// Modification & Object
-const mapToArray = ( obj ): any[] => ( obj ? Array.from( {
-  ...obj,
-  length: obj.length,
-} ) : [] );
-
-// console.log( obj[0].keys() );
-
-// const arr = obj ? Array.from( {
-//   ...obj,
-//   length: obj.keys().length,
-// } ) : [];
-
-// console.log( arr );
-// return [];
-
-export default mapToArray;
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
   const isIndexed = indices?.includes( index );

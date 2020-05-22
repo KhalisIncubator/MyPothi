@@ -66,7 +66,6 @@ const LineBlock: React.FC<Props> = ( {
 
   const { ascii } = Gurbani;
 
-  console.log( lineMods );
   const Pangtee = (
     <TextView
       isSelected={selectedElement === 'Pangtee'}
