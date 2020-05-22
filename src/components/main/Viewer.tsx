@@ -12,7 +12,7 @@ const Viewer = ( props ) => {
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ height: '100%' }}>
       <FlatList
         data={currentLines}
         initialNumToRender={currentLines[0]?.length < 101 ? 1 : undefined}
