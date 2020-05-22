@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import Realm, { Configuration } from 'realm';
-import { storedPothi, entryObj } from '../../types/types';
-// import { loadBani, loadShabad } from './BanidbApi';
-// import { entryObj } from '../../types/types';
+import { storedPothi } from '../../types/types';
+
 
 const PothiSchema = {
   name: 'Pothi',
@@ -61,12 +60,12 @@ const localRealmConfig: Configuration = {
       const newGutkas = newRealm.objects<storedPothi>( 'Pothi' );
       newGutkas.forEach( ( pothi, index ) => {
         pothi.index = index;
-        pothi.items.forEach((entry, index) => {
-          entry.index = index;
+        pothi.items.forEach( ( entry, idx ) => {
+          entry.index = idx;
           entry.source = null;
           entry.writer = null;
           entry.raag = null;
-        })
+        } );
       } );
     }
   },
