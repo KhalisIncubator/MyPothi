@@ -2,7 +2,7 @@
 This document is for developers interested in helping out the development of this app. If you wish to contribute in other ways, please see the Contributing page.
 
 ## Overview
-This `React Native` project is setup using the `react-native-cli` and the react native `typescript template`. 
+This [React Native](https://github.com/facebook/react-native) project is setup using the [react-native-cli](https://github.com/react-native-community/cli) and the react native [typescript template](https://github.com/react-native-community/react-native-template-typescript/tree/master/template). 
 
 MacOS is recommended for developing this application, as you will then have access to XCode and Android studio. While developing this application, it is recommended that you use the XCode simulator, as it is faster and less strenuous than the Android Studio counterpart. 
 
@@ -66,7 +66,7 @@ To enable this setting:
 Congratulations! Now you do not need to worry about how you write you code; Eslint will fix it for you! :)
 
 ## Adding Code
-We will now guide you through the process of contributing changes to the codebase. 
+This will now guide you through the process of contributing changes to the codebase. 
 
 ### Issues
 Please see the Contributing doc
@@ -76,7 +76,6 @@ Commits consist of a title and body, separated by one line.
 ```
 [Identifier]: title
 
-
 // body, write smaller notes here that are elaboration on the title or elaborates items that were omitted from the title
 ```
 
@@ -84,17 +83,15 @@ Commits consist of a title and body, separated by one line.
 
  - _feat_ introduces a new feature
 - _fix_ fix a bug introduced in previous commits
-- _cleanup_ clean up the code, usually used at the end of a pr
+- _cleanup_ clean up the code, usually used at the end of a pr (removing temporary monkey-patches, updating variable names to a more descriptive name etc)
 - _ref_ refactor code 
 - _docs_ documentation changes
 
 
 It is recommended to commit early and often ( do not follow in my footsteps - @AkalUstat) so that when people go over your PR, it is easier to track changes.
 
-
 ### PR (Pull Requests)
-Please open up a pull request soon after you start committing, so that your changes and work remains visible. This is so that maintainers can keep up on your work, on any device. For me personally, I like to open PRs (even though I am the only developer) so that I can read what I am doing and think about changes and how to make my code better from my phone. 
-
+Please open up a pull request soon after you start committing, so that your changes and work remains visible. This is so that maintainers can keep up on your work, on any device.
 ##### Merging
 Once your PR passes the `LGTM` test for code quality and a reviewer has approved your changes, your commits will be `squashed and merged` into dev.
 
