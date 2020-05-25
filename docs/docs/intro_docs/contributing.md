@@ -5,7 +5,7 @@ Thank you for considering contributing to MyPothi!
 This page outlines ways to contribute if you are not intersted in, or feel like you can contribute in other ways than development. 
 
 If you wish to contribute to the development of MyPothi, please read the following [Development page as well.](/intro_docs/development)
-### Overview
+## Overview
 These areas of the project need help (if you wish to contribute in others way aside from development): 
 
 1. Project Management (PM): This project is not very well managed. I just kind of do what I feel like it when I feel like. As such, it is hard to manage what is going on, as at any given time 2+ items are being work on. If anyone could setup up to be PM, that would be nice.

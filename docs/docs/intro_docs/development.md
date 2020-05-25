@@ -45,7 +45,7 @@ Although there is no limitation on what IDE you can use, it is recommended that 
 2. [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
 3. [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
 
-### ESlint: 
+### ESlint 
 This project uses Eslint instead of Prettier, as some prettier configurations conflict with Eslint settings, and it was decided to keep one formatter. 
 
  `Enable Eslint format on save.`
