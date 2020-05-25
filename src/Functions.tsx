@@ -7,13 +7,15 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
   const previousSections = phrases.slice( 0, phrases.length - 1 ); // everything before
   const currentSection = phrases[phrases.length - 1]; // current section we are editing
   // If is in index, group the word separately, and begin new section
+
+  const wordWithSpace = `${word} `;
   if ( isIndexed ) {
     return [
       ...( previousSections || [] ),
       currentSection,
       {
         type: sourceVishraams[indices.indexOf( index )].t,
-        data: word,
+        data: wordWithSpace,
       },
       {
         type: null,
@@ -25,13 +27,13 @@ const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.
     {
       ...currentSection,
       type: 'line',
-      data: currentSection?.data?.concat( ` ${word}` ) ?? word,
+      data: currentSection?.data?.concat( wordWithSpace ) ?? wordWithSpace,
     }
   )
     : (
       {
         type: 'line',
-        data: word,
+        data: wordWithSpace,
       }
     );
 

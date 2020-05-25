@@ -37,7 +37,7 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
         { data, type }, index,
       ) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Text key={`${data}-lineID${lineID}-${type}-${index}`} style={generateVishraamStyle( type )}>{`${data} `}</Text>
+        <Text key={`${data}-lineID${lineID}-${type}-${index}`} style={generateVishraamStyle( type )}>{data}</Text>
       ) ) || (
       <Text>
         {line}
