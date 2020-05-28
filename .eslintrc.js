@@ -11,7 +11,13 @@ module.exports = {
       'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint', "simple-import-sort",  "modules-newline"],
+  plugins: [
+      'react', 
+      'react-native', 
+      'react-hooks', 
+      '@typescript-eslint', 
+      "simple-import-sort",  
+      "modules-newline"],
   settings: {
       'import/resolver': {
           typescript: {},
