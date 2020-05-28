@@ -3,17 +3,31 @@
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Collection } from 'realm';
 
 import {
   Element,
-  LineMenuItem, Modification, RemappedLine,
+  LineMenuItem,
+  Modification,
+  RemappedLine,
 } from '../../../types/types';
 import { LineContext } from '../../Hooks';
-import { useEditMode, useValues } from '../../store/StateHooks';
-import { DefaultText, VishraamText } from './text/Text';
-import { GurmukhiTextContainer, RomanTextContainer } from './text/TextContainer';
+import {
+  useEditMode,
+  useValues,
+} from '../../store/StateHooks';
+import {
+  DefaultText,
+  VishraamText,
+} from './text/Text';
+import {
+  GurmukhiTextContainer,
+  RomanTextContainer,
+} from './text/TextContainer';
 import { ContextMenu } from './text/TextMenu';
 import { TextView } from './text/TextView';
 

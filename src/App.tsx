@@ -6,10 +6,17 @@ import 'react-native-gesture-handler';
 import { StoreProvider } from 'easy-peasy';
 import React, {
   lazy,
-  Suspense, useMemo,
+  Suspense,
+  useMemo,
 } from 'react';
-import { useColorScheme, View } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {
+  useColorScheme,
+  View,
+} from 'react-native';
+import {
+  DefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { MyPothiTheme } from '../types/types';

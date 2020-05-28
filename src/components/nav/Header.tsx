@@ -2,11 +2,17 @@ import { useIsDrawerOpen } from '@react-navigation/drawer';
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Appbar, useTheme } from 'react-native-paper';
+import {
+  Appbar,
+  useTheme,
+} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { FullScreenCtx } from '../../store/context_stores/Contexts';
-import { useUpdaters, useValues } from '../../store/StateHooks';
+import {
+  useUpdaters,
+  useValues,
+} from '../../store/StateHooks';
 
 
 const Header = ( { previous, navigation } ) => {

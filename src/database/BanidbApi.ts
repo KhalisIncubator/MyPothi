@@ -1,6 +1,10 @@
 import { buildApiUrl } from '@sttm/banidb';
 
-import { entryObj, lengthType, RemappedLine } from '../../types/types';
+import {
+  entryObj,
+  lengthType,
+  RemappedLine,
+} from '../../types/types';
 import { banisOrder } from '../Defaults';
 import { baniLengths } from './DatabaseConts';
 
@@ -128,5 +132,10 @@ const parseLines = async ( item: entryObj ) => {
 export default query;
 
 export {
-  remapLine, loadShabad, fetchBanis, loadBani, parseLines, shabadInfo,
+  remapLine,
+  loadShabad,
+  fetchBanis,
+  loadBani,
+  parseLines,
+  shabadInfo,
 };

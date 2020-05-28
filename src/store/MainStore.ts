@@ -1,10 +1,19 @@
 /* eslint-disable default-case */
 /* eslint-disable import/extensions */
 import {
-  action, actionOn, computed, createStore, persist, thunk, thunkOn,
+  action,
+  actionOn,
+  computed,
+  createStore,
+  persist,
+  thunk,
+  thunkOn,
 } from 'easy-peasy';
 
-import { loadBani, loadShabad } from '../database/BanidbApi';
+import {
+  loadBani,
+  loadShabad,
+} from '../database/BanidbApi';
 import {
   addToPothi,
   createModification,

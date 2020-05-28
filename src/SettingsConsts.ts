@@ -1,5 +1,7 @@
 import {
-  SettingArray, SettingsConsts, SettingSection,
+  SettingArray,
+  SettingsConsts,
+  SettingSection,
   SettingType,
 } from '../types/types';
 import { wrappedModifiers } from './components/main/SettingsComponents';
@@ -138,5 +140,7 @@ const GlobalConsts: SettingsConsts = {
 };
 
 export {
-  ViewerSettings, Settings, GlobalConsts,
+  ViewerSettings,
+  Settings,
+  GlobalConsts,
 };

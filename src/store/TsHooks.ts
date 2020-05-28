@@ -8,4 +8,8 @@ const useMainStoreActions = StoreHooks.useStoreActions;
 const useMainStoreDispatch = StoreHooks.useStoreDispatch;
 const useMainStoreState = StoreHooks.useStoreState;
 
-export { useMainStoreActions, useMainStoreDispatch, useMainStoreState };
+export {
+  useMainStoreActions,
+  useMainStoreDispatch,
+  useMainStoreState,
+};

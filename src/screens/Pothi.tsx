@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useEffect, useRef,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import {
   StyleSheet,
   View,
 } from 'react-native';
-import { State, TapGestureHandler } from 'react-native-gesture-handler';
+import {
+  State,
+  TapGestureHandler,
+} from 'react-native-gesture-handler';
 import { useTheme } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -16,7 +20,10 @@ import ShimmeringLine from '../components/main/ShimmeringBlock';
 import Toolbar from '../components/main/Toolbar';
 import Viewer from '../components/main/Viewer';
 import { parseLines } from '../database/BanidbApi';
-import { EditCtx, FullScreenCtx } from '../store/context_stores/Contexts';
+import {
+  EditCtx,
+  FullScreenCtx,
+} from '../store/context_stores/Contexts';
 import { useValues } from '../store/StateHooks';
 
 const Gutka = () => {

@@ -2,7 +2,8 @@
 import React, { ReactNode } from 'react';
 import {
   Platform,
-  StyleSheet, Text,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { Results } from 'realm';

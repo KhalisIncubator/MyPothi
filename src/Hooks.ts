@@ -1,4 +1,7 @@
-import { createContext, useContext } from 'react';
+import {
+  createContext,
+  useContext,
+} from 'react';
 import { useTheme } from 'react-native-paper';
 
 import { MyPothiTheme } from '../types/types';
@@ -19,4 +22,7 @@ const useMPTheme = (): MyPothiTheme => {
   return theme;
 };
 
-export { useLine, useMPTheme };
+export {
+  useLine,
+  useMPTheme,
+};

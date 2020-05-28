@@ -1,5 +1,9 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { useUpdaters } from '../../store/StateHooks';
 

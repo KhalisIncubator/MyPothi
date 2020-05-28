@@ -1,15 +1,25 @@
 import { ActionCreator } from 'easy-peasy';
 import _ from 'lodash';
 
-import { Element, entryObj, pothiEntry } from '../../types/types';
+import {
+  Element,
+  entryObj,
+  pothiEntry,
+} from '../../types/types';
 import { EditCtx } from './context_stores/Contexts';
 import { Info } from './Interfaces';
-import { useMainStoreActions, useMainStoreState } from './TsHooks';
+import {
+  useMainStoreActions,
+  useMainStoreState,
+} from './TsHooks';
 
 const useValues = ( model: string ) => useMainStoreState( ( store ) => ( { ...store[model] } ), _.isEqual );
 const useUpdaters = ( model: string ) => useMainStoreActions( ( actions ) => ( actions[model] ) );
 
-export { useValues, useUpdaters };
+export {
+  useValues,
+  useUpdaters,
+};
 
 // EDIT CONTEXT
 const useEditMode = () => [ EditCtx.useStoreState( ( store ) => store.isEditMode ) ];
@@ -47,5 +57,8 @@ const useEntry = ():
 };
 
 export {
-  useEditMode, useSelectionInfo, useCurrent, useEntry,
+  useEditMode,
+  useSelectionInfo,
+  useCurrent,
+  useEntry,
 };

@@ -1,4 +1,4 @@
-declare module 'anvaad-js';
+declare module 'anvaad-js'
 
 declare function ascii( letters: string ): string;
 declare function firstLetters(

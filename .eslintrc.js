@@ -11,7 +11,7 @@ module.exports = {
       'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint', "simple-import-sort"],
+  plugins: ['react', 'react-native', 'react-hooks', '@typescript-eslint', "simple-import-sort",  "modules-newline"],
   settings: {
       'import/resolver': {
           typescript: {},
@@ -25,8 +25,10 @@ module.exports = {
       },
   },
   rules: {
+    "modules-newline/import-declaration-newline": "error",
+    "modules-newline/export-declaration-newline": "error",
     "simple-import-sort/sort": "error",
-      "object-property-newline": ['error', { "allowAllPropertiesOnSameLine": false }],
+      "object-property-newline": ['error', { allowAllPropertiesOnSameLine: false }],
       'max-len': ['error', {code: 150}],
       'space-in-parens': ['error', 'always'],
       'array-bracket-spacing': ['error', 'always'],
