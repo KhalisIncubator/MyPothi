@@ -1,20 +1,35 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Collection } from 'realm';
 import Clipboard from '@react-native-community/clipboard';
 import { unicode } from 'anvaad-js';
-
-import { TextView } from './text/TextView';
-import { GurmukhiTextContainer, RomanTextContainer } from './text/TextContainer';
-import { VishraamText, DefaultText } from './text/Text';
-import { ContextMenu } from './text/TextMenu';
-import { useValues, useEditMode } from '../../store/StateHooks';
+import React from 'react';
 import {
-  RemappedLine, Modification, LineMenuItem, Element,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { Collection } from 'realm';
+
+import {
+  Element,
+  LineMenuItem,
+  Modification,
+  RemappedLine,
 } from '../../../types/types';
 import { LineContext } from '../../Hooks';
+import {
+  useEditMode,
+  useValues,
+} from '../../store/StateHooks';
+import {
+  DefaultText,
+  VishraamText,
+} from './text/Text';
+import {
+  GurmukhiTextContainer,
+  RomanTextContainer,
+} from './text/TextContainer';
+import { ContextMenu } from './text/TextMenu';
+import { TextView } from './text/TextView';
 
 
 const GurmukhiMenu: LineMenuItem[] = [

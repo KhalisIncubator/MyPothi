@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-
 import { Code } from 'react-content-loader/native';
+import { StyleSheet } from 'react-native';
 
 const ShimmeringLine = () => (
   <Code

@@ -1,9 +1,12 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import LineBlock from './LineBlock';
-import { useValues, useSelectionInfo } from '../../store/StateHooks';
 
 import { Element } from '../../../types/types';
+import {
+  useSelectionInfo,
+  useValues,
+} from '../../store/StateHooks';
+import LineBlock from './LineBlock';
 
 const ShabadBlock = ( {
   item, index,

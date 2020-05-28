@@ -1,7 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+} from 'react-native';
+
+import {
+  ApiVishraams,
+  VishraamType,
+} from '../../../../types/types';
 import { mapVishraams } from '../../../Functions';
-import { ApiVishraams, VishraamType } from '../../../../types/types';
 import { useLine } from '../../../Hooks';
 
 const generateVishraamStyle = ( type ) => {
@@ -46,7 +53,10 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
     </>
   );
 };
-export { DefaultText, VishraamText };
+export {
+  DefaultText,
+  VishraamText,
+};
 const styles = StyleSheet.create( {
   FullVishraam: {
     // color: '#e14500', alt orange

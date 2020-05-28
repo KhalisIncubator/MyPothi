@@ -1,12 +1,23 @@
 /* eslint-disable import/extensions */
 import {
-  Action, Thunk, Computed, ActionOn, ThunkOn,
+  Action,
+  ActionOn,
+  Computed,
+  Thunk,
+  ThunkOn,
 } from 'easy-peasy';
-import {
-  QueryType, entryObj, pothiEntry, ModType, lengthType,
-} from '../../types/types';
 
-import { loadShabad, loadBani } from '../database/BanidbApi';
+import {
+  entryObj,
+  lengthType,
+  ModType,
+  pothiEntry,
+  QueryType,
+} from '../../types/types';
+import {
+  loadBani,
+  loadShabad,
+} from '../database/BanidbApi';
 
 export interface Info {
     source: string,

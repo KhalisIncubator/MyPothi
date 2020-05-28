@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useNetInfo } from '@react-native-community/netinfo';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Searchbar, Menu, Text, useTheme, Title, Chip,
-} from 'react-native-paper';
-import {
-  View, StyleSheet, ScrollView, SafeAreaView, ActivityIndicator, Alert,
+  ActivityIndicator, Alert,
+  SafeAreaView, ScrollView, StyleSheet, View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { useNetInfo } from '@react-native-community/netinfo';
+import {
+  Chip,
+  Menu, Searchbar, Text, Title, useTheme,
+} from 'react-native-paper';
 
-import { SearchCtx } from '../store/context_stores/Contexts';
-import { SEARCH_TEXTS } from '../database/DatabaseConts';
-import query, { fetchBanis } from '../database/BanidbApi';
 import { BaniResult, SearchResult } from '../components/main/Results';
-import { useValues, useUpdaters } from '../store/StateHooks';
+import query, { fetchBanis } from '../database/BanidbApi';
+import { SEARCH_TEXTS } from '../database/DatabaseConts';
+import { SearchCtx } from '../store/context_stores/Contexts';
+import { useUpdaters, useValues } from '../store/StateHooks';
 
 
 const Search = () => {

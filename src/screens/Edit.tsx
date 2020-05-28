@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform,
+  KeyboardAvoidingView, Platform,
+  ScrollView, StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import {
-  Avatar, Card, IconButton, Snackbar, useTheme, Title,
+  Avatar, Card, IconButton, Snackbar, Title,
+  useTheme,
 } from 'react-native-paper';
+
+import ShabadCard, { generateTags, SourceColors } from '../components/main/Results';
 import { useUpdaters, useValues } from '../store/StateHooks';
-import ShabadCard, { SourceColors, generateTags } from '../components/main/Results';
 
 const Edit = ( { route } ) => {
   const theme = useTheme();

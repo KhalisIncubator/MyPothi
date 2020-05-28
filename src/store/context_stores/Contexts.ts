@@ -1,6 +1,13 @@
-import { action, createContextStore, persist } from 'easy-peasy';
 import {
-  SearchModel, EditModel, FullScreenModel,
+  action,
+  createContextStore,
+  persist,
+} from 'easy-peasy';
+
+import {
+  EditModel,
+  FullScreenModel,
+  SearchModel,
 } from '../Interfaces';
 import AsyncStore from '../PersistStore';
 

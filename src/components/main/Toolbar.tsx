@@ -1,12 +1,20 @@
 import React from 'react';
-
 import {
-  View, Text, StyleSheet, SafeAreaView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
+import {
+  IconButton,
+  useTheme,
+} from 'react-native-paper';
 
-import { IconButton, useTheme } from 'react-native-paper';
-import { useValues, useUpdaters } from '../../store/StateHooks';
 import { getCurrentFontSize } from '../../Functions';
+import {
+  useUpdaters,
+  useValues,
+} from '../../store/StateHooks';
 
 const Toolbar = ( {
   showMain, updateMode, currentLine, style, toggleHighligher, isHighlighterOn,

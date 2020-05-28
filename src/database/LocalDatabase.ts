@@ -1,12 +1,15 @@
 /* eslint-disable no-restricted-syntax */
 // saved Pothis database
-import Pothis from '../Defaults';
-import localRealm from './RealmSchemas';
-
-import generateID from './Functions';
 import {
-  storedPothi, entryObj, Modification, ModType, Element,
+  Element,
+  entryObj,
+  Modification,
+  ModType,
+  storedPothi,
 } from '../../types/types';
+import Pothis from '../Defaults';
+import generateID from './Functions';
+import localRealm from './RealmSchemas';
 
 
 // global db functions
@@ -51,7 +54,10 @@ const populateData = () => {
 };
 
 export {
-  isDataEmpty, realmPath, emptyDB, populateData,
+  isDataEmpty,
+  realmPath,
+  emptyDB,
+  populateData,
 };
 
 // pothi functions
@@ -129,7 +135,11 @@ const deleteGukta = ( name, pothiID ) => {
 };
 
 export {
-  fetchAllPothis, findPothi, updatePothi, createNewPothi, deleteGukta,
+  fetchAllPothis,
+  findPothi,
+  updatePothi,
+  createNewPothi,
+  deleteGukta,
 };
 
 // entry/item related functions
@@ -236,7 +246,10 @@ const undoCreation = () => {
   } );
 };
 export {
-  getCurrentItems, addToPothi, removeFromPothi, undoCreation,
+  getCurrentItems,
+  addToPothi,
+  removeFromPothi,
+  undoCreation,
 };
 
 // modification related functions
@@ -296,5 +309,11 @@ const deleteModification = ( lineid: number, element: Element, parentID: string 
 };
 
 export {
-  getAllModifications, getModification, existsModification, createModification, editModification, deleteModification, getModWithParent,
+  getAllModifications,
+  getModification,
+  existsModification,
+  createModification,
+  editModification,
+  deleteModification,
+  getModWithParent,
 };

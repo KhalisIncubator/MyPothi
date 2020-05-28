@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { ReactNode } from 'react';
-import { Results } from 'realm';
 import {
-  Text, StyleSheet, Platform,
+  Platform,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { Results } from 'realm';
+
 import { Modification } from '../../../../types/types';
 
 

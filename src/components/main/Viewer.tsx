@@ -1,7 +1,10 @@
 import React from 'react';
 import {
-  FlatList, SafeAreaView, View,
+  FlatList,
+  SafeAreaView,
+  View,
 } from 'react-native';
+
 import ShabadBlock from './ShabadBlock';
 
 const Viewer = ( props ) => {

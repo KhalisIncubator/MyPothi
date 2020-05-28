@@ -3,16 +3,25 @@
 /* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
 
-import React, {
-  useMemo, Suspense, lazy,
-} from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { StoreProvider } from 'easy-peasy';
+import React, {
+  lazy,
+  Suspense,
+  useMemo,
+} from 'react';
+import {
+  useColorScheme,
+  View,
+} from 'react-native';
+import {
+  DefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
-import { View, useColorScheme } from 'react-native';
+
+import { MyPothiTheme } from '../types/types';
 import store from './store/MainStore';
 import { useValues } from './store/StateHooks';
-import { MyPothiTheme } from '../types/types';
 
 const Routes = lazy( () => import( './Routes' ) );
 

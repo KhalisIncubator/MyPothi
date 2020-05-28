@@ -1,0 +1,90 @@
+{
+  "root": true,
+  // "parser": "@typescript-eslint/parser",
+  "env": {
+    "react-native/react-native": true,
+  },
+  "plugins": [
+    "react",
+    "react-native",
+    "react-hooks",
+    "@typescript-eslint",
+    "modules-newline",
+    "simple-import-sort"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx",
+          ".json"
+        ]
+      }
+    }
+  },
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-native"
+  ],
+  "rules": {
+    "simple-import-sort/sort": "error",
+    "modules-newline/import-declaration-newline": "error",
+    "modules-newline/export-declaration-newline": "error",
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "computed-property-spacing": [
+      "error",
+      "always"
+    ],
+    "object-curly-spacing": ["error", "always"],
+    "space-in-parens": ["error", "always"],
+    "max-len": ["error", {"code": 200}] ,
+    "import/no-unresolved": 0,
+    "import/extensions": ["error","never"],
+    "object-property-newline": ["error", {"allowAllPropertiesOnSameLine": false}],
+    "linebreak-style": [2, "unix"],
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true
+      }
+    ],
+    "no-nested-ternary": 0,
+    "prefer-destructuring": [
+      2, 
+      {
+        "array": true,
+        "object": true
+      }
+    ],
+
+    "react/prefer-stateless-function": 1,
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".jsx", ".tsx"],
+      },
+  ],
+  "react-hooks/rules-of-hooks": "error",
+  "react-hooks/exhaustive-deps": "warn",
+
+    "react-native/no-inline-styles": 2,
+    "react-native/split-platform-components": 1,
+
+    "@typescript-eslint/no-use-before-define": [
+      2,
+      {
+        "functions": true,
+        "variables": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [1, {"args": "none"}]
+  }
+}

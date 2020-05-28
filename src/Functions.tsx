@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { getModWithParent } from './database/LocalDatabase';
 import { ApiVishraams } from '../types/types';
+import { getModWithParent } from './database/LocalDatabase';
 
 const mapToSections = ( line: string, indices: any[], sourceVishraams ) => line.split( ' ' ).reduce( ( phrases, word, index ) => {
   const isIndexed = indices?.includes( index );

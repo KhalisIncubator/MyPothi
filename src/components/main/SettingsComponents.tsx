@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
 import {
-  View,
   StyleSheet,
+  View,
 } from 'react-native';
 import {
-  Switch, Subheading, Button, Menu, Card, Paragraph,
+  Button, Card, Menu, Paragraph,
+  Subheading, Switch,
 } from 'react-native-paper';
 
 const wrapHOC = ( SettingModifier ) => ( { theme, value, ...props } ) => <SettingModifier theme={theme} value={value} {...props} />;
