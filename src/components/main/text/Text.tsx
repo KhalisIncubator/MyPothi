@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { mapVishraams } from '../../../Functions';
+
 import { ApiVishraams, VishraamType } from '../../../../types/types';
+import { mapVishraams } from '../../../Functions';
 import { useLine } from '../../../Hooks';
 
 const generateVishraamStyle = ( type ) => {

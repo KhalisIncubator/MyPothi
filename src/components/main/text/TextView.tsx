@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactChild } from 'react';
-
 import {
-  StyleSheet, View, TouchableOpacity,
+  StyleSheet, TouchableOpacity,
+  View,
 } from 'react-native';
 
 import { useMPTheme } from '../../../Hooks';

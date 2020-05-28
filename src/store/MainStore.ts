@@ -1,34 +1,34 @@
 /* eslint-disable default-case */
 /* eslint-disable import/extensions */
 import {
-  createStore, action, persist, thunk, computed, actionOn, thunkOn,
+  action, actionOn, computed, createStore, persist, thunk, thunkOn,
 } from 'easy-peasy';
-import {
-  StoreModel,
-  CurrentModel,
-  PothiModel,
-  ViewerModel,
-  ThemeModel,
-  ModalModel,
-  AddedModel,
-} from './Interfaces';
 
+import { loadBani, loadShabad } from '../database/BanidbApi';
 import {
+  addToPothi,
+  createModification,
   createNewPothi,
+  deleteGukta,
+  deleteModification,
+  editModification,
+  existsModification,
   fetchAllPothis,
   getCurrentItems,
-  deleteGukta,
-  addToPothi,
   removeFromPothi,
-  editModification,
-  createModification,
-  existsModification,
-  deleteModification,
-  updatePothi,
   undoCreation,
+  updatePothi,
 } from '../database/LocalDatabase';
+import {
+  AddedModel,
+  CurrentModel,
+  ModalModel,
+  PothiModel,
+  StoreModel,
+  ThemeModel,
+  ViewerModel,
+} from './Interfaces';
 import AsyncStore from './PersistStore';
-import { loadBani, loadShabad } from '../database/BanidbApi';
 
 
 const modalModel: ModalModel = {

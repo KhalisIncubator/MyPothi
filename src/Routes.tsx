@@ -1,16 +1,17 @@
 /* eslint-disable react/display-name */
 /* eslint-disable import/extensions */
-import React from 'react';
-import { useWindowDimensions } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { useWindowDimensions } from 'react-native';
+
 import Drawer from './components/nav/Drawer';
-import Gutka from './screens/Pothi';
-import SettingsScreen from './screens/Settings';
-import Edit from './screens/Edit';
 import { Header } from './components/nav/Header';
+import Edit from './screens/Edit';
+import Gutka from './screens/Pothi';
 import Search from './screens/Search';
+import SettingsScreen from './screens/Settings';
 import { FullScreenCtx } from './store/context_stores/Contexts';
 
 const Stack = createStackNavigator();

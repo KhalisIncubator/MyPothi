@@ -1,12 +1,13 @@
 import React, { ReactChild } from 'react';
 import {
-  StyleSheet, TouchableOpacity, View, Text,
+  StyleSheet, Text,
+  TouchableOpacity, View,
 } from 'react-native';
 import {
   Avatar, Card, Paragraph, Title,
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Feather';
 import { Color } from 'react-native-svg';
+import Icon from 'react-native-vector-icons/Feather';
 
 
 const SourceColors = {

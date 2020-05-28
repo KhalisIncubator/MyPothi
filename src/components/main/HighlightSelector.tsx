@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { useUpdaters } from '../../store/StateHooks';
 
 const HighlightSelector = ( { currentLine, style } ) => {

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
-} from 'react-native';
 import { DrawerContentScrollView, DrawerItem, useIsDrawerOpen } from '@react-navigation/drawer';
-
+import React, { useEffect, useState } from 'react';
 import {
-  Title, Drawer, Text, Button, useTheme,
+  KeyboardAvoidingView, Platform,
+  StyleSheet, TextInput, View,
+} from 'react-native';
+import {
+  Button, Drawer, Text, Title, useTheme,
 } from 'react-native-paper';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useValues, useUpdaters } from '../../store/StateHooks';
+import { useUpdaters, useValues } from '../../store/StateHooks';
 
 const CustomDrawerComponent = ( props ) => {
   const theme = useTheme();

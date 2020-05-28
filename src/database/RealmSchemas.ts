@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import Realm, { Configuration } from 'realm';
+
 import { storedPothi } from '../../types/types';
 
 

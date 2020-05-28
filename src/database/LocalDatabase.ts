@@ -1,12 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 // saved Pothis database
-import Pothis from '../Defaults';
-import localRealm from './RealmSchemas';
-
-import generateID from './Functions';
 import {
-  storedPothi, entryObj, Modification, ModType, Element,
+  Element,
+  entryObj, Modification, ModType, storedPothi,
 } from '../../types/types';
+import Pothis from '../Defaults';
+import generateID from './Functions';
+import localRealm from './RealmSchemas';
 
 
 // global db functions

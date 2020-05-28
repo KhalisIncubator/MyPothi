@@ -2,14 +2,13 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import {
-  useTheme, Divider,
+  Divider,
+  useTheme,
 } from 'react-native-paper';
 
-import { useValues, useUpdaters } from '../store/StateHooks';
-
 import SettingsCard, { SettingSection } from '../components/main/SettingsComponents';
-
-import mapToComponent, { Settings, GlobalConsts } from '../SettingsConsts';
+import mapToComponent, { GlobalConsts, Settings } from '../SettingsConsts';
+import { useUpdaters, useValues } from '../store/StateHooks';
 
 const SettingsScreen = ( ) => {
   const theme = useTheme();
@@ -27,7 +26,11 @@ const SettingsScreen = ( ) => {
     themeUpdaters,
   };
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <ScrollView style={{
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    }}
+    >
       {Settings.map( ( { setting, values: valueObj, updaters } ) => setting.map( ( settingSection, index ) => {
         const {
           title, values, updater, type,

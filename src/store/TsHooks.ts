@@ -1,4 +1,5 @@
 import { createTypedHooks } from 'easy-peasy';
+
 import { StoreModel } from './Interfaces';
 
 const StoreHooks = createTypedHooks<StoreModel>();

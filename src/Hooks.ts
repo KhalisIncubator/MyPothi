@@ -1,5 +1,6 @@
-import { useContext, createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { useTheme } from 'react-native-paper';
+
 import { MyPothiTheme } from '../types/types';
 
 

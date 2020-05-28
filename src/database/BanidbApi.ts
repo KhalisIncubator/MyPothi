@@ -1,7 +1,8 @@
 import { buildApiUrl } from '@sttm/banidb';
-import { lengthType, entryObj, RemappedLine } from '../../types/types';
-import { baniLengths } from './DatabaseConts';
+
+import { entryObj, lengthType, RemappedLine } from '../../types/types';
 import { banisOrder } from '../Defaults';
+import { baniLengths } from './DatabaseConts';
 
 
 const shabadInfo = ( { shabadInfo: info, baniInfo } ) => {

@@ -1,7 +1,8 @@
-import { wrappedModifiers } from './components/main/SettingsComponents';
 import {
-  SettingsConsts, SettingType, SettingArray, SettingSection,
+  SettingArray, SettingsConsts, SettingSection,
+  SettingType,
 } from '../types/types';
+import { wrappedModifiers } from './components/main/SettingsComponents';
 
 const mapToComponent = ( type: SettingType ) => wrappedModifiers[type];
 
@@ -46,8 +47,16 @@ const ViewerSettings: SettingArray[] = [
 ];
 
 const Settings: SettingSection[] = [
-  { setting: ThemeSettings, values: 'themeValues', updaters: 'themeUpdaters' },
-  { setting: ViewerSettings, values: 'viewerValues', updaters: 'viewerUpdaters' },
+  {
+    setting: ThemeSettings,
+    values: 'themeValues',
+    updaters: 'themeUpdaters',
+  },
+  {
+    setting: ViewerSettings,
+    values: 'viewerValues',
+    updaters: 'viewerUpdaters',
+  },
 ];
 const baniList = {
   short: 'Short',
@@ -63,20 +72,24 @@ const vishraamList = {
 const translList = {
   English: 'English',
   Spanish: 'Spanish',
-}
+};
 const translitList = {
   English: 'English',
   Hindi: 'Hindi',
-  IPA: 'IPA'
-}
+  IPA: 'IPA',
+};
 const teekaList = {
   SS: 'Prof. Sahib Singh',
-  FT: 'Fareedkot Teeka'
-}
+  FT: 'Fareedkot Teeka',
+};
 const GlobalConsts: SettingsConsts = {
   theme: {
     choseSystem: { title: 'Use System Appearance' },
-    isDarkMode: { title: 'Dark Mode', parent: 'choseSystem', parentValue: false },
+    isDarkMode: {
+      title: 'Dark Mode',
+      parent: 'choseSystem',
+      parentValue: false,
+    },
     trueDarkMode: {
       title: 'True Dark Mode',
       subheading: '* If System Appearance has been chosen, this will only apply if dark mode is applied system-wide',
@@ -92,16 +105,35 @@ const GlobalConsts: SettingsConsts = {
     displayEng: { title: 'English' },
     displayTeeka: { title: 'Teeka' },
     displayTranslit: { title: 'Transliteration' },
-    displayVishraams: { title: 'Vishraams', separator: true },
+    displayVishraams: {
+      title: 'Vishraams',
+      separator: true,
+    },
   },
   sources: {
-    vishraamSource: { title: 'Vishraams Source', menu: vishraamList },
-    translationLang: { title: 'Translation', menu: translList },
-    teekaSource: { title: 'Teeka Source', menu: teekaList },
-    translitLang: { title: 'Transliteration', menu: translitList },
+    vishraamSource: {
+      title: 'Vishraams Source',
+      menu: vishraamList,
+    },
+    translationLang: {
+      title: 'Translation',
+      menu: translList,
+    },
+    teekaSource: {
+      title: 'Teeka Source',
+      menu: teekaList,
+    },
+    translitLang: {
+      title: 'Transliteration',
+      menu: translitList,
+    },
   },
   searchPreferences: {
-    baniLength: { title: 'Bani Length', menu: baniList, subheading: '*Note: This will not affect the length of banis already added' },
+    baniLength: {
+      title: 'Bani Length',
+      menu: baniList,
+      subheading: '*Note: This will not affect the length of banis already added',
+    },
   },
 };
 
