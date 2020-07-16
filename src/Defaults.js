@@ -46,8 +46,8 @@ const Pothis = [
     pothiID: 'Uakgb_J5m9g-0JDMbcJqLJ',
     index: 0,
   },
-];
-export default Pothis;
+]
+export default Pothis
 
 
 const banisOrder = [
@@ -156,6 +156,6 @@ const banisOrder = [
   105,
   106,
   107,
-];
+]
 
-export { banisOrder };
+export { banisOrder }

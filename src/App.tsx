@@ -1,9 +1,7 @@
 /* eslint-disable react/display-name */
-/* eslint-disable quotes */
-/* eslint-disable import/extensions */
 import 'react-native-gesture-handler';
 
-import { StoreProvider } from 'easy-peasy';
+import {StoreProvider} from 'easy-peasy';
 import React, {
   lazy,
   Suspense,
@@ -19,11 +17,11 @@ import {
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { MyPothiTheme } from '../types/types';
+import {MyPothiTheme} from '../types/types';
 import store from './store/MainStore';
-import { useValues } from './store/StateHooks';
+import {useValues} from './store/StateHooks';
 
-const Routes = lazy( () => import( './Routes' ) );
+const Routes = lazy(() => import('./Routes'));
 
 const theme: MyPothiTheme = {
   ...DefaultTheme,
@@ -85,17 +83,17 @@ const trueDark = {
 };
 
 const App = () => {
-  const { isDarkMode, trueDarkMode, choseSystem } = useValues( 'themeModel' ).theme;
+  const {isDarkMode, trueDarkMode, choseSystem} = useValues('themeModel').theme;
   const systemTheme = useColorScheme();
-  const decideTheme = useMemo( () => {
-    if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme;
-    return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme );
-  }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] );
+  const decideTheme = useMemo(() => {
+    if (choseSystem) return systemTheme === 'dark' ? (trueDarkMode ? trueDark : darkTheme) : theme;
+    return trueDarkMode ? trueDark : (isDarkMode ? darkTheme : theme);
+  }, [isDarkMode, trueDarkMode, choseSystem, systemTheme]);
   return (
     <PaperProvider
       theme={decideTheme}
       settings={{
-        icon: ( props ) => <Icon {...props} />,
+        icon: (props) => <Icon {...props} />,
       }}
     >
 
@@ -105,7 +103,7 @@ const App = () => {
           backgroundColor: '#FFA500',
         }}
         />
-)}
+      )}
       >
         <Routes />
       </Suspense>

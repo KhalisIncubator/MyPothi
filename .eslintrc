@@ -1,17 +1,16 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
   "env": {
-    "react-native/react-native": true,
+    "es6": true,
+    "react-native/react-native": true
   },
-  "plugins": [
-    "react",
-    "react-native",
-    "react-hooks",
-    "@typescript-eslint",
-    "modules-newline",
-    "simple-import-sort"
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:react-native/all"
   ],
+  "parser": "@typescript-eslint/parser",
   "settings": {
     "import/resolver": {
       "node": {
@@ -25,11 +24,13 @@
       }
     }
   },
-  "extends": [
-    "airbnb",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-native"
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-native",
+    "react-hooks",
+    "modules-newline",
+    "simple-import-sort"
   ],
   "rules": {
     "simple-import-sort/sort": "error",
@@ -43,13 +44,31 @@
       "error",
       "always"
     ],
-    "object-curly-spacing": ["error", "always"],
-    "space-in-parens": ["error", "always"],
-    "max-len": ["error", {"code": 200}] ,
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "space-in-parens": [
+      "error",
+      "always"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 200
+      }
+    ],
     "import/no-unresolved": 0,
-    "import/extensions": ["error","never"],
-    "object-property-newline": ["error", {"allowAllPropertiesOnSameLine": false}],
-    "linebreak-style": [2, "unix"],
+    "import/extensions": [
+      "error",
+      "never"
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": false
+      }
+    ],
     "object-curly-newline": [
       "error",
       {
@@ -58,33 +77,32 @@
     ],
     "no-nested-ternary": 0,
     "prefer-destructuring": [
-      2, 
+      2,
       {
         "array": true,
         "object": true
       }
     ],
-
     "react/prefer-stateless-function": 1,
-    "react/jsx-filename-extension": [
-      2,
-      {
-        "extensions": [".jsx", ".tsx"],
-      },
-  ],
-  "react-hooks/rules-of-hooks": "error",
-  "react-hooks/exhaustive-deps": "warn",
-
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react-native/no-inline-styles": 2,
     "react-native/split-platform-components": 1,
-
-    "@typescript-eslint/no-use-before-define": [
-      2,
-      {
-        "functions": true,
-        "variables": true
-      }
+    "indent": [
+      "error",
+      2
     ],
-    "@typescript-eslint/no-unused-vars": [1, {"args": "none"}]
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ]
   }
 }
