@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   StyleSheet,
   View,
-} from 'react-native';
+} from 'react-native'
 import {
   Button, Card, Menu, Paragraph,
   Subheading, Switch,
-} from 'react-native-paper';
+} from 'react-native-paper'
 
-const wrapHOC = ( SettingModifier ) => ( { theme, value, ...props } ) => <SettingModifier theme={theme} value={value} {...props} />;
+const wrapHOC = ( SettingModifier ) => ( { theme, value, ...props } ) => <SettingModifier theme={theme} value={value} {...props} />
 
 const SettingsCard = ( { children, title, theme } ) => (
   <Card theme={theme} style={styles.Card}>
@@ -17,8 +17,8 @@ const SettingsCard = ( { children, title, theme } ) => (
       { children }
     </Card.Content>
   </Card>
-);
-export default SettingsCard;
+)
+export default SettingsCard
 
 const SettingSection = ( { text, children, subheading } ) => (
   <>
@@ -41,20 +41,20 @@ const SettingSection = ( { text, children, subheading } ) => (
       {subheading && <Paragraph style={{ fontSize: 14 }}>{subheading}</Paragraph>}
     </View>
   </>
-);
+)
 const SwitchModifier = ( {
   value, updater, theme, objKey,
 } ) => (
   <Switch
     value={value}
-    onValueChange={() => { objKey ? updater( objKey ) : updater(); }}
+    onValueChange={() => { objKey ? updater( objKey ) : updater() }}
     color={theme.colors.backdrop}
   />
-);
+)
 const MenuModifier = ( {
   value, updater, theme, list, objKey,
 } ) => {
-  const [ isVisible, toggler ] = useState( false );
+  const [ isVisible, toggler ] = useState( false )
   return (
     <Menu
       visible={isVisible}
@@ -65,7 +65,7 @@ const MenuModifier = ( {
           color={theme.colors.text}
           onPress={() => toggler( true )}
         >
-          {list[value]}
+          {list[ value ]}
         </Button>
       )}
     >
@@ -74,8 +74,8 @@ const MenuModifier = ( {
           ? Object.entries( list ).map( ( [ key, itemVal ] ) => (
             <Menu.Item
               onPress={() => {
-                toggler( false );
-                updater( [ objKey, key ] );
+                toggler( false )
+                updater( [ objKey, key ] )
               }}
               title={itemVal}
               key={key}
@@ -83,8 +83,8 @@ const MenuModifier = ( {
           ) ) : []
       }
     </Menu>
-  );
-};
+  )
+}
 
 const IncrementModifier = ( {
   value, updater, theme, objKey,
@@ -96,7 +96,7 @@ const IncrementModifier = ( {
       icon="plus"
       color={theme.colors.backdrop}
       theme={{ roundness: 0 }}
-      onPress={() => { updater( [ objKey, value + 1 ] ); }}
+      onPress={() => { updater( [ objKey, value + 1 ] ) }}
       compact
     >
       {}
@@ -106,21 +106,21 @@ const IncrementModifier = ( {
       icon="minus"
       color={theme.colors.backdrop}
       theme={{ roundness: 0 }}
-      onPress={() => { updater( [ objKey, value - 1 ] ); }}
+      onPress={() => { updater( [ objKey, value - 1 ] ) }}
       compact
     >
       {}
     </Button>
   </View>
-);
+)
 
 const wrappedModifiers = {
   switch: wrapHOC( SwitchModifier ),
   menu: wrapHOC( MenuModifier ),
   font: wrapHOC( IncrementModifier ),
-};
+}
 
-export { SettingSection, wrappedModifiers, SwitchModifier };
+export { SettingSection, wrappedModifiers, SwitchModifier }
 const styles = StyleSheet.create( {
   Buttons: {
     display: 'flex',
@@ -140,4 +140,4 @@ const styles = StyleSheet.create( {
   button: {
     marginTop: 8,
   },
-} );
+} )

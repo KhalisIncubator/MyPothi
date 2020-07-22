@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Menu } from 'react-native-paper';
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native'
+import { Menu } from 'react-native-paper'
 
-import { useLine } from '../../../Hooks';
+import { useLine } from '../../../Hooks'
 
 const ContextMenu = ( { menu, children } ) => {
-  const line = useLine();
-  const [ isVisible, updateVisible ] = useState( false );
+  const line = useLine()
+  const [ isVisible, updateVisible ] = useState( false )
 
   const toggleVis = () => {
-    updateVisible( ( prev ) => !prev );
-  };
+    updateVisible( ( prev ) => !prev )
+  }
   return (
     <Menu
       visible={isVisible}
@@ -25,13 +25,13 @@ const ContextMenu = ( { menu, children } ) => {
         <Menu.Item
           title={title}
           onPress={() => {
-            action( line );
-            toggleVis();
+            action( line )
+            toggleVis()
           }}
           key={title}
         />
       ) )}
     </Menu>
-  );
-};
-export { ContextMenu };
+  )
+}
+export { ContextMenu }

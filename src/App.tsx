@@ -1,27 +1,27 @@
 /* eslint-disable react/display-name */
-import 'react-native-gesture-handler';
+import 'react-native-gesture-handler'
 
-import {StoreProvider} from 'easy-peasy';
+import {StoreProvider} from 'easy-peasy'
 import React, {
   lazy,
   Suspense,
   useMemo,
-} from 'react';
+} from 'react'
 import {
   useColorScheme,
   View,
-} from 'react-native';
+} from 'react-native'
 import {
   DefaultTheme,
   Provider as PaperProvider,
-} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Feather';
+} from 'react-native-paper'
+import Icon from 'react-native-vector-icons/Feather'
 
-import {MyPothiTheme} from '../types/types';
-import store from './store/MainStore';
-import {useValues} from './store/StateHooks';
+import {MyPothiTheme} from '../types/types'
+import store from './store/MainStore'
+import {useValues} from './store/StateHooks'
 
-const Routes = lazy(() => import('./Routes'));
+const Routes = lazy( () => import( './Routes' ) )
 
 const theme: MyPothiTheme = {
   ...DefaultTheme,
@@ -40,7 +40,7 @@ const theme: MyPothiTheme = {
   customTypes: {
     lineHighlight: '#c6cfd4',
   },
-};
+}
 
 const darkTheme = {
   ...DefaultTheme,
@@ -61,7 +61,7 @@ const darkTheme = {
 
 
   },
-};
+}
 
 const trueDark = {
   ...DefaultTheme,
@@ -80,20 +80,20 @@ const trueDark = {
       lineHightlight: '#2C2F33',
     },
   },
-};
+}
 
 const App = () => {
-  const {isDarkMode, trueDarkMode, choseSystem} = useValues('themeModel').theme;
-  const systemTheme = useColorScheme();
-  const decideTheme = useMemo(() => {
-    if (choseSystem) return systemTheme === 'dark' ? (trueDarkMode ? trueDark : darkTheme) : theme;
-    return trueDarkMode ? trueDark : (isDarkMode ? darkTheme : theme);
-  }, [isDarkMode, trueDarkMode, choseSystem, systemTheme]);
+  const {isDarkMode, trueDarkMode, choseSystem} = useValues( 'themeModel' ).theme
+  const systemTheme = useColorScheme()
+  const decideTheme = useMemo( () => {
+    if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme
+    return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme )
+  }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] )
   return (
     <PaperProvider
       theme={decideTheme}
       settings={{
-        icon: (props) => <Icon {...props} />,
+        icon: ( props ) => <Icon {...props} />,
       }}
     >
 
@@ -108,12 +108,12 @@ const App = () => {
         <Routes />
       </Suspense>
     </PaperProvider>
-  );
-};
+  )
+}
 const withStore = () => (
   <StoreProvider store={store}>
     <App />
   </StoreProvider>
-);
+)
 
-export default withStore;
+export default withStore

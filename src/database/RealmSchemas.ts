@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
-import Realm, { Configuration } from 'realm';
+import Realm, { Configuration } from 'realm'
 
-import { storedPothi } from '../../types/types';
+import { storedPothi } from '../../types/types'
 
 
 const PothiSchema = {
@@ -13,7 +13,7 @@ const PothiSchema = {
     items: 'Entry[]',
     pothiID: 'string',
   },
-};
+}
 const EntrySchema = {
   name: 'Entry',
   primaryKey: 'entryID',
@@ -30,7 +30,7 @@ const EntrySchema = {
     writer: 'string?',
     raag: 'string?',
   },
-};
+}
 const ModificationSchema = {
   name: 'Modification',
   primaryKey: 'modID',
@@ -44,7 +44,7 @@ const ModificationSchema = {
     italics: 'bool?',
     fontSize: 'int?',
   },
-};
+}
 const LineSchema = {
   name: 'Line',
   properties: {
@@ -52,25 +52,25 @@ const LineSchema = {
     data: 'string',
     lineId: 'int',
   },
-};
+}
 const localRealmConfig: Configuration = {
   schema: [ PothiSchema, EntrySchema, ModificationSchema, LineSchema ],
   schemaVersion: 4,
   migration: ( oldRealm, newRealm ) => {
     if ( oldRealm.schemaVersion < 4 ) {
-      const newGutkas = newRealm.objects<storedPothi>( 'Pothi' );
+      const newGutkas = newRealm.objects<storedPothi>( 'Pothi' )
       newGutkas.forEach( ( pothi, index ) => {
-        pothi.index = index;
+        pothi.index = index
         pothi.items.forEach( ( entry, idx ) => {
-          entry.index = idx;
-          entry.source = null;
-          entry.writer = null;
-          entry.raag = null;
-        } );
-      } );
+          entry.index = idx
+          entry.source = null
+          entry.writer = null
+          entry.raag = null
+        } )
+      } )
     }
   },
-};
+}
 
-export default new Realm( localRealmConfig );
-export { PothiSchema, EntrySchema };
+export default new Realm( localRealmConfig )
+export { PothiSchema, EntrySchema }

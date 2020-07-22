@@ -1,48 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   KeyboardAvoidingView, Platform,
   ScrollView, StyleSheet, Text, TextInput, View,
-} from 'react-native';
+} from 'react-native'
 import {
   Avatar, Card, IconButton, Snackbar, Title,
   useTheme,
-} from 'react-native-paper';
+} from 'react-native-paper'
 
-import ShabadCard, { generateTags, SourceColors } from '../components/main/Results';
-import { useUpdaters, useValues } from '../store/StateHooks';
+import ShabadCard, { generateTags, SourceColors } from '../components/main/Results'
+import { useUpdaters, useValues } from '../store/StateHooks'
 
 const Edit = ( { route } ) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const [ showSnack, updateShow ] = useState( false );
-  const [ showError, updateErr ] = useState( false );
+  const [ showSnack, updateShow ] = useState( false )
+  const [ showError, updateErr ] = useState( false )
   const [ editing, updateEditing ] = useState( {
     name: null,
     id: null,
-  } );
-  const [ editedText, updateText ] = useState( '' );
+  } )
+  const [ editedText, updateText ] = useState( '' )
 
-  const { currentItems } = useValues( 'currentModel' );
-  const { removeEntry, updateCurrentName } = useUpdaters( 'currentModel' );
-  const { pothiNames } = useValues( 'pothiModel' );
-  const { deletePothi, renamePothi } = useUpdaters( 'pothiModel' );
+  const { currentItems } = useValues( 'currentModel' )
+  const { removeEntry, updateCurrentName } = useUpdaters( 'currentModel' )
+  const { pothiNames } = useValues( 'pothiModel' )
+  const { deletePothi, renamePothi } = useUpdaters( 'pothiModel' )
 
-  const { type } = route.params;
+  const { type } = route.params
 
-  const snack = `${type} Removed!`;
+  const snack = `${type} Removed!`
   const handleRemoveShabad = ( [ entryID, shabadId ] ) => {
-    removeEntry( [ entryID, shabadId ] );
-    updateShow( true );
-  };
+    removeEntry( [ entryID, shabadId ] )
+    updateShow( true )
+  }
   const handleRemoveGutka = ( name, gutkaID, index ) => {
-    const position = index !== 0 ? index - 1 : index + 1;
+    const position = index !== 0 ? index - 1 : index + 1
     updateCurrentName(
-      [ pothiNames[position][0],
-        pothiNames[position][1] ],
-    );
-    deletePothi( [ name, gutkaID ] );
-    updateShow( true );
-  };
+      [ pothiNames[ position ][ 0 ],
+        pothiNames[ position ][ 1 ] ],
+    )
+    deletePothi( [ name, gutkaID ] )
+    updateShow( true )
+  }
   return (
     <KeyboardAvoidingView style={style.View} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
       <ScrollView style={[ style.View, { backgroundColor: theme.colors.background } ]}>
@@ -50,10 +50,10 @@ const Edit = ( { route } ) => {
                 && currentItems.map( ( item ) => {
                   const {
                     source, writer, raag, entryID, mainLine, shabadId,
-                  } = item;
+                  } = item
                   return (
                     <ShabadCard
-                      iconColor={SourceColors[source] || theme.colors.primary}
+                      iconColor={SourceColors[ source ] || theme.colors.primary}
                       key={`${shabadId}/${entryID}`}
                       title={`${mainLine}`}
                       roundness={theme.roundness}
@@ -68,21 +68,21 @@ const Edit = ( { route } ) => {
                           onPress={() => {
                             handleRemoveShabad(
                               [ entryID, shabadId ],
-                            );
+                            )
                           }}
                         />
                       )}
                     />
-                  );
+                  )
                 } )}
         {type === 'Pothi'
                 && (
                 <>
                   {pothiNames.map( ( data, index ) => (
-                    <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={data[1]}>
+                    <Card theme={theme} style={[ style.Card, { backgroundColor: theme.colors.surface } ]} key={data[ 1 ]}>
                       <Card.Title
-                        key={data[1]} //
-                        title={`${data[0]}`}
+                        key={data[ 1 ]} //
+                        title={`${data[ 0 ]}`}
                         left={( props ) => (
                           <Avatar.Icon {...props} icon="book" />
                         )}
@@ -93,7 +93,7 @@ const Edit = ( { route } ) => {
                           }}
                           >
                             {
-                                  editing.name === data[0] && editing.id === data[1]
+                                  editing.name === data[ 0 ] && editing.id === data[ 1 ]
                                     ? (
                                       <>
                                         <IconButton
@@ -101,12 +101,12 @@ const Edit = ( { route } ) => {
                                           color="green"
                                           icon="check"
                                           onPress={() => {
-                                            renamePothi( [ editing.name, editing.id, editedText ] );
-                                            updateText( '' );
+                                            renamePothi( [ editing.name, editing.id, editedText ] )
+                                            updateText( '' )
                                             updateEditing( {
                                               name: null,
                                               id: null,
-                                            } );
+                                            } )
                                           }}
                                         />
                                         <IconButton
@@ -114,11 +114,11 @@ const Edit = ( { route } ) => {
                                           color="red"
                                           icon="x"
                                           onPress={() => {
-                                            updateText( '' );
+                                            updateText( '' )
                                             updateEditing( {
                                               name: null,
                                               id: null,
-                                            } );
+                                            } )
                                           }}
                                         />
                                       </>
@@ -132,9 +132,9 @@ const Edit = ( { route } ) => {
                                           onPress={() => {
                                             updateEditing( ( prev ) => ( {
                                               ...prev,
-                                              name: data[0],
-                                              id: data[1],
-                                            } ) );
+                                              name: data[ 0 ],
+                                              id: data[ 1 ],
+                                            } ) )
                                           }}
                                         />
                                         <IconButton
@@ -143,13 +143,13 @@ const Edit = ( { route } ) => {
                                           icon="minus-circle"
                                           onPress={() => {
                                             if ( pothiNames.length === 1 ) {
-                                              updateErr( true );
+                                              updateErr( true )
                                             } else {
                                               handleRemoveGutka(
-                                                data[0],
-                                                data[1],
+                                                data[ 0 ],
+                                                data[ 1 ],
                                                 index,
-                                              );
+                                              )
                                             }
                                           }}
                                         />
@@ -161,7 +161,7 @@ const Edit = ( { route } ) => {
                       />
                       {
 
-                            editing.id === data[1]
+                            editing.id === data[ 1 ]
                             && (
                             <Card.Content style={{
                               alignItems: 'center',
@@ -182,7 +182,7 @@ const Edit = ( { route } ) => {
                                 placeholder="Enter Pothi Name"
                                 underlineColorAndroid="transparent"
                                 onChangeText={( text ) => {
-                                  updateText( text );
+                                  updateText( text )
                                 }}
                               />
                             </Card.Content>
@@ -211,8 +211,8 @@ const Edit = ( { route } ) => {
         <Text style={{ color: theme.colors.text }}>You cannot have less than one pothi!</Text>
       </Snackbar>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
 const style = StyleSheet.create( {
   Card: {
@@ -227,5 +227,5 @@ const style = StyleSheet.create( {
     flexDirection: 'column',
 
   },
-} );
-export default Edit;
+} )
+export default Edit

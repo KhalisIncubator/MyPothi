@@ -1,4 +1,4 @@
-import { Theme } from 'react-native-paper';
+import { Theme } from 'react-native-paper'
 // database types
 export type entryObj = {
   shabadId: number;

@@ -1,29 +1,29 @@
-import { buildApiUrl } from '@sttm/banidb';
+import { buildApiUrl } from '@sttm/banidb'
 
 import {
   entryObj,
   lengthType,
   RemappedLine,
-} from '../../types/types';
-import { banisOrder } from '../Defaults';
-import { baniLengths } from './DatabaseConts';
+} from '../../types/types'
+import { banisOrder } from '../Defaults'
+import { baniLengths } from './DatabaseConts'
 
 
 const shabadInfo = ( { shabadInfo: info, baniInfo } ) => {
-  const { source, raag, writer } = info ?? baniInfo;
-  const sourceG = source.gurmukhi;
-  const raagG = raag.gurmukhi;
-  const writerG = writer.gurmukhi;
+  const { source, raag, writer } = info ?? baniInfo
+  const sourceG = source.gurmukhi
+  const raagG = raag.gurmukhi
+  const writerG = writer.gurmukhi
   return {
     source: sourceG,
     raag: raagG,
     writer: writerG,
-  };
-};
+  }
+}
 const remapLine = ( raw ): RemappedLine => {
   const {
     verse, translation, transliteration, visraam,
-  } = raw;
+  } = raw
   return {
     id: raw.verseId,
     sID: raw.shabadId,
@@ -49,25 +49,25 @@ const remapLine = ( raw ): RemappedLine => {
       ig: visraam?.igurbani,
       sttm2: visraam?.sttm2,
     },
-  };
-};
+  }
+}
 
 const remapBani = ( verseObj ) => {
-  const { verse } = verseObj;
-  return remapLine( verse );
-};
+  const { verse } = verseObj
+  return remapLine( verse )
+}
 const query = async ( search: string, type: number ) => {
-  const API_URL = 'https://api.banidb.com/v2/';
-  const results = 50;
+  const API_URL = 'https://api.banidb.com/v2/'
+  const results = 50
   if ( search !== '' ) {
-    const q = type !== 4 ? search : null;
+    const q = type !== 4 ? search : null
     const url = encodeURI( buildApiUrl( {
       q,
       type,
       results,
       API_URL,
       ang: type === 4 ? Number( search ) : null,
-    } ) );
+    } ) )
 
     return fetch( url )
       .then( ( response ) => response.json() )
@@ -80,18 +80,18 @@ const query = async ( search: string, type: number ) => {
         },
         v,
       ] ) )
-      .catch( ( err ) => err );
+      .catch( ( err ) => err )
   }
-  return [ {} ];
-};
-const sortBani = ( firstBani, secondBani ) => banisOrder.indexOf( firstBani.ID ) - banisOrder.indexOf( secondBani.ID );
+  return [ {} ]
+}
+const sortBani = ( firstBani, secondBani ) => banisOrder.indexOf( firstBani.ID ) - banisOrder.indexOf( secondBani.ID )
 
 const loadShabad = async ( id: number ) => {
-  const API_URL = 'https://api.banidb.com/v2/';
+  const API_URL = 'https://api.banidb.com/v2/'
   const url = encodeURI( buildApiUrl( {
     id,
     API_URL,
-  } ) );
+  } ) )
   return fetch( url )
     .then( ( res ) => res.json() )
     .then( ( data ) => [ shabadInfo( data ), data.verses.map( ( verse ) => remapLine( verse ) ) ] )
@@ -99,37 +99,37 @@ const loadShabad = async ( id: number ) => {
       data: JSON.stringify( line ),
       lineId: line.id,
     } ) ) ] )
-    .catch( ( err ) => err );
-};
+    .catch( ( err ) => err )
+}
 const fetchBanis = async () => (
   fetch( 'https://api.banidb.com/v2/banis' )
     .then( ( res ) => res.json() )
     .then( ( data ): any[] => data.map( ( bani ) => bani ) )
     .then( ( banisArr ) => banisArr.sort( sortBani ) )
     .catch( ( err ) => err )
-);
+)
 
 const loadBani = async ( id: number, length: lengthType ) => (
   fetch( `https://api.banidb.com/v2/banis/${id}` )
     .then( ( res ) => res.json() )
     .then( ( json ) => [ shabadInfo( json ), json.verses.filter( ( verse ) => verse.mangalPosition !== 'above' ) ] )
-    .then( ( [ info, filtered ] ) => [ info, filtered.filter( ( verse ) => verse[baniLengths[length]] === 1 ) ] )
+    .then( ( [ info, filtered ] ) => [ info, filtered.filter( ( verse ) => verse[ baniLengths[ length ] ] === 1 ) ] )
     .then( ( [ info, data ] ) => [ info, data.map( ( verse ) => remapBani( verse ) ) ] )
     .then( ( [ info, remapped ] ) => [ info, remapped.map( ( line ) => ( {
       data: JSON.stringify( line ),
       lineId: line.id,
     } ) ) ] )
-    .catch( ( err ) => err ) );
+    .catch( ( err ) => err ) )
 
 const parseLines = async ( item: entryObj ) => {
   const linesArray = item.lines ? Array.from( {
     ...item.lines,
     length: Object.keys( item.lines ).length,
-  } ) : [];
-  return Promise.resolve( linesArray.map( ( { data } ) => JSON.parse( data ) ) );
-};
+  } ) : []
+  return Promise.resolve( linesArray.map( ( { data } ) => JSON.parse( data ) ) )
+}
 // because once again the realm returns the array as an object, we have to map to object
-export default query;
+export default query
 
 export {
   remapLine,
@@ -138,4 +138,4 @@ export {
   loadBani,
   parseLines,
   shabadInfo,
-};
+}
