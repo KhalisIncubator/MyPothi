@@ -53,6 +53,9 @@
     "react/jsx-filename-extension": 0,
     "react/sort-comp": 0,
     "react/jsx-props-no-spreading": 0,
+ "react/prefer-stateless-function": 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "semi": [
       "error",
       "never"
