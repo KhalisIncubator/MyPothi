@@ -1,29 +1,29 @@
-import React from 'react';
+import React from 'react'
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+} from 'react-native'
 import {
   IconButton,
   useTheme,
-} from 'react-native-paper';
+} from 'react-native-paper'
 
-import { getCurrentFontSize } from '../../Functions';
+import { getCurrentFontSize } from '../../Functions'
 import {
   useUpdaters,
   useValues,
-} from '../../store/StateHooks';
+} from '../../store/StateHooks'
 
 const Toolbar = ( {
   showMain, updateMode, currentLine, style, toggleHighligher, isHighlighterOn,
 } ) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const { createMod, deleteMod } = useUpdaters( 'currentModel' );
-  const { fontSizes } = useValues( 'viewerModel' );
-  const [ lineid, element, parentID ] = currentLine;
+  const { createMod, deleteMod } = useUpdaters( 'currentModel' )
+  const { fontSizes } = useValues( 'viewerModel' )
+  const [ lineid, element, parentID ] = currentLine
   return (
 
     <SafeAreaView
@@ -38,9 +38,9 @@ const Toolbar = ( {
         <IconButton
           icon={showMain ? 'chevron-down' : 'chevron-up'}
           onPress={() => {
-            updateMode();
+            updateMode()
             if ( isHighlighterOn ) {
-              toggleHighligher();
+              toggleHighligher()
             }
           }}
         />
@@ -58,7 +58,7 @@ const Toolbar = ( {
               type: 'bold',
               value: true,
               parentID,
-            } );
+            } )
           }}
         />
         <IconButton
@@ -66,14 +66,14 @@ const Toolbar = ( {
           size={20}
           onPress={() => {
             const newSize = getCurrentFontSize( currentLine,
-              fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] ) + 1;
+              fontSizes[ element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 ) ] ) + 1
             createMod( {
               lineid,
               element,
               type: 'fontSize',
               value: newSize,
               parentID,
-            } );
+            } )
           }}
         />
         <IconButton
@@ -81,22 +81,22 @@ const Toolbar = ( {
           size={20}
           onPress={() => {
             const getSize = getCurrentFontSize( currentLine,
-              fontSizes[element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 )] );
-            const newSize = getSize <= 0 ? null : getSize - 1;
+              fontSizes[ element === 'Pangtee' ? 'gurmukhi' : ( element ? element.toLowerCase() : 0 ) ] )
+            const newSize = getSize <= 0 ? null : getSize - 1
             createMod( {
               lineid,
               element,
               type: 'fontSize',
               value: newSize,
               parentID,
-            } );
+            } )
           }}
         />
         <IconButton
           icon="edit-2"
           size={20}
           onPress={() => {
-            toggleHighligher();
+            toggleHighligher()
           }}
         />
         <IconButton
@@ -107,15 +107,15 @@ const Toolbar = ( {
               lineid,
               element,
               parentID,
-            } );
+            } )
           }}
         />
       </View>
       )}
       {!showMain && <View />}
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create( {
 
@@ -137,5 +137,5 @@ const styles = StyleSheet.create( {
   View: {
     width: '100%',
   },
-} );
-export default Toolbar;
+} )
+export default Toolbar

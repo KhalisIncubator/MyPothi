@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactChild } from 'react';
+import React, { ReactChild } from 'react'
 import {
   StyleSheet, TouchableOpacity,
   View,
-} from 'react-native';
+} from 'react-native'
 
-import { useMPTheme } from '../../../Hooks';
-import { useEditMode } from '../../../store/StateHooks';
+import { useMPTheme } from '../../../Hooks'
+import { useEditMode } from '../../../store/StateHooks'
 
 interface BaseProps {
   isSelected: boolean,
@@ -19,10 +19,10 @@ interface BaseProps {
 const TextView: React.FC<BaseProps> = ( {
   isSelected, isMainLine, children, onClick,
 } ) => {
-  const theme = useMPTheme();
-  const [ isEditMode ] = useEditMode();
+  const theme = useMPTheme()
+  const [ isEditMode ] = useEditMode()
   const ViewStyle = StyleSheet.flatten( [ styles.View, isMainLine ? theme.customTypes?.lineHighlight : {},
-    isSelected ? styles.Selected : {} ] );
+    isSelected ? styles.Selected : {} ] )
 
   return isEditMode ? (
     <TouchableOpacity style={ViewStyle} onPress={onClick}>
@@ -33,10 +33,10 @@ const TextView: React.FC<BaseProps> = ( {
       <View style={ViewStyle}>
         {children}
       </View>
-    );
-};
+    )
+}
 
-export { TextView };
+export { TextView }
 const styles = StyleSheet.create( {
 
   // #136983
@@ -49,4 +49,4 @@ const styles = StyleSheet.create( {
   View: {
     width: '100%',
   },
-} );
+} )

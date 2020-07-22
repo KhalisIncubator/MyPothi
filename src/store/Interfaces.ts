@@ -5,7 +5,7 @@ import {
   Computed,
   Thunk,
   ThunkOn,
-} from 'easy-peasy';
+} from 'easy-peasy'
 
 import {
   entryObj,
@@ -13,11 +13,11 @@ import {
   ModType,
   pothiEntry,
   QueryType,
-} from '../../types/types';
+} from '../../types/types'
 import {
   loadBani,
   loadShabad,
-} from '../database/BanidbApi';
+} from '../database/BanidbApi'
 
 export interface Info {
     source: string,

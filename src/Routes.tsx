@@ -1,20 +1,20 @@
 /* eslint-disable react/display-name */
 /* eslint-disable import/extensions */
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
+import { useWindowDimensions } from 'react-native'
 
-import Drawer from './components/nav/Drawer';
-import { Header } from './components/nav/Header';
-import Edit from './screens/Edit';
-import Gutka from './screens/Pothi';
-import Search from './screens/Search';
-import SettingsScreen from './screens/Settings';
-import { FullScreenCtx } from './store/context_stores/Contexts';
+import Drawer from './components/nav/Drawer'
+import { Header } from './components/nav/Header'
+import Edit from './screens/Edit'
+import Gutka from './screens/Pothi'
+import Search from './screens/Search'
+import SettingsScreen from './screens/Settings'
+import { FullScreenCtx } from './store/context_stores/Contexts'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 const ScreenStack = () => (
   <FullScreenCtx.Provider>
     <Stack.Navigator
@@ -32,12 +32,12 @@ const ScreenStack = () => (
       <Stack.Screen name="Edit" component={Edit} />
     </Stack.Navigator>
   </FullScreenCtx.Provider>
-);
+)
 
-const AppDrawer = createDrawerNavigator();
+const AppDrawer = createDrawerNavigator()
 
-const DrawerNav = ( ) => {
-  const dimensions = useWindowDimensions();
+const DrawerNav = () => {
+  const dimensions = useWindowDimensions()
   return (
     <AppDrawer.Navigator
       drawerContent={( props ) => <Drawer {...props} />}
@@ -46,12 +46,12 @@ const DrawerNav = ( ) => {
     >
       <AppDrawer.Screen name="Stack" component={ScreenStack} />
     </AppDrawer.Navigator>
-  );
-};
+  )
+}
 
 const Routes = () => (
   <NavigationContainer>
     <DrawerNav />
   </NavigationContainer>
-);
-export default Routes;
+)
+export default Routes

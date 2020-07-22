@@ -1,28 +1,28 @@
 import {
   createContext,
   useContext,
-} from 'react';
-import { useTheme } from 'react-native-paper';
+} from 'react'
+import { useTheme } from 'react-native-paper'
 
-import { MyPothiTheme } from '../types/types';
+import { MyPothiTheme } from '../types/types'
 
 
-const LineContext = createContext( { line: '' } );
+const LineContext = createContext( { line: '' } )
 
-export { LineContext };
+export { LineContext }
 
 
 const useLine = () => {
-  const LineCtx = useContext( LineContext );
+  const LineCtx = useContext( LineContext )
 
-  return LineCtx.line;
-};
+  return LineCtx.line
+}
 const useMPTheme = (): MyPothiTheme => {
-  const theme = useTheme();
-  return theme;
-};
+  const theme = useTheme()
+  return theme
+}
 
 export {
   useLine,
   useMPTheme,
-};
+}

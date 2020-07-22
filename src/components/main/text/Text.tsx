@@ -1,35 +1,35 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   Text,
-} from 'react-native';
+} from 'react-native'
 
 import {
   ApiVishraams,
   VishraamType,
-} from '../../../../types/types';
-import { mapVishraams } from '../../../Functions';
-import { useLine } from '../../../Hooks';
+} from '../../../../types/types'
+import { mapVishraams } from '../../../Functions'
+import { useLine } from '../../../Hooks'
 
 const generateVishraamStyle = ( type ) => {
   switch ( type ) {
     case 'y':
-      return styles.YamkiVishraam;
+      return styles.YamkiVishraam
     case 'v':
-      return styles.FullVishraam;
+      return styles.FullVishraam
     case 't':
-      return styles.ThamkiVishraam;
-    default: return { };
+      return styles.ThamkiVishraam
+    default: return { }
   }
-};
+}
 
 // TEXT NODES
 
 const DefaultText = () => {
-  const line = useLine();
+  const line = useLine()
 
-  return <Text>{line}</Text>;
-};
+  return <Text>{line}</Text>
+}
 
 interface VishraamsProps {
   vishraams?: ApiVishraams,
@@ -37,7 +37,7 @@ interface VishraamsProps {
   lineID?: number // not really necessary, just helpful for the key prop
 }
 const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } ) => {
-  const line = useLine();
+  const line = useLine()
   return (
     <>
       {mapVishraams( line, vishraams, source ).map( (
@@ -51,12 +51,12 @@ const VishraamText: React.FC<VishraamsProps> = ( { vishraams, source, lineID } )
       </Text>
       ) }
     </>
-  );
-};
+  )
+}
 export {
   DefaultText,
   VishraamText,
-};
+}
 const styles = StyleSheet.create( {
   FullVishraam: {
     // color: '#e14500', alt orange
@@ -74,4 +74,4 @@ const styles = StyleSheet.create( {
     color: '#417d9a',
   },
   // #cc7100
-} );
+} )

@@ -1,35 +1,35 @@
-import { DrawerContentScrollView, DrawerItem, useIsDrawerOpen } from '@react-navigation/drawer';
-import React, { useEffect, useState } from 'react';
+import { DrawerContentScrollView, DrawerItem, useIsDrawerOpen } from '@react-navigation/drawer'
+import React, { useEffect, useState } from 'react'
 import {
   KeyboardAvoidingView, Platform,
   StyleSheet, TextInput, View,
-} from 'react-native';
+} from 'react-native'
 import {
   Button, Drawer, Text, Title, useTheme,
-} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+} from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { useUpdaters, useValues } from '../../store/StateHooks';
+import { useUpdaters, useValues } from '../../store/StateHooks'
 
 const CustomDrawerComponent = ( props ) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const { pothiNames } = useValues( 'pothiModel' );
-  const { currentName } = useValues( 'currentModel' );
+  const { pothiNames } = useValues( 'pothiModel' )
+  const { currentName } = useValues( 'currentModel' )
 
-  const { updateCurrentName } = useUpdaters( 'currentModel' );
-  const { createPothi } = useUpdaters( 'pothiModel' );
+  const { updateCurrentName } = useUpdaters( 'currentModel' )
+  const { createPothi } = useUpdaters( 'pothiModel' )
 
-  const [ isCreating, toggleCreateMode ] = useState( false );
-  const [ newGutkaName, changeText ] = useState( '' );
-  const { navigation } = props;
-  const isOpen = useIsDrawerOpen();
+  const [ isCreating, toggleCreateMode ] = useState( false )
+  const [ newGutkaName, changeText ] = useState( '' )
+  const { navigation } = props
+  const isOpen = useIsDrawerOpen()
 
   useEffect( () => {
     if ( !isOpen ) {
-      toggleCreateMode( false );
+      toggleCreateMode( false )
     }
-  }, [ isOpen ] );
+  }, [ isOpen ] )
   return (
     <KeyboardAvoidingView style={styles.drawerContent} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <DrawerContentScrollView
@@ -46,7 +46,7 @@ const CustomDrawerComponent = ( props ) => {
               color={theme.colors.text}
               size={20}
               onPress={() => {
-                toggleCreateMode( true );
+                toggleCreateMode( true )
               }}
             />
           </View>
@@ -66,26 +66,26 @@ const CustomDrawerComponent = ( props ) => {
                     size={size}
                   />
                 )}
-                key={data[0]}
+                key={data[ 0 ]}
                 style={{
                   borderRadius: theme.roundness,
                 }}
-                focused={data[0] === currentName[0] && data[1] === currentName[1]}
+                focused={data[ 0 ] === currentName[ 0 ] && data[ 1 ] === currentName[ 1 ]}
                 activeTintColor="#ff9a00"
                 label={( { focused, color } ) => (
                   <Text style={[ {
                     color: focused ? color : theme.colors.text,
                   }, styles.text ]}
                   >
-                    {data[0]}
+                    {data[ 0 ]}
                   </Text>
                 )}
                 onPress={() => {
-                  updateCurrentName( [ data[0], data[1] ] );
+                  updateCurrentName( [ data[ 0 ], data[ 1 ] ] )
                   props.navigation.navigate( 'Stack', {
                     screen: 'Gutka',
-                  } );
-                  props.navigation.closeDrawer();
+                  } )
+                  props.navigation.closeDrawer()
                 }}
               />
             </>
@@ -101,7 +101,7 @@ const CustomDrawerComponent = ( props ) => {
               )}
               onPress={() => null}
                             // activeTintColor="#ff9a00"
-              label={( ) => (
+              label={() => (
                 <TextInput
                   style={{
                     color: theme.colors.text,
@@ -114,7 +114,7 @@ const CustomDrawerComponent = ( props ) => {
                   placeholder="Enter Pothi Name"
                   underlineColorAndroid="transparent"
                   onChangeText={( text ) => {
-                    changeText( text );
+                    changeText( text )
                   }}
                 />
               )}
@@ -129,8 +129,8 @@ const CustomDrawerComponent = ( props ) => {
                 style={styles.button}
                 color="green"
                 onPress={() => {
-                  createPothi( newGutkaName );
-                  toggleCreateMode( false );
+                  createPothi( newGutkaName )
+                  toggleCreateMode( false )
                 }}
               >
                 Create Pothi!
@@ -140,7 +140,7 @@ const CustomDrawerComponent = ( props ) => {
                 icon="x"
                 style={styles.button}
                 onPress={() => {
-                  toggleCreateMode( false );
+                  toggleCreateMode( false )
                 }}
               >
                 Cancel
@@ -166,8 +166,8 @@ const CustomDrawerComponent = ( props ) => {
       </DrawerContentScrollView>
     </KeyboardAvoidingView>
 
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create( {
   button: {
@@ -199,6 +199,6 @@ const styles = StyleSheet.create( {
   titleSection: {
     paddingLeft: 20,
   },
-} );
+} )
 
-export default CustomDrawerComponent;
+export default CustomDrawerComponent

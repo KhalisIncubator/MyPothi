@@ -3,12 +3,12 @@ import {
   SettingsConsts,
   SettingSection,
   SettingType,
-} from '../types/types';
-import { wrappedModifiers } from './components/main/SettingsComponents';
+} from '../types/types'
+import { wrappedModifiers } from './components/main/SettingsComponents'
 
-const mapToComponent = ( type: SettingType ) => wrappedModifiers[type];
+const mapToComponent = ( type: SettingType ) => wrappedModifiers[ type ]
 
-export default mapToComponent;
+export default mapToComponent
 
 
 const ThemeSettings: SettingArray[] = [
@@ -18,7 +18,7 @@ const ThemeSettings: SettingArray[] = [
     updater: 'updateTheme',
     type: 'switch',
   },
-];
+]
 // stuff relating to viewerModel (excludes stuff from themeModel)
 // fontSizes, displayElements, baniLength, sources => values related to each section
 const ViewerSettings: SettingArray[] = [
@@ -46,7 +46,7 @@ const ViewerSettings: SettingArray[] = [
     type: 'menu',
     updater: 'updateSearch',
   },
-];
+]
 
 const Settings: SettingSection[] = [
   {
@@ -59,31 +59,31 @@ const Settings: SettingSection[] = [
     values: 'viewerValues',
     updaters: 'viewerUpdaters',
   },
-];
+]
 const baniList = {
   short: 'Short',
   medium: 'Medium',
   long: 'Long',
   extralong: 'Extra Long',
-};
+}
 const vishraamList = {
   sttm: 'BaniDB (default)',
   sttm2: 'Legacy STTM',
   ig: 'iGurbani',
-};
+}
 const translList = {
   English: 'English',
   Spanish: 'Spanish',
-};
+}
 const translitList = {
   English: 'English',
   Hindi: 'Hindi',
   IPA: 'IPA',
-};
+}
 const teekaList = {
   SS: 'Prof. Sahib Singh',
   FT: 'Fareedkot Teeka',
-};
+}
 const GlobalConsts: SettingsConsts = {
   theme: {
     choseSystem: { title: 'Use System Appearance' },
@@ -137,10 +137,10 @@ const GlobalConsts: SettingsConsts = {
       subheading: '*Note: This will not affect the length of banis already added',
     },
   },
-};
+}
 
 export {
   ViewerSettings,
   Settings,
   GlobalConsts,
-};
+}

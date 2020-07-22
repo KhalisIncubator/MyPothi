@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from 'react-native'
 
-import { useUpdaters } from '../../store/StateHooks';
+import { useUpdaters } from '../../store/StateHooks'
 
 const HighlightSelector = ( { currentLine, style } ) => {
-  const { createMod } = useUpdaters( 'currentModel' );
-  const [ lineid, element, parentID ] = currentLine;
+  const { createMod } = useUpdaters( 'currentModel' )
+  const [ lineid, element, parentID ] = currentLine
   //   {
   //     lineid, element, type, value, parentID,
   //   }
@@ -108,8 +108,8 @@ const HighlightSelector = ( { currentLine, style } ) => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create( {
   Main: {
@@ -124,5 +124,5 @@ const styles = StyleSheet.create( {
     minHeight: 35,
     minWidth: 35,
   },
-} );
-export default HighlightSelector;
+} )
+export default HighlightSelector

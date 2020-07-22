@@ -1,5 +1,5 @@
-import 'react-native-get-random-values';
+import 'react-native-get-random-values'
 
-import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid'
 
-export default () => nanoid();
+export default () => nanoid()

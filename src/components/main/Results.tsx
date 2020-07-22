@@ -1,13 +1,13 @@
-import React, { ReactChild } from 'react';
+import React, { ReactChild } from 'react'
 import {
   StyleSheet, Text,
   TouchableOpacity, View,
-} from 'react-native';
+} from 'react-native'
 import {
   Avatar, Card, Paragraph, Title,
-} from 'react-native-paper';
-import { Color } from 'react-native-svg';
-import Icon from 'react-native-vector-icons/Feather';
+} from 'react-native-paper'
+import { Color } from 'react-native-svg'
+import Icon from 'react-native-vector-icons/Feather'
 
 
 const SourceColors = {
@@ -17,14 +17,14 @@ const SourceColors = {
   'BweI gurdws isMG jI vwrW': '#746f01',
   'BweI nMd lwl jI vwrW': '#74001d',
   'rihqnwmy Aqy pMQk il^qW': '#000',
-};
+}
 const ShabadCard = ( {
   subheading, itemsRight, title, roundness, backgroundCondition, icon, iconColor, surfaceColor,
 } ) => {
   const containerStyle = StyleSheet.flatten( [ {
     backgroundColor: backgroundCondition || surfaceColor,
     borderRadius: roundness,
-  }, style.CardContent ] );
+  }, style.CardContent ] )
   return (
     <Card style={style.Card}>
       <Card.Content style={containerStyle}>
@@ -52,10 +52,10 @@ const ShabadCard = ( {
         </View>
       </Card.Content>
     </Card>
-  );
-};
+  )
+}
 
-export default ShabadCard;
+export default ShabadCard
 interface TouchableShabadCard {
   onPress: () => void,
   ResultCard: React.ReactNode
@@ -65,7 +65,7 @@ const TouchableShabadCard: React.FC<TouchableShabadCard> = ( { ResultCard, onPre
   <TouchableOpacity onPress={onPress}>
     {ResultCard}
   </TouchableOpacity>
-);
+)
 
 interface BaseProps {
   theme: any,
@@ -96,12 +96,12 @@ const ResultBase: React.FC<BaseProps> = ( {
       subheading={subheading}
       icon="book"
     />
-  );
+  )
 
   return (
     <TouchableShabadCard ResultCard={card} onPress={onPress} />
-  );
-};
+  )
+}
 
 const generateTags = ( source, raag, writer, theme ) => {
   const subtitle = [
@@ -115,9 +115,9 @@ const generateTags = ( source, raag, writer, theme ) => {
     },
     {
       value: source,
-      color: SourceColors[source],
+      color: SourceColors[ source ],
     },
-  ];
+  ]
   return (
     <>
       { ( source || raag || writer )
@@ -147,31 +147,31 @@ const generateTags = ( source, raag, writer, theme ) => {
           </View>
         ) : null}
     </>
-  );
-};
+  )
+}
 
 const SearchResult = ( {
   theme, onPress, info, addedCount, isAdded, result,
 } ) => {
-  const { raag, writer, source } = info;
-  const { verse } = result;
+  const { raag, writer, source } = info
+  const { verse } = result
 
   return (
     <ResultBase
       subheading={generateTags( source, raag, writer, theme )}
-      iconColor={SourceColors[source]}
+      iconColor={SourceColors[ source ]}
       isAdded={isAdded}
       addedCount={addedCount}
       theme={theme}
       onPress={onPress}
       title={verse.gurmukhi}
     />
-  );
-};
+  )
+}
 const BaniResult = ( {
   theme, result, onPress, isAdded,
 } ) => {
-  const { gurmukhi } = result;
+  const { gurmukhi } = result
   return (
     <ResultBase
       iconColor={theme.colors.primary}
@@ -180,12 +180,12 @@ const BaniResult = ( {
       theme={theme}
       onPress={onPress}
     />
-  );
-};
+  )
+}
 
 export {
   BaniResult, SearchResult, SourceColors, generateTags,
-};
+}
 
 const style = StyleSheet.create( {
   Card: {
@@ -205,4 +205,4 @@ const style = StyleSheet.create( {
     flex: 1,
   },
 
-} );
+} )

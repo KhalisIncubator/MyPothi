@@ -2,33 +2,33 @@ import {
   action,
   createContextStore,
   persist,
-} from 'easy-peasy';
+} from 'easy-peasy'
 
 import {
   EditModel,
   FullScreenModel,
   SearchModel,
-} from '../Interfaces';
-import AsyncStore from '../PersistStore';
+} from '../Interfaces'
+import AsyncStore from '../PersistStore'
 
 const searchModel: SearchModel = {
   searchType: 0,
   queryType: 'Shabad',
 
   updateSeachType: action( ( state, payload ) => {
-    state.searchType = payload;
+    state.searchType = payload
   } ),
   updateQueryType: action( ( state, payload ) => {
-    state.queryType = payload;
+    state.queryType = payload
   } ),
-};
+}
 
 const SearchCtx = createContextStore( persist( searchModel, {
   storage: AsyncStore,
   mergeStrategy: 'overwrite',
-} ) );
+} ) )
 
-export { SearchCtx };
+export { SearchCtx }
 
 const editModel: EditModel = {
   isEditMode: false,
@@ -36,27 +36,27 @@ const editModel: EditModel = {
 
   updateEditMode: action( ( state ) => {
     if ( state.isEditMode ) {
-      state.selectedInfo = [ null, null, null ];
+      state.selectedInfo = [ null, null, null ]
     }
-    state.isEditMode = !state.isEditMode;
+    state.isEditMode = !state.isEditMode
   } ),
   updatedSelectedInfo: action( ( state, payload ) => {
-    const [ lineID, element, entryID ] = payload;
-    state.selectedInfo = [ lineID, element, entryID ];
+    const [ lineID, element, entryID ] = payload
+    state.selectedInfo = [ lineID, element, entryID ]
   } ),
-};
+}
 
-const EditCtx = createContextStore( editModel );
+const EditCtx = createContextStore( editModel )
 
-export { EditCtx };
+export { EditCtx }
 
 
 const fullScreenModel: FullScreenModel = {
   isFullScreen: false,
   toggleMode: action( ( state ) => {
-    state.isFullScreen = !state.isFullScreen;
+    state.isFullScreen = !state.isFullScreen
   } ),
-};
+}
 
-const FullScreenCtx = createContextStore( fullScreenModel );
-export { FullScreenCtx };
+const FullScreenCtx = createContextStore( fullScreenModel )
+export { FullScreenCtx }

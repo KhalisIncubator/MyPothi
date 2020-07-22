@@ -1,77 +1,77 @@
-import { useNetInfo } from '@react-native-community/netinfo';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useNetInfo } from '@react-native-community/netinfo'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   ActivityIndicator, Alert,
   SafeAreaView, ScrollView, StyleSheet, View,
-} from 'react-native';
-import Modal from 'react-native-modal';
+} from 'react-native'
+import Modal from 'react-native-modal'
 import {
   Chip,
   Menu, Searchbar, Text, Title, useTheme,
-} from 'react-native-paper';
+} from 'react-native-paper'
 
-import { BaniResult, SearchResult } from '../components/main/Results';
-import query, { fetchBanis } from '../database/BanidbApi';
-import { SEARCH_TEXTS } from '../database/DatabaseConts';
-import { SearchCtx } from '../store/context_stores/Contexts';
-import { useUpdaters, useValues } from '../store/StateHooks';
+import { BaniResult, SearchResult } from '../components/main/Results'
+import query, { fetchBanis } from '../database/BanidbApi'
+import { SEARCH_TEXTS } from '../database/DatabaseConts'
+import { SearchCtx } from '../store/context_stores/Contexts'
+import { useUpdaters, useValues } from '../store/StateHooks'
 
 
 const Search = () => {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const [ searchQuery, updateQuery ] = useState( '' );
+  const [ searchQuery, updateQuery ] = useState( '' )
 
-  const [ banis, updateBanis ] = useState( [] );
-  const [ results, updateResults ] = useState( [] );
+  const [ banis, updateBanis ] = useState( [] )
+  const [ results, updateResults ] = useState( [] )
 
 
-  const [ typeMenu, updateTypeM ] = useState( false );
-  const [ searchMenu, updateSearchM ] = useState( false );
+  const [ typeMenu, updateTypeM ] = useState( false )
+  const [ searchMenu, updateSearchM ] = useState( false )
 
 
   const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( {
     ...store,
-  } ) );
+  } ) )
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
     ...actions,
-  } ) );
-  const { showModal, text } = useValues( 'modalModel' );
-  const { currentItems } = useValues( 'currentModel' );
-  const { addEntry } = useUpdaters( 'currentModel' );
+  } ) )
+  const { showModal, text } = useValues( 'modalModel' )
+  const { currentItems } = useValues( 'currentModel' )
+  const { addEntry } = useUpdaters( 'currentModel' )
 
 
-  const { addedItems } = useValues( 'addedModel' );
-  const { updateAddedItems } = useUpdaters( 'addedModel' );
-  const net = useNetInfo();
+  const { addedItems } = useValues( 'addedModel' )
+  const { updateAddedItems } = useUpdaters( 'addedModel' )
+  const net = useNetInfo()
 
   const onPress = useCallback( ( sID, gurmukhi ) => {
-    addEntry( [ sID, gurmukhi, queryType ] );
+    addEntry( [ sID, gurmukhi, queryType ] )
     updateAddedItems( {
       sID,
       queryType,
-    } );
-  }, [ addEntry, queryType, updateAddedItems ] );
+    } )
+  }, [ addEntry, queryType, updateAddedItems ] )
   useEffect( () => {
     const baniFetcher = async () => {
-      const fetched = await fetchBanis();
-      updateBanis( [ ...fetched ] );
-    };
-    baniFetcher();
-  }, [] );
+      const fetched = await fetchBanis()
+      updateBanis( [ ...fetched ] )
+    }
+    baniFetcher()
+  }, [] )
   useEffect( () => {
-    let cancelSearch = !net.isConnected;
+    let cancelSearch = !net.isConnected
     const fetchResults = async () => {
-      const dbResults = await query( searchQuery, searchType );
-      updateResults( [ ...dbResults ] );
-    };
+      const dbResults = await query( searchQuery, searchType )
+      updateResults( [ ...dbResults ] )
+    }
     if ( searchQuery.length > 1 && !cancelSearch ) {
-      fetchResults();
+      fetchResults()
     }
     return () => {
-      cancelSearch = true;
-    };
-  }, [ searchQuery, net.isConnected, searchType ] );
+      cancelSearch = true
+    }
+  }, [ searchQuery, net.isConnected, searchType ] )
   return (
     <SafeAreaView style={{
       backgroundColor: theme.colors.background,
@@ -141,15 +141,15 @@ const Search = () => {
         >
           <Menu.Item
             onPress={() => {
-              updateTypeM( false );
-              updateQueryType( 'Shabad' );
+              updateTypeM( false )
+              updateQueryType( 'Shabad' )
             }}
             title="Shabad"
           />
           <Menu.Item
             onPress={() => {
-              updateTypeM( false );
-              updateQueryType( 'Bani' );
+              updateTypeM( false )
+              updateQueryType( 'Bani' )
             }}
             title="Bani"
           />
@@ -164,23 +164,23 @@ const Search = () => {
               } ]}
               onPress={() => updateSearchM( true )}
             >
-              {SEARCH_TEXTS[searchType]}
+              {SEARCH_TEXTS[ searchType ]}
             </Chip>
                       )}
         >
           {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {
-            const [ id, desc ] = searchText;
-            const newID = parseInt( id, 10 );
+            const [ id, desc ] = searchText
+            const newID = parseInt( id, 10 )
             return (
               <Menu.Item
                 onPress={() => {
-                  updateSeachType( newID );
-                  updateSearchM( false );
+                  updateSeachType( newID )
+                  updateSearchM( false )
                 }}
                 key={id}
                 title={`${desc}`}
               />
-            );
+            )
           } )}
           {!net.isConnected && (
           <View>
@@ -194,9 +194,9 @@ const Search = () => {
       <ScrollView>
         {queryType === 'Shabad' && results.length > 0 && results.map( ( [ info, result ] ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
-                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Shabad' ) !== -1;
+                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Shabad' ) !== -1
 
-          const addedCount = addedItems.filter( ( item ) => item.sID === result.shabadId ).length;
+          const addedCount = addedItems.filter( ( item ) => item.sID === result.shabadId ).length
 
           return (
             <SearchResult
@@ -216,21 +216,21 @@ const Search = () => {
                     },
                     {
                       text: 'Ok',
-                      onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ); },
+                      onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ) },
                       style: 'cancel',
                     },
                   ],
                   {
                     cancelable: false,
                   },
-                );
+                )
               }}
             />
-          );
+          )
         } )}
         {queryType === 'Bani' && banis.map( ( bani ) => {
           const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
-                      || addedItems.findIndex( ( item ) => item.sID === bani.ID && item.queryType === 'Bani' ) !== -1;
+                      || addedItems.findIndex( ( item ) => item.sID === bani.ID && item.queryType === 'Bani' ) !== -1
           return (
             <BaniResult
               key={bani.gurmukhi}
@@ -244,7 +244,7 @@ const Search = () => {
                   [
                     {
                       text: 'Ok',
-                      onPress: () => { onPress( bani.ID, bani.gurmukhi ); },
+                      onPress: () => { onPress( bani.ID, bani.gurmukhi ) },
                       style: 'cancel',
                     },
                     {
@@ -254,17 +254,17 @@ const Search = () => {
                   {
                     cancelable: false,
                   },
-                );
+                )
               }}
             />
-          );
+          )
         } )}
       </ScrollView>
     </SafeAreaView>
 
 
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create( {
   button: {
@@ -283,11 +283,11 @@ const styles = StyleSheet.create( {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
-} );
+} )
 
 const withCtxs = () => (
   <SearchCtx.Provider>
     <Search />
   </SearchCtx.Provider>
-);
-export default withCtxs;
+)
+export default withCtxs
