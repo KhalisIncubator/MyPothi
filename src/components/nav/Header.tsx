@@ -22,7 +22,6 @@ const Header = ( { previous, navigation } ) => {
   const { addedItems } = useValues( 'addedModel' )
   const isFullScren = FullScreenCtx.useStoreState( ( store ) => store.isFullScreen )
   const route = useRoute()
-  const isDrawerOpen = useIsDrawerOpen()
   const isMain = route.name === 'Gutka'
   return isFullScren ? null : (
     <Appbar.Header theme={{ colors: { primary: theme.colors.backdrop } }}>
@@ -33,7 +32,6 @@ const Header = ( { previous, navigation } ) => {
           }}
         />
       ) : (
-        !isDrawerOpen && (
         <TouchableOpacity
           onPress={() => {
             navigation.openDrawer()
@@ -41,7 +39,6 @@ const Header = ( { previous, navigation } ) => {
         >
           <Icon name="menu" size={30} />
         </TouchableOpacity>
-        )
       )}
       <Appbar.Content title={isMain ? currentName[ 0 ] : route.name} />
       {isMain && [

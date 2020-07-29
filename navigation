@@ -1,0 +1,12 @@
+import { MobileRoutes } from './MobileRoutes'
+import { TabletRoutes } from './TabletRoutes'
+type RouteParams = {
+  Pothi: {pothiName: string},
+  Settings: null,
+  Search: null,
+  Edit: null
+}
+export { MobileRouteParams }
+
+
+export { MobileRoutes, TabletRoutes, RouteParams }
