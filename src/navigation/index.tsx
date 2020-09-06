@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button } from 'react-native'
-import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import {FullScreenCtx} from '../store/context_stores/Contexts'
+import { FullScreenCtx } from '../store/context_stores/Contexts'
 import Edit from '../screens/Edit'
 import Pothi from '../screens/Pothi'
 import Search from '../screens/Search'
@@ -31,7 +31,7 @@ const MobileRoutes = () => (
         component={Pothi}  
         options={( { navigation } ) => (  
             { headerRight: () => <Button title="yo" onPress={()=> navigation.navigate( "Settings" )}></Button> }  
-      )} />}
+      )} />
       <Main.Screen name="Settings" component={SettingsScreen} />
       <Main.Screen name="Search" component={Search} />
       <Main.Screen name="Edit" component={Edit} />

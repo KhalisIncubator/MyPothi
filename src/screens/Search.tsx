@@ -1,5 +1,5 @@
 import { useNetInfo } from '@react-native-community/netinfo'
-import React, { useCallback, useEffect, useState, useReducer } from 'react'
+import React, { useCallback, useEffect, useState, useReducer, ReducerAction } from 'react'
 import {
   ActivityIndicator, Alert,
   SafeAreaView, ScrollView, StyleSheet, View,
@@ -26,7 +26,7 @@ const InitialSearchState = {
   showSearchMethodMenu: false
 }
 
-const SearchStateReducer = ( state, action ) => {
+const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
   switch( action.type ) {
     case 'updateQuery': 
       return { ...state, searchQuery: action.payload }

@@ -18,7 +18,7 @@ const Homescreen = () => {
   }
   return (
     <ActionSheetProvider>  
-    <SafeAreaView style={styles.page} onPress={() => PothiCreatingRef.blur()}>
+    <SafeAreaView style={styles.page} >
       <View style={styles.headerView}>
         <Text style={styles.title}>MyPothi</Text>
         <View>
@@ -45,7 +45,7 @@ const Homescreen = () => {
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheader}>
-            <Icon name="settings" size={30} color={theme.colors.orange} />
+            <Icon name="command" size={30} color={theme.colors.orange} />
             <Text style={styles.subheaderText}>Actions</Text>
           </View>
         <View style={styles.Row}>
