@@ -2,24 +2,29 @@ import React, { ReactNode } from 'react'
 import { Text,StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native'
 import { useTheme, useIsTablet } from '../../utils/Hooks'
 import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/Feather'
 
 interface CardProps {
-  style?: StyleProp<ViewStyle>,
+  containerStyle?: StyleProp<ViewStyle>,
+  pressableStyle?: StyleProp<ViewStyle>,
   children: ReactNode,
-  clickAction?: () => any 
+  onPress?: () => void 
 }
-const CardContainer: React.FC<CardProps> = ( { style , children, clickAction } ) => {
+const CardContainer: React.FC<CardProps> = ( {  pressableStyle, containerStyle , children, onPress } ) => {
 
   const [ theme ] = useTheme()
 
- const ViewStyle = StyleSheet.flatten( [  
-    { borderRadius: theme.style.roundness, backgroundColor: theme.colors.card },
-     style,
+  const PressableStyle = ( { pressed } ) =>  StyleSheet.flatten( [  
+    CardStyles.Pressable,
+    { borderRadius: theme.style.roundness, backgroundColor: pressed ? 'lightblue' : theme.colors.card, opacity: pressed ? 70: 100 },
+     pressableStyle,
   ] )
+  
+  const ViewStyle = StyleSheet.flatten( [ CardStyles.View, containerStyle ] )
 
   return (
-    <Pressable style={ViewStyle} onPress={clickAction}>
-      <View style={CardStyles.container}>
+    <Pressable style={PressableStyle} onPress={onPress}>
+      <View style={ViewStyle}>
       {children}
         </View>
     </Pressable>
@@ -34,14 +39,14 @@ interface HomescreenCardProps {
 const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime } ) => {
   const navigation = useNavigation()
   const [ isTablet ] = useIsTablet()
-  const onClick = () => {
+  const onPress = () => {
     isTablet ?
       navigation.navigate( 'Stack', { screen: 'Pothi', params: { pothiName } } )  
-      : navigation.navigate( 'Search', { pothiName } )
+      : navigation.navigate( 'Pothi', { pothiName } )
   }
 
   return (
-    <CardContainer clickAction={onClick}>
+    <CardContainer onPress={onPress}>
       <View style={HomeCardStyles.view}>
           <Text style={HomeCardStyles.mainText}>{pothiName}</Text>
           <Text style={HomeCardStyles.time}>Last Opened: 0 days ago</Text>
@@ -50,13 +55,47 @@ const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime }
   )
 }
 
-export { CardContainer, HomescreenCard }
+interface IconCardProps {
+  iconName: string,
+  iconSize: number,
+  iconSubtitle: string,
+  onPress: ( ...args: any[] ) => any
+}
+const IconCard: React.FC<IconCardProps> = ( { iconName, onPress, iconSize, iconSubtitle } ) => {
+  const containerSize = iconSize * 2 
+  const containerStyle = StyleSheet.flatten( [ IconCardStyle.Container, { width: containerSize, height: containerSize } ] )
+ return (
+   <CardContainer pressableStyle={containerStyle} onPress={onPress}>
+     <View style={IconCardStyle.MainItems} >
+     <Icon name={iconName} size={iconSize} />
+     <Text>{iconSubtitle}</Text>
+   </View>
+     </CardContainer>
+ ) 
+}
+export { CardContainer, HomescreenCard, IconCard }
 
 const CardStyles = StyleSheet.create( {
-  container: {
-    padding: 5
+  Pressable: {
+    marginVertical: 5
   },
+  View: {
+    margin: 5,
+  }
 
+} )
+const IconCardStyle = StyleSheet.create( {
+  Container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  MainItems: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between'
+  },
 } )
 
 const HomeCardStyles = StyleSheet.create( {
@@ -65,10 +104,12 @@ const HomeCardStyles = StyleSheet.create( {
     fontSize: 20,
     padding: 5,
     paddingBottom: 20,
+    fontFamily: 'Comfortaa'
   },
   time: {
     alignSelf: 'flex-end',
     color: 'gray',
+    fontFamily: 'Comfortaa',
     padding: 5
   },
   view: {

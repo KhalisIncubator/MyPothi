@@ -6,7 +6,8 @@ type Theme = {
     text: string,
     background: string,
     error: string, 
-    warning: string
+    warning: string,
+    orange: string
   },
   style: {
     roundness: number,
@@ -25,7 +26,8 @@ const light: Theme = {
     text: 'black',
     background: 'white',
     error: 'red',
-    warning: 'white'
+    warning: 'white',
+    orange: '#FFA500'
   },
   style: {
     roundness: 5,

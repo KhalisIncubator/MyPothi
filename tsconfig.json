@@ -3,7 +3,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": [
-      "es6", "ES2017.Object"
+      "es6",
+      "ES2017.Object"
     ],
     "allowJs": true,
     "checkJs": true,
@@ -11,11 +12,18 @@
     "jsx": "react-native",
     "noEmit": true,
     "isolatedModules": true,
-    "strict": false,
+    "strict": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": ["node_modules","babel.config.js","metro.config.js","jest.config.js",],
-  "include": ["./types/**/*.ts"]
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+  "include": [
+    "./types/**/*.ts"
+  ]
 }

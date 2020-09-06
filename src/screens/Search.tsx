@@ -1,5 +1,5 @@
 import { useNetInfo } from '@react-native-community/netinfo'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useReducer } from 'react'
 import {
   ActivityIndicator, Alert,
   SafeAreaView, ScrollView, StyleSheet, View,
@@ -7,19 +7,43 @@ import {
 import Modal from 'react-native-modal'
 import {
   Chip,
-  Menu, Searchbar, Text, Title, useTheme,
+  Menu,  Text, Title,
 } from 'react-native-paper'
-
 import { BaniResult, SearchResult } from '../components/main/Results'
 import query, { fetchBanis } from '../database/BanidbApi'
 import { SEARCH_TEXTS } from '../database/DatabaseConts'
 import { SearchCtx } from '../store/context_stores/Contexts'
 import { useUpdaters, useValues } from '../store/StateHooks'
+import { SearchBar } from '../components/SearchComponents'
 
+import { useTheme } from '../utils/Hooks'
 
+const InitialSearchState = {
+  searchQuery: '',
+  banis: [],
+  results: [],
+  showQueryTypeMenu: false,
+  showSearchMethodMenu: false
+}
+
+const SearchStateReducer = ( state, action ) => {
+  switch( action.type ) {
+    case 'updateQuery': 
+      return { ...state, searchQuery: action.payload }
+    case 'updateBanis':
+      return { ...state, banis: action.payload }
+    case 'updateResults':
+      return { ...state, results: action.payload }
+    case 'toggleQueryTypeMenu': 
+      return { ...state, showQueryTypeMenu: !state.showQueryTypeMenu }
+    case 'toggleSearchMethodMenu':
+      return { ...state, showSearchMethodMenu: !state.showSearchMethodMenu }
+  }
+}
 const Search = () => {
-  const theme = useTheme()
+  const [ theme ] = useTheme()
 
+  const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
   const [ searchQuery, updateQuery ] = useState( '' )
 
   const [ banis, updateBanis ] = useState( [] )
@@ -36,7 +60,6 @@ const Search = () => {
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
     ...actions,
   } ) )
-  const { showModal, text } = useValues( 'modalModel' )
   const { currentItems } = useValues( 'currentModel' )
   const { addEntry } = useUpdaters( 'currentModel' )
 
@@ -78,49 +101,12 @@ const Search = () => {
       flex: 1,
     }}
     >
-      <Modal
-        testID="downloadingModal"
-        isVisible={showModal}
-        useNativeDriver
-      >
-        <SafeAreaView style={[ styles.content,
-          {
-            backgroundColor: theme.colors.surface,
-            borderRadius: theme.roundness,
-          } ]}
-        >
-          <View style={{
-            padding: 10,
-          }}
-          >
-            <Title style={{
-              color: theme.colors.text,
-            }}
-            >
-              {text}
-            </Title>
-            <ActivityIndicator color="white" />
-          </View>
-
-        </SafeAreaView>
-      </Modal>
       <View style={{
         padding: 5,
       }}
       >
-        <Searchbar
-          placeholder="Search"
-          inputStyle={styles.input}
-          autoCompleteType="off"
-          autoCorrect={false}
-          onChangeText={( newQuery ) => updateQuery( newQuery )}
-          value={searchQuery}
-          autoCapitalize="none"
-          theme={{
-            colors: {
-              primary: 'white',
-            },
-          }}
+        <SearchBar
+          theme={theme}
         />
       </View>
       <View style={styles.row}>
