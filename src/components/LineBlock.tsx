@@ -14,12 +14,12 @@ import {
   LineMenuItem,
   Modification,
   RemappedLine,
-} from '../../../types/types'
-import { LineContext } from '../../Hooks'
+} from '../../types/types'
+import { LineContext } from '../Hooks'
 import {
   useEditMode,
   useValues,
-} from '../../store/StateHooks'
+} from '../store/StateHooks'
 import {
   DefaultText,
   VishraamText,

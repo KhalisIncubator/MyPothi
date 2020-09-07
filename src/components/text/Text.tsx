@@ -7,9 +7,9 @@ import {
 import {
   ApiVishraams,
   VishraamType,
-} from '../../../../types/types'
-import { mapVishraams } from '../../../Functions'
-import { useLine } from '../../../Hooks'
+} from '../../../types/types'
+import { mapVishraams } from '../../Functions'
+import { useLine } from '../../Hooks'
 
 const generateVishraamStyle = ( type ) => {
   switch ( type ) {

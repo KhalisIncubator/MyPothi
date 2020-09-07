@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Text,StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native'
-import { useTheme, useIsTablet } from '../../utils/Hooks'
+import { useTheme, useIsTablet } from '../utils/Hooks'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -38,11 +38,8 @@ interface HomescreenCardProps {
 }
 const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime } ) => {
   const navigation = useNavigation()
-  const [ isTablet ] = useIsTablet()
   const onPress = () => {
-    isTablet ?
-      navigation.navigate( 'Stack', { screen: 'Pothi', params: { pothiName } } )  
-      : navigation.navigate( 'Pothi', { pothiName } )
+       navigation.navigate( 'Pothi', { pothiName } )
   }
 
   return (
@@ -74,6 +71,10 @@ const IconCard: React.FC<IconCardProps> = ( { iconName, onPress, iconSize, iconS
  ) 
 }
 export { CardContainer, HomescreenCard, IconCard }
+
+const ResultCard = () => {
+
+}
 
 const CardStyles = StyleSheet.create( {
   Pressable: {

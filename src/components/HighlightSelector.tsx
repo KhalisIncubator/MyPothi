@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native'
 
-import { useUpdaters } from '../../store/StateHooks'
+import { useUpdaters } from '../store/StateHooks'
 
 const HighlightSelector = ( { currentLine, style } ) => {
   const { createMod } = useUpdaters( 'currentModel' )

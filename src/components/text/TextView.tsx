@@ -5,8 +5,8 @@ import {
   View,
 } from 'react-native'
 
-import { useMPTheme } from '../../../Hooks'
-import { useEditMode } from '../../../store/StateHooks'
+import { useMPTheme } from '../../Hooks'
+import { useEditMode } from '../../store/StateHooks'
 
 interface BaseProps {
   isSelected: boolean,
