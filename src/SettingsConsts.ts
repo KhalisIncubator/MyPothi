@@ -4,7 +4,7 @@ import {
   SettingSection,
   SettingType,
 } from '../types/types'
-import { wrappedModifiers } from './components/main/SettingsComponents'
+import { wrappedModifiers } from './components/SettingsComponents'
 
 const mapToComponent = ( type: SettingType ) => wrappedModifiers[ type ]
 

@@ -8,7 +8,7 @@ import {
   useTheme,
 } from 'react-native-paper'
 
-import ShabadCard, { generateTags, SourceColors } from '../components/main/Results'
+import ShabadCard, { generateTags, SourceColors } from '../components/Results'
 import { useUpdaters, useValues } from '../store/StateHooks'
 
 const Edit = ( { route } ) => {

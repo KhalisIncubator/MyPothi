@@ -9,13 +9,13 @@ import {
   Chip,
   Menu,  Text, Title,
 } from 'react-native-paper'
-import { BaniResult, SearchResult } from '../components/main/Results'
+import { BaniResult, SearchResult } from '../components/Results'
 import query, { fetchBanis } from '../database/BanidbApi'
 import { SEARCH_TEXTS } from '../database/DatabaseConts'
 import { SearchCtx } from '../store/context_stores/Contexts'
 import { useUpdaters, useValues } from '../store/StateHooks'
 import { SearchBar } from '../components/SearchComponents'
-
+import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from '../utils/Hooks'
 
 const InitialSearchState = {
@@ -106,7 +106,12 @@ const Search = () => {
       }}
       >
         <SearchBar
+          icon="search"
           theme={theme}
+          placeholder="Search..."
+          autoCorrect={false}
+          autoCapitalize="none"
+          rightIcon={<Icon name="check" size={25} color="green" />}
         />
       </View>
       <View style={styles.row}>
