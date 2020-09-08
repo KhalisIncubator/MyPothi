@@ -1,5 +1,5 @@
 import { useNetInfo } from '@react-native-community/netinfo'
-import React, { useCallback, useEffect, useState, useReducer, ReducerAction } from 'react'
+import React, { useCallback, useEffect, useState, useReducer, ReducerAction, useRef } from 'react'
 import {
   ActivityIndicator, Alert,
   SafeAreaView, ScrollView, StyleSheet, View,
@@ -29,6 +29,7 @@ const InitialSearchState = {
 const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
   switch( action.type ) {
     case 'updateQuery': 
+      console.log( action, state )
       return { ...state, searchQuery: action.payload }
     case 'updateBanis':
       return { ...state, banis: action.payload }
@@ -45,6 +46,7 @@ const Search = () => {
 
   const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
   const [ searchQuery, updateQuery ] = useState( '' )
+  const SearchBarRef = useRef( null )
 
   const [ banis, updateBanis ] = useState( [] )
   const [ results, updateResults ] = useState( [] )
@@ -85,16 +87,17 @@ const Search = () => {
   useEffect( () => {
     let cancelSearch = !net.isConnected
     const fetchResults = async () => {
-      const dbResults = await query( searchQuery, searchType )
+      const dbResults = await query( searchState.searchQuery, searchType )
       updateResults( [ ...dbResults ] )
+      console.log( searchState )
     }
-    if ( searchQuery.length > 1 && !cancelSearch ) {
+    if ( !!searchState.searchQuery && !cancelSearch ) {
       fetchResults()
     }
     return () => {
       cancelSearch = true
     }
-  }, [ searchQuery, net.isConnected, searchType ] )
+  }, [ searchState.searchQuery, net.isConnected, searchType ] )
   return (
     <SafeAreaView style={{
       backgroundColor: theme.colors.background,
@@ -106,12 +109,15 @@ const Search = () => {
       }}
       >
         <SearchBar
+          ref={SearchBarRef}
           icon="search"
           theme={theme}
           placeholder="Search..."
           autoCorrect={false}
           autoCapitalize="none"
           rightIcon={<Icon name="check" size={25} color="green" />}
+          onTextInput={() => { 
+          dispatch( { type: "updateQuery", payload: SearchBarRef.current.getValue() } )}}
         />
       </View>
       <View style={styles.row}>

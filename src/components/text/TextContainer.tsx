@@ -8,7 +8,7 @@ import {
 import { useTheme } from 'react-native-paper'
 import { Results } from 'realm'
 
-import { Modification } from '../../../../types/types'
+import { Modification } from '../../../types/types'
 
 
 const generateFont = ( isGurmukhi, isBold ) => {

@@ -72,10 +72,44 @@ const IconCard: React.FC<IconCardProps> = ( { iconName, onPress, iconSize, iconS
 }
 export { CardContainer, HomescreenCard, IconCard }
 
-const ResultCard = () => {
+const EditCard = ( { subheading, itemsRight, title, icon } ) => {
+  return (
+    <CardContainer>
+        <View style={EditCardStyle.CardContent}>
+          <View style={EditCardStyle.CardTitleContainer}>
+            <Text style={EditCardStyle.CardTitle}>{title}</Text>
+            {subheading}
+          </View>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          alignSelf: 'auto',
+        }}
+        >
+          {itemsRight}
+        </View>
+        </View>
+      </CardContainer>
+  )
 
 }
 
+export { EditCard }
+const EditCardStyle = StyleSheet.create( {
+  CardContent: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  CardTitle: {
+    fontFamily: 'OpenGurbaniAkhar',
+    padding: 5,
+    textAlign: 'center',
+  },
+  CardTitleContainer: {
+    flex: 1,
+  },
+} )
 const CardStyles = StyleSheet.create( {
   Pressable: {
     marginVertical: 5
