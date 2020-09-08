@@ -8,7 +8,6 @@ import {
 
 import SettingsCard, { SettingSection } from '../components/SettingsComponents'
 import mapToComponent, { GlobalConsts, Settings } from '../SettingsConsts'
-import { useUpdaters, useValues } from '../store/StateHooks'
 
 const SettingsScreen = () => {
   const theme = useTheme()

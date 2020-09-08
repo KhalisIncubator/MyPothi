@@ -3,12 +3,8 @@ import { useCachedValue } from '../utils/Hooks'
 import THEMES, { Theme } from '../utils/Themes'
 import { update } from 'lodash'
 
-interface Themes {
-  [key: string]: Theme
-}
 type ProviderProps = {
   children: ReactNode,
-  themes: Themes  
 }
 const ThemeContext = createContext( null )
 

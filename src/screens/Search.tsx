@@ -13,7 +13,6 @@ import { BaniResult, SearchResult } from '../components/Results'
 import query, { fetchBanis } from '../database/BanidbApi'
 import { SEARCH_TEXTS } from '../database/DatabaseConts'
 import { SearchCtx } from '../store/context_stores/Contexts'
-import { useUpdaters, useValues } from '../store/StateHooks'
 import { SearchBar } from '../components/SearchComponents'
 import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from '../utils/Hooks'
@@ -45,7 +44,6 @@ const Search = () => {
   const [ theme ] = useTheme()
 
   const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
-  const [ searchQuery, updateQuery ] = useState( '' )
   const SearchBarRef = useRef( null )
 
   const [ banis, updateBanis ] = useState( [] )
@@ -62,42 +60,8 @@ const Search = () => {
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
     ...actions,
   } ) )
-  const { currentItems } = useValues( 'currentModel' )
-  const { addEntry } = useUpdaters( 'currentModel' )
-
-
-  const { addedItems } = useValues( 'addedModel' )
-  const { updateAddedItems } = useUpdaters( 'addedModel' )
   const net = useNetInfo()
 
-  const onPress = useCallback( ( sID, gurmukhi ) => {
-    addEntry( [ sID, gurmukhi, queryType ] )
-    updateAddedItems( {
-      sID,
-      queryType,
-    } )
-  }, [ addEntry, queryType, updateAddedItems ] )
-  useEffect( () => {
-    const baniFetcher = async () => {
-      const fetched = await fetchBanis()
-      updateBanis( [ ...fetched ] )
-    }
-    baniFetcher()
-  }, [] )
-  useEffect( () => {
-    let cancelSearch = !net.isConnected
-    const fetchResults = async () => {
-      const dbResults = await query( searchState.searchQuery, searchType )
-      updateResults( [ ...dbResults ] )
-      console.log( searchState )
-    }
-    if ( !!searchState.searchQuery && !cancelSearch ) {
-      fetchResults()
-    }
-    return () => {
-      cancelSearch = true
-    }
-  }, [ searchState.searchQuery, net.isConnected, searchType ] )
   return (
     <SafeAreaView style={{
       backgroundColor: theme.colors.background,
@@ -139,14 +103,12 @@ const Search = () => {
           <Menu.Item
             onPress={() => {
               updateTypeM( false )
-              updateQueryType( 'Shabad' )
             }}
             title="Shabad"
           />
           <Menu.Item
             onPress={() => {
               updateTypeM( false )
-              updateQueryType( 'Bani' )
             }}
             title="Bani"
           />
@@ -171,7 +133,6 @@ const Search = () => {
             return (
               <Menu.Item
                 onPress={() => {
-                  updateSeachType( newID )
                   updateSearchM( false )
                 }}
                 key={id}
@@ -188,75 +149,6 @@ const Search = () => {
           )}
         </Menu>
       </View>
-      <ScrollView>
-        {queryType === 'Shabad' && results.length > 0 && results.map( ( [ info, result ] ) => {
-          const isAdded = currentItems.findIndex( ( item ) => item.shabadId === result.shabadId ) !== -1
-                                    || addedItems.findIndex( ( item ) => item.sID === result.shabadId && item.queryType === 'Shabad' ) !== -1
-
-          const addedCount = addedItems.filter( ( item ) => item.sID === result.shabadId ).length
-
-          return (
-            <SearchResult
-              key={result.gurmukhi}
-              info={info}
-              theme={theme}
-              result={result}
-              isAdded={isAdded}
-              addedCount={addedCount || null}
-              onPress={() => {
-                Alert.alert(
-                  'Confirm Addition',
-                  'Are you sure you want to add this to your pothi?',
-                  [
-                    {
-                      text: 'Cancel',
-                    },
-                    {
-                      text: 'Ok',
-                      onPress: () => { onPress( result.shabadId, result.verse.gurmukhi ) },
-                      style: 'cancel',
-                    },
-                  ],
-                  {
-                    cancelable: false,
-                  },
-                )
-              }}
-            />
-          )
-        } )}
-        {queryType === 'Bani' && banis.map( ( bani ) => {
-          const isAdded = currentItems.findIndex( ( item ) => item.shabadId === bani.ID ) !== -1
-                      || addedItems.findIndex( ( item ) => item.sID === bani.ID && item.queryType === 'Bani' ) !== -1
-          return (
-            <BaniResult
-              key={bani.gurmukhi}
-              theme={theme}
-              result={bani}
-              isAdded={isAdded}
-              onPress={() => {
-                Alert.alert(
-                  'Confirm Addition',
-                  'Are you sure you want to add this to your pothi?',
-                  [
-                    {
-                      text: 'Ok',
-                      onPress: () => { onPress( bani.ID, bani.gurmukhi ) },
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Cancel',
-                    },
-                  ],
-                  {
-                    cancelable: false,
-                  },
-                )
-              }}
-            />
-          )
-        } )}
-      </ScrollView>
     </SafeAreaView>
 
 

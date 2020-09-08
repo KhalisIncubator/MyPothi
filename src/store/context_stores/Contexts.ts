@@ -4,14 +4,7 @@ import {
   persist,
 } from 'easy-peasy'
 
-import {
-  EditModel,
-  FullScreenModel,
-  SearchModel,
-} from '../Interfaces'
-import AsyncStore from '../PersistStore'
-
-const searchModel: SearchModel = {
+const searchModel = {
   searchType: 0,
   queryType: 'Shabad',
 
@@ -23,14 +16,11 @@ const searchModel: SearchModel = {
   } ),
 }
 
-const SearchCtx = createContextStore( persist( searchModel, {
-  storage: AsyncStore,
-  mergeStrategy: 'overwrite',
-} ) )
+const SearchCtx = createContextStore( searchModel )
 
 export { SearchCtx }
 
-const editModel: EditModel = {
+const editModel = {
   isEditMode: false,
   selectedInfo: [ null, null, null ],
 
@@ -51,7 +41,7 @@ const EditCtx = createContextStore( editModel )
 export { EditCtx }
 
 
-const fullScreenModel: FullScreenModel = {
+const fullScreenModel = {
   isFullScreen: false,
   toggleMode: action( ( state ) => {
     state.isFullScreen = !state.isFullScreen

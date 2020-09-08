@@ -1,30 +1,23 @@
 import React, { useRef, useState, MutableRefObject } from 'react'
-import { View, SafeAreaView, StyleSheet, Text, Keyboard, ScrollView, useWindowDimensions } from 'react-native'
+import { View,  StyleSheet, Text, Keyboard } from 'react-native'
 import { HomescreenCard, IconCard } from '../components/Card'
 import { SearchBar } from '../components/SearchComponents'
 import { useTheme } from '../utils/Hooks'
 import Icon from 'react-native-vector-icons/Feather'
-import { useValues, useUpdaters } from '../store/StateHooks'
 import { useNavigation } from '@react-navigation/native'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import { DynamicScrollView } from '../components/DynamicScrollView'
 
 const Homescreen = () => {
   const [ theme ] = useTheme()
-  const window = useWindowDimensions()
-  const [ pageHeight, updatePageHeight ] = useState( 0 )
-  const { pothiNames } = useValues( 'pothiModel' )
   const navigation = useNavigation()
   const PothiCreatingRef= useRef( null )
-  const { createPothi } = useUpdaters( 'pothiModel' )
   const makePothi = () => {
-    createPothi( PothiCreatingRef.current.getValue() )
     Keyboard.dismiss()
     PothiCreatingRef.current.clear()
   }
   return (
-    <ActionSheetProvider>  
-    <SafeAreaView style={styles.page} >
-      <ScrollView style={styles.page} scrollEnabled={pageHeight > window.height} onContentSizeChange={( screenWidth, screenHeight ) => { updatePageHeight( screenHeight )}}>
+      <DynamicScrollView>
       <View style={styles.headerView}>
         <Text style={styles.title}>MyPothi</Text>
         <View>
@@ -47,7 +40,6 @@ const Homescreen = () => {
             <Icon name="book-open" size={30} color={theme.colors.orange} />
             <Text style={styles.subheaderText}>Pothis</Text>
           </View>
-            {pothiNames.map( ( [ pothi, id ] ) => <HomescreenCard pothiName={pothi} openedTime="12" key={id}/> )}
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheader}>
@@ -61,9 +53,7 @@ const Homescreen = () => {
             <IconCard iconName="help-circle" iconSize={40} iconSubtitle="Help" onPress={() => alert( 'stop that' )} />
         </View>
       </View>
-        </ScrollView>
-    </SafeAreaView>
-  </ActionSheetProvider>
+      </DynamicScrollView>
   )
 }
 

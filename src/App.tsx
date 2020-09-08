@@ -1,16 +1,10 @@
 /* eslint-disable react/display-name */
 import 'react-native-gesture-handler'
 
-import { StoreProvider } from 'easy-peasy'
 import React, {
-  lazy,
   Suspense,
-  useMemo,
 } from 'react'
-import {
-  useColorScheme,
-  View,
-} from 'react-native'
+import { View } from 'react-native'
 import {
   DefaultTheme,
   Provider as PaperProvider,
@@ -18,8 +12,6 @@ import {
 import Icon from 'react-native-vector-icons/Feather'
 
 import { MyPothiTheme } from '../types/types'
-import store from './store/MainStore'
-import { useValues } from './store/StateHooks'
 import { MobileRoutes } from './navigation'
 import { ThemeProvider } from './store/Theme'
 
@@ -83,39 +75,17 @@ const trueDark = {
 }
 
 const App = () => {
-  const { isDarkMode, trueDarkMode, choseSystem } = useValues( 'themeModel' ).theme
-  const systemTheme = useColorScheme()
-  const decideTheme = useMemo( () => {
-    if ( choseSystem ) return systemTheme === 'dark' ? ( trueDarkMode ? trueDark : darkTheme ) : theme
-    return trueDarkMode ? trueDark : ( isDarkMode ? darkTheme : theme )
-  }, [ isDarkMode, trueDarkMode, choseSystem, systemTheme ] )
   return (
     <ThemeProvider>
     <PaperProvider
-      theme={decideTheme}
+      theme={theme}
       settings={{
         icon: ( props ) => <Icon {...props} />,
       }}
     >
-
-      <Suspense fallback={(
-        <View style={{
-          flex: 1,
-          backgroundColor: '#FFA500',
-        }}
-        />
-      )}
-      >
         <MobileRoutes />
-      </Suspense>
     </PaperProvider>
   </ThemeProvider>
   )
 }
-const withStore = () => (
-  <StoreProvider store={store}>
-    <App />
-  </StoreProvider>
-)
-
-export default withStore
+export default App
