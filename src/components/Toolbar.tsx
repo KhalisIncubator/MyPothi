@@ -10,11 +10,11 @@ import {
   useTheme,
 } from 'react-native-paper'
 
-import { getCurrentFontSize } from '../../Functions'
+import { getCurrentFontSize } from '../Functions'
 import {
   useUpdaters,
   useValues,
-} from '../../store/StateHooks'
+} from '../store/StateHooks'
 
 const Toolbar = ( {
   showMain, updateMode, currentLine, style, toggleHighligher, isHighlighterOn,

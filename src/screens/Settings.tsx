@@ -6,7 +6,7 @@ import {
   useTheme,
 } from 'react-native-paper'
 
-import SettingsCard, { SettingSection } from '../components/main/SettingsComponents'
+import SettingsCard, { SettingSection } from '../components/SettingsComponents'
 import mapToComponent, { GlobalConsts, Settings } from '../SettingsConsts'
 import { useUpdaters, useValues } from '../store/StateHooks'
 

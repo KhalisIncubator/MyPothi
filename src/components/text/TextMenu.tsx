@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Menu } from 'react-native-paper'
 
-import { useLine } from '../../../Hooks'
+import { useLine } from '../../Hooks'
 
 const ContextMenu = ( { menu, children } ) => {
   const line = useLine()

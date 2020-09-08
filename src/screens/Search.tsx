@@ -1,5 +1,5 @@
 import { useNetInfo } from '@react-native-community/netinfo'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useReducer, ReducerAction, useRef } from 'react'
 import {
   ActivityIndicator, Alert,
   SafeAreaView, ScrollView, StyleSheet, View,
@@ -7,20 +7,46 @@ import {
 import Modal from 'react-native-modal'
 import {
   Chip,
-  Menu, Searchbar, Text, Title, useTheme,
+  Menu,  Text, Title,
 } from 'react-native-paper'
-
-import { BaniResult, SearchResult } from '../components/main/Results'
+import { BaniResult, SearchResult } from '../components/Results'
 import query, { fetchBanis } from '../database/BanidbApi'
 import { SEARCH_TEXTS } from '../database/DatabaseConts'
 import { SearchCtx } from '../store/context_stores/Contexts'
 import { useUpdaters, useValues } from '../store/StateHooks'
+import { SearchBar } from '../components/SearchComponents'
+import Icon from 'react-native-vector-icons/Feather'
+import { useTheme } from '../utils/Hooks'
 
+const InitialSearchState = {
+  searchQuery: '',
+  banis: [],
+  results: [],
+  showQueryTypeMenu: false,
+  showSearchMethodMenu: false
+}
 
+const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
+  switch( action.type ) {
+    case 'updateQuery': 
+      console.log( action, state )
+      return { ...state, searchQuery: action.payload }
+    case 'updateBanis':
+      return { ...state, banis: action.payload }
+    case 'updateResults':
+      return { ...state, results: action.payload }
+    case 'toggleQueryTypeMenu': 
+      return { ...state, showQueryTypeMenu: !state.showQueryTypeMenu }
+    case 'toggleSearchMethodMenu':
+      return { ...state, showSearchMethodMenu: !state.showSearchMethodMenu }
+  }
+}
 const Search = () => {
-  const theme = useTheme()
+  const [ theme ] = useTheme()
 
+  const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
   const [ searchQuery, updateQuery ] = useState( '' )
+  const SearchBarRef = useRef( null )
 
   const [ banis, updateBanis ] = useState( [] )
   const [ results, updateResults ] = useState( [] )
@@ -36,7 +62,6 @@ const Search = () => {
   const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
     ...actions,
   } ) )
-  const { showModal, text } = useValues( 'modalModel' )
   const { currentItems } = useValues( 'currentModel' )
   const { addEntry } = useUpdaters( 'currentModel' )
 
@@ -62,65 +87,37 @@ const Search = () => {
   useEffect( () => {
     let cancelSearch = !net.isConnected
     const fetchResults = async () => {
-      const dbResults = await query( searchQuery, searchType )
+      const dbResults = await query( searchState.searchQuery, searchType )
       updateResults( [ ...dbResults ] )
+      console.log( searchState )
     }
-    if ( searchQuery.length > 1 && !cancelSearch ) {
+    if ( !!searchState.searchQuery && !cancelSearch ) {
       fetchResults()
     }
     return () => {
       cancelSearch = true
     }
-  }, [ searchQuery, net.isConnected, searchType ] )
+  }, [ searchState.searchQuery, net.isConnected, searchType ] )
   return (
     <SafeAreaView style={{
       backgroundColor: theme.colors.background,
       flex: 1,
     }}
     >
-      <Modal
-        testID="downloadingModal"
-        isVisible={showModal}
-        useNativeDriver
-      >
-        <SafeAreaView style={[ styles.content,
-          {
-            backgroundColor: theme.colors.surface,
-            borderRadius: theme.roundness,
-          } ]}
-        >
-          <View style={{
-            padding: 10,
-          }}
-          >
-            <Title style={{
-              color: theme.colors.text,
-            }}
-            >
-              {text}
-            </Title>
-            <ActivityIndicator color="white" />
-          </View>
-
-        </SafeAreaView>
-      </Modal>
       <View style={{
         padding: 5,
       }}
       >
-        <Searchbar
-          placeholder="Search"
-          inputStyle={styles.input}
-          autoCompleteType="off"
+        <SearchBar
+          ref={SearchBarRef}
+          icon="search"
+          theme={theme}
+          placeholder="Search..."
           autoCorrect={false}
-          onChangeText={( newQuery ) => updateQuery( newQuery )}
-          value={searchQuery}
           autoCapitalize="none"
-          theme={{
-            colors: {
-              primary: 'white',
-            },
-          }}
+          rightIcon={<Icon name="check" size={25} color="green" />}
+          onTextInput={() => { 
+          dispatch( { type: "updateQuery", payload: SearchBarRef.current.getValue() } )}}
         />
       </View>
       <View style={styles.row}>

@@ -15,10 +15,10 @@ import {
 import { useTheme } from 'react-native-paper'
 import SplashScreen from 'react-native-splash-screen'
 
-import HighlightSelector from '../components/main/HighlightSelector'
-import ShimmeringLine from '../components/main/ShimmeringBlock'
-import Toolbar from '../components/main/Toolbar'
-import Viewer from '../components/main/Viewer'
+import HighlightSelector from '../components/HighlightSelector'
+import ShimmeringLine from '../components/ShimmeringBlock'
+import Toolbar from '../components/Toolbar'
+import Viewer from '../components/Viewer'
 import { parseLines } from '../database/BanidbApi'
 import {
   EditCtx,

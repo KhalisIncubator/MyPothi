@@ -20,6 +20,14 @@
       }
     }
   },
+  "overrides": [
+  {
+    "files": ["**/*.tsx"],
+    "rules": {
+      "react/prop-types": "off"
+    }
+  }
+  ],
   "env": {
     "es6": true
   },
@@ -38,6 +46,7 @@
       "always"
     ],
     "import/no-unresolved": 0,
+     "object-curly-spacing": ["error", "always"],
     "object-curly-newline": [
       "error",
       {
@@ -68,6 +77,8 @@
           "empty"
         ]
       }
-    ]
+    ],
+    "react/display-name": 0,
+    
   }
 }
