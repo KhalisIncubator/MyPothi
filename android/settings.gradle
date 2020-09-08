@@ -2,4 +2,7 @@ rootProject.name = 'MyPothi'
 include ':@react-native-community_async-storage'
 // project(':@react-native-community_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/async-storage/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':watermelondb'
+project(':watermelondb').projectDir =
+    new File(rootProject.projectDir, '../node_modules/@nozbe/watermelondb/native/android')
 include ':app'
