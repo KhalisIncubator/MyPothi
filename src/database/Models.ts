@@ -7,8 +7,17 @@ class Pothi extends Model {
   static associations: Associations = {
     shabads: { type: 'has_many', foreignKey: 'pothi_id' }
   }
-  @field( 'name' ) name: string
+  @field( 'title' ) title 
   @children( 'shabads' ) shabads
+}
+
+type StoredShabad = {
+  html: string,
+  mainLine: string,
+}
+type StoredPothi  = {
+  title: string,
+  shabads: []
 }
 
 class Shabad extends Model {

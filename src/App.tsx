@@ -75,8 +75,8 @@ const trueDark = {
 
 const App = () => {
   return (
-    <DatabaseProvider database={localDatabase}>
     <ThemeProvider>
+    <DatabaseProvider database={localDatabase}>
     <PaperProvider
       theme={theme}
       settings={{
@@ -85,8 +85,8 @@ const App = () => {
     >
         <MobileRoutes />
     </PaperProvider>
-  </ThemeProvider>
       </DatabaseProvider>
+  </ThemeProvider>
   )
 }
 export default App

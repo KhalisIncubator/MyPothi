@@ -8,14 +8,13 @@ import { useNavigation } from '@react-navigation/native'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { DynamicScrollView } from '../components/DynamicScrollView'
 
-import { useQuery } from '../utils/Hooks.ts'
+import { useQuery } from '../utils/Hooks'
 
 const Homescreen =  () => {
   const [ theme ] = useTheme()
   const navigation = useNavigation()
   const PothiCreatingRef= useRef( null )
   const [ pothis, newPothi ] = useQuery( 'pothis' )
-  pothis.forEach( p => console.log( p.title ) )
   const makePothi = () => {
     newPothi( { title: PothiCreatingRef.current.getValue() } )
     Keyboard.dismiss()

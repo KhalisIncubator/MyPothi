@@ -6,9 +6,9 @@ import { update } from 'lodash'
 type ProviderProps = {
   children: ReactNode,
 }
-const ThemeContext = createContext( null )
-
 const DEFAULT_THEME = 'light'
+const ThemeContext = createContext( { theme: THEMES[ DEFAULT_THEME ], setTheme: function( theme:string ){} } )
+
 
 const ThemeProvider: React.FC<ProviderProps> = ( { children } ) => {
   const [ themeName, setTheme ] = useCachedValue( '@theme', DEFAULT_THEME )

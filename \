@@ -3,8 +3,8 @@ import { useAsyncStorage } from '@react-native-community/async-storage'
 import { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from '../store/Theme'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
-import themes from './Themes' 
-import { Columns } from '../database/LocalDatabase'
+import themes from './Themes'
+
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
   return [ dimensions.width > 900 ]
@@ -37,26 +37,28 @@ const useCachedValue = ( key:string, initialValue: string ): [string, ( name: st
 }
 
 const useTheme = () => {
-  const { theme, setTheme } = useContext( ThemeContext )
-  return [ theme, setTheme ]
+  const themeCtx = useContext( ThemeContext )
+  return [ themes.light, () => {} ]
 }
 
-const useQuery: {<K extends keyof Columns>( column: K ): [Columns[K][], ( any ) => void]} = ( columnName, dependencies = [] ) => {
+const useQuery = ( columnName, dependencies = [] ) => {
   const database = useDatabase()
   const column = database.collections.get( columnName )
+  const observeColumn = column.query().observe()
   const [ result, updateResult ] = useState( [] )
   useEffect( () => {
-    const subscription = column.query().observe().subscribe( updateResult )
+    const subscription = observeColumn.subscribe( updateResult )
 
     return () => subscription.unsubscribe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies )
-  const createNew = async( fields ) => {
+  useEffect( () => {
+    result.forEach( res => res.title )
+  }, [ result ] ) 
+  const createNew = async( info ) => {
     await database.action( async () => {
-      const newRow = await column.create( row => {
-        Object.entries( fields ).forEach( ( [ key, value ] ) => {
-          row[ key ] = value
-        } )
+      const newItem = await column.create( item => {
+        item.title = "test"
       } )
     } )
   }

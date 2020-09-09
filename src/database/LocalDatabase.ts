@@ -12,6 +12,10 @@ const localDatabase = new Database( {
   actionsEnabled: true
 } )
 
+interface Columns {
+  "pothis": typeof Pothi,
+  "shabads": typeof Shabad
 
-export {localDatabase}
+}
+export { localDatabase, Columns }
 
