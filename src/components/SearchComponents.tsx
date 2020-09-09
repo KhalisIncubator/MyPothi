@@ -30,9 +30,6 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     }
   }
   #input: TextInput | null
-  setNativeProps( args ) {
-    return this.#input && this.#input.setNativeProps( args )
-  }
   clear = (): void => this.#input?.clear() 
   focus = (): void => this.#input.focus() 
   blur = (): void => this.#input.blur()

@@ -1,4 +1,4 @@
-import React, { useRef, useState, MutableRefObject } from 'react'
+import React, { useRef } from 'react'
 import { View,  StyleSheet, Text, Keyboard } from 'react-native'
 import { HomescreenCard, IconCard } from '../components/Card'
 import { SearchBar } from '../components/SearchComponents'
@@ -8,14 +8,18 @@ import { useNavigation } from '@react-navigation/native'
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { DynamicScrollView } from '../components/DynamicScrollView'
 
-const Homescreen = () => {
+import { useQuery } from '../utils/Hooks.ts'
+
+const Homescreen =  () => {
   const [ theme ] = useTheme()
   const navigation = useNavigation()
   const PothiCreatingRef= useRef( null )
+  const [ pothis, newPothi ] = useQuery( 'pothis' )
+  pothis.forEach( p => console.log( p.title ) )
   const makePothi = () => {
+    newPothi( { title: PothiCreatingRef.current.getValue() } )
     Keyboard.dismiss()
-    PothiCreatingRef.current.clear()
-  }
+    PothiCreatingRef.current.clear() }
   return (
       <DynamicScrollView>
       <View style={styles.headerView}>
@@ -40,6 +44,7 @@ const Homescreen = () => {
             <Icon name="book-open" size={30} color={theme.colors.orange} />
             <Text style={styles.subheaderText}>Pothis</Text>
           </View>
+        {pothis.map( pothi => <HomescreenCard pothiName={pothi.title} key={pothi.title} /> )}
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheader}>
@@ -55,9 +60,9 @@ const Homescreen = () => {
       </View>
       </DynamicScrollView>
   )
-}
-
+} 
 export { Homescreen }
+
 
 const styles = StyleSheet.create( {
   Row: {

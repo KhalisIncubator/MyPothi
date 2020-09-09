@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useEffect,
   useRef,
   useState,
 } from 'react'
@@ -13,17 +12,7 @@ import {
   TapGestureHandler,
 } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
-import SplashScreen from 'react-native-splash-screen'
 
-import HighlightSelector from '../components/HighlightSelector'
-import ShimmeringLine from '../components/ShimmeringBlock'
-import Toolbar from '../components/Toolbar'
-import Viewer from '../components/Viewer'
-import { parseLines } from '../database/BanidbApi'
-import {
-  EditCtx,
-  FullScreenCtx,
-} from '../store/context_stores/Contexts'
 
 const Gutka = () => {
   const theme = useTheme()

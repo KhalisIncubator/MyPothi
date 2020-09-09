@@ -20,7 +20,7 @@ const CardContainer: React.FC<CardProps> = ( {  pressableStyle, containerStyle ,
      pressableStyle,
   ] )
   
-  const ViewStyle = StyleSheet.flatten( [ CardStyles.View, containerStyle ] )
+ const ViewStyle = StyleSheet.flatten( [ CardStyles.View, containerStyle ] )
 
   return (
     <Pressable style={PressableStyle} onPress={onPress}>

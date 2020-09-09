@@ -1,8 +1,7 @@
-/* eslint-disable no-restricted-syntax */
 import { Database } from '@nozbe/watermelondb'
-import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
-import schema from './Schema'
 import { Shabad, Pothi } from './Models'
+import schema from './Schema'
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 
 const adapter = new SQLiteAdapter( {
  schema,
@@ -14,4 +13,5 @@ const localDatabase = new Database( {
 } )
 
 
-export { localDatabase }
+export {localDatabase}
+

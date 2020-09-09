@@ -1,13 +1,12 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { FullScreenCtx } from '../store/context_stores/Contexts'
 import Edit from '../screens/Edit'
 import Pothi from '../screens/Pothi'
 import Search from '../screens/Search'
 import SettingsScreen from '../screens/Settings'
-import { Homescreen } from '../screens/Homescreen'
 
+import { Homescreen } from '../screens/Homescreen'
 const Main = createStackNavigator<MainRouteParams>()
 
 type MainRouteParams = {
@@ -20,7 +19,6 @@ type MainRouteParams = {
 
 const MobileRoutes = () => (
   <NavigationContainer >
-  <FullScreenCtx.Provider>
     <Main.Navigator
       initialRouteName="Home"
       headerMode="float"
@@ -48,7 +46,6 @@ const MobileRoutes = () => (
       <Main.Screen name="Edit" component={Edit} />
       <Main.Screen name="Home" component={Homescreen} options={{ headerShown: false }}/>
     </Main.Navigator>
-  </FullScreenCtx.Provider>
   </NavigationContainer>
 )
 export { MobileRoutes }

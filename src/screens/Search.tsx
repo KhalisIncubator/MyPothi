@@ -12,7 +12,6 @@ import {
 import { BaniResult, SearchResult } from '../components/Results'
 import query, { fetchBanis } from '../database/BanidbApi'
 import { SEARCH_TEXTS } from '../database/DatabaseConts'
-import { SearchCtx } from '../store/context_stores/Contexts'
 import { SearchBar } from '../components/SearchComponents'
 import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from '../utils/Hooks'
@@ -54,12 +53,6 @@ const Search = () => {
   const [ searchMenu, updateSearchM ] = useState( false )
 
 
-  const { searchType, queryType } = SearchCtx.useStoreState( ( store ) => ( {
-    ...store,
-  } ) )
-  const { updateQueryType, updateSeachType } = SearchCtx.useStoreActions( ( actions ) => ( {
-    ...actions,
-  } ) )
   const net = useNetInfo()
 
   return (
@@ -85,69 +78,6 @@ const Search = () => {
         />
       </View>
       <View style={styles.row}>
-        <Menu
-          visible={typeMenu}
-          onDismiss={() => updateTypeM( false )}
-          anchor={(
-            <Chip
-              style={[ styles.button, {
-                backgroundColor: theme.colors.surface,
-              } ]}
-              // color={theme.colors.text}
-              onPress={() => updateTypeM( true )}
-            >
-              {queryType}
-            </Chip>
-                      )}
-        >
-          <Menu.Item
-            onPress={() => {
-              updateTypeM( false )
-            }}
-            title="Shabad"
-          />
-          <Menu.Item
-            onPress={() => {
-              updateTypeM( false )
-            }}
-            title="Bani"
-          />
-        </Menu>
-        <Menu
-          visible={searchMenu}
-          onDismiss={() => updateSearchM( false )}
-          anchor={(
-            <Chip
-              style={[ styles.button, {
-                backgroundColor: theme.colors.surface,
-              } ]}
-              onPress={() => updateSearchM( true )}
-            >
-              {SEARCH_TEXTS[ searchType ]}
-            </Chip>
-                      )}
-        >
-          {Object.entries( SEARCH_TEXTS ).map( ( searchText ) => {
-            const [ id, desc ] = searchText
-            const newID = parseInt( id, 10 )
-            return (
-              <Menu.Item
-                onPress={() => {
-                  updateSearchM( false )
-                }}
-                key={id}
-                title={`${desc}`}
-              />
-            )
-          } )}
-          {!net.isConnected && (
-          <View>
-            <Text>
-              Sorry you are not connected to the internet!
-            </Text>
-          </View>
-          )}
-        </Menu>
       </View>
     </SafeAreaView>
 
@@ -174,9 +104,4 @@ const styles = StyleSheet.create( {
   },
 } )
 
-const withCtxs = () => (
-  <SearchCtx.Provider>
-    <Search />
-  </SearchCtx.Provider>
-)
-export default withCtxs
+export default Search

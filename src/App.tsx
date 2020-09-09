@@ -1,10 +1,9 @@
 /* eslint-disable react/display-name */
 import 'react-native-gesture-handler'
 
-import React, {
-  Suspense,
-} from 'react'
-import { View } from 'react-native'
+import React from 'react'
+import { localDatabase } from './database/LocalDatabase'
+import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider'
 import {
   DefaultTheme,
   Provider as PaperProvider,
@@ -76,6 +75,7 @@ const trueDark = {
 
 const App = () => {
   return (
+    <DatabaseProvider database={localDatabase}>
     <ThemeProvider>
     <PaperProvider
       theme={theme}
@@ -86,6 +86,7 @@ const App = () => {
         <MobileRoutes />
     </PaperProvider>
   </ThemeProvider>
+      </DatabaseProvider>
   )
 }
 export default App
