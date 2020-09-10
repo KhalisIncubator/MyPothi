@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { View,  StyleSheet, Text, Keyboard } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { View,  StyleSheet, Text, Keyboard, Button } from 'react-native'
 import { HomescreenCard, IconCard } from '../components/Card'
 import { SearchBar } from '../components/SearchComponents'
 import { useTheme } from '../utils/Hooks'
@@ -14,7 +14,8 @@ const Homescreen =  () => {
   const [ theme ] = useTheme()
   const navigation = useNavigation()
   const PothiCreatingRef= useRef( null )
-  const [ pothis, newPothi ] = useQuery( 'pothis' )
+  const [ pothis, newPothi, deletePothi ] = useQuery('pothis')
+  const [ editing, toggleEditing ] = useState( false )
   const makePothi = () => {
     newPothi( { title: PothiCreatingRef.current.getValue() } )
     Keyboard.dismiss()
@@ -33,17 +34,19 @@ const Homescreen =  () => {
             ref={PothiCreatingRef}  
             theme={theme}  
             placeholder="Create Gutka..."  
-            icon="book"  
-            autoCorrect={false}
+            icon="book"  autoCorrect={false}
             autoCapitalize="none"
           rightIcon={<Icon style={styles.iconView} onPress={makePothi} name="check" size={25} color="green"/>} />
       </View>
       <View style={styles.subsection} >
-          <View style={styles.subheader}>
+          <View style={styles.subheaderRow}>
+            <View style={styles.subheader}>
             <Icon name="book-open" size={30} color={theme.colors.orange} />
             <Text style={styles.subheaderText}>Pothis</Text>
+            </View>
+            <Button title={editing ? "Done" : "Edit"} onPress={() => toggleEditing( prev => !prev )}/>
           </View>
-        {pothis.map( pothi => <HomescreenCard pothiName={pothi.title} key={pothi.title} /> )}
+        {pothis.map( pothi => <HomescreenCard pothiName={pothi.title} openedTime={!editing && '1'} key={pothi.title} rightIcon={ editing && <Icon style={{ color: 'red' }} size={25} name="minus-circle" onPress={() => deletePothi( pothi.id )}/>} /> )}
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheader}>
@@ -52,7 +55,6 @@ const Homescreen =  () => {
           </View>
         <View style={styles.Row}>
           <IconCard iconName="search" iconSize={40} iconSubtitle="Search" onPress={() => navigation.navigate( 'Search' )} />
-          <IconCard iconName="edit-2" iconSize={40} iconSubtitle="Edit" onPress={() => navigation.navigate( 'Edit', { type: 'Pothi' } )} />
             <IconCard iconName="settings" iconSize={40} iconSubtitle="Settings" onPress={() => navigation.navigate( 'Settings' )} />
             <IconCard iconName="help-circle" iconSize={40} iconSubtitle="Help" onPress={() => alert( 'stop that' )} />
         </View>
@@ -65,6 +67,7 @@ export { Homescreen }
 
 const styles = StyleSheet.create( {
   Row: {
+    alignSelf: 'flex-start',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -79,15 +82,16 @@ const styles = StyleSheet.create( {
   iconView: {
     alignSelf: 'flex-end',
   },
-  page: {
-    flex: 1,
-    padding: 10
-  },
   subheader: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
-    padding: 2,
+  },
+  subheaderRow: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   subheaderText: {
     fontFamily: 'Comfortaa',

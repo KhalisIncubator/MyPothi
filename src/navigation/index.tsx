@@ -13,7 +13,6 @@ type MainRouteParams = {
   Pothi: {pothiName: string},
   Settings: null,
   Search: null,
-  Edit: null,
   Home: null
 }
 
@@ -37,13 +36,15 @@ const MobileRoutes = () => (
       <Main.Screen  
         name="Pothi"  
         component={Pothi}  
+        options={( { route } ) => ( {
+          title: route.params.pothiName
+        } )}
         //options={( { navigation } ) => (  
         //   { headerRight: () => <Button title="yo" onPress={()=> navigation.navigate( "Settings" )}></Button> }  
       // )} />
       />
       <Main.Screen name="Settings" component={SettingsScreen} />
       <Main.Screen name="Search" component={Search} />
-      <Main.Screen name="Edit" component={Edit} />
       <Main.Screen name="Home" component={Homescreen} options={{ headerShown: false }}/>
     </Main.Navigator>
   </NavigationContainer>

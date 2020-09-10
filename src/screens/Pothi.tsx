@@ -14,7 +14,7 @@ import {
 import { useTheme } from 'react-native-paper'
 
 
-const Gutka = () => {
+const Pothi = () => {
   const theme = useTheme()
   const doubleTapRef = useRef()
   const [ shabads, updateShabads ] = useState( [] )
@@ -49,9 +49,4 @@ const styles = StyleSheet.create( {
   },
 } )
 
-const withEditCtx = () => (
-  <EditCtx.Provider>
-    <Gutka />
-  </EditCtx.Provider>
-)
-export default withEditCtx
+export default Pothi

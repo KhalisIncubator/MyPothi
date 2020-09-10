@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": [
-      "es6",
-      "ES2017.Object"
-    ],
+    "lib": [ "es6" ],
     "allowJs": true,
     "checkJs": true,
     "allowSyntheticDefaultImports": true,

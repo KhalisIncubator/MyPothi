@@ -3,15 +3,16 @@ import { useAsyncStorage } from '@react-native-community/async-storage'
 import { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from '../store/Theme'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
-import themes from './Themes' 
+import { Theme } from './Themes'
 import { Columns } from '../database/LocalDatabase'
+import { Pothi } from '../database/Models'
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
   return [ dimensions.width > 900 ]
 }
 
 const useCachedValue = ( key:string, initialValue: string ): [string, ( name: string ) => void] => {
-  const [ value, updateValue ] = useState( initialValue )
+  const [ value, updateValue ] = useState( initialValue ) 
   const { getItem, setItem } = useAsyncStorage( key )
 
   useEffect( () => {
@@ -36,14 +37,18 @@ const useCachedValue = ( key:string, initialValue: string ): [string, ( name: st
 
 }
 
-const useTheme = () => {
+const useTheme = (): [Theme, ( theme: string ) => void] => {
   const { theme, setTheme } = useContext( ThemeContext )
   return [ theme, setTheme ]
 }
 
-const useQuery: {<K extends keyof Columns>( column: K ): [Columns[K][], ( any ) => void]} = ( columnName, dependencies = [] ) => {
+const useQuery:
+   {
+     <K extends keyof Columns>( columnName: K ): 
+      [Columns[K][], (any) => {}, (any)=> {}] }  
+   = ( columnName, dependencies = [] ) => {
   const database = useDatabase()
-  const column = database.collections.get( columnName )
+  const column = database.collections.get<Columns[typeof columnName]>( columnName )
   const [ result, updateResult ] = useState( [] )
   useEffect( () => {
     const subscription = column.query().observe().subscribe( updateResult )
@@ -60,9 +65,15 @@ const useQuery: {<K extends keyof Columns>( column: K ): [Columns[K][], ( any ) 
       } )
     } )
   }
+  const deleteRecord = async ( id ) => {
+    const pothi = await column.find( id )
+    await database.action( async() => {
+      await pothi.destroyPermanently()
+    } )
+  }
   
 
-  return [ result, createNew ]
+  return [ result, createNew, deleteRecord ]
 }
 
 export { useIsTablet, useCachedValue, useTheme, useQuery }

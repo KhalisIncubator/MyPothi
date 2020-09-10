@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { ScrollView, useWindowDimensions, StyleSheet, SafeAreaView } from 'react-native'
+import { ScrollView, Keyboard, useWindowDimensions, StyleSheet, SafeAreaView } from 'react-native'
 
 
 const DynamicScrollView = ( { children } ) => {
@@ -9,7 +9,7 @@ const DynamicScrollView = ( { children } ) => {
 
     return (
       <SafeAreaView  style={PageStyles.page} >
-        <ScrollView scrollEnabled={pageHeight > window.height} style={PageStyles.scrollView} onContentSizeChange={( width, height ) => {updatePageHeight( height )}}>
+        <ScrollView onScroll={() => Keyboard.dismiss()} scrollEnabled={pageHeight > window.height} style={PageStyles.scrollView} onContentSizeChange={( width, height ) => {updatePageHeight( height )}}>
           {children}
         </ScrollView>
       </SafeAreaView>

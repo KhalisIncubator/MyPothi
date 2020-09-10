@@ -2,7 +2,7 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import React, { useCallback, useEffect, useState, useReducer, ReducerAction, useRef } from 'react'
 import {
   ActivityIndicator, Alert,
-  SafeAreaView, ScrollView, StyleSheet, View,
+  SafeAreaView, ScrollView, StyleSheet, View, Keyboard,
 } from 'react-native'
 import Modal from 'react-native-modal'
 import {
@@ -15,6 +15,7 @@ import { SEARCH_TEXTS } from '../database/DatabaseConts'
 import { SearchBar } from '../components/SearchComponents'
 import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from '../utils/Hooks'
+import { SearchCard } from '../components/Card'
 
 const InitialSearchState = {
   searchQuery: '',
@@ -27,7 +28,6 @@ const InitialSearchState = {
 const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
   switch( action.type ) {
     case 'updateQuery': 
-      console.log( action, state )
       return { ...state, searchQuery: action.payload }
     case 'updateBanis':
       return { ...state, banis: action.payload }
@@ -45,26 +45,19 @@ const Search = () => {
   const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
   const SearchBarRef = useRef( null )
 
-  const [ banis, updateBanis ] = useState( [] )
-  const [ results, updateResults ] = useState( [] )
-
-
-  const [ typeMenu, updateTypeM ] = useState( false )
-  const [ searchMenu, updateSearchM ] = useState( false )
-
-
   const net = useNetInfo()
+  useEffect( () => {
+   const fetchResults = async () => {
+        const dbResults = await query( searchState.searchQuery, 1 )
+        dispatch( { type: 'updateResults', payload: dbResults } )
+      }
+      if ( searchState.searchQuery.length > 1 && net.isConnected ) {
+        fetchResults()
+      }
+  }, [ searchState.searchQuery, net.isConnected ] )
 
   return (
-    <SafeAreaView style={{
-      backgroundColor: theme.colors.background,
-      flex: 1,
-    }}
-    >
-      <View style={{
-        padding: 5,
-      }}
-      >
+    <SafeAreaView style={styles.page } >
         <SearchBar
           ref={SearchBarRef}
           icon="search"
@@ -76,9 +69,15 @@ const Search = () => {
           onTextInput={() => { 
           dispatch( { type: "updateQuery", payload: SearchBarRef.current.getValue() } )}}
         />
-      </View>
       <View style={styles.row}>
+        
       </View>
+      
+      <ScrollView onScroll={() => {
+        Keyboard.dismiss()
+        }}>
+        {searchState.results.map( result => <SearchCard title={result[ 1 ].verse.gurmukhi} /> )}
+        </ScrollView> 
     </SafeAreaView>
 
 
@@ -86,22 +85,16 @@ const Search = () => {
 }
 
 const styles = StyleSheet.create( {
-  button: {
-    margin: 8,
-  },
-  content: {
-    alignItems: 'center',
-    backgroundColor: '#FFA500',
-    justifyContent: 'center',
-  },
-
   input: {
     fontFamily: 'OpenGurbaniAkhar',
+  },
+  page:{
+    margin: 10
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-  },
+  }
 } )
 
 export default Search

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, ReactElement } from 'react'
 import { Text,StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native'
 import { useTheme, useIsTablet } from '../utils/Hooks'
 import { useNavigation } from '@react-navigation/native'
@@ -34,9 +34,10 @@ const CardContainer: React.FC<CardProps> = ( {  pressableStyle, containerStyle ,
 
 interface HomescreenCardProps {
   pothiName: string,
-  openedTime: string
+  openedTime?: string,
+  rightIcon?: ReactElement
 }
-const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime } ) => {
+const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime, rightIcon } ) => {
   const navigation = useNavigation()
   const onPress = () => {
        navigation.navigate( 'Pothi', { pothiName } )
@@ -46,7 +47,8 @@ const HomescreenCard:React.FC<HomescreenCardProps> = ( { pothiName, openedTime }
     <CardContainer onPress={onPress}>
       <View style={HomeCardStyles.view}>
           <Text style={HomeCardStyles.mainText}>{pothiName}</Text>
-          <Text style={HomeCardStyles.time}>Last Opened: 0 days ago</Text>
+          {openedTime &&<Text style={HomeCardStyles.time}>Last Opened: 0 days ago</Text>}
+          {rightIcon}
         </View>
     </CardContainer>
   )
@@ -72,43 +74,25 @@ const IconCard: React.FC<IconCardProps> = ( { iconName, onPress, iconSize, iconS
 }
 export { CardContainer, HomescreenCard, IconCard }
 
-const EditCard = ( { subheading, itemsRight, title, icon } ) => {
+interface SearchCardProps {
+  title: string
+}
+const SearchCard: React.FC<SearchCardProps> = ( { title } ) => {
   return (
     <CardContainer>
-        <View style={EditCardStyle.CardContent}>
-          <View style={EditCardStyle.CardTitleContainer}>
-            <Text style={EditCardStyle.CardTitle}>{title}</Text>
-            {subheading}
-          </View>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          alignSelf: 'auto',
-        }}
-        >
-          {itemsRight}
-        </View>
-        </View>
+      <View>
+        <Text style={SearchCardStyles.Text}>{title}</Text>
+      </View>
       </CardContainer>
-  )
-
+  ) 
 }
 
-export { EditCard }
-const EditCardStyle = StyleSheet.create( {
-  CardContent: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  CardTitle: {
+export { SearchCard }
+const SearchCardStyles = StyleSheet.create( {
+  Text: {
     fontFamily: 'OpenGurbaniAkhar',
-    padding: 5,
-    textAlign: 'center',
-  },
-  CardTitleContainer: {
-    flex: 1,
-  },
+    fontSize: 30
+  }
 } )
 const CardStyles = StyleSheet.create( {
   Pressable: {
@@ -148,9 +132,10 @@ const HomeCardStyles = StyleSheet.create( {
     padding: 5
   },
   view: {
+    alignItems: 'center',
     display: 'flex',
     flexDirection: "row",
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   }
 
 } )

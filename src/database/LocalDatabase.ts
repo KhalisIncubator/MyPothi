@@ -1,7 +1,9 @@
-import { Database } from '@nozbe/watermelondb'
+import { Database, Query, Model } from '@nozbe/watermelondb'
 import { Shabad, Pothi } from './Models'
 import schema from './Schema'
+import Collection from '@nozbe/watermelondb/Collection'
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
+import { Observable } from 'rxjs'
 
 const adapter = new SQLiteAdapter( {
  schema,
@@ -9,12 +11,15 @@ const adapter = new SQLiteAdapter( {
 const localDatabase = new Database( {
   adapter,
   modelClasses: [ Pothi, Shabad ],
-  actionsEnabled: true
+  actionsEnabled: true,
+  // @ts-ignore
+  synchronous: true
 } )
 
 interface Columns {
-  "pothis": typeof Pothi,
-  "shabads": typeof Shabad
+  "pothis":  Pothi,
+  "shabads": Shabad,
+  [key: string]: Pothi | Shabad
 
 }
 export { localDatabase, Columns }
