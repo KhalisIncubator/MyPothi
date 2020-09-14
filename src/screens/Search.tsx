@@ -1,31 +1,28 @@
 import { useNetInfo } from '@react-native-community/netinfo'
-import React, { useCallback, useEffect, useState, useReducer, ReducerAction, useRef } from 'react'
-import {
-  ActivityIndicator, Alert,
-  SafeAreaView, ScrollView, StyleSheet, View, Keyboard,
-} from 'react-native'
-import Modal from 'react-native-modal'
-import {
-  Chip,
-  Menu,  Text, Title,
-} from 'react-native-paper'
-import { BaniResult, SearchResult } from '../components/Results'
-import query, { fetchBanis } from '../database/BanidbApi'
-import { SEARCH_TEXTS } from '../database/DatabaseConts'
+import React, {  useEffect, useReducer } from 'react'
+import { ScrollView, StyleSheet, View, Keyboard, } from 'react-native'
+import query from '../database/BanidbApi'
 import { SearchBar } from '../components/SearchComponents'
 import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from '../utils/Hooks'
 import { SearchCard } from '../components/Card'
+import { Page } from '../components/Page'
 
-const InitialSearchState = {
+type SearchState = {
+  searchQuery: string,
+  banis: any[],
+  results: any[],
+  showQueryTypeMenu: boolean,
+  showSearchMethodMenu: boolean
+}
+const InitialSearchState: SearchState = {
   searchQuery: '',
   banis: [],
   results: [],
   showQueryTypeMenu: false,
   showSearchMethodMenu: false
 }
-
-const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
+const SearchStateReducer = (state: any, action: any) => {
   switch( action.type ) {
     case 'updateQuery': 
       return { ...state, searchQuery: action.payload }
@@ -41,10 +38,7 @@ const SearchStateReducer = ( state:typeof InitialSearchState, action ) => {
 }
 const Search = () => {
   const [ theme ] = useTheme()
-
-  const [ searchState, dispatch ] = useReducer( SearchStateReducer, InitialSearchState )
-  const SearchBarRef = useRef( null )
-
+  const [ searchState, dispatch ] = useReducer<React.Reducer<SearchState, any>>( SearchStateReducer, InitialSearchState )
   const net = useNetInfo()
   useEffect( () => {
    const fetchResults = async () => {
@@ -54,20 +48,20 @@ const Search = () => {
       if ( searchState.searchQuery.length > 1 && net.isConnected ) {
         fetchResults()
       }
-  }, [ searchState.searchQuery, net.isConnected ] )
 
+  },[ searchState.searchQuery, net.isConnected ] )
   return (
-    <SafeAreaView style={styles.page } >
+    <Page>
         <SearchBar
-          ref={SearchBarRef}
           icon="search"
           theme={theme}
           placeholder="Search..."
           autoCorrect={false}
           autoCapitalize="none"
+          onChangeText={( text ) => {
+            dispatch( { type: 'updateQuery', payload: text } )
+          }}
           rightIcon={<Icon name="check" size={25} color="green" />}
-          onTextInput={() => { 
-          dispatch( { type: "updateQuery", payload: SearchBarRef.current.getValue() } )}}
         />
       <View style={styles.row}>
         
@@ -75,21 +69,25 @@ const Search = () => {
       
       <ScrollView onScroll={() => {
         Keyboard.dismiss()
-        }}>
-        {searchState.results.map( result => <SearchCard title={result[ 1 ].verse.gurmukhi} /> )}
+        }}
+        scrollEventThrottle={50}
+        style={styles.ScrollView}
+        >
+        {searchState.results.map( result => ( <SearchCard result={result}/> )
+         )}
         </ScrollView> 
-    </SafeAreaView>
+    </Page>
 
 
   )
 }
 
 const styles = StyleSheet.create( {
+  ScrollView: {
+    height: '100%'
+  },
   input: {
     fontFamily: 'OpenGurbaniAkhar',
-  },
-  page:{
-    margin: 10
   },
   row: {
     flexDirection: 'row',

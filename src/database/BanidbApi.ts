@@ -1,10 +1,5 @@
 import { buildApiUrl } from '@sttm/banidb'
 
-import {
-  entryObj,
-  lengthType,
-  RemappedLine,
-} from '../../types/types'
 import { banisOrder } from '../Defaults'
 import { baniLengths } from './DatabaseConts'
 

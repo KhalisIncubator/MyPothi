@@ -9,7 +9,7 @@ import SettingsScreen from '../screens/Settings'
 import { Homescreen } from '../screens/Homescreen'
 const Main = createStackNavigator<MainRouteParams>()
 
-type MainRouteParams = {
+export type MainRouteParams = {
   Pothi: {pothiName: string},
   Settings: null,
   Search: null,

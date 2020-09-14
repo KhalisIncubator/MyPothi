@@ -1,5 +1,5 @@
 import { Model } from '@nozbe/watermelondb'
-import { field, children, relation } from '@nozbe/watermelondb/decorators'
+import {  field, children, relation } from '@nozbe/watermelondb/decorators'
 import { Associations } from '@nozbe/watermelondb/Model'
 
 class Pothi extends Model {
@@ -7,8 +7,8 @@ class Pothi extends Model {
   static associations: Associations = {
     shabads: { type: 'has_many', foreignKey: 'pothi_id' }
   }
-  @field( 'title' ) title: any 
-  @children( 'shabads' ) shabads: any
+  @field( 'title' ) title: string 
+  @children( 'shabads' ) shabads: Shabad[]
 }
 
 class Shabad extends Model {
@@ -17,9 +17,9 @@ class Shabad extends Model {
     pothi: { type: 'belongs_to', key: 'pothi_id' }
   }
   
-  @field( 'html' ) html
-  @field( 'main_line' ) mainLine
-  @relation( 'pothis', 'pothi_id' ) pothi
+  @field( 'html' ) html: string
+  @field( 'main_line' ) mainLine: string
+  @relation( 'pothis', 'pothi_id' ) pothi: Pothi
 
 }
 

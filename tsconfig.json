@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": [ "es6" ],
+    "lib": [
+      "es6"
+    ],
     "allowJs": true,
     "checkJs": true,
     "allowSyntheticDefaultImports": true,
@@ -19,8 +21,5 @@
     "babel.config.js",
     "metro.config.js",
     "jest.config.js"
-  ],
-  "include": [
-    "./types/**/*.ts"
   ]
 }

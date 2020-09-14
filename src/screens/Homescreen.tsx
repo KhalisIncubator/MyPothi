@@ -5,21 +5,21 @@ import { SearchBar } from '../components/SearchComponents'
 import { useTheme } from '../utils/Hooks'
 import Icon from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
-import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { DynamicScrollView } from '../components/DynamicScrollView'
 
 import { useQuery } from '../utils/Hooks'
+import { Pothi } from '../database/Models'
 
 const Homescreen =  () => {
   const [ theme ] = useTheme()
   const navigation = useNavigation()
-  const PothiCreatingRef= useRef( null )
-  const [ pothis, newPothi, deletePothi ] = useQuery('pothis')
+  const PothiCreatingRef= useRef<SearchBar>()
+  const [ pothis, newPothi, deletePothi, updatePothi ] = useQuery( 'pothis' )
   const [ editing, toggleEditing ] = useState( false )
   const makePothi = () => {
-    newPothi( { title: PothiCreatingRef.current.getValue() } )
+    newPothi( { title: PothiCreatingRef?.current.getValue() } )
     Keyboard.dismiss()
-    PothiCreatingRef.current.clear() }
+    PothiCreatingRef?.current.clear() }
   return (
       <DynamicScrollView>
       <View style={styles.headerView}>
@@ -36,7 +36,7 @@ const Homescreen =  () => {
             placeholder="Create Gutka..."  
             icon="book"  autoCorrect={false}
             autoCapitalize="none"
-          rightIcon={<Icon style={styles.iconView} onPress={makePothi} name="check" size={25} color="green"/>} />
+          rightIcon={<Icon style={styles.iconView} onPress={makePothi} name="plus" size={25} color="green"/>} />
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheaderRow}>
@@ -46,7 +46,13 @@ const Homescreen =  () => {
             </View>
             <Button title={editing ? "Done" : "Edit"} onPress={() => toggleEditing( prev => !prev )}/>
           </View>
-        {pothis.map( pothi => <HomescreenCard pothiName={pothi.title} openedTime={!editing && '1'} key={pothi.title} rightIcon={ editing && <Icon style={{ color: 'red' }} size={25} name="minus-circle" onPress={() => deletePothi( pothi.id )}/>} /> )}
+        {pothis.map( pothi => <HomescreenCard  
+                              updatePothi={updatePothi}  
+                              editing={editing}
+                              pothi={pothi}
+                              openedTime={!editing && '1'}  
+                              key={pothi.title}  
+                              rightIcon={ editing && <Icon style={{ color: 'red' }} size={25} name="minus-circle" onPress={() => deletePothi( pothi.id )}/>} /> )}
       </View>
       <View style={styles.subsection} >
           <View style={styles.subheader}>

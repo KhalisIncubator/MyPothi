@@ -1,4 +1,4 @@
-type Theme = {
+export type Theme = {
   colors: {
     primary: string,
     secondary: string,
@@ -15,16 +15,23 @@ type Theme = {
   },
   highlighter?: Array<string>,
 }
-export { Theme }
+const SourceColors = {
+  'sRI gurU gRMQ swihb jI': '#417d9a',
+  'dsm bwxI': '#70007D',
+  'BweI gurdws jI vwrW': '#017174',
+  'BweI gurdws isMG jI vwrW': '#746f01',
+  'BweI nMd lwl jI vwrW': '#74001d',
+  'rihqnwmy Aqy pMQk il^qW': '#000',
+}
+export { SourceColors }
 
 const light: Theme = {
   colors: {
     primary: '#004c87',
-    secondary: '#99AAB5',
+    secondary: '#D97D0B',
     card: "white",
-    //background: '#f6f6f6',
+    background: '#f6f6f6',
     text: 'black',
-    background: 'white',
     error: 'red',
     warning: 'white',
     orange: '#FFA500'

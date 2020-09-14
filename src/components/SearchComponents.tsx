@@ -29,7 +29,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
       inputValue: '',
     }
   }
-  #input: TextInput | null
+  #input: TextInput
   clear = (): void => this.#input?.clear() 
   focus = (): void => this.#input.focus() 
   blur = (): void => this.#input.blur()
@@ -47,7 +47,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
       ...inputProps
     } = this.props
     return (
-      <Surface style={this.ViewStyle}>
+      <View style={this.ViewStyle}>
         <View style={SearchBarStyles.inputView}>
           <Icon name={this.props.icon} size={25} />
           <TextInput  
@@ -60,8 +60,8 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
             {...inputProps}
           />
         </View>
-        {rightIcon} 
-      </Surface>
+        {!!this.state.inputValue.length && rightIcon} 
+      </View>
     )
   }
 }
