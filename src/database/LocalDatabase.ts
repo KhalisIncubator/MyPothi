@@ -17,6 +17,7 @@ const localDatabase = new Database( {
 export type Columns = {
   "pothis":  Pothi,
   "shabads": Shabad,
+  [key: string]: Pothi | Shabad,
 }
 export { localDatabase }
 

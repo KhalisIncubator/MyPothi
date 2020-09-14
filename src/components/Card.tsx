@@ -14,7 +14,7 @@ interface CardProps extends React.ComponentProps<Pressable> {
 }
 const CardContainer= ( {  pressableStyle, containerStyle , children, onPress, ...restPresableProps }: CardProps ) => {
   const [ theme ] = useTheme()
-  const PressableStyle = ( { pressed } ) =>  StyleSheet.flatten( [  
+  const PressableStyle = ( { pressed }: {pressed: boolean} ) =>  StyleSheet.flatten( [  
     CardStyles.Pressable,
     { borderRadius: theme.style.roundness, backgroundColor: pressed ? 'lightblue' : theme.colors.card, opacity: pressed ? 70: 100 },
      pressableStyle,
@@ -32,9 +32,9 @@ const CardContainer= ( {  pressableStyle, containerStyle , children, onPress, ..
 
 interface HomescreenCardProps {
   pothi: Pothi,
-  openedTime?: string,
-  rightIcon?: ReactElement
-  updatePothi: ( pothi: Pothi, fields ) => void,
+  openedTime?: string | false,
+  rightIcon?: ReactElement | false,
+  updatePothi: ( pothi: Pothi, fields: Partial<Pothi>) => void,
   editing: boolean,
 }
 const HomescreenCard = ( { pothi, openedTime, rightIcon, editing, updatePothi }: HomescreenCardProps ) => {

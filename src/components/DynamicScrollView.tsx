@@ -3,11 +3,7 @@ import React, { ReactChild, useState } from 'react'
 import { ScrollView, Keyboard, useWindowDimensions, StyleSheet, SafeAreaView } from 'react-native'
 import { Page } from './Page'
 
-
-type DynamicScrollViewProps = {
-  children: ReactChild
-}
-const DynamicScrollView = ( { children }: DynamicScrollViewProps ) => {
+const DynamicScrollView = ( { children }) => {
   const window = useWindowDimensions()
   const [ pageHeight, updatePageHeight ] = useState( 0 )
 

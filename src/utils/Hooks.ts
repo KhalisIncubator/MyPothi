@@ -38,17 +38,24 @@ const useTheme = (): [Theme, ( theme: keyof typeof themes ) => void] => {
   return [ theme, setTheme ]
 }
 
-const useQuery = (columnName: keyof Columns, dependencies: any[] = []) => {
+const useQuery: {
+  <K extends keyof Columns>(columnName: K, dependencies?: any[]): 
+  [Columns[K][], 
+  (fields: Partial<Columns[K]>) => void, 
+  (id: string) => void,
+  (item: Columns[K], fields: Partial<Columns[K]>) => void ]
+} = (columnName, dependencies = []) => {
   const database = useDatabase()
-  const column = database.collections.get( columnName )
-  const [ result, updateResult ] = useState([])
+  type ColumnType = Columns[typeof columnName]
+  const column = database.collections.get<ColumnType>( columnName.toString() )
+  const [ result, updateResult ] = useState<ColumnType[]>([])
   useEffect( () => {
     const subscription = column.query().observe().subscribe(updateResult)
 
     return () => subscription.unsubscribe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies )
-  const createRow = async(fields) => {
+  const createRow = async(fields: Partial<Columns[typeof columnName]>) => {
     await database.action( async () => {
       const newRow = await column.create( row => {
         Object.entries( fields ).forEach( ( [ key, value ] ) => {
@@ -63,7 +70,7 @@ const useQuery = (columnName: keyof Columns, dependencies: any[] = []) => {
       await item.destroyPermanently()
     } )
   }
-  const updateItem = async( item, fields ) => {
+  const updateItem = async( item: ColumnType, fields: Partial<ColumnType>) => {
     await database.action( async () => {
       if ( item ) {
         item.update( ( record) => {
