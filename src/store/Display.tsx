@@ -1,8 +1,8 @@
 import React, { createContext } from 'react'
 
-const DisplayContext = createContext(null)
+const DisplayContext = createContext( null )
 
 const DisplayProvider = () => {
 }
 
-export {DisplayContext, DisplayProvider}
+export { DisplayContext, DisplayProvider }

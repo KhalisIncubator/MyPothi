@@ -1,12 +1,12 @@
-import React, { ReactNode, ReactElement, useMemo, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, ReactElement, useMemo, useEffect, useState } from 'react'
 import { Text,StyleSheet, View, StyleProp, ViewStyle, Pressable, TextInput } from 'react-native'
-import { useTheme } from '../utils/Hooks'
+import { useTheme } from '../store/Theme'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
 import { SourceColors } from '../utils/Themes'
 import { Pothi } from '../database/Models'
 
-interface CardProps extends React.ComponentProps<Pressable> {
+interface CardProps extends React.ComponentProps<typeof Pressable> {
   containerStyle?: StyleProp<ViewStyle>,
   pressableStyle?: StyleProp<ViewStyle>,
   children: ReactNode,
@@ -34,7 +34,7 @@ interface HomescreenCardProps {
   pothi: Pothi,
   openedTime?: string | false,
   rightIcon?: ReactElement | false,
-  updatePothi: ( pothi: Pothi, fields: Partial<Pothi>) => void,
+  updatePothi: ( pothi: Pothi, fields: Partial<Pothi> ) => void,
   editing: boolean,
 }
 const HomescreenCard = ( { pothi, openedTime, rightIcon, editing, updatePothi }: HomescreenCardProps ) => {
@@ -47,7 +47,6 @@ const HomescreenCard = ( { pothi, openedTime, rightIcon, editing, updatePothi }:
 
   useEffect( ()=> {
     if( !editing && pothi.title !== inputValue ) {
-      console.log( 'save' )
       updatePothi( pothi, { title: inputValue } )
     }
   }, [ editing, pothi, updatePothi, inputValue ] )
@@ -105,7 +104,7 @@ const Tags = ( { info } ) => {
   return (
     <>
       {subtitle.map( ( { value, color } ) => value && (
-        <View style={{ paddingHorizontal: 8 }} key={value}>
+        <View style={SearchCardStyles.TagView} key={value}>
           <Text style={{
                 color,
                 fontFamily: 'OpenGurbaniAkhar',
@@ -114,7 +113,7 @@ const Tags = ( { info } ) => {
                 overflow: 'hidden',
                 paddingVertical: 2,
             }}>
-            {!!value && value}
+            {value}
           </Text>
         </View>
       ) )}
@@ -139,6 +138,9 @@ const SearchCardStyles = StyleSheet.create( {
   Content: {
     padding: 5
   },
+  TagView: {
+    marginHorizontal: 8
+  }, 
   Tags: {
     display: 'flex',
     flexDirection: 'row',

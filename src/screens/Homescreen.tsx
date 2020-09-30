@@ -1,25 +1,26 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View,  StyleSheet, Text, Keyboard, Button } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/Feather'
+
+import { DynamicScrollView } from '../components/DynamicScrollView'
 import { HomescreenCard, IconCard } from '../components/Card'
 import { SearchBar } from '../components/SearchComponents'
-import { useTheme } from '../utils/Hooks'
-import Icon from 'react-native-vector-icons/Feather'
-import { useNavigation } from '@react-navigation/native'
-import { DynamicScrollView } from '../components/DynamicScrollView'
-
 import { useQuery } from '../utils/Hooks'
-import { Pothi } from '../database/Models'
+import { useTheme } from '../store/Theme'
 
 const Homescreen =  () => {
   const [ theme ] = useTheme()
-  const navigation = useNavigation()
-  const PothiCreatingRef= useRef<SearchBar>()
   const [ pothis, newPothi, deletePothi, updatePothi ] = useQuery( 'pothis' )
   const [ editing, toggleEditing ] = useState( false )
+
+  const navigation = useNavigation()
+  const PothiCreatingRef= useRef<any>( null )
+
   const makePothi = () => {
-    newPothi( { title: PothiCreatingRef?.current.getValue() } )
+    newPothi( { title: PothiCreatingRef?.current?.getValue() } )
     Keyboard.dismiss()
-    PothiCreatingRef?.current.clear() }
+    PothiCreatingRef?.current?.clear() }
   return (
       <DynamicScrollView>
       <View style={styles.headerView}>
@@ -62,7 +63,7 @@ const Homescreen =  () => {
         <View style={styles.Row}>
           <IconCard iconName="search" iconSize={40} iconSubtitle="Search" onPress={() => navigation.navigate( 'Search' )} />
             <IconCard iconName="settings" iconSize={40} iconSubtitle="Settings" onPress={() => navigation.navigate( 'Settings' )} />
-            <IconCard iconName="help-circle" iconSize={40} iconSubtitle="Help" onPress={() => alert( 'stop that' )} />
+            <IconCard iconName="help-circle" iconSize={40} iconSubtitle="Help" onPress={() => console.log( 'stop that' )} />
         </View>
       </View>
       </DynamicScrollView>
@@ -102,10 +103,10 @@ const styles = StyleSheet.create( {
   subheaderText: {
     fontFamily: 'Comfortaa',
     fontSize: 30,
-    padding: 5,
+    margin: 5,
   },
   subsection: {
-    paddingVertical: 5
+    marginVertical: 5
   },
   subtitle: {
     fontFamily: 'Comfortaa',
@@ -115,7 +116,7 @@ const styles = StyleSheet.create( {
     fontFamily: 'Comfortaa',
     fontSize: 40,
     fontWeight: '500',
-    paddingVertical: 10,
+    marginVertical: 10,
   }
 } )
 

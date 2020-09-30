@@ -15,6 +15,13 @@ export type Theme = {
   },
   highlighter?: Array<string>,
 }
+export enum Colors {
+  Blue = "",
+  Orange = "",
+  White = "#00000",
+  LightGrey = "#f9f9f9",
+  DarkGrey = ""
+}
 const SourceColors = {
   'sRI gurU gRMQ swihb jI': '#417d9a',
   'dsm bwxI': '#70007D',

@@ -8,7 +8,7 @@ class Pothi extends Model {
     shabads: { type: 'has_many', foreignKey: 'pothi_id' }
   }
   @field( 'title' ) title: string 
-  @children( 'shabads' ) shabads: Shabad[]
+  @children( 'shabads' ) shabads: Shabad[] | undefined
 }
 
 class Shabad extends Model {

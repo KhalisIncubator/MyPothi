@@ -2,9 +2,9 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import React, {  useEffect, useReducer } from 'react'
 import { ScrollView, StyleSheet, View, Keyboard, } from 'react-native'
 import query from '../database/BanidbApi'
-import { SearchBar } from '../components/SearchComponents'
+import { SearchBar } from '../components/SearchComponents'  
 import Icon from 'react-native-vector-icons/Feather'
-import { useTheme } from '../utils/Hooks'
+import { useTheme } from '../store/Theme'
 import { SearchCard } from '../components/Card'
 import { Page } from '../components/Page'
 
@@ -22,7 +22,7 @@ const InitialSearchState: SearchState = {
   showQueryTypeMenu: false,
   showSearchMethodMenu: false
 }
-const SearchStateReducer = (state: any, action: any) => {
+const SearchStateReducer = ( state: any, action: any ) => {
   switch( action.type ) {
     case 'updateQuery': 
       return { ...state, searchQuery: action.payload }
@@ -58,7 +58,7 @@ const Search = () => {
           placeholder="Search..."
           autoCorrect={false}
           autoCapitalize="none"
-          onChangeText={( text ) => {
+          onChangeText={( text: string ) => {
             dispatch( { type: 'updateQuery', payload: text } )
           }}
           rightIcon={<Icon name="check" size={25} color="green" />}
@@ -67,13 +67,8 @@ const Search = () => {
         
       </View>
       
-      <ScrollView onScroll={() => {
-        Keyboard.dismiss()
-        }}
-        scrollEventThrottle={50}
-        style={styles.ScrollView}
-        >
-        {searchState.results.map( result => ( <SearchCard result={result}/> )
+      <ScrollView style={styles.ScrollView} >
+        {searchState.results.map( result => ( <SearchCard result={result} key={result[ 1 ].verse.gurmukhi}/> )
          )}
         </ScrollView> 
     </Page>

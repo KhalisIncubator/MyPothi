@@ -79,6 +79,6 @@
       }
     ],
     "react/display-name": 0,
-    
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }

@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react'
-import { View } from 'react-native'
+import React, { useRef } from 'react'
+import { RichEditor } from 'react-native-pell-rich-editor'
+import { DynamicScrollView } from '../components/DynamicScrollView'
+import { Editor } from '../components/Editor'
 
 
 const Pothi = () => {
-  return (
-    <View>
+  const EditorRef = useRef<RichEditor>( null )
 
-    </View>
+  return (
+    <DynamicScrollView >
+      <Editor ref={EditorRef}/>
+    </DynamicScrollView>
   )
 }
 export default Pothi

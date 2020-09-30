@@ -13,11 +13,8 @@ const localDatabase = new Database( {
   // @ts-ignore
   synchronous: true
 } )
+export type TableNames = "pothis"|"shabads"
 
-export type Columns = {
-  "pothis":  Pothi,
-  "shabads": Shabad,
-  [key: string]: Pothi | Shabad,
-}
+export type TableType<T> = T extends "pothis" ? Pothi : Shabad
 export { localDatabase }
 

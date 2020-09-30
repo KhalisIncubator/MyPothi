@@ -73,7 +73,7 @@ const SearchBarStyles = StyleSheet.create( {
     flex: 2,
     fontFamily: 'Comfortaa',
     fontSize: 20 ,
-    paddingHorizontal: 10
+    marginHorizontal: 10
   },
   inputView: {
     alignItems: 'center',

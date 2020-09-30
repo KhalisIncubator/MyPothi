@@ -1,63 +1,90 @@
+import { useState, useEffect, useContext, useCallback } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { useAsyncStorage } from '@react-native-community/async-storage'
-import { useState, useEffect, useContext } from 'react'
-import { ThemeContext } from '../store/Theme'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
-import themes, { Theme } from './Themes'
-import { Columns } from '../database/LocalDatabase'
+import { Clause } from '@nozbe/watermelondb/QueryDescription'
+import deepEqual from 'deep-equal'
+
+import { TableNames, TableType } from '../database/LocalDatabase'
+import { never } from 'rxjs'
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
   return [ dimensions.width > 900 ]
-} 
-const useCachedValue: {<T>(key: string, initialValue: T): [T, (newVal: T) => Promise<void>]} = ( key, initialValue) => {
-  const [ value, updateValue ] = useState<typeof initialValue>( initialValue ) 
-  const { getItem, setItem } = useAsyncStorage( key )
-  useEffect( () => {
-    const setValue = async () => {
-      let cachedVal = await getItem()
+}
 
+const useToggle = ( initialValue?: boolean ): [boolean, ( newValue?: boolean ) => void] => {
+  const [ isToggled, setToggle ] = useState<boolean>( initialValue ?? false )
+  const updateToggle = ( newValue?: boolean ) => {setToggle( prev => newValue ?? !prev )}
+  return [ isToggled, updateToggle ]
+}
+
+export type CacheValueUpdater<T> = ( ( newValue: T ) => Promise<void> )
+const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdater<T>] => {
+  const [ value, updateValue ] = useState<T>( initialValue ) 
+  const { getItem, setItem } = useAsyncStorage( key )
+
+  useEffect( () => {
+    let cancel = false
+    console.log( 'running...' )
+    const setValue = async () => {
+      const cachedVal = await getItem()
+      console.log( cachedVal, !cachedVal )
       if ( !cachedVal ) {
-       await setItem( JSON.stringify(initialValue) )
-       cachedVal = JSON.stringify(initialValue)
+       await setItem( JSON.stringify( initialValue ) )
+      } else {
+        updateValue( JSON.parse( cachedVal ) )
       }
-      const parsedVal: typeof initialValue = JSON.parse(cachedVal)
-      updateValue(parsedVal)
     }
-    setValue()
-  }, [ getItem, initialValue, setItem ] )
-  const cacheNewValue = async ( newValue: typeof initialValue ) => {
-    await setItem( JSON.stringify(newValue) )
+    !cancel && setValue()
+    return () => {
+      cancel = true
+    }
+  }, [ deepEqual( initialValue ), getItem, setItem  ] )
+
+  const cacheNewValue = async ( newValue: T ) => {
+    await setItem( JSON.stringify( newValue ) )
     updateValue( newValue )
   }
   return [ value, cacheNewValue ]
 
 }
 
-const useTheme = (): [Theme, ( theme: keyof typeof themes ) => void] => {
-  const { theme, setTheme } = useContext( ThemeContext )
-  return [ theme, setTheme ]
+const useExpCachedValueUpdater = <T>( key: string, initialValue: T ): [T] => {
+  const [ value, updateValue ] = useState<T | null>( null ) 
+  const { getItem, setItem } = useAsyncStorage( key )
+
+  const getValue = useCallback( async( key, initialValue: T ) => {
+    const item = await getItem()
+    const value: T = !!item ? JSON.parse( item ): initialValue
+    updateValue( value )
+  }, [] )
+
+  useEffect( () => {
+      getValue( key, initialValue )
+  }, [ initialValue, key, getValue ] )
+
+  return [ value ]
 }
 
-const useQuery: {
-  <K extends keyof Columns>(columnName: K, dependencies?: any[]): 
-  [Columns[K][], 
-  (fields: Partial<Columns[K]>) => void, 
-  (id: string) => void,
-  (item: Columns[K], fields: Partial<Columns[K]>) => void ]
-} = (columnName, dependencies = []) => {
+const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencies: any[] = [] ): [
+  TableType<K>[],
+  ( fields: Partial<TableType<K>> ) => Promise<void>,
+  ( id: string ) => Promise<void>,
+  ( item: TableType<K>, fields: Partial<TableType<K>> ) => Promise<void>
+] => {
   const database = useDatabase()
-  type ColumnType = Columns[typeof columnName]
-  const column = database.collections.get<ColumnType>( columnName.toString() )
-  const [ result, updateResult ] = useState<ColumnType[]>([])
+  const column = database.collections.get<TableType<K>>( tableName.toString() ) 
+  const [ result, updateResult ] = useState<TableType<K>[]>( [] )
   useEffect( () => {
-    const subscription = column.query().observe().subscribe(updateResult)
+    const query = !!Q ? column.query( ...Q ) : column.query()
+    const subscription = query.observe().subscribe( updateResult )
 
     return () => subscription.unsubscribe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies )
-  const createRow = async(fields: Partial<Columns[typeof columnName]>) => {
+  const createRow = async( fields: Partial<TableType<K>> ) => {
     await database.action( async () => {
-      const newRow = await column.create( row => {
+      const newRow:TableType<K> = await column.create( row => {
         Object.entries( fields ).forEach( ( [ key, value ] ) => {
           row[ key ] = value
         } )
@@ -70,10 +97,10 @@ const useQuery: {
       await item.destroyPermanently()
     } )
   }
-  const updateItem = async( item: ColumnType, fields: Partial<ColumnType>) => {
+  const updateItem = async( item: TableType<K>, fields: Partial<TableType<K>> ) => {
     await database.action( async () => {
-      if ( item ) {
-        item.update( ( record) => {
+      if ( !!item ) {
+        item.update( ( record: TableType<K> ) => {
           Object.entries( fields ).forEach( ( [ key, value ] ) => {
           record[ key ] = value
         } )
@@ -87,4 +114,4 @@ const useQuery: {
   return [ result, createRow, deleteRow, updateItem ]
 }
 
-export { useIsTablet, useCachedValue, useTheme, useQuery }
+export { useIsTablet, useCachedValue, useQuery, useToggle, useExpCachedValueUpdater }
