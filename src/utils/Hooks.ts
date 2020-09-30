@@ -1,19 +1,17 @@
-import { useState, useEffect, useContext, useCallback } from 'react'
+import { useState, useEffect  } from 'react'
 import { useWindowDimensions } from 'react-native'
-import { useAsyncStorage } from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { Clause } from '@nozbe/watermelondb/QueryDescription'
-import deepEqual from 'deep-equal'
-
 import { TableNames, TableType } from '../database/LocalDatabase'
-import { never } from 'rxjs'
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
   return [ dimensions.width > 900 ]
 }
 
 const useToggle = ( initialValue?: boolean ): [boolean, ( newValue?: boolean ) => void] => {
-  const [ isToggled, setToggle ] = useState<boolean>( initialValue ?? false )
+  const [ isToggled, setToggle ] = useState<boolean>( initialValue !== undefined ? initialValue : false )
   const updateToggle = ( newValue?: boolean ) => {setToggle( prev => newValue ?? !prev )}
   return [ isToggled, updateToggle ]
 }
@@ -21,49 +19,29 @@ const useToggle = ( initialValue?: boolean ): [boolean, ( newValue?: boolean ) =
 export type CacheValueUpdater<T> = ( ( newValue: T ) => Promise<void> )
 const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdater<T>] => {
   const [ value, updateValue ] = useState<T>( initialValue ) 
-  const { getItem, setItem } = useAsyncStorage( key )
 
-  useEffect( () => {
+  // this is for when the data is an obj or array (useEffect cant compare)
+  useDeepCompareEffectNoCheck( () => {
     let cancel = false
-    console.log( 'running...' )
-    const setValue = async () => {
-      const cachedVal = await getItem()
-      console.log( cachedVal, !cachedVal )
-      if ( !cachedVal ) {
-       await setItem( JSON.stringify( initialValue ) )
-      } else {
-        updateValue( JSON.parse( cachedVal ) )
-      }
-    }
-    !cancel && setValue()
+    !cancel &&  AsyncStorage.getItem( key ).then( async ( storedValue ) => {
+        if ( !storedValue ) {
+          await AsyncStorage.setItem( key, JSON.stringify( initialValue ) )
+        }else {
+          const parsedValue: T = JSON.parse( storedValue )
+          updateValue( parsedValue )
+        }
+      } )
     return () => {
       cancel = true
     }
-  }, [ deepEqual( initialValue ), getItem, setItem  ] )
+  }, [ initialValue, key ] )
 
   const cacheNewValue = async ( newValue: T ) => {
-    await setItem( JSON.stringify( newValue ) )
+    await AsyncStorage.setItem( key, JSON.stringify( newValue ) )
     updateValue( newValue )
   }
   return [ value, cacheNewValue ]
 
-}
-
-const useExpCachedValueUpdater = <T>( key: string, initialValue: T ): [T] => {
-  const [ value, updateValue ] = useState<T | null>( null ) 
-  const { getItem, setItem } = useAsyncStorage( key )
-
-  const getValue = useCallback( async( key, initialValue: T ) => {
-    const item = await getItem()
-    const value: T = !!item ? JSON.parse( item ): initialValue
-    updateValue( value )
-  }, [] )
-
-  useEffect( () => {
-      getValue( key, initialValue )
-  }, [ initialValue, key, getValue ] )
-
-  return [ value ]
 }
 
 const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencies: any[] = [] ): [
@@ -114,4 +92,4 @@ const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencie
   return [ result, createRow, deleteRow, updateItem ]
 }
 
-export { useIsTablet, useCachedValue, useQuery, useToggle, useExpCachedValueUpdater }
+export { useIsTablet, useCachedValue, useQuery, useToggle }

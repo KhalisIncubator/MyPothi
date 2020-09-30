@@ -16,7 +16,7 @@ export type Theme = {
   highlighter?: Array<string>,
 }
 export enum Colors {
-  Blue = "",
+  Blue = "#004c87",
   Orange = "",
   White = "#00000",
   LightGrey = "#f9f9f9",

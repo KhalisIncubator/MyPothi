@@ -1,5 +1,6 @@
 import { between } from '@nozbe/watermelondb/QueryDescription'
 import { Keyboard } from 'react-native'
+import { sub } from 'react-native-reanimated'
 /* eslint-disable @typescript-eslint/ban-types */
 import { asyncScheduler, ObjectUnsubscribedError } from 'rxjs'
 import { RemappedLine, ShabadInfo } from '../index'
@@ -42,7 +43,9 @@ const updateObject = <ObjectType, Value>( objKey: any, newValue: Value, obj: Obj
     if ( key === objKey ) {
       newObject[ key ] = newValue
     } else if ( typeof value === 'object' ) {
-      newObject[ key ] = updateObject<typeof obj, typeof newValue>( objKey, newValue, value )
+      Object.entries( value ).forEach( ( [ subKey ] ) => {
+        if ( subKey === objKey ) newObject[ key ][ subKey ] = newValue
+      } )
     }
   } )
    

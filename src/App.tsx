@@ -13,7 +13,9 @@ const App = () => {
   return (
     <ThemeProvider>
       <DatabaseProvider database={localDatabase}>
+        <SettingsProvider >
           <MobileRoutes />
+        </SettingsProvider>
       </DatabaseProvider>
   </ThemeProvider>
   )

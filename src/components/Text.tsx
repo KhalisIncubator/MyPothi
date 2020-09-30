@@ -24,7 +24,8 @@ const Title: React.FC<TextProps> = ( props ) => {
 const TextStyle = StyleSheet.create( {
   Text: {
     fontFamily: 'Comfortaa',
-    fontWeight: '400'
+    fontWeight: '400',
+    paddingVertical: 5
   }
 
 } )

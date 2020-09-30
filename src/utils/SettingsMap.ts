@@ -1,15 +1,15 @@
 const SectionsMap = {
   displaySettings: {
     title: 'Display',
-    values: 'displaySettings',
+    valueSource: 'displaySettings',
   },
   fontSettings: {
     title: 'Fonts',
-    values: 'fontSettings',
+    valueSource: 'fontSettings',
   },
   sourceSettings: {
     title: 'Source',
-    values: 'sourceSettings',
+    valueSource: 'sourceSettings',
   }
 }
 const BaniLengths = [
@@ -20,7 +20,7 @@ const BaniLengths = [
 ]
 const VishraamsSources = [
   'Old STTM',
-  'Default',
+  'BaniDB',
   'iGurbani'
 ]
 

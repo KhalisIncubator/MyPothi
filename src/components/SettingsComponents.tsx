@@ -9,35 +9,51 @@ import { Text, Title } from './Text'
 import { Column, Row } from './View'
 import { useToggle } from '../utils/Hooks'
 
-const Checkbox = () => {
+
+type SettingsComponentProps = {
+  initialvalue: any,
+  settingKey: string
+  update: ( key: any, value: any ) => void
+}
+const Checkbox = ( { initialvalue, settingKey, update }: SettingsComponentProps ) => {
   const [ theme ] = useTheme()
-  const [ isChecked, updateChecked ] = useToggle()
-  
+  const [ isChecked, updateChecked ] = useToggle( initialvalue )
+  const toggle = ( newValue: boolean ) => {
+    updateChecked( newValue )
+    update( settingKey, newValue )
+  }
   return <RoundedCheckbox 
              checkedColor={theme.colors.orange}
              outerSize={25}
              innerSize={20}
              isChecked={isChecked} 
-             onPress={updateChecked}
+             onPress={toggle}
              component={<Icon name="check" />}
              />  
 }
 
-const Picker = () => {
+type PickerProps = SettingsComponentProps & {
+  pickerOptions?: string[]
+}
+const Picker = ( { initialvalue, settingKey, update, pickerOptions }: PickerProps ) => {
   const { showActionSheetWithOptions } = useActionSheet()
   return <Button onPress={() => {
-    showActionSheetWithOptions( { options: [ 'cancel', 'nope' ], cancelButtonIndex: 0 }, ( buttonIndex ) => {
-      console.log( buttonIndex )
+    showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions ] : [ 'cancel' ] , cancelButtonIndex: 0 }, ( buttonIndex ) => {
+      // cancel button
+      if ( buttonIndex === 0 ) return
+      const newValue = pickerOptions[ buttonIndex -1 ] ?? []
+      !!newValue && update( settingKey, newValue ) 
     } )
-  }}title={'test'}/>
+  }} title={initialvalue}/>
 }
 
-const Stepper = () => {
- const [ theme ] = useTheme()
+const Stepper = ( { settingKey, update, initialvalue }: SettingsComponentProps ) => {
+  console.log( settingKey )
  return (
   <Row>
-    <Icon name="minus" size={25}/>
-    <Icon name="plus" size={25}/>
+    <Text>{initialvalue}</Text>
+    <Icon name="minus" size={25} onPress={() => update( settingKey, initialvalue - 1 )}/>
+    <Icon name="plus" size={25} onPress={() => update( settingKey, initialvalue + 1 )}/>
   </Row> 
  )
 } 
@@ -49,7 +65,7 @@ type SettingProps = {
 
 const Setting = ( { title, modifier }: SettingProps ) => {
   return (
-    <Row spaceBetween>
+    <Row spaceBetween style={SettingsStyles.SettingsContainer}>
       <Text>{title}</Text>
       {modifier}
     </Row>
@@ -57,11 +73,10 @@ const Setting = ( { title, modifier }: SettingProps ) => {
 }
 
 const SettingsSection = ( { title, children }: {title: string, children: ReactNode} ) => {
-  const [ theme ] = useTheme()
   return (
-    <Column style={[ SettingsStyles.SectionContainer, { backgroundColor: theme.colors.card, borderRadius: theme.style.roundness } ]}>
+    <Column style={SettingsStyles.SectionContainer}>
       <Row>
-        <Title>{title}</Title>
+        <Title style={SettingsStyles.SectionTitle}>{title}</Title>
       </Row>
       <Column>
         {children}
@@ -75,6 +90,12 @@ const SettingsStyles = StyleSheet.create( {
     marginVertical: 10,
     padding: 10
   },
+  SectionTitle: {
+    fontSize: 30
+  },
+  SettingsContainer: {
+    paddingHorizontal: 15
+  }
 } )
 
 const SettingsComponentMap = {
@@ -82,4 +103,4 @@ const SettingsComponentMap = {
   "picker": Picker,
   "checkbox": Checkbox
 }
-export { SettingsSection, Setting }
+export { SettingsSection, Setting, SettingsComponentMap }
