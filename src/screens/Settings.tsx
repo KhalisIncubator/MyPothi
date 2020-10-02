@@ -19,7 +19,7 @@ const SettingsScreen = () => {
       </ScrollView>
       <ScrollView style={SettingsStyles.SettingsContainer}>
       <Row centered>
-        <Text>Settings</Text>
+        <Text>Settings Preview</Text>
       </Row>
         <DynamicSettings />
       </ScrollView>
@@ -42,29 +42,17 @@ const DynamicSettings = () => {
     return (
     <SettingsSection key={title} title={title}>
       {
-        Object.entries( settingValues ).map( ( [ settingKey, settingValue ], settingIdx ) => {
-          if ( typeof settingValue === 'object' ) {
-          // // map to record of string and boolean since this is displaySettings
-            return (
-              <Column key={`${settingKey}-column`}>
-                <Text key={settingKey}>{settingKey[ 0 ].toUpperCase().concat( settingKey.slice( 1 ) )}</Text> 
-                  { Object.entries( settingValue as Record<string, boolean> ).map( ( [ subKey, subValue ], subIdx ) => {
-                    const { title: settingTitle, type }: {title: string, type: keyof typeof SettingsComponentMap} = sectionInfo[ subKey ]
-                    const Component = SettingsComponentMap[ type ]
+        Object.entries( sectionInfo ).map( ( [ settingKey, settingInfo ] )=> {
+           const settingValue = settingValues[ settingKey ]
+           const { title: settingTitle, type, pickerValues }: any = settingInfo
 
-                    return <Setting key={`${subIdx} ${settingKey}-${subKey}-${subValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${subKey}`} settingKey={subKey} update={updateSetting( valueSource )} initialvalue={subValue} />}/>
-
-                } )}
-          </Column> )
-        } else {
-          const { title: settingTitle, type, pickerValues }: {title: string, type: keyof typeof SettingsComponentMap, pickerValues: string[]} = sectionInfo[ settingKey ]
+           if( !!settingValue ) {
             const Component = SettingsComponentMap[ type ]
 
-            return <Setting key={`${settingIdx} ${settingKey}-${settingValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${settingKey}`} settingKey={settingKey} update={updateSetting( valueSource )} initialvalue={settingValue} pickerOptions={pickerValues}/>}/>
-
-      }
-      } )
-    }
+            return <Setting key={`${settingKey}-${settingValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${settingKey}`} settingKey={settingKey} update={updateSetting( valueSource )} initialvalue={settingValue} pickerOptions={pickerValues}/>}/>
+           }
+        } )
+      } 
     </SettingsSection>
     )
   } )
@@ -87,3 +75,24 @@ const SettingsStyles = StyleSheet.create( {
     flexGrow: 7,
   }
 } )
+// Object.entries( settingValues ).map( ( [ settingKey, settingValue ], settingIdx ) => {
+//   if ( typeof settingValue === 'object' ) {
+//   // // map to record of string and boolean since this is displaySettings
+//     return (
+//       <Column key={`${settingKey}-column`}>
+//         <Text key={settingKey}>{settingKey[ 0 ].toUpperCase().concat( settingKey.slice( 1 ) )}</Text> 
+//           { Object.entries( settingValue as Record<string, boolean> ).map( ( [ subKey, subValue ], subIdx ) => {
+//             const { title: settingTitle, type }: {title: string, type: keyof typeof SettingsComponentMap} = sectionInfo[ subKey ]
+//             const Component = SettingsComponentMap[ type ]
+
+//             return <Setting key={`${subIdx} ${settingKey}-${subKey}-${subValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${subKey}`} settingKey={subKey} update={updateSetting( valueSource )} initialvalue={subValue} />}/>
+
+//         } )}
+//   </Column> )
+// } else {
+//   const { title: settingTitle, type, pickerValues }: {title: string, type: keyof typeof SettingsComponentMap, pickerValues: string[]} = sectionInfo[ settingKey ]
+//     const Component = SettingsComponentMap[ type ]
+
+//     return <Setting key={`${settingIdx} ${settingKey}-${settingValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${settingKey}`} settingKey={settingKey} update={updateSetting( valueSource )} initialvalue={settingValue} pickerOptions={pickerValues}/>}/>
+
+// }

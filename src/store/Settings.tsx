@@ -1,73 +1,43 @@
-import React, { createContext, ReactNode, useCallback, useContext } from 'react'
+import React, { createContext, ReactNode, useContext } from 'react'
 import { updateObject } from '../utils/Functions'
 import { useCachedValue } from '../utils/Hooks'
+import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns } from '../utils/DefaultSettings'
 
-const DefaulyDisplaySettings = {
-  translations: {
-    'en.bdb': true,
-    'en.ms': false,
-    'en.ssk': false,
-    'es': false
-  },
-  translit: {
-    'en': false,
-    'hi': false,
-    'ipa': false,
-    'ur': false
-  },
-  teeka: {
-    'pu.ss': false,
-    'pu.ft': false,
-    'pu.bdb': true,
-    'pu.ms': false,
-  }
-}
-type DisplaySettingsKeys = keyof typeof DefaulyDisplaySettings.translations | keyof typeof DefaulyDisplaySettings.translit | keyof typeof DefaulyDisplaySettings.teeka
-const DefaultFontSettings = {
-  gurmukhi: 16,
-  translation: 12,
-  translit: 12,
-  teeka: 12
-}
-
-const DefaultSourceSettings = {
-  vishraams: 'BaniDB',
-  baniLen: 'long'
-}
+type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings'
 
 export type SettingsCtx = {
-  displaySettings: typeof DefaulyDisplaySettings,
-  fontSettings: typeof DefaultFontSettings,
-  sourceSettings: typeof DefaultSourceSettings,
-  updateSettings: ( section: 'displaySettings' | 'fontSettings' | 'sourceSettings', key: any, value: any ) => void
+  gurbaniSettings: typeof DefaultGurbaniSettings,
+  translationSettings: typeof DefaultTranslationSettings,
+  translitSettings: typeof DefaultTranslitSettings,
+  teekaSettings: typeof DefaultTeekaSettings, 
+  sourceSettings: typeof DefaultSourceSettigns,
+  updateSettings: ( section: SettingsCtxKeys , path: string, value: any ) => void
 }
 const SettingsContext = createContext<SettingsCtx | null>( null )
 
 const SettingsProvider = ( { children }: {children: ReactNode} ) => { 
-  const [ displaySettings, setDisplaySettings ] = useCachedValue<typeof DefaulyDisplaySettings>( '@settings-display', DefaulyDisplaySettings )
-  const [ fontSettings, setFontSettings ] = useCachedValue<typeof DefaultFontSettings>( '@settings-font', DefaultFontSettings )
-  const [ sourceSettings, setSourceSettings ] = useCachedValue<typeof DefaultSourceSettings>( '@settings-source', DefaultSourceSettings )
+  const [ gurbaniSettings, setGurbaniSettings ] = useCachedValue( '@settings-gurbaniSettings', DefaultGurbaniSettings )
+  const [ translationSettings, setTranslationSettings ] = useCachedValue( '@settings-translationSettings', DefaultTranslationSettings )
+  const [ translitSettings, setTranslitSettings ] = useCachedValue( '@settings-translitSettings', DefaultTranslitSettings )
+  const [ teekaSettings, setTeekaSettings ] = useCachedValue( '@settings-teekaSettings', DefaultTeekaSettings )
+  const [ sourceSettings, setSourceSettings ] = useCachedValue( '@settings-sourcesettings', DefaultSourceSettigns )
 
-  const updateDisplaySettings = ( key: DisplaySettingsKeys, value: boolean ) => {
-    setDisplaySettings( updateObject( key, value, displaySettings ) )
-  }
-  const updateFontSettings = ( key: keyof typeof DefaultFontSettings, value: number ) => {
-    setFontSettings( { ...DefaultFontSettings, [ key ]: value } )
-  }
-  const updateSourceSettings = ( key: keyof typeof DefaultSourceSettings, value: typeof DefaultSourceSettings[typeof key] ) => {
-    setSourceSettings( { ...DefaultSourceSettings, [ key ]: value } )
-  }
-
-  const updateSettings =  ( section: 'displaySettings' | "fontSettings" | "sourceSettings", key: any, value: any ) => {
+  const updateSettings =  ( section: SettingsCtxKeys, path: string, value: any ) => {
     switch( section ) {
-      case 'displaySettings': 
-        updateDisplaySettings( key, value )
+      case 'gurbaniSettings': 
+        setGurbaniSettings( updateObject( path, value, gurbaniSettings ) )
         break
-      case 'fontSettings':
-        updateFontSettings( key, value )
+      case 'translationSettings':
+        setTranslationSettings( updateObject( path, value, translationSettings ) )
+        break
+      case 'translitSettings':
+        setTranslitSettings( updateObject( path, value, translitSettings ) )
+        break
+      case 'teekaSettings':
+        setTeekaSettings( updateObject( path, value, teekaSettings ) )
         break
       case 'sourceSettings':
-        updateSourceSettings( key, value )
+        setSourceSettings( updateObject( path, value, sourceSettings ) )
         break
       default : {}
     }
@@ -75,8 +45,10 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
 
   return (
     <SettingsContext.Provider value={{
-      displaySettings,
-      fontSettings,
+      gurbaniSettings,
+      translationSettings,
+      translitSettings,
+      teekaSettings,
       sourceSettings,
       updateSettings
     }}>
