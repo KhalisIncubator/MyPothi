@@ -22,10 +22,7 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
   const [ teekaSettings, setTeekaSettings ] = useCachedValue( '@settings-teekaSettings', DefaultTeekaSettings )
   const [ sourceSettings, setSourceSettings ] = useCachedValue( '@settings-sourcesettings', DefaultSourceSettigns )
 
-
-  console.log( gurbaniSettings )
   const updateSettings =  ( section: SettingsCtxKeys, path: string, value: any ) => {
-    console.log( 'went to here' )
     switch( section ) {
       case 'gurbaniSettings': 
         setGurbaniSettings( updateObject( path, value, gurbaniSettings ) )

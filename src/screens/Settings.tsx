@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import { Page } from '../components/Page'
 import { Colors } from '../utils/Themes'
 import { Editor } from '../components/Editor'
 import { useTheme } from '../store/Theme'
 import { Text, Title } from '../components/Text'
 import { Row, Column } from '../components/View'
-import { SettingsComponentMap, SettingsSection, Setting } from '../components/SettingsComponents'
+import { SettingsComponentMap, Setting } from '../components/SettingsComponents'
 import { useSettings } from '../store/Settings'
 import { SectionMap, SettingsMap } from '../utils/DefaultSettings'
 
@@ -30,9 +30,6 @@ export default SettingsScreen
 
 const DynamicSettings = () => {
   const settings = useSettings()
-  useEffect( () => {
-    console.log( 'what' )
-  }, [ settings ] )
   const setSetting = useCallback( ( section:any, path: string ) => ( value: any ) => settings.updateSettings( section, path, value ), [ settings ] )
   return (
    <>

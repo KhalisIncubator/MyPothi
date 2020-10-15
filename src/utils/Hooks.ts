@@ -5,6 +5,7 @@ import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { Clause } from '@nozbe/watermelondb/QueryDescription'
 import { TableNames, TableType } from '../database/LocalDatabase'
+
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
   return [ dimensions.width > 900 ]
@@ -18,7 +19,7 @@ const useToggle = ( initialValue?: boolean ): [boolean, ( newValue?: boolean ) =
 
 export type CacheValueUpdater<T> = ( ( newValue: T ) => Promise<void> )
 const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdater<T>] => {
-  const [ value, updateValue ] = useState<T>( initialValue ) 
+  const [ value, setValue ] = useState<T>( initialValue ) 
 
   // this is for when the data is an obj or array (useEffect cant compare)
   useDeepCompareEffectNoCheck( () => {
@@ -28,7 +29,7 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
           await AsyncStorage.setItem( key, JSON.stringify( initialValue ) )
         }else {
           const parsedValue: T = JSON.parse( storedValue )
-          updateValue( parsedValue )
+          setValue( parsedValue )
         }
       } )
     return () => {
@@ -38,13 +39,12 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
 
   const cacheNewValue = async ( newValue: T ) => {
     await AsyncStorage.setItem( key, JSON.stringify( newValue ) )
-    console.log( 'i set the value bor' )
-    updateValue( newValue )
+    if ( typeof newValue === 'object' ) {
+      setValue( prev => ( { ...prev, ...newValue } ) )
+    } else {
+      setValue( newValue )
+    }
   }
-
-  useEffect( () => {
-    console.log( 'this changed' )
-  }, [ value ] )
   return [ value, cacheNewValue ]
 }
 
