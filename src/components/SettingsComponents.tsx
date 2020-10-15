@@ -94,6 +94,7 @@ const SettingsStyles = StyleSheet.create( {
     fontSize: 30
   },
   SettingsContainer: {
+    marginVertical: 2,
     paddingHorizontal: 15
   }
 } )

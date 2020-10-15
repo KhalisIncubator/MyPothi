@@ -1,22 +1,19 @@
-import React, { useCallback, useEffect } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import React, { useCallback } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { Page } from '../components/Page'
 import { Colors } from '../utils/Themes'
 import { Editor } from '../components/Editor'
 import { useTheme } from '../store/Theme'
-import { Text, Title } from '../components/Text'
+import { Subtitle, Text, Title } from '../components/Text'
 import { Row, Column } from '../components/View'
 import { SettingsComponentMap, Setting } from '../components/SettingsComponents'
 import { useSettings } from '../store/Settings'
 import { SectionMap, SettingsMap } from '../utils/DefaultSettings'
 
 const SettingsScreen = () => {
-  const [ theme ] = useTheme()
   return (
     <Page>
-      <ScrollView style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness } ]}>
-        <Editor style={{ backgroundColor: Colors.Blue }} html="<div>yo" onHeightChange={() => { console.log( 'hi' )}}/>
-      </ScrollView>
+      <SettingsPreview />
       <ScrollView style={SettingsStyles.SettingsContainer}>
       <Row centered>
         <Text>Settings Preview</Text>
@@ -28,6 +25,15 @@ const SettingsScreen = () => {
 }
 export default SettingsScreen
 
+const SettingsPreview = () => {
+  const [ theme ] = useTheme()
+  return (
+    <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness } ]}>
+      <Editor style={{ backgroundColor: Colors.Blue }} html="<div>yo</div>" useContainer={false} disabled />
+    </View>
+  )
+
+}
 const DynamicSettings = () => {
   const settings = useSettings()
   const setSetting = useCallback( ( section:any, path: string ) => ( value: any ) => settings.updateSettings( section, path, value ), [ settings ] )
@@ -43,8 +49,8 @@ const DynamicSettings = () => {
             {!!subtitle && <Title>{subtitle}</Title>}
             
             {!!subections && Object.entries( subections ).map( ( [ subKey, { title: subtitle, values } ] ) => (
-              <Column key={`${subtitle}-container`}>
-              <Title>{subtitle}</Title>
+              <Column key={`${subtitle}-container`} style={SettingsStyles.SettingsSubsection}>
+              <Subtitle>{subtitle}</Subtitle>
                 {values.map( valueKey => {
                   const { title: settingTitle, type, pickerValues } = SettingsMap[ subKey ][ valueKey ]
                   const Modifier = SettingsComponentMap[ type ]
@@ -95,5 +101,8 @@ const SettingsStyles = StyleSheet.create( {
   SettingsContainer: {
     flex: 7,
     flexGrow: 7,
+  },
+  SettingsSubsection: {
+    marginLeft: 10
   }
 } )

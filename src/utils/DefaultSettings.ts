@@ -123,7 +123,7 @@ const SectionMap = [
   },
   {
     title: 'Translations',
-    values: Object.keys( TranslationMap ).filter( ( key ) => typeof TranslationMap[ key as keyof typeof TranslationMap ] !== 'object' ),
+    values: Object.keys( TranslationMap ).filter( ( key ) => typeof DefaultTranslationSettings[ key as keyof typeof TranslationMap ] !== 'object' ),
     valueSource: 'translationSettings',
     subections: {
       English: {

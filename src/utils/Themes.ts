@@ -11,8 +11,12 @@ export type Theme = {
   },
   style: {
     roundness: number,
-    textSize: number
   },
+  text: {
+    textSize: number,
+    subheaderSize: number
+    titleSize: number
+  }
   highlighter?: Array<string>,
 }
 export enum Colors {
@@ -45,7 +49,11 @@ const light: Theme = {
   },
   style: {
     roundness: 5,
-    textSize: 20,
+  },
+  text: {
+    textSize: 16,
+    titleSize: 25,
+    subheaderSize: 20
   }
 }
 
