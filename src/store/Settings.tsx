@@ -1,9 +1,9 @@
-import React, { createContext, ReactNode, useContext } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { updateObject } from '../utils/Functions'
 import { useCachedValue } from '../utils/Hooks'
 import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns } from '../utils/DefaultSettings'
 
-type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings'
+type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings' | "test"
 
 export type SettingsCtx = {
   gurbaniSettings: typeof DefaultGurbaniSettings,
@@ -22,7 +22,10 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
   const [ teekaSettings, setTeekaSettings ] = useCachedValue( '@settings-teekaSettings', DefaultTeekaSettings )
   const [ sourceSettings, setSourceSettings ] = useCachedValue( '@settings-sourcesettings', DefaultSourceSettigns )
 
+
+  console.log( gurbaniSettings )
   const updateSettings =  ( section: SettingsCtxKeys, path: string, value: any ) => {
+    console.log( 'went to here' )
     switch( section ) {
       case 'gurbaniSettings': 
         setGurbaniSettings( updateObject( path, value, gurbaniSettings ) )
@@ -39,7 +42,7 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
       case 'sourceSettings':
         setSourceSettings( updateObject( path, value, sourceSettings ) )
         break
-      default : {}
+      default : { }
     }
   }
 

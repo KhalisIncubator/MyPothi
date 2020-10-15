@@ -38,10 +38,14 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
 
   const cacheNewValue = async ( newValue: T ) => {
     await AsyncStorage.setItem( key, JSON.stringify( newValue ) )
+    console.log( 'i set the value bor' )
     updateValue( newValue )
   }
-  return [ value, cacheNewValue ]
 
+  useEffect( () => {
+    console.log( 'this changed' )
+  }, [ value ] )
+  return [ value, cacheNewValue ]
 }
 
 const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencies: any[] = [] ): [

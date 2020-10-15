@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Page } from '../components/Page'
 import { Colors } from '../utils/Themes'
 import { Editor } from '../components/Editor'
 import { useTheme } from '../store/Theme'
-import { Text } from '../components/Text'
+import { Text, Title } from '../components/Text'
 import { Row, Column } from '../components/View'
 import { SettingsComponentMap, SettingsSection, Setting } from '../components/SettingsComponents'
-import { SettingsMap, SectionsMap } from '../utils/SettingsMap'
 import { useSettings } from '../store/Settings'
+import { SectionMap, SettingsMap } from '../utils/DefaultSettings'
 
 const SettingsScreen = () => {
   const [ theme ] = useTheme()
@@ -21,7 +21,7 @@ const SettingsScreen = () => {
       <Row centered>
         <Text>Settings Preview</Text>
       </Row>
-        <DynamicSettings />
+      <DynamicSettings />
       </ScrollView>
     </Page>
   )
@@ -30,38 +30,63 @@ export default SettingsScreen
 
 const DynamicSettings = () => {
   const settings = useSettings()
-  const updateSetting = ( section: any ) => ( key: string, value: any ) => settings.updateSettings( section, key, value )
-
-  const generateSettings = (): JSX.Element[] => Object.entries( SectionsMap ).map( ( [ mapKey, mapInfo ] ) => {
-     
-    const { title,valueSource } = mapInfo
-    // @ts-expect-error this is due to Object.entries returning key typeof as string
-    const sectionInfo = SettingsMap[ mapKey ]
-    // @ts-expect-error
-    const settingValues = settings[ mapKey ]
-    return (
-    <SettingsSection key={title} title={title}>
-      {
-        Object.entries( sectionInfo ).map( ( [ settingKey, settingInfo ] )=> {
-           const settingValue = settingValues[ settingKey ]
-           const { title: settingTitle, type, pickerValues }: any = settingInfo
-
-           if( !!settingValue ) {
-            const Component = SettingsComponentMap[ type ]
-
-            return <Setting key={`${settingKey}-${settingValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${settingKey}`} settingKey={settingKey} update={updateSetting( valueSource )} initialvalue={settingValue} pickerOptions={pickerValues}/>}/>
-           }
-        } )
-      } 
-    </SettingsSection>
-    )
-  } )
-  
+  useEffect( () => {
+    console.log( 'what' )
+  }, [ settings ] )
+  const setSetting = useCallback( ( section:any, path: string ) => ( value: any ) => settings.updateSettings( section, path, value ), [ settings ] )
   return (
-    <>
-    {generateSettings()}
-    </>
-  )
+   <>
+    {
+      SectionMap.map( section => {
+        const { title, valueSource, values, subections, subtitle } = section
+        const settingsValues = settings[ valueSource ]
+        return (
+          <Column key={`${title}-container`}>
+            <Title>{title}</Title>
+            {!!subtitle && <Title>{subtitle}</Title>}
+            
+            {!!subections && Object.entries( subections ).map( ( [ subKey, { title: subtitle, values } ] ) => (
+              <Column key={`${subtitle}-container`}>
+              <Title>{subtitle}</Title>
+                {values.map( valueKey => {
+                  const { title: settingTitle, type, pickerValues } = SettingsMap[ subKey ][ valueKey ]
+                  const Modifier = SettingsComponentMap[ type ]
+                  const updater = setSetting( valueSource, `${subKey}-${valueKey}` )
+                  return (
+                    <Setting 
+                      key={`${settingTitle}-${title}-${subKey}-${valueKey} ${settingsValues[ subKey ][ valueKey ]}`}
+                      title={settingTitle}
+                      modifier={<Modifier  
+                                key={`${settingTitle}-${title}-${subKey}-${valueKey} ${settingsValues[ subKey ][ valueKey ]} modifier`}
+                                update={updater}  
+                                initialValue={settingsValues[ subKey ][ valueKey ]}  
+                                pickerOptions={pickerValues} />}
+                    />
+                  )
+                } )}
+              </Column>
+             ) )}
+              {values.map( valueName => {
+                const { title: settingTitle, type, pickerValues } = SettingsMap[ valueName ]
+                  const Modifier = SettingsComponentMap[ type ]
+                  const updater = setSetting( valueSource, `${valueName}` )
+                  return (
+                    <Setting 
+                        key={`${settingTitle}-${title}-${valueName} ${settingsValues[ valueName ]}`}
+                        title={settingTitle}
+                        modifier={<Modifier  
+                                    key={`${settingTitle}-${title}-${valueName} ${settingsValues[ valueName ]} modifier`}
+                                    update={updater}  
+                                    initialValue={settingsValues[ valueName ] }  
+                                    pickerOptions={pickerValues} />} />
+                  )
+                } )}
+          </Column>
+        )
+      } )
+    }
+   </>
+ ) 
 }
 
 const SettingsStyles = StyleSheet.create( {
@@ -75,24 +100,3 @@ const SettingsStyles = StyleSheet.create( {
     flexGrow: 7,
   }
 } )
-// Object.entries( settingValues ).map( ( [ settingKey, settingValue ], settingIdx ) => {
-//   if ( typeof settingValue === 'object' ) {
-//   // // map to record of string and boolean since this is displaySettings
-//     return (
-//       <Column key={`${settingKey}-column`}>
-//         <Text key={settingKey}>{settingKey[ 0 ].toUpperCase().concat( settingKey.slice( 1 ) )}</Text> 
-//           { Object.entries( settingValue as Record<string, boolean> ).map( ( [ subKey, subValue ], subIdx ) => {
-//             const { title: settingTitle, type }: {title: string, type: keyof typeof SettingsComponentMap} = sectionInfo[ subKey ]
-//             const Component = SettingsComponentMap[ type ]
-
-//             return <Setting key={`${subIdx} ${settingKey}-${subKey}-${subValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${subKey}`} settingKey={subKey} update={updateSetting( valueSource )} initialvalue={subValue} />}/>
-
-//         } )}
-//   </Column> )
-// } else {
-//   const { title: settingTitle, type, pickerValues }: {title: string, type: keyof typeof SettingsComponentMap, pickerValues: string[]} = sectionInfo[ settingKey ]
-//     const Component = SettingsComponentMap[ type ]
-
-//     return <Setting key={`${settingIdx} ${settingKey}-${settingValue} ${settingTitle}`} title={settingTitle} modifier={<Component key={`${settingTitle}-${settingKey}`} settingKey={settingKey} update={updateSetting( valueSource )} initialvalue={settingValue} pickerOptions={pickerValues}/>}/>
-
-// }

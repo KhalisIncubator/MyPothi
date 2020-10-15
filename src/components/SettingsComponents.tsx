@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { StyleSheet, Button } from 'react-native'
 import RoundedCheckbox from "react-native-rounded-checkbox"
 import Icon from 'react-native-vector-icons/Feather'
@@ -8,19 +8,19 @@ import { useTheme } from '../store/Theme'
 import { Text, Title } from './Text'
 import { Column, Row } from './View'
 import { useToggle } from '../utils/Hooks'
+import { SettingTypes } from '../utils/DefaultSettings'
 
 
 type SettingsComponentProps = {
-  initialvalue: any,
-  settingKey: string
-  update: ( key: any, value: any ) => void
+  initialValue: any,
+  update: ( value: any ) => void
 }
-const Checkbox = ( { initialvalue, settingKey, update }: SettingsComponentProps ) => {
+const Toggle = ( { initialValue, update }: SettingsComponentProps ) => {
   const [ theme ] = useTheme()
-  const [ isChecked, updateChecked ] = useToggle( initialvalue )
+  const [ isChecked, updateChecked ] = useToggle( initialValue )
   const toggle = ( newValue: boolean ) => {
     updateChecked( newValue )
-    update( settingKey, newValue )
+    update( newValue )
   }
   return <RoundedCheckbox 
              checkedColor={theme.colors.orange}
@@ -35,25 +35,25 @@ const Checkbox = ( { initialvalue, settingKey, update }: SettingsComponentProps 
 type PickerProps = SettingsComponentProps & {
   pickerOptions?: string[]
 }
-const Picker = ( { initialvalue, settingKey, update, pickerOptions }: PickerProps ) => {
+const Picker = ( { initialValue, update, pickerOptions }: PickerProps ) => {
   const { showActionSheetWithOptions } = useActionSheet()
   return <Button onPress={() => {
     showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions ] : [ 'cancel' ] , cancelButtonIndex: 0 }, ( buttonIndex ) => {
       // cancel button
       if ( buttonIndex === 0 ) return
       const newValue = pickerOptions[ buttonIndex -1 ] ?? []
-      !!newValue && update( settingKey, newValue ) 
+      !!newValue && update( newValue )
     } )
-  }} title={initialvalue}/>
+  }} title={initialValue}/>
 }
 
-const Stepper = ( { settingKey, update, initialvalue }: SettingsComponentProps ) => {
-  console.log( settingKey )
+const Stepper = ( { update, initialValue }: SettingsComponentProps ) => {
  return (
   <Row>
-    <Text>{initialvalue}</Text>
-    <Icon name="minus" size={25} onPress={() => update( settingKey, initialvalue - 1 )}/>
-    <Icon name="plus" size={25} onPress={() => update( settingKey, initialvalue + 1 )}/>
+    <Text>{initialValue}</Text>
+    <Icon name="minus" size={25} onPress={() => { 
+    update( initialValue  - 1 )}}/>
+    <Icon name="plus" size={25} onPress={() => update( initialValue + 1 )}/>
   </Row> 
  )
 } 
@@ -99,8 +99,8 @@ const SettingsStyles = StyleSheet.create( {
 } )
 
 const SettingsComponentMap = {
-  "stepper": Stepper,
-  "picker": Picker,
-  "checkbox": Checkbox
+  [ SettingTypes.Stepper ]: Stepper,
+  [ SettingTypes.Picker ]: Picker,
+  [ SettingTypes.Toggle ]: Toggle
 }
 export { SettingsSection, Setting, SettingsComponentMap }
