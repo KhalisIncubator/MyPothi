@@ -10,6 +10,15 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "paths": ["src"],
+        "alias": {
+          "components": "./src/components",
+          "database": "./src/database",
+          "navigation": "./src/navigation",
+          "screens": "./src/screens",
+          "store": "./src/store",
+          "utils": "./src/utils"
+        },
         "extensions": [
           ".js",
           ".jsx",
@@ -34,7 +43,7 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-native/all",
+    "plugin:react-native/all"
   ],
   "rules": {
     "array-bracket-spacing": [

@@ -1,8 +1,7 @@
-import React, { ReactNode, useState } from 'react'
-
+import React, { useState } from 'react'
 import { ScrollView, Keyboard, useWindowDimensions } from 'react-native'
-import { Page, PageProps } from './Page'
 
+import { Page, PageProps } from './Page'
 
 const DynamicScrollView = ( { children, style }: PageProps ) => {
   const window = useWindowDimensions()

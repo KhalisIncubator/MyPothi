@@ -1,12 +1,12 @@
 import { useNetInfo } from '@react-native-community/netinfo'
 import React, {  useEffect, useReducer } from 'react'
-import { ScrollView, StyleSheet, View, Keyboard, } from 'react-native'
-import query from '../database/BanidbApi'
-import { SearchBar } from '../components/SearchComponents'  
+import { ScrollView, StyleSheet, View } from 'react-native'
+import query from '../../database/BanidbApi'
+import { SearchBar } from './SearchComponents'  
 import Icon from 'react-native-vector-icons/Feather'
-import { useTheme } from '../store/Theme'
-import { SearchCard } from '../components/Card'
-import { Page } from '../components/Page'
+import { useTheme } from '../../store/Theme'
+import { SearchCard } from './SearchComponents'
+import { Page } from '../../components/Page'
 
 type SearchState = {
   searchQuery: string,
@@ -81,13 +81,10 @@ const styles = StyleSheet.create( {
   ScrollView: {
     height: '100%'
   },
-  input: {
-    fontFamily: 'OpenGurbaniAkhar',
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   }
 } )
 
-export default Search
+export { Search }

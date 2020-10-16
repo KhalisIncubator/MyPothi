@@ -1,11 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useRef } from 'react'
 import { RichEditor } from 'react-native-pell-rich-editor'
-import { DynamicScrollView } from '../components/DynamicScrollView'
-import { Editor } from '../components/Editor'
+import { DynamicScrollView } from 'components/DynamicScrollView'
+import { Editor } from 'components/Editor'
 
 
-const Pothi = () => {
+const Viewer = () => {
   const EditorRef = useRef<RichEditor>( null )
 
   return (
@@ -14,4 +14,4 @@ const Pothi = () => {
     </DynamicScrollView>
   )
 }
-export default Pothi
+export { Viewer }

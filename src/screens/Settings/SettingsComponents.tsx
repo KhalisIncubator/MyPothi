@@ -1,14 +1,14 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { StyleSheet, Button } from 'react-native'
 import RoundedCheckbox from "react-native-rounded-checkbox"
 import Icon from 'react-native-vector-icons/Feather'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 
-import { useTheme } from '../store/Theme'
-import { Text, Title } from './Text'
-import { Column, Row } from './View'
-import { useToggle } from '../utils/Hooks'
-import { SettingTypes } from '../utils/DefaultSettings'
+import { useTheme } from '../../store/Theme'
+import { Text, Title, Subtitle } from '../../components/Text'
+import { Column, Row } from '../../components/View'
+import { useToggle } from '../../utils/Hooks'
+import { SettingTypes } from './DefaultSettings'
 
 
 type SettingsComponentProps = {
@@ -72,11 +72,17 @@ const Setting = ( { title, modifier }: SettingProps ) => {
   )
 }
 
-const SettingsSection = ( { title, children }: {title: string, children: ReactNode} ) => {
+type SectionProps = {
+  title?: string,
+  subtitle?: string, 
+  children: ReactNode,
+}
+const SettingsSection = ( { title, subtitle, children }: SectionProps ) => {
   return (
     <Column style={SettingsStyles.SectionContainer}>
       <Row>
         <Title style={SettingsStyles.SectionTitle}>{title}</Title>
+        {!!subtitle && <Subtitle>{subtitle}</Subtitle>}
       </Row>
       <Column>
         {children}

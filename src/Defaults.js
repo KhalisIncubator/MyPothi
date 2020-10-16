@@ -107,14 +107,3 @@ const banisOrder = [
 ]
 
 export { banisOrder }
-
-const SettingsShabadView = 
-`
-<html>
-  <div class="viewer">
-    <div class="shabad">
-      <div class="pangtee"
-    </div>
-  </div>
-</html>
-`

@@ -1,14 +1,14 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Pothi from '../screens/Pothi'
-import Search from '../screens/Search'
-import SettingsScreen from '../screens/Settings'
+import { Viewer } from 'screens/Viewer'
+import { Search } from 'screens/Search'
+import { Homescreen } from 'screens/Homescreen'
+import SettingsScreen from '../screens/Settings/Settings'
 
-import { Homescreen } from '../screens/Homescreen'
 
 export type MainRouteParams = {
-  Pothi: {pothiName: string},
+  Viewer: {pothiName: string},
   Settings: undefined,
   Search: undefined,
   Home: undefined
@@ -33,8 +33,8 @@ const MobileRoutes = () => (
       }}
     >
       <Main.Screen  
-        name="Pothi"  
-        component={Pothi}  
+        name="Viewer"  
+        component={Viewer}  
         options={( { route } ) => ( {
           title: route.params.pothiName
         } )}

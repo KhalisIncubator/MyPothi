@@ -23,8 +23,7 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
 
   // this is for when the data is an obj or array (useEffect cant compare)
   useDeepCompareEffectNoCheck( () => {
-    let cancel = false
-    !cancel &&  AsyncStorage.getItem( key ).then( async ( storedValue ) => {
+    AsyncStorage.getItem( key ).then( async ( storedValue ) => {
         if ( !storedValue ) {
           await AsyncStorage.setItem( key, JSON.stringify( initialValue ) )
         }else {
@@ -32,9 +31,6 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
           setValue( parsedValue )
         }
       } )
-    return () => {
-      cancel = true
-    }
   }, [ initialValue, key ] )
 
   const cacheNewValue = async ( newValue: T ) => {

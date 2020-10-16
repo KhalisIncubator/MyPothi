@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import {  View, SafeAreaView, StyleSheet, Keyboard, StyleProp, ViewStyle } from 'react-native'
+import {  View, SafeAreaView, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import { useTheme } from '../store/Theme'
 
 
@@ -9,9 +9,8 @@ export type PageProps = {
 }
 const Page = ( { children, style }: PageProps ) => {
   const [ theme ] = useTheme()
-  const pageTheme = StyleSheet.flatten( [ PageStyles.Page, { backgroundColor: theme.colors.background }, style ] )
   return (
-    <SafeAreaView style={pageTheme}>
+    <SafeAreaView style={[ PageStyles.Page, { backgroundColor: theme.colors.background }, style ] }>
       <View style={PageStyles.View}>
         {children}
         </View>

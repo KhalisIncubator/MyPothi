@@ -13,34 +13,25 @@ const Text: React.FC<TextProps> = ( props ) => {
   )
 }
 export { Text }
-
-
 const Title: React.FC<TextProps> = ( props ) => {
   const [ theme ] = useTheme()
   return ( 
-    <Text {...props} style={[ TextStyle.title, { fontSize: theme.text.titleSize } ]} />
+    <Text style={[ TextStyle.title, { fontSize: theme.text.titleSize } ]} {...props} />
 )
 }
-
 const Subtitle: React.FC<TextProps> = ( props ) =>  {
   const [ theme ] = useTheme()
   return ( <Text {...props} style={[ TextStyle.subtitle, { fontSize: theme.text.subheaderSize } ]} /> )
 
 }
-
-
 const TextStyle = StyleSheet.create( {
   Text: {
     fontFamily: 'Comfortaa',
     fontWeight: '400',
     paddingVertical: 5
   },
-  subtitle: {
-    fontWeight: '500'
-  },
-  title: {
-    fontWeight: 'bold'
-  }
+  subtitle: { fontWeight: '500' },
+  title: { fontWeight: 'bold' }
 
 } )
 

@@ -1,4 +1,4 @@
-import { Database, Query, Model } from '@nozbe/watermelondb'
+import { Database } from '@nozbe/watermelondb'
 import { Shabad, Pothi } from './Models'
 import schema from './Schema'
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'

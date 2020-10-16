@@ -22,9 +22,10 @@ export type Theme = {
 export enum Colors {
   Blue = "#004c87",
   Orange = "",
-  White = "#00000",
+  White = "#FFFFFF",
   LightGrey = "#f9f9f9",
-  DarkGrey = ""
+  DarkGrey = "",
+  Red = "red"
 }
 const SourceColors = {
   'sRI gurU gRMQ swihb jI': '#417d9a',
@@ -51,9 +52,9 @@ const light: Theme = {
     roundness: 5,
   },
   text: {
-    textSize: 16,
-    titleSize: 25,
-    subheaderSize: 20
+    textSize: 13,
+    titleSize: 20,
+    subheaderSize: 15
   }
 }
 
