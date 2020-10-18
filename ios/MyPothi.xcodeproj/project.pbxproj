@@ -11,7 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3235BF59250734D500622841 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235BF58250734D500622841 /* File.swift */; };
+		3235BF5A250734D500622841 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235BF58250734D500622841 /* File.swift */; };
 		32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B3C5B5243269F80062B22F /* LaunchScreen.xib */; };
+		3C96B61C6FA84D9D98AC47E1 /* Comfortaa-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F70CC5C8D6E4B84BEBC9454 /* Comfortaa-VariableFont_wght.ttf */; };
 		88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */; };
 		9A2EE262D217978C93D1495C /* libPods-MyPothi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385D953E54E3427CDFF3680 /* libPods-MyPothi.a */; };
 		A4327B9489F97EBD9278B837 /* libPods-MyPothi-MyPothiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */; };
@@ -43,6 +46,10 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MyPothi/main.m; sourceTree = "<group>"; };
 		26947516DFB17B28D0FA451C /* Pods-MyPothi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi.debug.xcconfig"; path = "Target Support Files/Pods-MyPothi/Pods-MyPothi.debug.xcconfig"; sourceTree = "<group>"; };
 		2948DBDB02CEAE18331EE51B /* Pods-MyPothi-MyPothiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-MyPothiTests.debug.xcconfig"; path = "Target Support Files/Pods-MyPothi-MyPothiTests/Pods-MyPothi-MyPothiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		32216E2024D0AD2D007FF177 /* MyPothi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyPothi.entitlements; path = MyPothi/MyPothi.entitlements; sourceTree = "<group>"; };
+		3235BF56250734D500622841 /* MyPothi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyPothi-Bridging-Header.h"; sourceTree = "<group>"; };
+		3235BF57250734D500622841 /* MyPothiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyPothiTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		3235BF58250734D500622841 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		32B3C5B5243269F80062B22F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3385D953E54E3427CDFF3680 /* libPods-MyPothi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPothi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60BB8A11009323FFE7356255 /* Pods-MyPothi-MyPothiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-MyPothiTests.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-MyPothiTests/Pods-MyPothi-MyPothiTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -50,6 +57,7 @@
 		6E88A3C0E973F77F65B9B1CF /* Pods-MyPothi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOS/Pods-MyPothi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Regular.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Regular.otf"; sourceTree = "<group>"; };
 		712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPothi-MyPothiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F70CC5C8D6E4B84BEBC9454 /* Comfortaa-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Comfortaa-VariableFont_wght.ttf"; path = "../assets/fonts/Comfortaa-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		81930148B328056E160721D9 /* Pods-MyPothi-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOSTests/Pods-MyPothi-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		852B77A9D15143958A127094 /* OpenGurbaniAkhar-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Bold.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Bold.otf"; sourceTree = "<group>"; };
 		86EC67D16890A8E783AB339F /* Pods-MyPothi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOSTests/Pods-MyPothi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +106,7 @@
 		13B07FAE1A68108700A75B9A /* MyPothi */ = {
 			isa = PBXGroup;
 			children = (
+				32216E2024D0AD2D007FF177 /* MyPothi.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -147,6 +156,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3235BF58250734D500622841 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* MyPothi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MyPothiTests */,
@@ -154,6 +164,8 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				7B7A9CF8176D67E8863616F3 /* Pods */,
 				A9D8D488D02E4351BEDFDCA9 /* Resources */,
+				3235BF56250734D500622841 /* MyPothi-Bridging-Header.h */,
+				3235BF57250734D500622841 /* MyPothiTests-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -174,6 +186,7 @@
 			children = (
 				852B77A9D15143958A127094 /* OpenGurbaniAkhar-Bold.otf */,
 				6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */,
+				7F70CC5C8D6E4B84BEBC9454 /* Comfortaa-VariableFont_wght.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -228,16 +241,18 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Khalis Foundation";
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 6UQB6G9H4L;
+						LastSwiftMigration = 1160;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = B3W82WVBU9;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -277,6 +292,7 @@
 				32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */,
 				BDF5006612C349F38314B075 /* OpenGurbaniAkhar-Bold.otf in Resources */,
 				88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */,
+				3C96B61C6FA84D9D98AC47E1 /* Comfortaa-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* MyPothiTests.m in Sources */,
+				3235BF5A250734D500622841 /* File.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				3235BF59250734D500622841 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,13 +513,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2948DBDB02CEAE18331EE51B /* Pods-MyPothi-MyPothiTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 6UQB6G9H4L;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = MyPothiTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -510,6 +531,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyPothiTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyPothi.app/MyPothi";
 			};
 			name = Debug;
@@ -518,10 +542,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 60BB8A11009323FFE7356255 /* Pods-MyPothi-MyPothiTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = MyPothiTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -530,6 +556,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyPothiTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyPothi.app/MyPothi";
 			};
 			name = Release;
@@ -540,6 +568,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MyPothi/MyPothi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 26;
@@ -560,6 +589,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.WahegurooNetwork.MyPothi;
 				PRODUCT_NAME = MyPothi;
 				PROVISIONING_PROFILE_SPECIFIER = MyPothi2;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = MyPothi2;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "MyPothi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -573,6 +605,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MyPothi/MyPothi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 26;
@@ -588,6 +621,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.WahegurooNetwork.MyPothi;
 				PRODUCT_NAME = MyPothi;
 				PROVISIONING_PROFILE_SPECIFIER = MyPothi2;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "MyPothi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -617,6 +652,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -641,7 +677,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -677,6 +713,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -694,7 +731,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -703,6 +740,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

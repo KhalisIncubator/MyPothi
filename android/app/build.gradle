@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply plugin: "com.android.application"
+apply plugin: 'kotlin-android'  // ⬅️ This!
 
 import com.android.build.OutputFile
 
@@ -206,6 +208,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation project(':watermelondb')  // ⬅️ This!
 }
 project.ext.vectoricons = [
     iconFontNames: [ 'Feather.ttf', 'MaterialCommunityIcons.ttf' ] // Name of the font files you want to copy

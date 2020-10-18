@@ -10,6 +10,15 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "paths": ["src"],
+        "alias": {
+          "components": "./src/components",
+          "database": "./src/database",
+          "navigation": "./src/navigation",
+          "screens": "./src/screens",
+          "store": "./src/store",
+          "utils": "./src/utils"
+        },
         "extensions": [
           ".js",
           ".jsx",
@@ -20,13 +29,21 @@
       }
     }
   },
+  "overrides": [
+  {
+    "files": ["**/*.tsx"],
+    "rules": {
+      "react/prop-types": "off"
+    }
+  }
+  ],
   "env": {
     "es6": true
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-native/all",
+    "plugin:react-native/all"
   ],
   "rules": {
     "array-bracket-spacing": [
@@ -38,6 +55,7 @@
       "always"
     ],
     "import/no-unresolved": 0,
+     "object-curly-spacing": ["error", "always"],
     "object-curly-newline": [
       "error",
       {
@@ -68,6 +86,9 @@
           "empty"
         ]
       }
-    ]
+    ],
+    "react/display-name": 0,
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-comment": 0
   }
 }
