@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useState, useEffect, useContext } from 'react'
-import { CacheValueUpdater, useCachedValue } from '../utils/Hooks'
-import THEMES, { Theme } from '../utils/Themes'
+import { useSettings } from './Settings'
+import THEMES, { Theme } from 'utils/Themes'
 
 type ProviderProps = {
   children: ReactNode,
@@ -8,18 +8,22 @@ type ProviderProps = {
 const DEFAULT_THEME = 'light'
 type ThemeCtx = {
   theme: Theme,
-  setTheme: CacheValueUpdater<keyof typeof THEMES>
+  setTheme: ( theme: keyof typeof THEMES ) => void,
 }
 const ThemeContext = createContext<ThemeCtx | null>( null )
 
 
 const ThemeProvider: React.FC<ProviderProps> = ( { children } ) => {
-  const [ themeName, setTheme ] = useCachedValue<keyof typeof THEMES>( '@theme', DEFAULT_THEME )
+  const { themeSettings, updateSettings } = useSettings()
   const [ theme, updateTheme ] = useState<Theme>( THEMES[ DEFAULT_THEME ] )
 
+  const setTheme = ( theme: keyof typeof THEMES ) => {
+    updateSettings( 'themeSettings', 'theme', theme )
+  }
+
   useEffect( () => {
-    updateTheme( THEMES[ themeName ] )
-  }, [ themeName ] )
+    updateTheme( THEMES[ themeSettings.theme as keyof typeof THEMES ] )
+  }, [ themeSettings.theme ] )
 
   return (
     <ThemeContext.Provider value ={{ theme, setTheme }}>
@@ -28,7 +32,7 @@ const ThemeProvider: React.FC<ProviderProps> = ( { children } ) => {
   )
 }
 
-const useTheme = (): [Theme, CacheValueUpdater<keyof typeof THEMES>] => {
+const useTheme = (): [Theme, ( theme: keyof typeof THEMES ) => void] => {
   const { theme, setTheme } = useContext( ThemeContext )!
   return [ theme, setTheme ]
 }

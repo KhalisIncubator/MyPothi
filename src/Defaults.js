@@ -107,3 +107,19 @@ const banisOrder = [
 ]
 
 export { banisOrder }
+
+
+export const SettingsPreviewHTML = 
+`
+<div class="shabad"> 
+  <div class="pangtee">
+    <div class="gurbani">
+      <> siq nwmu krqw purKu inrBau inrvYru Akwl mUriq AjUnI sYBM gur pRswid ]
+    </div>
+    <div class="translation">
+    One Universal Creator God. The Name Is Truth. Creative Being Personified. No Fear. No Hatred. Image Of The Undying, Beyond Birth, Self-Existent. By Guru's Grace ~
+    </div>
+   </div>
+   
+</div>
+`

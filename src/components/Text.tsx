@@ -9,7 +9,7 @@ const Text: React.FC<TextProps> = ( props ) => {
   const [ theme ] = useTheme()
   const { style, ...rest } = props
   return (
-    <NativeText {...rest} style={[ TextStyle.Text, { fontSize: theme.text.textSize }, style ]}/>
+    <NativeText {...rest} style={[ TextStyle.Text, { fontSize: theme.text.textSize, color: theme.colors.text }, style ]}/>
   )
 }
 export { Text }

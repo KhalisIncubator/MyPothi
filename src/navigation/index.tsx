@@ -5,6 +5,8 @@ import { Viewer } from 'screens/Viewer'
 import { Search } from 'screens/Search'
 import { Homescreen } from 'screens/Homescreen'
 import SettingsScreen from '../screens/Settings/Settings'
+import { useTheme } from 'store/Theme'
+import Icon from 'react-native-vector-icons/Feather'
 
 
 export type MainRouteParams = {
@@ -14,15 +16,16 @@ export type MainRouteParams = {
   Home: undefined
 }
 const Main = createStackNavigator<MainRouteParams>()
-
-const MobileRoutes = () => (
+const MobileRoutes = () => {
+  const [ theme ] = useTheme()
+return (
   <NavigationContainer >
     <Main.Navigator
       initialRouteName="Home"
       headerMode="float"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#004c87'
+          backgroundColor: theme.colors.primary,
       },
       headerTitleStyle: {
         color: '#FFF'
@@ -30,6 +33,8 @@ const MobileRoutes = () => (
       headerBackTitleStyle: {
         color: '#FFF',
       },
+      headerBackTitleVisible: false,
+      headerBackImage: () => <Icon name="arrow-left" size={25} style={{ color: "#FFF", marginLeft: 10 }}/>
       }}
     >
       <Main.Screen  
@@ -42,10 +47,11 @@ const MobileRoutes = () => (
         //   { headerRight: () => <Button title="yo" onPress={()=> navigation.navigate( "Settings" )}></Button> }  
       // )} />
       />
-      <Main.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
+      <Main.Screen name="Settings" component={SettingsScreen} />
       <Main.Screen name="Search" component={Search} />
       <Main.Screen name="Home" component={Homescreen} options={{ headerShown: false }}/>
     </Main.Navigator>
   </NavigationContainer>
 )
+}
 export { MobileRoutes }

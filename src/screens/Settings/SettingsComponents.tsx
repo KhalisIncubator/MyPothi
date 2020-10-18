@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react'
-import { StyleSheet, Button } from 'react-native'
+import { StyleSheet, Button, StyleProp, ViewStyle } from 'react-native'
 import RoundedCheckbox from "react-native-rounded-checkbox"
 import Icon from 'react-native-vector-icons/Feather'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 
 import { useTheme } from '../../store/Theme'
-import { Text, Title, Subtitle } from '../../components/Text'
+import { Text, Title } from '../../components/Text'
 import { Column, Row } from '../../components/View'
 import { useToggle } from '../../utils/Hooks'
 import { SettingTypes } from './DefaultSettings'
@@ -24,8 +24,8 @@ const Toggle = ( { initialValue, update }: SettingsComponentProps ) => {
   }
   return <RoundedCheckbox 
              checkedColor={theme.colors.orange}
-             outerSize={25}
-             innerSize={20}
+             outerSize={30}
+             innerSize={25}
              isChecked={isChecked} 
              onPress={toggle}
              component={<Icon name="check" />}
@@ -38,22 +38,23 @@ type PickerProps = SettingsComponentProps & {
 const Picker = ( { initialValue, update, pickerOptions }: PickerProps ) => {
   const { showActionSheetWithOptions } = useActionSheet()
   return <Button onPress={() => {
-    showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions ] : [ 'cancel' ] , cancelButtonIndex: 0 }, ( buttonIndex ) => {
+    showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions.map( optn => optn.toUpperCase() ) ] : [ 'cancel' ] , cancelButtonIndex: 0 }, ( buttonIndex ) => {
       // cancel button
       if ( buttonIndex === 0 ) return
       const newValue = pickerOptions[ buttonIndex -1 ] ?? []
       !!newValue && update( newValue )
     } )
-  }} title={initialValue}/>
+  }} title={initialValue.toUpperCase()}/>
 }
 
 const Stepper = ( { update, initialValue }: SettingsComponentProps ) => {
+  const [ theme ] = useTheme()
  return (
   <Row>
     <Text>{initialValue}</Text>
     <Icon name="minus" size={25} onPress={() => { 
-    update( initialValue  - 1 )}}/>
-    <Icon name="plus" size={25} onPress={() => update( initialValue + 1 )}/>
+    update( initialValue  - 1 )}} style={{ color: theme.colors.text }}/>
+    <Icon name="plus" size={25} onPress={() => update( initialValue + 1 )} style={{ color: theme.colors.text }}/>
   </Row> 
  )
 } 
@@ -76,13 +77,16 @@ type SectionProps = {
   title?: string,
   subtitle?: string, 
   children: ReactNode,
+  style?: StyleProp<ViewStyle>
 }
-const SettingsSection = ( { title, subtitle, children }: SectionProps ) => {
+const SettingsSection = ( { title, subtitle, children, style }: SectionProps ) => {
   return (
-    <Column style={SettingsStyles.SectionContainer}>
+    <Column style={[ SettingsStyles.SectionContainer, style ]}>
       <Row>
         <Title style={SettingsStyles.SectionTitle}>{title}</Title>
-        {!!subtitle && <Subtitle>{subtitle}</Subtitle>}
+      </Row>
+      <Row>
+        {!!subtitle && <Text>{subtitle}</Text>}
       </Row>
       <Column>
         {children}

@@ -1,9 +1,9 @@
 import React, { createContext, ReactNode, useContext } from 'react'
-import { updateObject } from '../utils/Functions'
-import { useCachedValue } from '../utils/Hooks'
-import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns } from '../screens/Settings/DefaultSettings'
+import { updateObject } from 'utils/Functions'
+import { useCachedValue } from 'utils/Hooks'
+import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns, DefaultThemeSettings } from 'screens/Settings/DefaultSettings'
 
-type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings' | "test"
+type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings' | "themeSettings"
 
 export type SettingsCtx = {
   gurbaniSettings: typeof DefaultGurbaniSettings,
@@ -11,6 +11,7 @@ export type SettingsCtx = {
   translitSettings: typeof DefaultTranslitSettings,
   teekaSettings: typeof DefaultTeekaSettings, 
   sourceSettings: typeof DefaultSourceSettigns,
+  themeSettings: typeof DefaultThemeSettings,
   updateSettings: ( section: SettingsCtxKeys , path: string, value: any ) => void
 }
 const SettingsContext = createContext<SettingsCtx | null>( null )
@@ -21,6 +22,7 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
   const [ translitSettings, setTranslitSettings ] = useCachedValue( '@settings-translitSettings', DefaultTranslitSettings )
   const [ teekaSettings, setTeekaSettings ] = useCachedValue( '@settings-teekaSettings', DefaultTeekaSettings )
   const [ sourceSettings, setSourceSettings ] = useCachedValue( '@settings-sourcesettings', DefaultSourceSettigns )
+  const [ themeSettings, setThemeSettings ] = useCachedValue( '@settings-themeSettings', DefaultThemeSettings )
 
   const updateSettings =  ( section: SettingsCtxKeys, path: string, value: any ) => {
     switch( section ) {
@@ -39,6 +41,9 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
       case 'sourceSettings':
         setSourceSettings( updateObject( path, value, sourceSettings ) )
         break
+      case "themeSettings":
+        setThemeSettings( updateObject( path, value, themeSettings ) )
+        break
       default : { }
     }
   }
@@ -50,6 +55,7 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
       translitSettings,
       teekaSettings,
       sourceSettings,
+      themeSettings,
       updateSettings
     }}>
       {children}

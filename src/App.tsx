@@ -19,13 +19,13 @@ const App = () => {
     }
   }, [] )
   return (
-    <ThemeProvider>
-      <DatabaseProvider database={localDatabase}>
-        <SettingsProvider >
+    <DatabaseProvider database={localDatabase}>
+      <SettingsProvider >
+        <ThemeProvider>
           <MobileRoutes />
-        </SettingsProvider>
-      </DatabaseProvider>
-  </ThemeProvider>
+        </ThemeProvider>
+      </SettingsProvider>
+    </DatabaseProvider>
   )
 }
 

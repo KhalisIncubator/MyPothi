@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
+
 import { Page } from 'components/Page'
-import { Colors } from 'utils/Themes'
 import { Editor } from 'components/Editor'
 import { useTheme } from 'store/Theme'
 import { Text } from 'components/Text'
@@ -9,13 +9,14 @@ import { Row } from 'components/View'
 import { SettingsComponentMap, Setting, SettingsSection } from 'screens/Settings/SettingsComponents'
 import { useSettings } from 'store/Settings'
 import { SectionMap, SettingsMap } from 'screens/Settings/DefaultSettings'
+import { SettingsPreviewHTML } from '../../Defaults'
 
 const SettingsScreen = () => {
   return (
     <Page>
       <SettingsPreview />
       <ScrollView style={SettingsStyles.SettingsContainer}>
-      <Row centered>
+      <Row horizontalCenter>
         <Text>Settings Preview</Text>
       </Row>
       <DynamicSettings />
@@ -28,8 +29,8 @@ export default SettingsScreen
 const SettingsPreview = () => {
   const [ theme ] = useTheme()
   return (
-    <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness } ]}>
-      <Editor style={{ backgroundColor: Colors.Blue }} html="<div>yo</div>" useContainer={false} disabled />
+    <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness, backgroundColor: theme.colors.background } ]}>
+      <Editor editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
     </View>
   )
 
@@ -59,13 +60,13 @@ const DynamicSettings = () => {
     {
       SectionMap.map( section => {
         const { title, valueSource, values, subsections, subtitle } = section
-        const settingsValues = settings[ valueSource ]
+        const settingsValues = settings[ valueSource as keyof typeof settings ]
         return (
           <SettingsSection title={title} subtitle={subtitle} key={`${title}-container`} >
             {!!subsections && Object.entries( subsections ).map( ( [ subKey, { title: subtitle, values: subValues } ] ) => {
               return (
-                <SettingsSection subtitle={subtitle} key={`${title}-${subtitle}-container`}> 
-                  {subValues.map( subValueKey => createSetting( valueSource, subValueKey, SettingsMap[ subKey ], `${subKey}-${subValueKey}`, settingsValues[ subKey ][ subValueKey ] ) )}
+                <SettingsSection style={SettingsStyles.SettingsSubsection} subtitle={subtitle} key={`${title}-${subtitle}-container`}> 
+                  {subValues.map( subValueKey => createSetting( valueSource, subValueKey, SettingsMap[ subKey as keyof typeof SettingsMap ], `${subKey}-${subValueKey}`, settingsValues[ subKey ][ subValueKey ] ) )}
                 </SettingsSection>
               )
             } )}
@@ -92,6 +93,7 @@ const SettingsStyles = StyleSheet.create( {
     flexGrow: 7,
   },
   SettingsSubsection: {
-    marginLeft: 10
+    marginVertical: 0,
+    padding: 5
   }
 } )

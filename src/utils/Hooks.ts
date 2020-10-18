@@ -5,6 +5,7 @@ import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { Clause } from '@nozbe/watermelondb/QueryDescription'
 import { TableNames, TableType } from '../database/LocalDatabase'
+import { Observable, observable } from 'rxjs'
 
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
@@ -92,4 +93,14 @@ const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencie
   return [ result, createRow, deleteRow, updateItem ]
 }
 
-export { useIsTablet, useCachedValue, useQuery, useToggle }
+const useObservable = <T>( observable: ( ...args: any[] ) => Observable<T>, initialValue: T, dependencies: any[] = [] ) => {
+  const [ state, setState ] = useState( initialValue )
+  useEffect( () => {
+    const sub = observable().subscribe( setState )
+    return () => {
+      sub.unsubscribe()
+    }
+  }, dependencies )
+  return [ state ]
+}
+export { useIsTablet, useCachedValue, useQuery, useToggle, useObservable }

@@ -1,29 +1,34 @@
+import { ThemeNames } from "utils/Themes"
+
 export enum GurbaniKeys {
-  GurbaniFont = 'gurbani'
+  GurbaniFont = 'gurbani.font'
 }
 export enum TranslationKeys {
   BanidbEng = 'en.bdb',
   ManmohanSinghEng = 'en.ms',
   SahibSinghEng = 'en.ssk',
   Spanish = 'es',
-  TranslationFont = 'translation'
+  TranslationFont = 'translation.font'
 }
 export enum TranslitKeys {
   English = 'en',
   Hindi = 'hi',
   Urdu = 'ur',
-  TranslitFont = 'translit'
+  TranslitFont = 'translit.font'
 }
 export enum TeekaKeys {
   SahibSingh = 'pu.ss',
   Faridkot = 'pu.ft',
   Banidb = 'pu.bdb',
   ManmohanSingh = 'pu.ms',
-  TeekaFont = 'teeka'
+  TeekaFont = 'teeka.font'
 }
 export enum SourceKeys {
   BaniLen = 'banilen',
   Vishraams = 'vishraams'
+}
+export enum ThemeKeys {
+  Theme = "theme"
 }
 
 export enum SettingTypes {
@@ -34,6 +39,7 @@ export enum SettingTypes {
 
 const BaniLenValues = [ 'Short', 'Medium', 'Long', 'Extra Long' ]
 const VishraamValues = [ 'STTM 2', 'iGurbani', 'Default' ]
+const ThemeValues = ThemeNames
 
 const DefaultGurbaniSettings = {
   [ GurbaniKeys.GurbaniFont ]: 16
@@ -70,6 +76,9 @@ const DefaultSourceSettigns = {
   [ SourceKeys.Vishraams ]: 'Default'
 }
 
+const DefaultThemeSettings = {
+  [ ThemeKeys.Theme ]: 'light'
+}
 // ok below this is configuration for dynamic settings
 
 const GurbaniMap = {
@@ -106,13 +115,17 @@ const SourceMap = {
   [ SourceKeys.BaniLen ]: { title: 'Bani Length', type: SettingTypes.Picker, pickerValues: BaniLenValues },
   [ SourceKeys.Vishraams ]: { title: 'Vishraams', type: SettingTypes.Picker, pickerValues: VishraamValues }
 }
+const ThemeMap = {
+  [ ThemeKeys.Theme ]: { title: 'Theme', type: SettingTypes.Picker, pickerValues: ThemeValues }
+}
 
 const SettingsMap = {
   ...GurbaniMap,
   ...TranslationMap,
   ...TeekaMap,
   ...TranslitMap,
-  ...SourceMap
+  ...SourceMap,
+  ...ThemeMap
 }
 
 const SectionMap = [
@@ -151,8 +164,13 @@ const SectionMap = [
     subtitle: '*Note: Bani Length setting does not apply to already added Banis',
     values: Object.keys( SourceMap ),
     valueSource: 'sourceSettings'
+  },
+  {
+    title: 'Themes',
+    values: Object.keys( ThemeMap ),
+    valueSource: 'themeSettings'
   }
 ]
 
 
-export { DefaultGurbaniSettings, DefaultTeekaSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultSourceSettigns, SettingsMap, SectionMap }
+export { DefaultGurbaniSettings, DefaultTeekaSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultSourceSettigns, DefaultThemeSettings, SettingsMap, SectionMap }

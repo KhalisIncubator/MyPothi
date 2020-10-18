@@ -1,3 +1,4 @@
+type StatusBarType = "light-content" | "dark-content"
 export type Theme = {
   colors: {
     primary: string,
@@ -16,50 +17,81 @@ export type Theme = {
     textSize: number,
     subheaderSize: number
     titleSize: number
-  }
+  },
+  statusbar: StatusBarType,
   highlighter?: Array<string>,
 }
 export enum Colors {
   Blue = "#004c87",
-  Orange = "",
+  Orange = "#D97D0B",
   White = "#FFFFFF",
   LightGrey = "#f9f9f9",
-  DarkGrey = "",
-  Red = "red"
+  DarkGrey = "#6f6f6f",
+  IOSDark = '#1c1c1e',
+  Red = "#74001d",
+  Purple = "#417d9a",
+  DarkCyan = "#017174",
+  Yellow = "#FFA500",
+  Pink = "#d80ad0"
 }
 const SourceColors = {
-  'sRI gurU gRMQ swihb jI': '#417d9a',
-  'dsm bwxI': '#70007D',
-  'BweI gurdws jI vwrW': '#017174',
-  'BweI gurdws isMG jI vwrW': '#746f01',
-  'BweI nMd lwl jI vwrW': '#74001d',
-  'rihqnwmy Aqy pMQk il^qW': '#000',
+  'sRI gurU gRMQ swihb jI': Colors.Orange,
+  'dsm bwxI': Colors.Purple,
+  'BweI gurdws jI vwrW': Colors.DarkCyan,
+  'BweI gurdws isMG jI vwrW': Colors.Pink,
+  'BweI nMd lwl jI vwrW': Colors.Red,
+  'rihqnwmy Aqy pMQk il^qW': Colors.Blue,
 }
 export { SourceColors }
 
 const light: Theme = {
   colors: {
-    primary: '#004c87',
-    secondary: '#D97D0B',
+    primary: Colors.Blue,
+    secondary: Colors.Orange,
     card: "white",
-    background: '#f6f6f6',
+    background: Colors.LightGrey,
     text: 'black',
     error: 'red',
-    warning: 'white',
-    orange: '#FFA500'
+    warning: 'yellow',
+    orange: Colors.Yellow
   },
   style: {
     roundness: 5,
   },
   text: {
-    textSize: 13,
-    titleSize: 20,
-    subheaderSize: 15
-  }
+    textSize: 16,
+    titleSize: 24,
+    subheaderSize: 18
+  },
+  statusbar: 'dark-content'
+}
+const dark: Theme = {
+  colors: {
+    primary: Colors.Blue,
+    secondary: Colors.Yellow,
+    card: Colors.DarkGrey,
+    background: Colors.IOSDark,
+    text: 'white',
+    error: 'red',
+    warning: 'yellow',
+    orange: Colors.Orange
+  },
+  style: {
+    roundness: 5,
+  },
+  text : {
+    textSize: 16,
+    titleSize: 24,
+    subheaderSize: 18
+  },
+  statusbar: 'light-content'
 }
 
 const themes = {
-  light
+  light,
+  dark
 }
+
+export const ThemeNames = Object.keys( themes )
 
 export default themes

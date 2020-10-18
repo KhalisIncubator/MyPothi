@@ -1,12 +1,13 @@
 import React, {  useRef, useState } from 'react'
 import Icon from 'react-native-vector-icons/Feather'
-import { StyleSheet, Text, Keyboard, Button } from 'react-native'
+import { StyleSheet, Keyboard, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import { HomeSection, IconCard, Subheader, HomescreenCard } from './Components'
 
 import { DynamicScrollView } from 'components/DynamicScrollView'
 import { SearchBar } from 'screens/Search/SearchComponents'
+import { Text } from 'components/Text'
 import { useQuery } from 'utils/Hooks'
 import { useTheme } from 'store/Theme'
 import { Column, Row } from 'components/View'
@@ -35,8 +36,7 @@ const Homescreen =  () => {
         </Row>
         <SearchBar  
             ref={PothiCreatingRef}  
-            theme={theme}  
-            placeholder="Create Gutka..."  
+            placeholder="Create Pothi..."  
             icon="book"  autoCorrect={false}
             autoCapitalize="none"
             rightIcon={<Icon style={HomeStyles.iconView} onPress={makePothi} name="plus" size={25} color="green"/>} />

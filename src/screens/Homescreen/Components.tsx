@@ -9,6 +9,7 @@ import { Text, Title } from 'components/Text'
 import { useTheme } from 'store/Theme'
 import { Pothi } from 'database/Models '
 import { useNavigation } from '@react-navigation/native'
+import themes from 'utils/Themes'
 
 type SectionProps = {
   header: ReactNode,
@@ -60,13 +61,14 @@ interface HomescreenCardProps {
   editing: boolean,
 }
 const HomescreenCard = ( { pothi, rightIcon, editing, updatePothi }: HomescreenCardProps ) => {
+  const [ theme ] = useTheme()
   const navigation = useNavigation()
   const [ inputValue, updateInputValue ] = useState( pothi.title )
 
   const onPress = () => {
     navigation.navigate( 'Viewer', { pothiName: pothi.title } )
   }
-  const textStyles = [ CardStyles.Text ] 
+  const textStyles = [ CardStyles.Text , { color: theme.colors.text } ] 
 
   useEffect( ()=> {
     if( !editing && pothi.title !== inputValue ) {
@@ -110,12 +112,13 @@ type IconCardProps = {
   onPress: ( ...args: any[] ) => void
 }
 const IconCard = ( { name, size, subtitle, onPress }: IconCardProps ) => {
+  const [ theme ] = useTheme()
   const containerSize = size * 2 
   const containerStyle = StyleSheet.flatten( [ IconCardStyles.Container, { width: containerSize, height: containerSize } ] )
  return (
    <CardContainer pressableStyle={containerStyle} onPress={onPress}>
      <Row style={IconCardStyles.MainItems} >
-     <Icon name={name} size={size} />
+     <Icon name={name} size={size} style={{ color: theme.colors.text }}/>
      <Text>{subtitle}</Text>
    </Row>
      </CardContainer>

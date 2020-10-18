@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useRef, useImperativeHandle, forwardRef, useMemo } from 'react'
 import { TextInput, View, StyleSheet, StyleProp } from 'react-native'
-import { Colors, Theme } from 'utils/Themes'
+import { Theme } from 'utils/Themes'
 import Icon from 'react-native-vector-icons/Feather'
 import { useTheme } from 'store/Theme'
 import { Text } from 'components/Text'
@@ -9,7 +9,6 @@ import { CardContainer } from 'components/Card'
 import { Row } from 'components/View'
 
 interface SearchBarProps extends React.ComponentPropsWithRef<typeof TextInput> {
-  theme: Theme
   icon: string
   textInputStyle?: StyleProp<TextInput>
   iconStyle?: StyleProp<Icon>
@@ -17,7 +16,7 @@ interface SearchBarProps extends React.ComponentPropsWithRef<typeof TextInput> {
 }
 
 const FunctionalSearchbar = ( props: SearchBarProps, ref ) => {
-  const { placeholder, rightIcon, ...restInputProps } = props
+  const { placeholder, rightIcon, style, ...restInputProps } = props
   const [ theme ] = useTheme()
   const inputRef = useRef<TextInput>()
   const [ inputValue, setValue ] = useState( placeholder ?? '' )
@@ -41,9 +40,10 @@ const FunctionalSearchbar = ( props: SearchBarProps, ref ) => {
           <TextInput  
             accessibilityRole="search"
             onChangeText={setValue} 
-            style={SearchBarStyles.input}  
+            style={[ SearchBarStyles.input, { color: theme.colors.text }, style ]}  
             ref={inputRef}  
             placeholder={placeholder}
+            placeholderTextColor={theme.colors.text}
             clearButtonMode="while-editing"
             {...restInputProps}
           />
@@ -105,7 +105,6 @@ const Tags = ( { info } ) => {
 
 const TagStyles = StyleSheet.create( {
   Tag: {
-    backgroundColor: Colors.White,
     borderRadius: 6,
     fontFamily: 'OpenGurbaniAkhar',
     overflow: 'hidden',
@@ -115,11 +114,12 @@ const TagStyles = StyleSheet.create( {
     marginHorizontal: 8
   }
 } )
-const SearchCard = ( { result: [ info, value ] } ) => {
+const SearchCard = ( { result: { verse, info } } ) => {
   return (
     <CardContainer>
       <View style={CardStyles.Content}>
-        <Text style={CardStyles.Title}>{value.verse.gurmukhi}</Text>
+        <Text style={CardStyles.Title}>{verse.gurmukhi}</Text>
+    {!!verse.translation && <Text numberOfLines={1} style={CardStyles.Subtitle}>{verse.translation}</Text> }
       </View>
       <Row spaceEvenly>
         <Tags info={info} />
@@ -131,6 +131,10 @@ const SearchCard = ( { result: [ info, value ] } ) => {
 export { SearchCard }
 const CardStyles = StyleSheet.create( { Content: {
     padding: 5
+  },
+  Subtitle: {
+    textAlign: 'center',
+
   },
   Title: {
     fontFamily: 'OpenGurbaniAkhar',
