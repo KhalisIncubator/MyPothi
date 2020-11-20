@@ -1,5 +1,7 @@
-import React, {  forwardRef } from 'react'
+import React, {  forwardRef, useEffect } from 'react'
 import { RichEditor, RichEditorProps } from 'react-native-pell-rich-editor'
+import {  useDisplaySettings } from 'store/Settings'
+import { WebviewKeys } from 'screens/Settings/DefaultSettings'
 
 type ViewerProps = RichEditorProps & {
   html: string,
@@ -7,7 +9,6 @@ type ViewerProps = RichEditorProps & {
   onHeightChange?: () => void
 }
 const Editor = forwardRef<RichEditor, ViewerProps>( ( { html, onHeightChange = () => {} ,  ...rest }, ref ) => {
-
   return (
     <RichEditor
       ref={ref}

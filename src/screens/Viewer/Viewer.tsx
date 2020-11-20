@@ -2,7 +2,7 @@
 import React, { useRef } from 'react'
 import { RichEditor } from 'react-native-pell-rich-editor'
 import { DynamicScrollView } from 'components/DynamicScrollView'
-import { Editor } from 'components/Editor'
+import { Editor } from 'components/Editor/Editor'
 
 
 const Viewer = () => {

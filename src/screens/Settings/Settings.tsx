@@ -1,15 +1,16 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
 import { Page } from 'components/Page'
-import { Editor } from 'components/Editor'
+import { Editor } from 'components/Editor/Editor'
 import { useTheme } from 'store/Theme'
 import { Text } from 'components/Text'
 import { Row } from 'components/View'
 import { SettingsComponentMap, Setting, SettingsSection } from 'screens/Settings/SettingsComponents'
-import { useSettings } from 'store/Settings'
-import { SectionMap, SettingsMap } from 'screens/Settings/DefaultSettings'
+import { useDisplaySettings, useSettings } from 'store/Settings'
+import { SectionMap, SettingsMap, WebviewKeys } from 'screens/Settings/DefaultSettings'
 import { SettingsPreviewHTML } from '../../Defaults'
+import { RichEditor } from 'react-native-pell-rich-editor'
 
 const SettingsScreen = () => {
   return (
@@ -27,10 +28,28 @@ const SettingsScreen = () => {
 export default SettingsScreen
 
 const SettingsPreview = () => {
+  const settings = useDisplaySettings()
+  const EditorRef = useRef<RichEditor>()
+  useEffect( () => {
+    Object.entries( settings ).map( ( [ key, value ] ) => {
+      if ( WebviewKeys.includes( key ) ) {
+        EditorRef?.current?.webViewBridge?.injectJavaScript(
+          `document.querySelectorAll('.translation').forEach(node => {
+            window.ReactNativeWebView.postMessage('test');
+          });
+          true;
+          `
+        )
+      }
+    } )
+  
+  }, [ settings ] )
   const [ theme ] = useTheme()
   return (
     <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness, backgroundColor: theme.colors.background } ]}>
-      <Editor editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
+      <Editor ref={EditorRef} 
+      onMessage={( event ) => { console.log( event.nativeEvent.data )}}
+      editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
     </View>
   )
 

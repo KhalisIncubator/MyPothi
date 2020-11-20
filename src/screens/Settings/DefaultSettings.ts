@@ -128,6 +128,13 @@ const SettingsMap = {
   ...ThemeMap
 }
 
+const WebviewKeys = [
+  ...Object.keys( TranslationMap.English ),
+  ...Object.keys( TranslationMap.Other ),
+  ...Object.keys( TeekaMap ).filter( key => key !== TeekaKeys.TeekaFont ),
+  ...Object.keys( TranslitMap ).filter( key => key !== TranslitKeys.TranslitFont )
+]
+
 const SectionMap = [
   {
     title: 'Gurbani',
@@ -172,5 +179,4 @@ const SectionMap = [
   }
 ]
 
-
-export { DefaultGurbaniSettings, DefaultTeekaSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultSourceSettigns, DefaultThemeSettings, SettingsMap, SectionMap }
+export { DefaultGurbaniSettings, DefaultTeekaSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultSourceSettigns, DefaultThemeSettings, SettingsMap, SectionMap, WebviewKeys }

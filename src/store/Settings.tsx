@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useContext } from 'react'
 import { updateObject } from 'utils/Functions'
 import { useCachedValue } from 'utils/Hooks'
-import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns, DefaultThemeSettings } from 'screens/Settings/DefaultSettings'
+import { DefaultGurbaniSettings, DefaultTranslationSettings, DefaultTranslitSettings, DefaultTeekaSettings, DefaultSourceSettigns, DefaultThemeSettings, TranslationKeys } from 'screens/Settings/DefaultSettings'
 
 type SettingsCtxKeys = 'gurbaniSettings' | 'translationSettings' | 'translitSettings' | 'teekaSettings' | 'sourceSettings' | "themeSettings"
 
@@ -64,5 +64,15 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
 }
 
 const useSettings = (): SettingsCtx => useContext( SettingsContext )!
+const useSettingsValues = (): [typeof DefaultTranslationSettings, typeof DefaultTranslitSettings, typeof DefaultTeekaSettings] => {
+  const { translationSettings, translitSettings, teekaSettings } = useContext( SettingsContext )!
+  return [ translationSettings, translitSettings, teekaSettings ]
+}
 
-export { SettingsContext, SettingsProvider, useSettings }
+const useDisplaySettings = () => { 
+  const { translationSettings, translitSettings, teekaSettings } = useSettings()
+
+  return { ...translationSettings.English, ...translationSettings.Other, ...translitSettings, ...teekaSettings }
+}
+
+export { SettingsContext, SettingsProvider, useSettings, useDisplaySettings }
