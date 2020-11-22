@@ -44,7 +44,7 @@ const Subheader = ( { icon, text, rightButton }: SubheaderProps ) => {
       {rightButton}
     </Row>
   )
-} 
+}
 
 const SubheaderStyles = StyleSheet.create( {
   Text: {
@@ -57,7 +57,7 @@ export { Subheader }
 interface HomescreenCardProps {
   pothi: Pothi,
   rightIcon?: ReactNode | false,
-  updatePothi: ( pothi: Pothi, fields: Partial<Pothi> ) => void,
+  updatePothi: ( pothi: Pothi, title: string ) => void,
   editing: boolean,
 }
 const HomescreenCard = ( { pothi, rightIcon, editing, updatePothi }: HomescreenCardProps ) => {
@@ -68,27 +68,27 @@ const HomescreenCard = ( { pothi, rightIcon, editing, updatePothi }: HomescreenC
   const onPress = () => {
     navigation.navigate( 'Viewer', { pothiName: pothi.title } )
   }
-  const textStyles = [ CardStyles.Text , { color: theme.colors.text } ] 
+  const textStyles = [ CardStyles.Text, { color: theme.colors.text } ]
 
-  useEffect( ()=> {
-    if( !editing && pothi.title !== inputValue ) {
+  useEffect( () => {
+    if ( !editing && pothi.title !== inputValue ) {
       updatePothi( pothi, { title: inputValue } )
     }
   }, [ editing, pothi, updatePothi, inputValue ] )
   return (
     <CardContainer onPress={onPress} disabled={editing}>
       <Row spaceBetween verticalCenter>
-          <TextInput  
-            editable={editing}  
-            style={textStyles} 
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={updateInputValue}
-         > 
-        {inputValue}
+        <TextInput
+          editable={editing}
+          style={textStyles}
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={updateInputValue}
+        >
+          {inputValue}
         </TextInput>
-          {rightIcon}
-        </Row>
+        {rightIcon}
+      </Row>
     </CardContainer>
   )
 }
@@ -113,16 +113,16 @@ type IconCardProps = {
 }
 const IconCard = ( { name, size, subtitle, onPress }: IconCardProps ) => {
   const [ theme ] = useTheme()
-  const containerSize = size * 2 
+  const containerSize = size * 2
   const containerStyle = StyleSheet.flatten( [ IconCardStyles.Container, { width: containerSize, height: containerSize } ] )
- return (
-   <CardContainer pressableStyle={containerStyle} onPress={onPress}>
-     <Row style={IconCardStyles.MainItems} >
-     <Icon name={name} size={size} style={{ color: theme.colors.text }}/>
-     <Text>{subtitle}</Text>
-   </Row>
-     </CardContainer>
- ) 
+  return (
+    <CardContainer pressableStyle={containerStyle} onPress={onPress}>
+      <Row style={IconCardStyles.MainItems} >
+        <Icon name={name} size={size} style={{ color: theme.colors.text }} />
+        <Text>{subtitle}</Text>
+      </Row>
+    </CardContainer>
+  )
 }
 
 export { IconCard }

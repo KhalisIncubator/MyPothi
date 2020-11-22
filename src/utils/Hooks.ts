@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { Clause } from '@nozbe/watermelondb/QueryDescription'
-import { TableNames, TableType } from '../database/LocalDatabase'
 import { Observable } from 'rxjs'
+import { Pothi, Shabad } from 'database/Models '
 
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
@@ -45,52 +45,50 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
   return [ value, cacheNewValue ]
 }
 
-const useQuery = <K extends TableNames>( tableName: K, Q?: Clause[], dependencies: any[] = [] ): [
-  TableType<K>[],
-  ( fields: Partial<TableType<K>> ) => Promise<void>,
-  ( id: string ) => Promise<void>,
-  ( item: TableType<K>, fields: Partial<TableType<K>> ) => Promise<void>
-] => {
+const usePothis = ( Q?: Clause[], dependencies: any[] = [] ):
+  [Pothi[],
+    ( title: string, shabads?: Shabad[] ) => Promise<void>,
+    ( id: string ) => Promise<void>,
+    ( item: Pothi, title: string ) => Promise<void>
+  ] => {
+  const [ pothis, updatePothis ] = useState<Pothi[]>( [] )
   const database = useDatabase()
-  const column = database.collections.get<TableType<K>>( tableName.toString() )
-  const [ result, updateResult ] = useState<TableType<K>[]>( [] )
+  const column = database.collections.get<Pothi>( 'pothis' )
   useEffect( () => {
     const query = !!Q ? column.query( ...Q ) : column.query()
-    const subscription = query.observe().subscribe( updateResult )
+
+    const subscription = query.observe().subscribe( updatePothis )
 
     return () => subscription.unsubscribe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies )
-  const createRow = async ( fields: Partial<TableType<K>> ) => {
+
+  const createPothi = async ( title: string, shabads: Shabad[] = [] ) => {
     await database.action( async () => {
-      const newRow: TableType<K> = await column.create( row => {
-        Object.entries( fields ).forEach( ( [ key, value ] ) => {
-          row[ key ] = value
-        } )
+      const newPothi = await column.create( newRow => {
+        newRow.title = title
+        newRow.shabads = shabads
       } )
     } )
   }
-  const deleteRow = async ( id: string ) => {
-    const item = await column.find( id )
+
+  const deletePothi = async ( id: string ) => {
+    const pothi = await column.find( id )
     await database.action( async () => {
-      await item.destroyPermanently()
+      await pothi.destroyPermanently()
     } )
   }
-  const updateItem = async ( item: TableType<K>, fields: Partial<TableType<K>> ) => {
-    await database.action( async () => {
-      if ( !!item ) {
-        item.update( ( record: TableType<K> ) => {
-          Object.entries( fields ).forEach( ( [ key, value ] ) => {
-            record[ key ] = value
-          } )
+  const updatePothi = async ( item: Pothi, title: string ) => {
+    if ( !!item ) {
+      await database.action( async () => {
+        await item.update( record => {
+          record.title = title
         } )
-
-      }
-    } )
-
+      } )
+    }
   }
 
-  return [ result, createRow, deleteRow, updateItem ]
+  return [ pothis, createPothi, deletePothi, updatePothi ]
 }
 
 const useObservable = <T>( observable: ( ...args: any[] ) => Observable<T>, initialValue: T, dependencies: any[] = [] ) => {
@@ -104,4 +102,4 @@ const useObservable = <T>( observable: ( ...args: any[] ) => Observable<T>, init
   return [ state ]
 }
 
-export { useIsTablet, useCachedValue, useQuery, useToggle, useObservable }
+export { useIsTablet, useCachedValue, usePothis, useToggle, useObservable }

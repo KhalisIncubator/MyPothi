@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
 import { Page } from 'components/Page'
@@ -7,8 +7,8 @@ import { useTheme } from 'store/Theme'
 import { Text } from 'components/Text'
 import { Row } from 'components/View'
 import { SettingsComponentMap, Setting, SettingsSection } from 'screens/Settings/SettingsComponents'
-import { useDisplaySettings, useSettings } from 'store/Settings'
-import { SectionMap, SettingsMap, WebviewKeys } from 'screens/Settings/DefaultSettings'
+import { useSettings } from 'store/Settings'
+import { SectionMap, SettingsMap } from 'screens/Settings/DefaultSettings'
 import { SettingsPreviewHTML } from '../../Defaults'
 import { RichEditor } from 'react-native-pell-rich-editor'
 
@@ -28,30 +28,12 @@ const SettingsScreen = () => {
 export default SettingsScreen
 
 const SettingsPreview = () => {
-  const settings = useDisplaySettings()
-  const testObj = {
-    'en-ms': true
-  }
-  const EditorRef = useRef<RichEditor>()
-  useEffect( () => {
-    Object.entries( settings ).map( ( [ key, value ] ) => {
-      if ( WebviewKeys.includes( key ) ) {
-        // @ts-ignore
-        EditorRef?.current?.webviewBridge?.injectJavaScript(
-          `document.querySelectorAll('.${key}').forEach(node => {
-            node.style.display = ${value} ? "block" : "none";
-          });
-          true;
-          `
-        )
-      }
-    } )
-
-  }, [ settings ] )
+  const EditorRef = useRef<RichEditor>( null )
   const [ theme ] = useTheme()
   return (
     <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness, backgroundColor: theme.colors.background } ]}>
       <Editor ref={EditorRef}
+        onHeightChange={() => {}}
         onMessage={( event ) => {console.log( event.nativeEvent.data )}}
         editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
     </View>

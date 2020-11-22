@@ -4,7 +4,7 @@ import schema from './Schema'
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 
 const adapter = new SQLiteAdapter( {
- schema,
+  schema,
 } )
 const localDatabase = new Database( {
   adapter,
@@ -13,8 +13,5 @@ const localDatabase = new Database( {
   // @ts-ignore
   synchronous: true
 } )
-export type TableNames = "pothis"|"shabads"
-
-export type TableType<T> = T extends "pothis" ? Pothi : Shabad
 export { localDatabase }
 

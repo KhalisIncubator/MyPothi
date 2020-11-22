@@ -1,21 +1,39 @@
-import React, {forwardRef} from 'react'
-import {RichEditor, RichEditorProps} from 'react-native-pell-rich-editor'
+import React, { forwardRef, useEffect, useState } from 'react'
+import { RichEditor, RichEditorProps } from 'react-native-pell-rich-editor'
+import { WebviewKeys } from 'screens/Settings/DefaultSettings'
+import { useDisplaySettings } from 'store/Settings'
 
 type ViewerProps = RichEditorProps & {
   html: string,
-  // map the function from editor lib to optional
-  onHeightChange?: () => void
 }
-const Editor = forwardRef<RichEditor, ViewerProps>(({html, onHeightChange = () => {}, ...rest}, ref) => {
+const Editor = forwardRef<RichEditor, ViewerProps>( ( { html, ...rest }, ref ) => {
+  const [ isWebviewLoaded, updateLoaded ] = useState( false )
+  const displaySettings = useDisplaySettings()
+
+  useEffect( () => {
+    Object.entries( displaySettings ).map( ( [ key, value ] ) => {
+      if ( WebviewKeys.includes( key ) ) {
+        // @ts-ignore
+        ref?.current?.webviewBridge?.injectJavaScript(
+          `document.querySelectorAll('.${key}').forEach(node => {
+            node.style.display = ${value} ? "block" : "none";
+          });
+          true;
+          `
+        )
+      }
+    } )
+
+  }, [ displaySettings, isWebviewLoaded, ref ] )
   return (
     <RichEditor
       ref={ref}
       scrollEnabled
       initialContentHTML={html}
-      onHeightChange={onHeightChange}
+      onLoadEnd={() => {updateLoaded( true )}}
       {...rest} />
   )
 
-})
+} )
 
-export {Editor}
+export { Editor }
