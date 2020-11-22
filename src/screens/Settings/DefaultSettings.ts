@@ -4,24 +4,24 @@ export enum GurbaniKeys {
   GurbaniFont = 'gurbani.font'
 }
 export enum TranslationKeys {
-  BanidbEng = 'en.bdb',
-  ManmohanSinghEng = 'en.ms',
-  SahibSinghEng = 'en.ssk',
+  BanidbEng = 'en-bdb',
+  ManmohanSinghEng = 'en-ms',
+  SahibSinghEng = 'en-ssk',
   Spanish = 'es',
-  TranslationFont = 'translation.font'
+  TranslationFont = 'translation-font'
 }
 export enum TranslitKeys {
-  English = 'en',
-  Hindi = 'hi',
-  Urdu = 'ur',
-  TranslitFont = 'translit.font'
+  English = 'tl-en',
+  Hindi = 'tl-hi',
+  Urdu = 'tl-ur',
+  TranslitFont = 'translit-font'
 }
 export enum TeekaKeys {
-  SahibSingh = 'pu.ss',
-  Faridkot = 'pu.ft',
-  Banidb = 'pu.bdb',
-  ManmohanSingh = 'pu.ms',
-  TeekaFont = 'teeka.font'
+  SahibSingh = 'pu-ss',
+  Faridkot = 'pu-ft',
+  Banidb = 'pu-bdb',
+  ManmohanSingh = 'pu-ms',
+  TeekaFont = 'teeka-font'
 }
 export enum SourceKeys {
   BaniLen = 'banilen',

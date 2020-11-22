@@ -9,14 +9,14 @@ export type SettingsCtx = {
   gurbaniSettings: typeof DefaultGurbaniSettings,
   translationSettings: typeof DefaultTranslationSettings,
   translitSettings: typeof DefaultTranslitSettings,
-  teekaSettings: typeof DefaultTeekaSettings, 
+  teekaSettings: typeof DefaultTeekaSettings,
   sourceSettings: typeof DefaultSourceSettigns,
   themeSettings: typeof DefaultThemeSettings,
-  updateSettings: ( section: SettingsCtxKeys , path: string, value: any ) => void
+  updateSettings: ( section: SettingsCtxKeys, path: string, value: any ) => void
 }
 const SettingsContext = createContext<SettingsCtx | null>( null )
 
-const SettingsProvider = ( { children }: {children: ReactNode} ) => { 
+const SettingsProvider = ( { children }: {children: ReactNode} ) => {
   const [ gurbaniSettings, setGurbaniSettings ] = useCachedValue( '@settings-gurbaniSettings', DefaultGurbaniSettings )
   const [ translationSettings, setTranslationSettings ] = useCachedValue( '@settings-translationSettings', DefaultTranslationSettings )
   const [ translitSettings, setTranslitSettings ] = useCachedValue( '@settings-translitSettings', DefaultTranslitSettings )
@@ -24,9 +24,9 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
   const [ sourceSettings, setSourceSettings ] = useCachedValue( '@settings-sourcesettings', DefaultSourceSettigns )
   const [ themeSettings, setThemeSettings ] = useCachedValue( '@settings-themeSettings', DefaultThemeSettings )
 
-  const updateSettings =  ( section: SettingsCtxKeys, path: string, value: any ) => {
-    switch( section ) {
-      case 'gurbaniSettings': 
+  const updateSettings = ( section: SettingsCtxKeys, path: string, value: any ) => {
+    switch ( section ) {
+      case 'gurbaniSettings':
         setGurbaniSettings( updateObject( path, value, gurbaniSettings ) )
         break
       case 'translationSettings':
@@ -44,7 +44,7 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
       case "themeSettings":
         setThemeSettings( updateObject( path, value, themeSettings ) )
         break
-      default : { }
+      default: {}
     }
   }
 
@@ -69,7 +69,7 @@ const useSettingsValues = (): [typeof DefaultTranslationSettings, typeof Default
   return [ translationSettings, translitSettings, teekaSettings ]
 }
 
-const useDisplaySettings = () => { 
+const useDisplaySettings = () => {
   const { translationSettings, translitSettings, teekaSettings } = useSettings()
 
   return { ...translationSettings.English, ...translationSettings.Other, ...translitSettings, ...teekaSettings }

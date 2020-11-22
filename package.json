@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "npm run clean && pod-install ios",
+    "postinstall": "npx pod-install ios",
     "android": "react-native run-android",
     "ios": "react-native run-ios && tsc -w ",
     "start": "react-native start",
-    "clean": "react-native-clean-project -y",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"

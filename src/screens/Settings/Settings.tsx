@@ -17,10 +17,10 @@ const SettingsScreen = () => {
     <Page>
       <SettingsPreview />
       <ScrollView style={SettingsStyles.SettingsContainer}>
-      <Row horizontalCenter>
-        <Text>Settings Preview</Text>
-      </Row>
-      <DynamicSettings />
+        <Row horizontalCenter>
+          <Text>Settings Preview</Text>
+        </Row>
+        <DynamicSettings />
       </ScrollView>
     </Page>
   )
@@ -29,40 +29,44 @@ export default SettingsScreen
 
 const SettingsPreview = () => {
   const settings = useDisplaySettings()
+  const testObj = {
+    'en-ms': true
+  }
   const EditorRef = useRef<RichEditor>()
   useEffect( () => {
     Object.entries( settings ).map( ( [ key, value ] ) => {
       if ( WebviewKeys.includes( key ) ) {
-        EditorRef?.current?.webViewBridge?.injectJavaScript(
-          `document.querySelectorAll('.translation').forEach(node => {
-            window.ReactNativeWebView.postMessage('test');
+        // @ts-ignore
+        EditorRef?.current?.webviewBridge?.injectJavaScript(
+          `document.querySelectorAll('.${key}').forEach(node => {
+            node.style.display = ${value} ? "block" : "none";
           });
           true;
           `
         )
       }
     } )
-  
+
   }, [ settings ] )
   const [ theme ] = useTheme()
   return (
     <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness, backgroundColor: theme.colors.background } ]}>
-      <Editor ref={EditorRef} 
-      onMessage={( event ) => { console.log( event.nativeEvent.data )}}
-      editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
+      <Editor ref={EditorRef}
+        onMessage={( event ) => {console.log( event.nativeEvent.data )}}
+        editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
     </View>
   )
 
 }
 const DynamicSettings = () => {
   const settings = useSettings()
-  const setSetting = useCallback( ( section:any, path: string ) => ( value: any ) => settings.updateSettings( section, path, value ), [ settings ] )
+  const setSetting = useCallback( ( section: any, path: string ) => ( value: any ) => settings.updateSettings( section, path, value ), [ settings ] )
 
   const createSetting = useCallback( ( valueSource, settingKey, settingsMap, settingPath, value ) => {
     const { title: settingTitle, type, pickerValues } = settingsMap[ settingKey ]
     const Mod = SettingsComponentMap[ type as keyof typeof SettingsComponentMap ]
     const update = setSetting( valueSource, settingPath )
-    
+
     return (
       <Setting
         key={`${settingKey}-${settingTitle} ${settingPath} ${value} `}
@@ -70,35 +74,35 @@ const DynamicSettings = () => {
         modifier={
           <Mod key={`${settingKey}-modifier-${settingTitle} ${value}`} initialValue={value} update={update} pickerOptions={pickerValues} />
         }
-       />
+      />
     )
 
   }, [ setSetting ] )
   return (
-   <>
-    {
-      SectionMap.map( section => {
-        const { title, valueSource, values, subsections, subtitle } = section
-        const settingsValues = settings[ valueSource as keyof typeof settings ]
-        return (
-          <SettingsSection title={title} subtitle={subtitle} key={`${title}-container`} >
-            {!!subsections && Object.entries( subsections ).map( ( [ subKey, { title: subtitle, values: subValues } ] ) => {
-              return (
-                <SettingsSection style={SettingsStyles.SettingsSubsection} subtitle={subtitle} key={`${title}-${subtitle}-container`}> 
-                  {subValues.map( subValueKey => createSetting( valueSource, subValueKey, SettingsMap[ subKey as keyof typeof SettingsMap ], `${subKey}-${subValueKey}`, settingsValues[ subKey ][ subValueKey ] ) )}
-                </SettingsSection>
-              )
-            } )}
-            {values.map( valueSettingKey => {
-              return createSetting( valueSource, valueSettingKey, SettingsMap, `${valueSettingKey}`, settingsValues[ valueSettingKey ] )
-            } )}
+    <>
+      {
+        SectionMap.map( section => {
+          const { title, valueSource, values, subsections, subtitle } = section
+          const settingsValues = settings[ valueSource as keyof typeof settings ]
+          return (
+            <SettingsSection title={title} subtitle={subtitle} key={`${title}-container`} >
+              {!!subsections && Object.entries( subsections ).map( ( [ subKey, { title: subtitle, values: subValues } ] ) => {
+                return (
+                  <SettingsSection style={SettingsStyles.SettingsSubsection} subtitle={subtitle} key={`${title}-${subtitle}-container`}>
+                    {subValues.map( subValueKey => createSetting( valueSource, subValueKey, SettingsMap[ subKey as keyof typeof SettingsMap ], `${subKey}/${subValueKey}`, settingsValues[ subKey ][ subValueKey ] ) )}
+                  </SettingsSection>
+                )
+              } )}
+              {values.map( valueSettingKey => {
+                return createSetting( valueSource, valueSettingKey, SettingsMap, `${valueSettingKey}`, settingsValues[ valueSettingKey ] )
+              } )}
             </SettingsSection>
 
-        )
-      } )
-    }
-   </>
- ) 
+          )
+        } )
+      }
+    </>
+  )
 }
 
 const SettingsStyles = StyleSheet.create( {
