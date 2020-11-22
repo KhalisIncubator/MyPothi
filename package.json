@@ -5,10 +5,10 @@
   "scripts": {
     "postinstall": "npx pod-install ios",
     "android": "react-native run-android",
-    "ios": "react-native run-ios && tsc -w ",
+    "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "typecheck": "tsc -w -pretty -skipLibCheck",
+    "typecheck": "tsc -w -pretty",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
