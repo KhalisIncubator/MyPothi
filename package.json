@@ -42,6 +42,7 @@
     "reactotron-react-native": "^5.0.0",
     "rn-async-storage-flipper": "0.0.9",
     "rxjs": "^6.6.3",
+    "ts-toolbelt": "^8.0.7",
     "use-deep-compare-effect": "^1.4.0"
   },
   "devDependencies": {

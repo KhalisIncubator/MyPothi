@@ -1,30 +1,3 @@
-const remapLine = ( line ) => {
-  const { verseId: verseID, shabadId: shabadID, verse, translation, transliteration, visraam } = line
-
-  const punjabiTranslationAscii = {}
-
-  Object.keys( translation.pu ).map( key => {
-    punjabiTranslationAscii[ key ] = translation.pu[ key ].gurmukhi
-  } )
-  return {
-    verseID,
-    shabadID,
-    gurmukhi: verse.gurmukhi,
-    translation: {
-      ...translation,
-      pu: {
-        ...punjabiTranslationAscii
-
-      }
-    },
-    transliteration: {
-      ...transliteration,
-      english: null,
-      hindi: null
-    },
-    visraam
-  }
-}
 const mapApiValues = ( section: any, classNamePrefix: string ) => {
 
   let sectionString = ''
@@ -81,4 +54,4 @@ const createShabadHTML = ( shabad ) => {
   `
 
 }
-export { remapLine, createPangteeHTMl, createShabadHTML }
+export { createPangteeHTMl, createShabadHTML }

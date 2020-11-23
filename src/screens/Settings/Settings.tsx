@@ -33,7 +33,8 @@ const SettingsPreview = () => {
   return (
     <View style={[ SettingsStyles.EditorContainer, { borderRadius: theme.style.roundness, backgroundColor: theme.colors.background } ]}>
       <Editor ref={EditorRef}
-        onHeightChange={() => {}}
+        // literally do anything because this function is actually useless
+        onHeightChange={() => 1}
         onMessage={( event ) => {console.log( event.nativeEvent.data )}}
         editorStyle={{ backgroundColor: theme.colors.background, cssText: theme.colors.text }} html={SettingsPreviewHTML} useContainer={false} disabled />
     </View>

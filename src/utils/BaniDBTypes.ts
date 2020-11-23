@@ -139,10 +139,10 @@ export interface VerseElement {
   existsTaksal: number;
   existsBuddhaDal: number;
   paragraph: number;
-  verse: VerseVerse;
+  verse: BaniVerse;
 }
 
-export interface VerseVerse {
+export interface BaniVerse {
   verseId: number;
   verse: Larivaar;
   larivaar: Larivaar;
@@ -165,3 +165,36 @@ export interface Transliteration {
   ur: string;
 }
 
+export interface QueryResponse {
+  resultsInfo: ResultsInfo;
+  verses: QueryVerse[];
+}
+
+export interface ResultsInfo {
+  totalResults: number;
+  pageResults: number;
+  pages: Pages;
+}
+
+export interface Pages {
+  page: number;
+  resultsPerPage: number;
+  totalPages: number;
+  nextPage: string;
+}
+
+export interface QueryVerse {
+  verseId: number;
+  shabadId: number;
+  verse: Larivaar;
+  larivaar: Larivaar;
+  translation: Translation;
+  transliteration: Transliteration;
+  pageNo: number;
+  lineNo: number;
+  updated: string;
+  visraam: Visraam;
+  writer: Writer;
+  source: Source;
+  raag: Raag;
+}
