@@ -64,10 +64,6 @@ const SettingsProvider = ( { children }: {children: ReactNode} ) => {
 }
 
 const useSettings = (): SettingsCtx => useContext( SettingsContext )!
-const useSettingsValues = (): [typeof DefaultTranslationSettings, typeof DefaultTranslitSettings, typeof DefaultTeekaSettings] => {
-  const { translationSettings, translitSettings, teekaSettings } = useContext( SettingsContext )!
-  return [ translationSettings, translitSettings, teekaSettings ]
-}
 
 const useDisplaySettings = () => {
   const { translationSettings, translitSettings, teekaSettings } = useSettings()
@@ -75,4 +71,14 @@ const useDisplaySettings = () => {
   return { ...translationSettings.English, ...translationSettings.Other, ...translitSettings, ...teekaSettings }
 }
 
-export { SettingsContext, SettingsProvider, useSettings, useDisplaySettings }
+const useFontSizeSettings = () => {
+  const { gurbaniSettings, translationSettings, translitSettings, teekaSettings } = useSettings()
+  return {
+    gurbaniFont: gurbaniSettings[ 'gurbani-font' ],
+    translationFont: translationSettings[ 'translation-font' ],
+    translitFont: translitSettings[ 'translit-font' ],
+    teekaFont: teekaSettings[ 'teeka-font' ]
+  }
+}
+
+export { SettingsContext, SettingsProvider, useSettings, useDisplaySettings, useFontSizeSettings }

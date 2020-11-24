@@ -1,7 +1,7 @@
 import { ThemeNames } from "utils/Themes"
 
 export enum GurbaniKeys {
-  GurbaniFont = 'gurbani.font'
+  GurbaniFont = 'gurbani-font'
 }
 export enum TranslationKeys {
   BanidbEng = 'en-bdb',

@@ -6,6 +6,7 @@ import { Editor } from 'components/Editor/Editor'
 import { useCurrentPothi } from 'utils/Hooks'
 import { switchMap, map, scan, filter } from 'rxjs/operators'
 import { from, } from 'rxjs'
+import { StyleSheet } from 'react-native'
 
 
 const Viewer = () => {
@@ -28,9 +29,10 @@ const Viewer = () => {
 
 
   return (
-    <DynamicScrollView>
-      <Editor html={html} onHeightChange={() => 1} ref={EditorRef} onChange={console.log} />
+    <DynamicScrollView >
+      <Editor html={html} onHeightChange={() => 1} ref={EditorRef} />
     </DynamicScrollView>
   )
 }
+
 export { Viewer }
