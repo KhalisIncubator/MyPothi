@@ -180,10 +180,6 @@ export const SettingsPreviewHTML =
           ੴ सति नामु करता पुरखु निरभउ निरवैरु अकाल मूरति अजूनी सैभं गुर प्रसादि
           ॥
         </div>
-        <div class="tl-ipa">
-          ɪk oəŋkɑɾ sət̪ nɑm kərət̪ɑ pʊrəkʰ nɪrɓo nɪrəʋær əkɑl murət̪ əd͡ʒuni sæɓəŋ
-          Gʊr pɹəsɑd̪.
-        </div>
         <div class="tl-ur">
           اک اونکار ست نام کرتا پُرکھ نربھا نروَےر اکال مُورت اجٌیِ سَےبھں گُر
           پرساد ۔۔

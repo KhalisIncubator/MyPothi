@@ -9,7 +9,7 @@ import { Text, Title } from 'components/Text'
 import { useTheme } from 'store/Theme'
 import { Pothi } from 'database/Models '
 import { useNavigation } from '@react-navigation/native'
-import themes from 'utils/Themes'
+import { useCurrentState } from 'store/Current'
 
 type SectionProps = {
   header: ReactNode,
@@ -62,17 +62,19 @@ interface HomescreenCardProps {
 }
 const HomescreenCard = ( { pothi, rightIcon, editing, updatePothi }: HomescreenCardProps ) => {
   const [ theme ] = useTheme()
+  const [ , setCurrentPothi ] = useCurrentState()
   const navigation = useNavigation()
   const [ inputValue, updateInputValue ] = useState( pothi.title )
 
   const onPress = () => {
-    navigation.navigate( 'Viewer', { pothiName: pothi.title } )
+    navigation.navigate( 'Viewer' )
+    setCurrentPothi( pothi.title )
   }
   const textStyles = [ CardStyles.Text, { color: theme.colors.text } ]
 
   useEffect( () => {
     if ( !editing && pothi.title !== inputValue ) {
-      updatePothi( pothi, { title: inputValue } )
+      updatePothi( pothi, inputValue )
     }
   }, [ editing, pothi, updatePothi, inputValue ] )
   return (

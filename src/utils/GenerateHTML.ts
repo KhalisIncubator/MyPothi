@@ -22,7 +22,7 @@ const createPangteeHTMl = ( line ) => {
     const { transliteration } = line
     return `
       <div class="transliteration">
-        ${mapApiValues( transliteration, 'tr' )}
+        ${mapApiValues( transliteration, 'tl' )}
       </div>
     `
   }
@@ -45,8 +45,8 @@ const createPangteeHTMl = ( line ) => {
    `
 }
 
-const createShabadHTML = ( shabad ) => {
-  const lines = shabad.verses.map( verse => createPangteeHTMl( verse ) ).reduce( ( acc, curr ) => acc += curr, '' )
+const createShabadHTML = ( verses ) => {
+  const lines = verses.map( verse => createPangteeHTMl( verse ) ).reduce( ( acc, curr ) => acc += curr, '' )
   return `
   <div class="shabad">
     ${lines}

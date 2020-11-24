@@ -3,9 +3,25 @@ import { buildApiUrl } from '@sttm/banidb'
 import { banisOrder } from '../Defaults'
 import { fromFetch } from 'rxjs/fetch'
 import { map, switchMap } from 'rxjs/operators'
-import { of } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { VerseElement, QueryVerse, Visraam, Verse, BaniVerse, ShabadResponse, BaniResponse } from 'utils/BaniDBTypes'
 
+
+export type RemappedQueryInfo = {
+  source: string | null,
+  writer: string | null,
+  raag: string | null
+}
+type RemappedQueryVerse = {
+  gurmukhi: string,
+  translation: string | null,
+  id: number,
+  verseId: number
+}
+export type RemappedQuery = {
+  info: RemappedQueryInfo
+  verse: RemappedQueryVerse
+}
 type RemappedVerse = {
   verseID: number,
   gurmukhi: string,
@@ -141,7 +157,7 @@ const remapBani = ( bani: BaniResponse ): RemappedVerse[] => {
 
 const sortBani = ( firstBani: any, secondBani: any ) => banisOrder.indexOf( firstBani.ID ) - banisOrder.indexOf( secondBani.ID )
 
-const query = ( query: string, searchType: number ) => {
+const query = ( query: string, searchType: number ): Observable<RemappedQuery[]> => {
   const API_URL = 'https://api.banidb.com/v2/'
   const MAX_RESULTS = 50
 
@@ -168,7 +184,9 @@ const query = ( query: string, searchType: number ) => {
           },
           verse: {
             gurmukhi: result.verse.gurmukhi,
-            translation: result.translation.en.bdb
+            translation: result.translation.en.bdb,
+            verseId: result.verseId,
+            id: result.shabadId
           }
         } ) )
       } ),
@@ -189,7 +207,7 @@ const fetchShabad = async ( id: number ): Promise<[RemappedInfo, RemappedVerse[]
   } ) )
 
   return fetch( url )
-    .then( res => res.json )
+    .then( res => res.json() )
     .then( ( shabadRes: unknown ) => {
       const ResWithTypes = shabadRes as ShabadResponse
       return [ getShabadInfo( ResWithTypes ), remapShabad( ResWithTypes ) ]

@@ -1,4 +1,4 @@
-import { Model } from '@nozbe/watermelondb'
+import { Model, Query, Relation } from '@nozbe/watermelondb'
 import { field, children, relation, action } from '@nozbe/watermelondb/decorators'
 import { Associations } from '@nozbe/watermelondb/Model'
 
@@ -8,7 +8,7 @@ class Pothi extends Model {
     shabads: { type: 'has_many', foreignKey: 'pothi_id' }
   }
   @field( 'title' ) title: string
-  @children( 'shabads' ) shabads: Shabad[] | undefined
+  @children( 'shabads' ) shabads: Query<Shabad>
 
   @action async addShabad( html: string, main_line: string ) {
     return await this.collections.get<Shabad>( 'shabads' ).create( shabad => {
@@ -27,7 +27,7 @@ class Shabad extends Model {
 
   @field( 'html' ) html: string
   @field( 'main_line' ) mainLine: string
-  @relation( 'pothis', 'pothi_id' ) pothi: Pothi
+  @relation( 'pothis', 'pothi_id' ) pothi: Relation<Pothi>
 
 }
 

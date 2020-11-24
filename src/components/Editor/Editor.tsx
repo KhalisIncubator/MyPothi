@@ -11,6 +11,7 @@ const Editor = forwardRef<RichEditor, ViewerProps>( ( { html, ...rest }, ref ) =
   const displaySettings = useDisplaySettings()
 
   useEffect( () => {
+    console.log( 'running' )
     Object.entries( displaySettings ).map( ( [ key, value ] ) => {
       if ( WebviewKeys.includes( key ) ) {
         // @ts-ignore

@@ -11,6 +11,7 @@ import { useSettings } from 'store/Settings'
 import { SectionMap, SettingsMap } from 'screens/Settings/DefaultSettings'
 import { SettingsPreviewHTML } from '../../Defaults'
 import { RichEditor } from 'react-native-pell-rich-editor'
+import { Colors } from 'utils/Themes'
 
 const SettingsScreen = () => {
   return (
@@ -93,6 +94,10 @@ const SettingsStyles = StyleSheet.create( {
     flex: 3,
     flexGrow: 3,
     marginBottom: 10,
+    borderColor: Colors.Orange,
+    borderWidth: 2,
+    borderRadius: 10
+
   },
   SettingsContainer: {
     flex: 7,

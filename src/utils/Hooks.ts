@@ -6,6 +6,7 @@ import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { Clause } from '@nozbe/watermelondb/QueryDescription'
 import { Observable } from 'rxjs'
 import { Pothi, Shabad } from 'database/Models '
+import { useCurrentState } from 'store/Current'
 
 const useIsTablet = () => {
   const dimensions = useWindowDimensions()
@@ -47,7 +48,7 @@ const useCachedValue = <T>( key: string, initialValue: T ): [T, CacheValueUpdate
 
 const usePothis = ( Q?: Clause[], dependencies: any[] = [] ):
   [Pothi[],
-    ( title: string, shabads?: Shabad[] ) => Promise<void>,
+    ( title: string ) => Promise<void>,
     ( id: string ) => Promise<void>,
     ( item: Pothi, title: string ) => Promise<void>
   ] => {
@@ -63,11 +64,10 @@ const usePothis = ( Q?: Clause[], dependencies: any[] = [] ):
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies )
 
-  const createPothi = async ( title: string, shabads: Shabad[] = [] ) => {
+  const createPothi = async ( title: string ) => {
     await database.action( async () => {
       const newPothi = await column.create( newRow => {
         newRow.title = title
-        newRow.shabads = shabads
       } )
     } )
   }
@@ -91,15 +91,38 @@ const usePothis = ( Q?: Clause[], dependencies: any[] = [] ):
   return [ pothis, createPothi, deletePothi, updatePothi ]
 }
 
+const useCurrentPothi = (): [Pothi] => {
+  const [ currentPothi ] = useCurrentState()
+  const [ pothis ] = usePothis()
+
+  return [ pothis.find( pothi => pothi.title === currentPothi ) ?? pothis[ 0 ] ]
+}
+
+const useShabads = () => {
+  const [ shabads, setShabads ] = useState<Shabad[]>( [] )
+  const database = useDatabase()
+  const column = database.collections.get<Shabad>( 'shabads' )
+  useEffect( () => {
+    const query = column.query()
+
+    const subscription = query.observe().subscribe( setShabads )
+
+    return () => subscription.unsubscribe()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [] )
+
+
+  return [ shabads ]
+}
 const useObservable = <T>( observable: ( ...args: any[] ) => Observable<T>, initialValue: T, dependencies: any[] = [] ) => {
   const [ state, setState ] = useState( initialValue )
   useEffect( () => {
-    const sub = observable().subscribe( setState )
+    const sub = observable()?.subscribe( setState )
     return () => {
-      sub.unsubscribe()
+      sub?.unsubscribe()
     }
   }, dependencies )
   return [ state ]
 }
 
-export { useIsTablet, useCachedValue, usePothis, useToggle, useObservable }
+export { useIsTablet, useCachedValue, usePothis, useShabads, useCurrentPothi, useToggle, useObservable }

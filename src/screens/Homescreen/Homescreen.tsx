@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Icon from 'react-native-vector-icons/Feather'
 import { StyleSheet, Keyboard, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
@@ -8,21 +8,20 @@ import { HomeSection, IconCard, Subheader, HomescreenCard } from './Components'
 import { DynamicScrollView } from 'components/DynamicScrollView'
 import { SearchBar } from 'screens/Search/SearchComponents'
 import { Text } from 'components/Text'
-import { usePothis, useQuery } from 'utils/Hooks'
-import { useTheme } from 'store/Theme'
+import { useCurrentPothi, useObservable, usePothis, useShabads } from 'utils/Hooks'
 import { Column, Row } from 'components/View'
 import { Colors } from 'utils/Themes'
 
 const Homescreen = () => {
-  const [ theme ] = useTheme()
   const [ pothis, newPothi, deletePothi, updatePothi ] = usePothis()
   const [ editing, toggleEditing ] = useState( false )
-
   const navigation = useNavigation()
-  const PothiCreatingRef = useRef<any>( null )
 
+
+  type SearchBarHandle = React.ElementRef<typeof SearchBar>
+  const PothiCreatingRef = useRef<SearchBarHandle>( null )
   const makePothi = () => {
-    newPothi( { title: PothiCreatingRef?.current?.getValue() } )
+    newPothi( PothiCreatingRef?.current?.getValue() ?? '' )
     Keyboard.dismiss()
     PothiCreatingRef?.current?.clear()
   }
