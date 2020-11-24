@@ -22,14 +22,14 @@ const Toggle = ( { initialValue, update }: SettingsComponentProps ) => {
     updateChecked( newValue )
     update( newValue )
   }
-  return <RoundedCheckbox 
-             checkedColor={theme.colors.orange}
-             outerSize={30}
-             innerSize={25}
-             isChecked={isChecked} 
-             onPress={toggle}
-             component={<Icon name="check" />}
-             />  
+  return <RoundedCheckbox
+    checkedColor={theme.colors.orange}
+    outerSize={30}
+    innerSize={25}
+    isChecked={isChecked}
+    onPress={toggle}
+    component={<Icon name="check" />}
+  />
 }
 
 type PickerProps = SettingsComponentProps & {
@@ -38,26 +38,27 @@ type PickerProps = SettingsComponentProps & {
 const Picker = ( { initialValue, update, pickerOptions }: PickerProps ) => {
   const { showActionSheetWithOptions } = useActionSheet()
   return <Button onPress={() => {
-    showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions.map( optn => optn.toUpperCase() ) ] : [ 'cancel' ] , cancelButtonIndex: 0 }, ( buttonIndex ) => {
+    showActionSheetWithOptions( { options: !!pickerOptions ? [ 'cancel', ...pickerOptions.map( optn => optn.toUpperCase() ) ] : [ 'cancel' ], cancelButtonIndex: 0 }, ( buttonIndex ) => {
       // cancel button
       if ( buttonIndex === 0 ) return
-      const newValue = pickerOptions[ buttonIndex -1 ] ?? []
+      const newValue = pickerOptions[ buttonIndex - 1 ] ?? []
       !!newValue && update( newValue )
     } )
-  }} title={initialValue.toUpperCase()}/>
+  }} title={initialValue.toUpperCase()} />
 }
 
 const Stepper = ( { update, initialValue }: SettingsComponentProps ) => {
   const [ theme ] = useTheme()
- return (
-  <Row>
-    <Text>{initialValue}</Text>
-    <Icon name="minus" size={25} onPress={() => { 
-    update( initialValue  - 1 )}} style={{ color: theme.colors.text }}/>
-    <Icon name="plus" size={25} onPress={() => update( initialValue + 1 )} style={{ color: theme.colors.text }}/>
-  </Row> 
- )
-} 
+  return (
+    <Row>
+      <Text>{initialValue}</Text>
+      <Icon name="minus" size={25} onPress={() => {
+        update( initialValue - 1 )
+      }} style={{ color: theme.colors.text }} />
+      <Icon name="plus" size={25} onPress={() => update( initialValue + 1 )} style={{ color: theme.colors.text }} />
+    </Row>
+  )
+}
 
 type SettingProps = {
   title: string,
@@ -66,7 +67,7 @@ type SettingProps = {
 
 const Setting = ( { title, modifier }: SettingProps ) => {
   return (
-    <Row spaceBetween style={SettingsStyles.SettingsContainer}>
+    <Row spaceBetween verticalCenter style={SettingsStyles.SettingsContainer}>
       <Text>{title}</Text>
       {modifier}
     </Row>
@@ -75,7 +76,7 @@ const Setting = ( { title, modifier }: SettingProps ) => {
 
 type SectionProps = {
   title?: string,
-  subtitle?: string, 
+  subtitle?: string,
   children: ReactNode,
   style?: StyleProp<ViewStyle>
 }
@@ -114,4 +115,4 @@ const SettingsComponentMap = {
   [ SettingTypes.Picker ]: Picker,
   [ SettingTypes.Toggle ]: Toggle
 }
-export { SettingsSection, Setting, SettingsComponentMap }
+export { SettingsSection, Setting, SettingsComponentMap, Picker }
