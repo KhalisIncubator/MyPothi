@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": [
+      "es6"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "common-components": [
+        "./common-components"
+      ],
+      "consts": [
+        "./consts"
+      ],
+      "db": [
+        "./db"
+      ],
+      "hooks": [
+        "./hooks"
+      ],
+      "providers": [
+        "./providers"
+      ],
+      "utils": [
+        "./utils"
+      ],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.confg.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
+}
