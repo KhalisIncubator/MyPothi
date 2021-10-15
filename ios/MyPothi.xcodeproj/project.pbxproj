@@ -13,8 +13,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3235BF59250734D500622841 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235BF58250734D500622841 /* File.swift */; };
 		3235BF5A250734D500622841 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235BF58250734D500622841 /* File.swift */; };
-		32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32B3C5B5243269F80062B22F /* LaunchScreen.xib */; };
 		3C96B61C6FA84D9D98AC47E1 /* Comfortaa-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F70CC5C8D6E4B84BEBC9454 /* Comfortaa-VariableFont_wght.ttf */; };
+		7606F84E256C7FCC00E315D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7606F84D256C7FCC00E315D8 /* Launch Screen.storyboard */; };
+		7606F88C256C848D00E315D8 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7606F88B256C848D00E315D8 /* BootSplash.storyboard */; };
 		88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */; };
 		9A2EE262D217978C93D1495C /* libPods-MyPothi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385D953E54E3427CDFF3680 /* libPods-MyPothi.a */; };
 		A4327B9489F97EBD9278B837 /* libPods-MyPothi-MyPothiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */; };
@@ -50,13 +51,14 @@
 		3235BF56250734D500622841 /* MyPothi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyPothi-Bridging-Header.h"; sourceTree = "<group>"; };
 		3235BF57250734D500622841 /* MyPothiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyPothiTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		3235BF58250734D500622841 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		32B3C5B5243269F80062B22F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3385D953E54E3427CDFF3680 /* libPods-MyPothi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPothi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60BB8A11009323FFE7356255 /* Pods-MyPothi-MyPothiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-MyPothiTests.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-MyPothiTests/Pods-MyPothi-MyPothiTests.release.xcconfig"; sourceTree = "<group>"; };
 		6BF31C79E0DC8C11B9BA0EDF /* Pods-MyPothi-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOS/Pods-MyPothi-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6E88A3C0E973F77F65B9B1CF /* Pods-MyPothi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOS/Pods-MyPothi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		6FA6DC7CA7024AFA9079CD15 /* OpenGurbaniAkhar-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Regular.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Regular.otf"; sourceTree = "<group>"; };
 		712A2570B39514A7F2340F36 /* libPods-MyPothi-MyPothiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPothi-MyPothiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7606F84D256C7FCC00E315D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		7606F88B256C848D00E315D8 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = MyPothi/BootSplash.storyboard; sourceTree = "<group>"; };
 		7F70CC5C8D6E4B84BEBC9454 /* Comfortaa-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Comfortaa-VariableFont_wght.ttf"; path = "../assets/fonts/Comfortaa-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		81930148B328056E160721D9 /* Pods-MyPothi-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPothi-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyPothi-tvOSTests/Pods-MyPothi-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		852B77A9D15143958A127094 /* OpenGurbaniAkhar-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenGurbaniAkhar-Bold.otf"; path = "../assets/fonts/OpenGurbaniAkhar-Bold.otf"; sourceTree = "<group>"; };
@@ -106,14 +108,15 @@
 		13B07FAE1A68108700A75B9A /* MyPothi */ = {
 			isa = PBXGroup;
 			children = (
+				7606F88B256C848D00E315D8 /* BootSplash.storyboard */,
 				32216E2024D0AD2D007FF177 /* MyPothi.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				32B3C5B5243269F80062B22F /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				7606F84D256C7FCC00E315D8 /* Launch Screen.storyboard */,
 			);
 			name = MyPothi;
 			sourceTree = "<group>";
@@ -289,9 +292,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				32B3C5B6243269F80062B22F /* LaunchScreen.xib in Resources */,
 				BDF5006612C349F38314B075 /* OpenGurbaniAkhar-Bold.otf in Resources */,
 				88AB86CE6B254E299BD06F03 /* OpenGurbaniAkhar-Regular.otf in Resources */,
+				7606F88C256C848D00E315D8 /* BootSplash.storyboard in Resources */,
+				7606F84E256C7FCC00E315D8 /* Launch Screen.storyboard in Resources */,
 				3C96B61C6FA84D9D98AC47E1 /* Comfortaa-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

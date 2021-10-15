@@ -7,12 +7,17 @@ const DynamicScrollView = ( { children, style }: PageProps ) => {
   const window = useWindowDimensions()
   const [ pageHeight, updatePageHeight ] = useState( 0 )
 
-    return (
-      <Page style={style}>
-        <ScrollView onScroll={() => Keyboard.dismiss()} scrollEnabled={pageHeight > window.height} onContentSizeChange={( _, height ) => {updatePageHeight( height )}}>
-          {children}
-        </ScrollView>
-      </Page>
+  return (
+    <Page style={style}>
+      <ScrollView
+        onScroll={() => Keyboard.dismiss()} scrollEnabled={pageHeight > window.height}
+        onContentSizeChange={( _, height ) => {updatePageHeight( height )}
+        }
+        scrollEventThrottle={1000}
+      >
+        {children}
+      </ScrollView>
+    </Page>
   )
 
 }
