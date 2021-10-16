@@ -1,4 +1,4 @@
-export const deepCompareObjectKeys = ( base , toCompare ): boolean => { 
+export const deepObjectEquality = ( base , toCompare ): boolean => { 
   let baseKeys = Object.keys( base )
   let compareKeys = Object.keys( base )
 
@@ -6,8 +6,8 @@ export const deepCompareObjectKeys = ( base , toCompare ): boolean => {
   // execution, they're just not the same
   if ( baseKeys.length !== compareKeys.length ) return false
 
-  baseKeys = setNestedKeys( baseKeys, base )
-  compareKeys = setNestedKeys( compareKeys, toCompare )
+  baseKeys = flattenKeys( baseKeys, base )
+  compareKeys = flattenKeys( compareKeys, toCompare )
 
   return arrayEquals( baseKeys, compareKeys )
 
@@ -22,7 +22,7 @@ const arrayEquals = ( a: any[],b: any[] ): boolean => {
   } )
 }
 
-const setNestedKeys = ( firstLayerKeyArray, obj ) => {
+const flattenKeys = ( firstLayerKeyArray, obj ) => {
   return firstLayerKeyArray.map( ( key, index ) => {
     if( typeof obj[ key ] === "object" ) {
       return Object.keys( object[ key ] )

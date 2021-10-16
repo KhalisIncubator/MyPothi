@@ -8,17 +8,21 @@
     "react-hooks"
   ],
   "settings": {
-      "import/resolver": {
-          "babel-modules": { allowExistingDirectories: true } 
-        }
-    },
-  "overrides": [
-  {
-    "files": ["**/*.tsx"],
-    "rules": {
-      "react/prop-types": "off"
+    "import/resolver": {
+      "babel-modules": {
+        "allowExistingDirectories": true
+      }
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.tsx"
+      ],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
   ],
   "env": {
     "es6": true
@@ -38,7 +42,10 @@
       "always"
     ],
     "import/no-unresolved": 0,
-     "object-curly-spacing": ["error", "always"],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "object-curly-newline": [
       "error",
       {
@@ -54,7 +61,7 @@
     "react/jsx-filename-extension": 0,
     "react/sort-comp": 0,
     "react/jsx-props-no-spreading": 0,
- "react/prefer-stateless-function": 1,
+    "react/prefer-stateless-function": 1,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "semi": [
@@ -72,6 +79,7 @@
     ],
     "react/display-name": 0,
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/ban-ts-comment": 0
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-explicit-any": 0
   }
 }
