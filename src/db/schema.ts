@@ -1,13 +1,13 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb'
 
-export default appSchema({
+export default appSchema( {
   version: 1, 
   tables: [
      tableSchema( {
       name: 'pothis',
       columns: [
         { name: 'title', type: 'string' },
-        { name: 'created_at', type: 'number'},
+        { name: 'created_at', type: 'number' },
         { name: 'last_opened', type: 'number' } 
       ]
     } ),
@@ -20,4 +20,4 @@ export default appSchema({
       ]
     } )
   ],
-})
+} )

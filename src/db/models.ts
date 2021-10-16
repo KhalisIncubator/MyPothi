@@ -7,10 +7,13 @@ class Pothi extends Model {
   static associations: Associations = {
     shabads: { type: 'has_many', foreignKey: 'pothi_id' }
   }
-  @field( 'title' ) title: string 
-  @date('last_opened') lastOpened: Date
+  @field( 'title' )
+  title!: string 
+  @date( 'last_opened' )
+  lastOpened!: Date
   @children( 'shabads' ) shabads: Shabad[] | undefined
-  @readonly @date('created_at') createdAt: Date
+  @readonly @date( 'created_at' )
+  createdAt!: Date
 
 }
 
@@ -20,9 +23,12 @@ class Shabad extends Model {
     pothi: { type: 'belongs_to', key: 'pothi_id' }
   }
   
-  @field( 'html' ) html: string
-  @field( 'main_line' ) mainLine: string
-  @relation( 'pothis', 'pothi_id' ) pothi: Pothi
+  @field( 'html' )
+  html!: string
+  @field( 'main_line' )
+  mainLine!: string
+  @relation( 'pothis', 'pothi_id' )
+  pothi!: Pothi
 
 }
 

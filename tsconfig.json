@@ -11,6 +11,7 @@
     "jsx": "react-native",
     "noEmit": true,
     "isolatedModules": true,
+    "noImplicitAny": false,
     "strict": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
