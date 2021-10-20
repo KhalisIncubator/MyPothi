@@ -4,6 +4,7 @@
    *
  * @format
  * @flow strict-local
+ TODO: UDPATE TO RN 0.66
  */
 
  import { useEffect } from 'React'
