@@ -18,6 +18,7 @@
   "dependencies": {
     "@nozbe/watermelondb": "^0.22.0",
     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@sttm/banidb": "^3.0.0",
     "@types/lodash": "^4.14.170",
     "dripsy": "^2.2.0",
     "lodash": "^4.17.21",
