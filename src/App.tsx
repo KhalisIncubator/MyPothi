@@ -7,12 +7,13 @@
  TODO: UDPATE TO RN 0.66
  */
 
- import { useEffect } from 'React'
+ import React, { useEffect } from 'React'
 import RNAsyncStorageFlipper from 'rn-async-storage-flipper'
 import AsyncStorage from '@react-native-community/async-storage'
 import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider'
 import DripsyProvider from 'dripsy'
 import { database } from 'db/database'
+import { theme } from 'utils/theme'
 
 const App = () => {
   useEffect( () => {
@@ -21,7 +22,7 @@ const App = () => {
 
   return (
     <DatabaseProvider database={database}> 
-      <DripsyProvider>
+    <DripsyProvider theme={theme}>
       </DripsyProvider>
     </DatabaseProvider>
   )
