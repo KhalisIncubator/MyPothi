@@ -21,7 +21,7 @@
     "@sttm/banidb": "^3.0.0",
     "@types/lodash": "^4.14.170",
     "dripsy": "^2.2.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "react": "17.0.1",
     "react-i18next": "^11.10.0",
     "react-native": "0.64.2",
